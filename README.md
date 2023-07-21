@@ -1,1 +1,57 @@
 # Analise_de_Dados
+## RESUMO  
+**Objetivos:** implementar um ambiente de trabalho padronizado e, ao mesmo tempo, maleável para análise de dados na Vigilância Epidemiológica da 22ª Regional de Saúde/PR. **Métodos:** um diretório com uma árvore de subpastas específica foi criado para receber diferentes bases de dados, armazenamento de shapefiles,  e produtos finais. Planilhas Eletrônicas (PL) suprem necessidades específicas como inclusão de coordenadas geográficas. A automatização de processos foi possibilitada pela utilização da linguagem R. **Principais Resultados Alcançados:** O uso do diretório permitiu que diferentes agravos pudessem ter seus processos de análise situacional padronizados. O uso do R possibilitou agilizar e sistematizar o processo de coleta, armazenamento, tratamento e exibição de dados por meio de informes e dashboards. Em conjunto, o uso do software QGIS configurado para interpretar as tabulações executadas pelo R, possibilitou a criação de Sistemas de Informações Geográficas (SIG) que permitem o operador utilizar o sistema como uma Estação de Monitoramento (EM) de determinado agravo ou situação, permitindo análises mais precisas e personalizadas de acordo com o momento. Material produzido pode ser encontrado em: https://github.com/Gustavo-Fabris. **Conclusão/recomendações:** uso de ferramentas tecnológicas como R e QGIS demonstram ser essenciais em Vigilância em Saúde. Capacitações de técnicos para sua utilização mostra-se fundamental.
+
+## Objetivos
+### Geral
+    • Implementar um ambiente de trabalho organizador, unificador e facilitador do processo de obtenção e tratamento de dados para transformação em informação e análise.
+### Específicos
+    • Proporcionar às equipes uma visão global e dinâmica da situação, permitindo ações específicas de controle;
+    • Permitir maleabilidade para equipes com diferentes necessidades moldem os sistemas a sua realidade;
+    • Atuar como elemento de integração entre diferentes setores das secretarias de saúde.
+
+## Metodologia
+Para apresentação do processo de trabalho, o Programa de Controle de Arboviroses será usado como exemplo.
+Diretório Análise_de_Dados: Diretório localizado na área de trabalho com uma árvore de subdiretórios específica no qual as bases de dados (buscada pelo R ou baixada pelo usuário)  e shapefiles são alocadas. Os scripts R e os Sistemas de Informações Geográficas (SIG) ficam na raiz do diretório.
+Base de Dado: Composta por dados do SINAN, LACEN/PR e planilhas eletrônicas.
+Planilhas Eletrônicas: Planilhas online onde os municípios inserem dados entomológicos e coordenadas geográficas de casos notificados no SINAN. Cada município tem acesso apenas a sua planilha e a regional de saúde possui os dados consolidados.
+R 4.3.1: É o motor do diretório com a função de  automatizar todos os processos. Faz download/upload de dados, manipulação dos mesmos em informações, produção de mapas, gráficos e criação de planilhas CSV secundárias para serem utilizadas pelo QGIS.
+QGIS 3.22: Software de georreferenciamento configurado para interpretar as planilhas CSV produzidas pelo R e apresentar estes dados georreferenciados em um SIG.
+Looker Studio e FlexDashboard/Shine: Ferramentas utilizadas para a produção de dashboards municipais e o Informe Epidemiológico Arboviroses.
+Os elementos acima citados atuam em conjunto (Figura 1) retroalimentando-se e tendo o R como gerenciador de processos. Após execução do script, o sistema atualiza os dashboards municipais, o informe regional e o SIG.
+
+## Resultados
+O propósito do diretório Análise_de_Dados é aumentar agilidade e qualidade das diferentes análises situacionais necessárias na rotina da vigilância epidemiológica. 
+O Programa de Controle de Arboviroses Regional (PCAR) tinha a necessidade de utilizar no processo de análise de risco, os dados entomológicos. Estes dados ficavam restritos às Vigilâncias Entomológicas Municipais, que os inseriam em sistema específico do Ministério da Saúde e a informação se tornava de difícil acesso. Com isto em mente, Planilhas Eletrônicas municipais (PEM)  foram elaboradas para que fossem alimentadas com o Reconhecimento Geográfico (RG), Índice de Infestação Predial (IIP), Índice de Breteau (IB), Pontos Estratégicos (PE) e Ovitrampas (OT). Estes dados são inseridos por localidade municipal e a PEM calcula as informações os índices e RG Municipais. Ainda dentro das PEM, as equipes de Vigilâncias Entomológicas inserem coordenadas geográficas dos casos suspeitos notificados no SINAN. A ação de inserção de coordenadas geográficas aproveita o fato de que as equipes, por padrão, se deslocam ao local para realizar o Bloqueio de Foco.
+Planilhas Eletrônicas Regionais (PER) centralizam os dados de todos os municípios.
+De forma manual, é realizado o download das Bases BDF do SINAN diariamente e de dados do LACEN/PR via Gerenciador de Ambiente Laboratorial (GAL) semanalmente. Estes dados são salvos em pastas específicas dentro do Diretório Análise_de_Dados
+Ao rodar um script R (Figura 2) específico do PCAR, é executado automaticamente o download de dados das PER e o processo de tratamento dos dados entomológicos, epidemiológicos e laboratoriais para produção de informações é realizado automaticamente.
+Como produto final do script R, arquivos CSV com informações diversas são elaborados e salvos automaticamente em pasta específica para posterior uso. Em paralelo, o script gera todos os gráficos (canais endêmicos, séries históricas, incidência, taxa de positividade, etc) e mapas para utilização no informe regional. Ainda dentro do script R, algumas das tabelas CSV são encaminhadas para a conta do Google Drive onde as planilhas eletrônicas estão alocadas para utilização pelo Looker Studio para produção de Dashboards Municipais. Por questões técnicas, o script R alimenta planilhas municipais com dados de notificação para vínculo com coordenadas geográficas.
+Este processo apresenta grau de complexidade que inviabilizaria uma equipe o executar manualmente. O tratamento de dados do SINAN utilizando o TABWIN, demanda muito tempo, o que só permitia a equipe da 22ª Regional de Saúde/PR realizar o procedimento uma vez por semana. Com o script R, o processo pode ser realizado diariamente, consumindo apenas o tempo para baixar as Bases DBF do SINAN. Além disso, a linguagem R, produz gráficos, mapas, download e upload de dados o que agiliza o processo e permite a equipe utilizar seu tempo para análise situacional e planejamento de ações.
+A atualização diária do sistema permite a equipe regional identificar situações em um período em que é possível tomada de medidas visando mitigação da situação ou minimização de danos.
+Utilizando os arquivos CSV elaborados pelo R, o software QGIS, configurado para interpretar estes arquivos, produz um Sistema de Informações Geográficas (SIG) que é utilizado pela Regional de Saúde como uma Estação de Monitoramento (EM) para arboviroses.
+O SIG consolida todas as informações entomológicas, laboratoriais e do SINAN produzidas pelo R e as apresenta de forma georreferenciada na tela do computador. Dados de Área (Figura 3) como IIP, IB, RG , incidência, sorotipo circulante, são estratificados por cores para as regiões que eles representam. Dados de Ponto (Figura 4), que possuem uma coordenada geográfica associada, como PE, OT, Pontos de Assistência ao Paciente e casos notificados, aparecem no sistema como pontos e também são estratificados por cores a depender da informação que eles representam. 
+O uso do SIG como uma EM, é possibilitado pela configuração prévia do sistema. Ao executar o script R, as informações são atualizadas nos arquivos CSV e o SIG, ao ser aberto ou atualizado, lê as informações e as representa espacialmente de forma automática. O SIG é estruturado com diversas camadas de mapas, cada uma com  informação diferente.
+Se a linguagem R é o motor do Análise_de_Dados, o SIG é a ferramenta de análise de maior valor do diretório. Ele permite que as camadas sejam sobrepostas para cruzamento de informações (Figura 5), zoom desde grau estadual até quarteirão, deslocamento de mapas, uso de imagem por satélite. Com o SIG, a análise se torna dinâmica e personalizada, de acordo com as inúmeras situações que a equipe pode se deparar.
+Como os dados das PEM são inseridos por localidades, o SIG possibilita a análise de dados entomológicos dos municípios estratificados por localidades e total. Isso permite direcionamento de recursos humanos no município.
+Exemplos de ações específicas possíveis são: definição de localidades dentro do município onde casos suspeitos terão coleta de exames para encerramento de notificações por critério laboratorial e locais onde já é possível encerramento por critério clínico-epidemiológico baseado em localização espacial de casos confirmados; aplicação de UBV – Pesado de forma personalizada com a situação baseado em dados espaciais de IIP, OT, e  SINAN identificação de hotspots com casos confirmados, IIP e OT indicando possibilidade de espalhamento viral, entre outros.
+Além do SIG, dashboards municipais produzidos utilizando o Looker Studio são atualizados com informações específicas para cada município da 22ª Regional de Saúde/PR e o Informe Epidemiológico Arboviroses Regional é elaborado e encaminhado aos municípios semanalmente. 
+Com estes elementos, procura-se estabelecer oportunidades para ações precisas, no tempo ideal e no lugar exato.
+Material produzido pode ser encontrado em: https://github.com/Gustavo-Fabris.
+
+## Conclusão/recomendações
+A utilização de um diretório padronizado para análise de dados em saúde associado à ferramentas tecnológicas como linguagem R e QGIS permite que haja um aumento da complexidade dos procedimentos de tratamento de dados com consequente sofisticação das informações produzidas. 
+Pontos frágeis do sistema são: 
+    • Baixa adesão dos municípios ao preenchimento das PEM por não haver obrigatoriedade;
+    • O SIG ser um sistema aberto, podendo ser desconfigurado caso seja manipulado por operadores que desconhecem o software; 
+    • Necessidade de conhecimento da linguagem R para criação de scripts; 
+    • Tanto o R quanto o QGIS utilizam dados de arquivos que tem caminho específico no computador, o diretório, apesar de ter como propósito contornar este fato, ainda assim, necessita de ajuste no script R ao ser transferido de computador.
+Pontos que podem ser explorados: 
+    • Utilização do pacotes Flexdashboard e Shine do R para produção de dashboards no lugar do Looker Studio. Sendo necessário que o dashboard fosse inserido em servidor da instituição, fato nem sempre disponível; 
+    • Aprimoramento de scripts utilizando pacote purrr visando substituição de for loops;
+    • Possibilidade de compartilhamento de scripts entre equipes diferentes visando troca de experiências e compartilhamento de códigos;
+    • Aprimoramento de processos de webscrapping;
+    • Elaboração de metodologias alternativas de obtenção de coordenadas geográficas à coleta in loco.
+Recomendações:
+Capacitar servidores para utilização de linguagem R e uso de QGIS mostra-se uma ação que deve ser considerada para as Secretarias de Saúde. A popularização da utilização destes instrumentos em saúde pública propiciaria um aumento na qualidade do processo de análise de risco para diferentes agravos. A criação independente de scripts e SIG traria como benefício uma multiplicidade de processos de trabalho personalizados para a região dos operadores/elaboradores dos mesmos.
+
