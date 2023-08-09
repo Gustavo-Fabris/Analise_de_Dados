@@ -236,7 +236,7 @@ AUX02 <- DENGON2023 %>%
 SINAN_DENGUE_RS <- rbind(AUX01, 
                          AUX02)
 
-assign(paste0("RS", RS, "_22_22_23_SINAN"), 
+assign(paste0("RS", RS, "_22_23_SINAN"), 
        SINAN_DENGUE_RS) 
 
 ###############   Fazendo o mesmo com as bases DBF de chikungunya   ################################################

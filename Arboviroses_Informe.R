@@ -9,7 +9,7 @@ rm(list =ls())
 ##    reprodutíveis em qualquer computador desde que os itens abaixo sejam executados corretamente.          ##
 ##    #############################################################################################          ## 
 ##                                                                                                           ##
-##    /home/gustavo/Área de trabalho/Análise_de_Dados/Arboviroses_Geral deve ser previamente rodado          ##
+##    /home/gustavo/Área de Trabalho/Análise_de_Dados/Arboviroses_Geral deve ser previamente rodado          ##
 ##    para que o script abaixo funcione.                                                                     ##
 ##    ############################################################################################           ##
 ##                                                                                                           ##
@@ -27,7 +27,7 @@ rm(list =ls())
 
 #####      Definindo diretório de trabalho, caso tenha que trabalhar em Windows, acertar o diretório       ####
 
-setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
+setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 
 ###############################################################################################################
 ###############################################################################################################
@@ -41,7 +41,7 @@ setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 ##            o sistema esteja sempre atualizado!!!                                                          ##
 ##            Os dados do LACEN devem ser baixados da GAL                                                    ##
 ##            Estes arquivos devem ser alocados no diretório abaixo:                                         ##
-##            /home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/DBF ou /Base_de_Dados/LACEN      ##
+##            /home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/DBF ou /Base_de_Dados/LACEN      ##
 ##    ############################################################################################           ##
 ##                                                                                                           ##
 ###############################################################################################################
@@ -2520,7 +2520,7 @@ rownames(RS22_CE_Notificados) <- c(1:nrow(RS22_CE_Notificados))
 rm(AUX, AUX2, RS22_CE_Notificados_Base)
 
 write.csv (RS22_CE_Notificados, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados.csv", 
+           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados.csv", 
            row.names = FALSE)
 
 ####         Canal Endêmico CONFIRMADOS              ####
@@ -2581,7 +2581,7 @@ rownames(RS22_CE_Confirmados) <- c(1:nrow(RS22_CE_Confirmados))
 rm(AUX, AUX2, RS22_CE_Confirmados_Base)
 
 write.csv (RS22_CE_Confirmados, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados.csv", 
+           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados.csv", 
            row.names = FALSE)
 
 ################################################################
@@ -5712,7 +5712,7 @@ rownames(RS22_CE_Notificados_IVAIPORÃ) <- c(1:nrow(RS22_CE_Notificados_IVAIPOR�
 rm(AUX, AUX2, RS22_CE_Notificados_IVAIPORÃ_Base)
 
 write.csv (RS22_CE_Notificados_IVAIPORÃ, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados_IVAIPORÃ.csv", 
+           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados_IVAIPORÃ.csv", 
            row.names = FALSE)
 
 ####Canal Endêmico CONFIRMADOS####
@@ -5769,7 +5769,7 @@ rownames(RS22_CE_Confirmados_IVAIPORÃ) <- c(1:nrow(RS22_CE_Confirmados_IVAIPOR�
 rm(AUX, AUX2, RS22_CE_Confirmados_IVAIPORÃ_Base)
 
 write.csv (RS22_CE_Confirmados_IVAIPORÃ, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados_IVAIPORÃ.csv", 
+           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados_IVAIPORÃ.csv", 
            row.names = FALSE)
 
 #####################################################################################################################################################################################
@@ -5965,7 +5965,7 @@ rm(RS22_22_23_Casos_Provaveis_IVAIPORÃ, AUX_GRAF)
 ###############################  Buscando CSV com dados do LACEN   ########################################################################
 ###########################################################################################################################################
 
-RS22_22_23_LACEN_PESQ_ARBO <- read.csv("/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_PESQUISA_ARBOVIRUS_22_23.csv",
+RS22_22_23_LACEN_PESQ_ARBO <- read.csv("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_PESQUISA_ARBOVIRUS_22_23.csv",
                                        header = TRUE,
                                        sep = ",")
 
@@ -6023,7 +6023,7 @@ RS22_22_23_LACEN_PESQ_ARBO[, 24] <- as.factor(RS22_22_23_LACEN_PESQ_ARBO[, 24])
 ###############################  Buscando CSV com dados do LACEN   ########################################################################
 ###########################################################################################################################################
 
-RS22_22_23_LACEN_SOROLOGIA <- read.csv("/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_SOROLOGIA_22_23.csv",
+RS22_22_23_LACEN_SOROLOGIA <- read.csv("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_SOROLOGIA_22_23.csv",
                                        header = TRUE,
                                        sep = ",")
 
@@ -9826,7 +9826,7 @@ PR_DENGUE_22_23_SINAN <- rbind(PR_DENGUE_22_23_AUX01, PR_DENGUE_22_23_AUX02)
 rm(PR_DENGUE_22_23_AUX01, PR_DENGUE_22_23_AUX02, DENGON2022, DENGON2023)
 
 
-PR_DENGUE_22_23_GERAL <- BASE_IBGE[,-4]
+PR_DENGUE_22_23_GERAL <- BASE_IBGE[,-c(4,6)]
 
 PR_DENGUE_22_23_GERAL$Notificados <- NA
 
@@ -9863,7 +9863,7 @@ for(i in BASE_IBGE[, 2]){
                                                                                           filter(ID_MN_RESI == i) %>%   
                                                                                           count()
   )   
-  
+
   ###Dengue###
   
   PR_DENGUE_22_23_GERAL[which(PR_DENGUE_22_23_GERAL$Código_IBGE == i), 6] <-as.integer(PR_DENGUE_22_23_SINAN %>% 
@@ -10112,91 +10112,91 @@ for (i in RS22_22_23_GERAL$Município){
 }
 
 write.csv(PR_DENGUE_22_23_GERAL, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_22_23_DENGUE_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_22_23_DENGUE_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(PR_CHIK_22_23_GERAL, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_22_23_CHIKUNGUNYA_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_22_23_CHIKUNGUNYA_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(PR_ZIKA_22_23_GERAL, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_22_23_ZIKA_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_22_23_ZIKA_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_REDE_OVITRAMPAS, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_REDE_OVITRAMPAS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_REDE_OVITRAMPAS.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_CICLOS_LOCALIDADES, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_CICLOS_LOCALIDADES.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_CICLOS_LOCALIDADES.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_CICLOS_MUNICIPIOS, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_CICLOS_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_CICLOS_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_RG_MUNICIPIOS, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_RG_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_RG_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_RG_LOCALIDADES, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_RG_LOCALIDADES.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_RG_LOCALIDADES.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_PE, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_PE.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_PE.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_ASSISTENCIA, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_ASSISTENCIA.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_ASSISTENCIA.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_GERAL, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_GERAL.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_GERAL.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_EXTRA, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_EXTRA.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_EXTRA.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SINAN, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAN.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAN.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SINAN_DECODIFICADO, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAN_DECODIFICADO.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAN_DECODIFICADO.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SINAIS_DE_ALARME, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAIS_DE_ALARME.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAIS_DE_ALARME.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SINAIS_Notificados, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAIS_Notificados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAIS_Notificados.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SINAIS_Confirmados, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAIS_Confirmados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAIS_Confirmados.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SE_Confirmados, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_Confirmados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_Confirmados.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_SE_Notificados, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_Notificados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_Notificados.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_DENGUE_GRAVE, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_DENGUE_GRAVE.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_DENGUE_GRAVE.csv",
           row.names = FALSE)
 
 write.csv(RS22_22_23_DOENCAS_PRE_EXISTENTES, 
-          "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_DOENCAS_PRE_EXISTENTES.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_DOENCAS_PRE_EXISTENTES.csv",
           row.names = FALSE)
 
 write.csv (RS22_Serie_Historica, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica.csv", 
+           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica.csv", 
            row.names = FALSE)
 
 
@@ -10207,7 +10207,7 @@ RS22_22_23_SINAN_DECODIFICADO <- read_sheet("https://docs.google.com/spreadsheet
 
 ####      Gravando a planilha RS22_22_23_SINAN_DECODIFICADO no diretório para ser utilizada pelo QGIS    ###
 
-write.csv(RS22_22_23_SINAN_DECODIFICADO,  "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAN_DECODIFICADO.csv",
+write.csv(RS22_22_23_SINAN_DECODIFICADO,  "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SINAN_DECODIFICADO.csv",
           row.names = FALSE)
 
 ###    MAPAS      ###
@@ -11308,7 +11308,7 @@ RS22_22_23_GRAF_Tratamento_Ciclo3 <- ggplot() +
 
 RS22_22_23_INFORME_Pag_03 <- (RS22_Serie_Historica_GRAF_Not_Conf / (RS22_Serie_Historica_GRAF_Sorotipo + RS22_Serie_Historica_GRAF_Hospitalizados))
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_03.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_03.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11321,7 +11321,7 @@ dev.off()
 
 RS22_22_23_INFORME_Pag_04 <- (RS22_22_23_GRAF_CE_Notificados / RS22_22_23_GRAF_CE_Confirmados)
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_04.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_04.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11334,7 +11334,7 @@ dev.off()
 
 RS22_22_23_INFORME_Pag_05 <- RS22_22_23_GRAF_CE_Provaveis
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_05.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_05.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11348,7 +11348,7 @@ dev.off()
 
 RS22_22_23_INFORME_Pag_06 <- ((RS22_22_23_GRAF_Notificados + RS22_22_23_GRAF_Confirmados)/ (RS22_22_23_GRAF_Autoctones + RS22_22_23_GRAF_Investigacao))
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_06.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_06.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11361,7 +11361,7 @@ dev.off()
 
 RS22_22_23_INFORME_Pag_07 <- ((RS22_22_23_GRAF_Descartados + RS22_22_23_GRAF_Hospitalizados)/ RS22_22_23_GRAF_Incidencia)
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_07.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_07.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11375,7 +11375,7 @@ dev.off()
 
 RS22_22_23_INFORME_Pag_08 <- (RS22_Serie_Historica_GRAF_Encerramento / RS22_22_23_GRAF_SINAIS)
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_08.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_08.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11386,7 +11386,7 @@ dev.off()
 
 #### LACEN Municípios
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_09A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_09A.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11401,7 +11401,7 @@ RS22_22_23_CE_IVAIPORÂ_I <- RS22_22_23_GRAF_CE_Notificados_IVAIPORÃ
 
 RS22_22_23_CE_IVAIPORÃ_II <- (RS22_22_23_GRAF_CE_Confirmados_IVAIPORÃ / RS22_22_23_GRAF_CE_Provaveis_IVAIPORÃ)
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_09B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_09B.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11410,7 +11410,7 @@ RS22_22_23_CE_IVAIPORÂ_I
 
 dev.off()
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_10.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_10.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11422,7 +11422,7 @@ dev.off()
 
 ###      Histogramas Notificados - Pag 11
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_11.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_11.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11433,7 +11433,7 @@ dev.off()
 
 ###        Histogramas Notificados - Pag 12
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_12.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_12.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11444,7 +11444,7 @@ dev.off()
 
 ###      Histogramas Confirmados - ##PAG 13
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_13.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_13.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11455,7 +11455,7 @@ dev.off()
 
 ###      Histogramas Confirmados - ##PAG 14
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_14.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_14.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11466,7 +11466,7 @@ dev.off()
 
 ###     Histogramas Prováveis - ##PAG 15
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_15.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_15.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11477,7 +11477,7 @@ dev.off()
 
 ###     Histogramas Prováveis - ##PAG 16
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_16.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_16.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11487,7 +11487,7 @@ RS22_22_23_GRAF_Histograma_Provaveis_02
 dev.off()
 
 RS22_22_23_GRAF_1 <- (PR_22_23_GRAF_SOROTIPO_PR / RS22_22_23_GRAF_Sorotipo)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_17.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_17.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11497,7 +11497,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_US_TOTAL / RS22_22_23_GRAF_US_DETEC)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_18A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_18A.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11507,7 +11507,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_SORO_TOTAL / RS22_22_23_GRAF_SORO_REAG)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_18B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_18B.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11518,7 +11518,7 @@ dev.off()
 
 ##### Exames Municípios  
 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_19.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_19.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11528,7 +11528,7 @@ RS22_GRAF_LACEN_MUNIC
 dev.off()
 
 RS22_22_23_GRAF_1 <- (PR_22_23_GRAF_INCIDENCIA_PR / PR_22_23_GRAF_INCIDENCIA_PROV_PR)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_20.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_20.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11538,7 +11538,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (PR_22_23_GRAF_CHIK_Notificados / PR_22_23_GRAF_CHIK_Incidência)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_21.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_21.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11548,7 +11548,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- PR_22_23_GRAF_SINAIS_CHIK 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_22A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_22A.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11558,7 +11558,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_CHK_Not + RS22_22_23_GRAF_CHK_Conf) 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_22B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_22B.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11568,7 +11568,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (PR_22_23_ZIKA_CHIK_Notificados / PR_22_23_GRAF_ZIKA_Incidência)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_23.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_23.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11578,7 +11578,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_IIP_Ciclo4 / RS22_22_23_GRAF_Tratamento_Ciclo4)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_24.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_24.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11588,7 +11588,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_IIP_Ciclo5 / RS22_22_23_GRAF_Tratamento_Ciclo5)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_25.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_25.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11598,7 +11598,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_IIP_Ciclo6 / RS22_22_23_GRAF_Tratamento_Ciclo6)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_26.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_26.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11608,7 +11608,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_IIP_Ciclo1 / RS22_22_23_GRAF_Tratamento_Ciclo1)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_27.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_27.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11618,7 +11618,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_IIP_Ciclo2 / RS22_22_23_GRAF_Tratamento_Ciclo2)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_28.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_28.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11628,7 +11628,7 @@ RS22_22_23_GRAF_1
 dev.off()
 
 RS22_22_23_GRAF_1 <- (RS22_22_23_GRAF_IIP_Ciclo3 / RS22_22_23_GRAF_Tratamento_Ciclo3)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_29.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_22_23_INFORME_Pag_29.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
