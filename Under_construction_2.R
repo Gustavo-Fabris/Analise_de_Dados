@@ -1222,6 +1222,8 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_09_10_SE_Confirmados"), AUX)
 
+assign(paste0("RS", "_09_10_SE_Confirmados"), AUX)
+
 write.csv (assign(paste0("RS", RS, "_09_10_SE_Confirmados"), AUX), 
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_SE_Confirmados.csv", 
            row.names = FALSE)
@@ -1391,6 +1393,8 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_09_10_GERAL"), AUX)
+
+assign(paste0("RS", "_09_10_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_09_10_GERAL"), AUX), 
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_GERAL.csv", 
@@ -2859,6 +2863,8 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_10_11_GERAL"), AUX)
 
+assign(paste0("RS", "_10_11_GERAL"), AUX)
+
 write.csv (assign(paste0("RS", RS, "_10_11_GERAL"), AUX), 
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_GERAL.csv", 
            row.names = FALSE)
@@ -4325,6 +4331,8 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_11_12_GERAL"), AUX)
+
+assign(paste0("RS", "_11_12_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_11_12_GERAL"), AUX),
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_GERAL.csv", 
@@ -5793,6 +5801,8 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_12_13_GERAL"), AUX)
+
+assign(paste0("RS", "_12_13_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_12_13_GERAL"), AUX), 
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_GERAL.csv", 
@@ -7263,6 +7273,8 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_13_14_GERAL"), AUX)
 
+assign(paste0("RS", "_13_14_GERAL"), AUX)
+
 write.csv (assign(paste0("RS", RS, "_13_14_GERAL"), AUX), 
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_GERAL.csv", 
            row.names = FALSE)
@@ -8732,6 +8744,8 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_14_15_GERAL"), AUX)
 
+assign(paste0("RS", "_14_15_GERAL"), AUX)
+
 write.csv (assign(paste0("RS", RS, "_14_15_GERAL"), AUX), 
            "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_GERAL.csv", 
            row.names = FALSE)
@@ -8953,6 +8967,10 @@ SINAN_DENGUE_15_16_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_15_16_SINAN"), 
        SINAN_DENGUE_15_16_RS) 
+
+write.csv (assign(paste0("RS", RS, "_15_16_SINAN"), SINAN_DENGUE_15_16_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2015 já utilizada###
 
@@ -9302,6 +9320,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_15_16_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_15_16_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -9913,6 +9935,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_15_16_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_15_16_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -10079,6 +10105,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_15_16_GERAL"), AUX)
 
+assign(paste0("RS", "_15_16_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_15_16_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -10234,6 +10266,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_15_16_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_15_16_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas. Possível somente a partir de 2015                        ###
 #################################################################################################################
@@ -10367,6 +10403,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_15_16_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_15_16_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SINAIS.csv", 
+           row.names = FALSE)
+
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -10441,6 +10482,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_15_16_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_15_16_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -10532,6 +10578,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_15_16_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_15_16_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -10664,6 +10714,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_15_16_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_15_16_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_15_16_RS)
 
 #####################################################################################################################
@@ -10722,6 +10776,10 @@ SINAN_DENGUE_16_17_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_16_17_SINAN"), 
        SINAN_DENGUE_16_17_RS) 
+
+write.csv (assign(paste0("RS", RS, "_16_17_SINAN"), SINAN_DENGUE_16_17_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2016 já utilizada###
 
@@ -11071,6 +11129,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_16_17_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_16_17_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -11682,6 +11744,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_16_17_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_16_17_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -11848,6 +11914,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_16_17_GERAL"), AUX)
 
+assign(paste0("RS", "_16_17_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_16_17_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -12003,6 +12075,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_16_17_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_16_17_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas.                                                          ###
 #################################################################################################################
@@ -12136,6 +12212,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_16_17_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_16_17_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SINAIS.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -12210,6 +12290,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_16_17_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_16_17_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -12301,6 +12386,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_16_17_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_16_17_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -12433,6 +12522,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_16_17_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_16_17_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_16_17_RS)
 
 #####################################################################################################################
@@ -12491,6 +12584,10 @@ SINAN_DENGUE_17_18_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_17_18_SINAN"), 
        SINAN_DENGUE_17_18_RS) 
+
+write.csv (assign(paste0("RS", RS, "_17_18_SINAN"), SINAN_DENGUE_17_18_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2017 já utilizada###
 
@@ -12840,6 +12937,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_17_18_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_17_18_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -13451,6 +13552,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_17_18_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_17_18_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -13617,6 +13722,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_17_18_GERAL"), AUX)
 
+assign(paste0("RS", "_17_18_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_17_18_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -13772,6 +13883,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_17_18_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_17_18_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas.                                                          ###
 #################################################################################################################
@@ -13905,6 +14020,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_17_18_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_17_18_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SINAIS.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -13979,6 +14098,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_17_18_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_17_18_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -14070,6 +14194,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_17_18_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_17_18_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -14202,6 +14330,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_17_18_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_17_18_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_17_18_RS)
 
 #####################################################################################################################
@@ -14260,6 +14392,10 @@ SINAN_DENGUE_18_19_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_18_19_SINAN"), 
        SINAN_DENGUE_18_19_RS) 
+
+write.csv (assign(paste0("RS", RS, "_18_19_SINAN"), SINAN_DENGUE_18_19_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2018 já utilizada###
 
@@ -14609,6 +14745,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_18_19_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_18_19_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -15220,6 +15360,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_18_19_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_18_19_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -15386,6 +15530,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_18_19_GERAL"), AUX)
 
+assign(paste0("RS", "_18_19_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_18_19_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -15541,6 +15691,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_18_19_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_18_19_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas.                                                          ###
 #################################################################################################################
@@ -15674,6 +15828,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_18_19_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_18_19_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SINAIS.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -15748,6 +15906,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_18_19_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_18_19_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -15839,6 +16002,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_18_19_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_18_19_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -15971,6 +16138,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_18_19_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_18_19_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_18_19_RS)
 
 #####################################################################################################################
@@ -16029,6 +16200,10 @@ SINAN_DENGUE_19_20_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_19_20_SINAN"), 
        SINAN_DENGUE_19_20_RS) 
+
+write.csv (assign(paste0("RS", RS, "_19_20_SINAN"), SINAN_DENGUE_19_20_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2019 já utilizada###
 
@@ -16378,6 +16553,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_19_20_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_19_20_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -16989,6 +17168,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_19_20_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_19_20_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -17155,6 +17338,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_19_20_GERAL"), AUX)
 
+assign(paste0("RS", "_19_20_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_19_20_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -17310,6 +17499,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_19_20_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_19_20_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas.                                                          ###
 #################################################################################################################
@@ -17443,6 +17636,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_19_20_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_19_20_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SINAIS.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -17517,6 +17714,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_19_20_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_19_20_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -17608,6 +17810,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_19_20_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_19_20_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -17740,6 +17946,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_19_20_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_19_20_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_19_20_RS)
 
 #####################################################################################################################
@@ -17798,6 +18008,10 @@ SINAN_DENGUE_20_21_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_20_21_SINAN"), 
        SINAN_DENGUE_20_21_RS) 
+
+write.csv (assign(paste0("RS", RS, "_20_21_SINAN"), SINAN_DENGUE_20_21_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2020 já utilizada###
 
@@ -18147,6 +18361,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_20_21_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_20_21_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -18758,6 +18976,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_20_21_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_20_21_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -18924,6 +19146,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_20_21_GERAL"), AUX)
 
+assign(paste0("RS", "_20_21_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_20_21_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -19079,6 +19307,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_20_21_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_20_21_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas.                                                          ###
 #################################################################################################################
@@ -19212,6 +19444,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_20_21_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_20_21_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SINAIS.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -19286,6 +19522,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_20_21_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_20_21_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -19377,6 +19618,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_20_21_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_20_21_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -19509,6 +19754,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_20_21_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_20_21_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_20_21_RS)
 
 #####################################################################################################################
@@ -19567,6 +19816,10 @@ SINAN_DENGUE_21_22_RS <- rbind(AUX01,
 
 assign(paste0("RS", RS, "_21_22_SINAN"), 
        SINAN_DENGUE_21_22_RS) 
+
+write.csv (assign(paste0("RS", RS, "_21_22_SINAN"), SINAN_DENGUE_21_22_RS), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SINAN.csv", 
+           row.names = FALSE)
 
 ###Removendo tabela DENGON2021 já utilizada###
 
@@ -19916,6 +20169,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_21_22_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_21_22_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SE_Notificados.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###     Construindo um for loop para realizar a tabela de confirmados por semana epidemiológica               ###
@@ -20527,6 +20784,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_21_22_SE_Confirmados"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_21_22_SE_Confirmados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SE_Confirmados.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         laborando for loop para criar tabela de dados gerais de notificação da 22ª RS                     ###
 #################################################################################################################
@@ -20693,6 +20954,12 @@ AUX$Incidencia <- (AUX$Autoctones/AUX$Populacao)*100000
 
 assign(paste0("RS", RS, "_21_22_GERAL"), AUX)
 
+assign(paste0("RS", "_21_22_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_21_22_GERAL"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_GERAL.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade                        ###
 #################################################################################################################
@@ -20848,6 +21115,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_21_22_EXTRA"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_21_22_EXTRA"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_EXTRA.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Elaborando tabelas de sinais e sintomas.                                                          ###
 #################################################################################################################
@@ -20981,6 +21252,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_21_22_SINAIS"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_21_22_SINAIS"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SINAIS.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Montando tabela de doenças pré-existentes                                                         ###
 #################################################################################################################
@@ -21055,6 +21330,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_21_22_DOENCAS_PRE_EXISTENTES"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_21_22_DOENCAS_PRE_EXISTENTES"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_DOENCAS_PRE_EXISTENTES.csv", 
+           row.names = FALSE)
+
 #################################################################################################################
 ###         Construindo tabela sinais de alarme                                                               ###
 #################################################################################################################
@@ -21146,6 +21426,10 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 #### Salvando tabela   ####
 
 assign(paste0("RS", RS, "_21_22_SINAIS_DE_ALARME"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_21_22_SINAIS_DE_ALARME"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SINAIS_DE_ALARME.csv", 
+           row.names = FALSE)
 
 #################################################################################################################
 ###       Construindo tabela Dengue Grave                                                                     ###
@@ -21278,6 +21562,204 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 
 assign(paste0("RS", RS, "_21_22_DENGUE_GRAVE"), AUX)
 
+write.csv (assign(paste0("RS", RS, "_21_22_DENGUE_GRAVE"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_DENGUE_GRAVE.csv", 
+           row.names = FALSE)
+
 rm(SINAN_DENGUE_21_22_RS)
+
+###########################################################################################################################
+###########################Elaborando tabelas especiais para serem utilizadas no Informe Epidemiológico####################
+###########################################################################################################################
+
+RS_Serie_Historica <- data.frame(RS = paste0("RS", RS), "RS_2009_10" = NA, "RS_2010_11" = NA, 
+                                 "RS_2011_12" = NA, "RS_2012_13" = NA, "RS_2013_14" = NA, 
+                                 "RS_2014_15" = NA, "RS_2015_16" = NA, "RS_2016_17" = NA, 
+                                 "RS_2017_18" = NA, "RS_2018_19" = NA, "RS_2019_20" = NA, 
+                                 "RS_2020_21" = NA, "RS_2021_22" = NA)
+
+RS_Serie_Historica[1, 1] <- "Notificados"
+RS_Serie_Historica[2, 1] <- "Dengue"
+RS_Serie_Historica[3, 1] <- "D.S.A."
+RS_Serie_Historica[4, 1] <- "Dengue_Grave"
+RS_Serie_Historica[5, 1] <- "Hospitalizados"
+RS_Serie_Historica[6, 1] <- "Autóctones"
+RS_Serie_Historica[7, 1] <- "DENV_I"
+RS_Serie_Historica[8, 1] <- "DENV_II"
+RS_Serie_Historica[9, 1] <- "DENV_III"
+RS_Serie_Historica[10, 1] <- "DENV_IV"
+RS_Serie_Historica[11, 1] <- "Obitos"
+
+RS_Serie_Historica[1, 2] <- sum(RS_09_10_GERAL$Notificados)
+RS_Serie_Historica[2, 2] <- sum(RS_09_10_GERAL$Dengue)
+RS_Serie_Historica[3, 2] <- sum(RS_09_10_GERAL$D_S_A)
+RS_Serie_Historica[4, 2] <- sum(RS_09_10_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 2] <- sum(RS_09_10_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 2] <- sum(RS_09_10_GERAL$Autoctones)
+RS_Serie_Historica[7, 2] <- sum(RS_09_10_GERAL$DENV_I)
+RS_Serie_Historica[8, 2] <- sum(RS_09_10_GERAL$DENV_II)
+RS_Serie_Historica[9, 2] <- sum(RS_09_10_GERAL$DENV_III)
+RS_Serie_Historica[10, 2] <- sum(RS_09_10_GERAL$DENV_IV)
+RS_Serie_Historica[11, 2] <- sum(RS_09_10_GERAL$Obitos)
+
+RS_Serie_Historica[1, 3] <- sum(RS_10_11_GERAL$Notificados)
+RS_Serie_Historica[2, 3] <- sum(RS_10_11_GERAL$Dengue)
+RS_Serie_Historica[3, 3] <- sum(RS_10_11_GERAL$D_S_A)
+RS_Serie_Historica[4, 3] <- sum(RS_10_11_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 3] <- sum(RS_10_11_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 3] <- sum(RS_10_11_GERAL$Autoctones)
+RS_Serie_Historica[7, 3] <- sum(RS_10_11_GERAL$DENV_I)
+RS_Serie_Historica[8, 3] <- sum(RS_10_11_GERAL$DENV_II)
+RS_Serie_Historica[9, 3] <- sum(RS_10_11_GERAL$DENV_III)
+RS_Serie_Historica[10, 3] <- sum(RS_10_11_GERAL$DENV_IV)
+RS_Serie_Historica[11, 3] <- sum(RS_10_11_GERAL$Obitos)
+
+RS_Serie_Historica[1, 4] <- sum(RS_11_12_GERAL$Notificados)
+RS_Serie_Historica[2, 4] <- sum(RS_11_12_GERAL$Dengue)
+RS_Serie_Historica[3, 4] <- sum(RS_11_12_GERAL$D_S_A)
+RS_Serie_Historica[4, 4] <- sum(RS_11_12_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 4] <- sum(RS_11_12_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 4] <- sum(RS_11_12_GERAL$Autoctones)
+RS_Serie_Historica[7, 4] <- sum(RS_11_12_GERAL$DENV_I)
+RS_Serie_Historica[8, 4] <- sum(RS_11_12_GERAL$DENV_II)
+RS_Serie_Historica[9, 4] <- sum(RS_11_12_GERAL$DENV_III)
+RS_Serie_Historica[10, 4] <- sum(RS_11_12_GERAL$DENV_IV)
+RS_Serie_Historica[11, 4] <- sum(RS_11_12_GERAL$Obitos)
+
+RS_Serie_Historica[1, 5] <- sum(RS_12_13_GERAL$Notificados)
+RS_Serie_Historica[2, 5] <- sum(RS_12_13_GERAL$Dengue)
+RS_Serie_Historica[3, 5] <- sum(RS_12_13_GERAL$D_S_A)
+RS_Serie_Historica[4, 5] <- sum(RS_12_13_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 5] <- sum(RS_12_13_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 5] <- sum(RS_12_13_GERAL$Autoctones)
+RS_Serie_Historica[7, 5] <- sum(RS_12_13_GERAL$DENV_I)
+RS_Serie_Historica[8, 5] <- sum(RS_12_13_GERAL$DENV_II)
+RS_Serie_Historica[9, 5] <- sum(RS_12_13_GERAL$DENV_III)
+RS_Serie_Historica[10, 5] <- sum(RS_12_13_GERAL$DENV_IV)
+RS_Serie_Historica[11, 5] <- sum(RS_12_13_GERAL$Obitos)
+
+RS_Serie_Historica[1, 6] <- sum(RS_13_14_GERAL$Notificados)
+RS_Serie_Historica[2, 6] <- sum(RS_13_14_GERAL$Dengue)
+RS_Serie_Historica[3, 6] <- sum(RS_13_14_GERAL$D_S_A)
+RS_Serie_Historica[4, 6] <- sum(RS_13_14_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 6] <- sum(RS_13_14_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 6] <- sum(RS_13_14_GERAL$Autoctones)
+RS_Serie_Historica[7, 6] <- sum(RS_13_14_GERAL$DENV_I)
+RS_Serie_Historica[8, 6] <- sum(RS_13_14_GERAL$DENV_II)
+RS_Serie_Historica[9, 6] <- sum(RS_13_14_GERAL$DENV_III)
+RS_Serie_Historica[10, 6] <- sum(RS_13_14_GERAL$DENV_IV)
+RS_Serie_Historica[11, 6] <- sum(RS_13_14_GERAL$Obitos)
+
+RS_Serie_Historica[1, 7] <- sum(RS_14_15_GERAL$Notificados)
+RS_Serie_Historica[2, 7] <- sum(RS_14_15_GERAL$Dengue)
+RS_Serie_Historica[3, 7] <- sum(RS_14_15_GERAL$D_S_A)
+RS_Serie_Historica[4, 7] <- sum(RS_14_15_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 7] <- sum(RS_14_15_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 7] <- sum(RS_14_15_GERAL$Autoctones)
+RS_Serie_Historica[7, 7] <- sum(RS_14_15_GERAL$DENV_I)
+RS_Serie_Historica[8, 7] <- sum(RS_14_15_GERAL$DENV_II)
+RS_Serie_Historica[9, 7] <- sum(RS_14_15_GERAL$DENV_III)
+RS_Serie_Historica[10, 7] <- sum(RS_14_15_GERAL$DENV_IV)
+RS_Serie_Historica[11, 7] <- sum(RS_14_15_GERAL$Obitos)
+
+RS_Serie_Historica[1, 8] <- sum(RS_15_16_GERAL$Notificados)
+RS_Serie_Historica[2, 8] <- sum(RS_15_16_GERAL$Dengue)
+RS_Serie_Historica[3, 8] <- sum(RS_15_16_GERAL$D_S_A)
+RS_Serie_Historica[4, 8] <- sum(RS_15_16_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 8] <- sum(RS_15_16_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 8] <- sum(RS_15_16_GERAL$Autoctones)
+RS_Serie_Historica[7, 8] <- sum(RS_15_16_GERAL$DENV_I)
+RS_Serie_Historica[8, 8] <- sum(RS_15_16_GERAL$DENV_II)
+RS_Serie_Historica[9, 8] <- sum(RS_15_16_GERAL$DENV_III)
+RS_Serie_Historica[10, 8] <- sum(RS_15_16_GERAL$DENV_IV)
+RS_Serie_Historica[11, 8] <- sum(RS_15_16_GERAL$Obitos)
+
+RS_Serie_Historica[1, 9] <- sum(RS_16_17_GERAL$Notificados)
+RS_Serie_Historica[2, 9] <- sum(RS_16_17_GERAL$Dengue)
+RS_Serie_Historica[3, 9] <- sum(RS_16_17_GERAL$D_S_A)
+RS_Serie_Historica[4, 9] <- sum(RS_16_17_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 9] <- sum(RS_16_17_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 9] <- sum(RS_16_17_GERAL$Autoctones)
+RS_Serie_Historica[7, 9] <- sum(RS_16_17_GERAL$DENV_I)
+RS_Serie_Historica[8, 9] <- sum(RS_16_17_GERAL$DENV_II)
+RS_Serie_Historica[9, 9] <- sum(RS_16_17_GERAL$DENV_III)
+RS_Serie_Historica[10, 9] <- sum(RS_16_17_GERAL$DENV_IV)
+RS_Serie_Historica[11, 9] <- sum(RS_16_17_GERAL$Obitos)
+
+RS_Serie_Historica[1, 10] <- sum(RS_17_18_GERAL$Notificados)
+RS_Serie_Historica[2, 10] <- sum(RS_17_18_GERAL$Dengue)
+RS_Serie_Historica[3, 10] <- sum(RS_17_18_GERAL$D_S_A)
+RS_Serie_Historica[4, 10] <- sum(RS_17_18_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 10] <- sum(RS_17_18_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 10] <- sum(RS_17_18_GERAL$Autoctones)
+RS_Serie_Historica[7, 10] <- sum(RS_17_18_GERAL$DENV_I)
+RS_Serie_Historica[8, 10] <- sum(RS_17_18_GERAL$DENV_II)
+RS_Serie_Historica[9, 10] <- sum(RS_17_18_GERAL$DENV_III)
+RS_Serie_Historica[10, 10] <- sum(RS_17_18_GERAL$DENV_IV)
+RS_Serie_Historica[11, 10] <- sum(RS_17_18_GERAL$Obitos)
+
+RS_Serie_Historica[1, 11] <- sum(RS_18_19_GERAL$Notificados)
+RS_Serie_Historica[2, 11] <- sum(RS_18_19_GERAL$Dengue)
+RS_Serie_Historica[3, 11] <- sum(RS_18_19_GERAL$D_S_A)
+RS_Serie_Historica[4, 11] <- sum(RS_18_19_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 11] <- sum(RS_18_19_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 11] <- sum(RS_18_19_GERAL$Autoctones)
+RS_Serie_Historica[7, 11] <- sum(RS_18_19_GERAL$DENV_I)
+RS_Serie_Historica[8, 11] <- sum(RS_18_19_GERAL$DENV_II)
+RS_Serie_Historica[9, 11] <- sum(RS_18_19_GERAL$DENV_III)
+RS_Serie_Historica[10, 11] <- sum(RS_18_19_GERAL$DENV_IV)
+RS_Serie_Historica[11, 11] <- sum(RS_18_19_GERAL$Obitos)
+
+RS_Serie_Historica[1, 12] <- sum(RS_19_20_GERAL$Notificados)
+RS_Serie_Historica[2, 12] <- sum(RS_19_20_GERAL$Dengue)
+RS_Serie_Historica[3, 12] <- sum(RS_19_20_GERAL$D_S_A)
+RS_Serie_Historica[4, 12] <- sum(RS_19_20_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 12] <- sum(RS_19_20_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 12] <- sum(RS_19_20_GERAL$Autoctones)
+RS_Serie_Historica[7, 12] <- sum(RS_19_20_GERAL$DENV_I)
+RS_Serie_Historica[8, 12] <- sum(RS_19_20_GERAL$DENV_II)
+RS_Serie_Historica[9, 12] <- sum(RS_19_20_GERAL$DENV_III)
+RS_Serie_Historica[10, 12] <- sum(RS_19_20_GERAL$DENV_IV)
+RS_Serie_Historica[11, 12] <- sum(RS_19_20_GERAL$Obitos)
+
+RS_Serie_Historica[1, 13] <- sum(RS_20_21_GERAL$Notificados)
+RS_Serie_Historica[2, 13] <- sum(RS_20_21_GERAL$Dengue)
+RS_Serie_Historica[3, 13] <- sum(RS_20_21_GERAL$D_S_A)
+RS_Serie_Historica[4, 13] <- sum(RS_20_21_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 13] <- sum(RS_20_21_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 13] <- sum(RS_20_21_GERAL$Autoctones)
+RS_Serie_Historica[7, 13] <- sum(RS_20_21_GERAL$DENV_I)
+RS_Serie_Historica[8, 13] <- sum(RS_20_21_GERAL$DENV_II)
+RS_Serie_Historica[9, 13] <- sum(RS_20_21_GERAL$DENV_III)
+RS_Serie_Historica[10, 13] <- sum(RS_20_21_GERAL$DENV_IV)
+RS_Serie_Historica[11, 13] <- sum(RS_20_21_GERAL$Obitos)
+
+RS_Serie_Historica[1, 14] <- sum(RS_21_22_GERAL$Notificados)
+RS_Serie_Historica[2, 14] <- sum(RS_21_22_GERAL$Dengue)
+RS_Serie_Historica[3, 14] <- sum(RS_21_22_GERAL$D_S_A)
+RS_Serie_Historica[4, 14] <- sum(RS_21_22_GERAL$Dengue_Grave)
+RS_Serie_Historica[5, 14] <- sum(RS_21_22_GERAL$Hospitalizacao)
+RS_Serie_Historica[6, 14] <- sum(RS_21_22_GERAL$Autoctones)
+RS_Serie_Historica[7, 14] <- sum(RS_21_22_GERAL$DENV_I)
+RS_Serie_Historica[8, 14] <- sum(RS_21_22_GERAL$DENV_II)
+RS_Serie_Historica[9, 14] <- sum(RS_21_22_GERAL$DENV_III)
+RS_Serie_Historica[10, 14] <- sum(RS_21_22_GERAL$DENV_IV)
+RS_Serie_Historica[11, 14] <- sum(RS_21_22_GERAL$Obitos)
+
+rm(RS_09_10_GERAL, RS_10_11_GERAL, RS_11_12_GERAL, RS_12_13_GERAL, 
+   RS_13_14_GERAL, RS_14_15_GERAL, RS_15_16_GERAL, RS_16_17_GERAL,
+   RS_17_18_GERAL, RS_18_19_GERAL, RS_19_20_GERAL, RS_20_21_GERAL,
+   RS_21_22_GERAL)
+
+#####Gravando tabela de série histórica#####
+
+assign(paste0("RS", RS, "_Serie_Historica"), 
+       RS_Serie_Historica) 
+
+write.csv (RS_Serie_Historica, 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica_Base.csv", 
+           row.names = FALSE)
+
+rm(RS_Serie_Historica)
 
 
