@@ -21757,9 +21757,237 @@ assign(paste0("RS", RS, "_Serie_Historica"),
        RS_Serie_Historica) 
 
 write.csv (RS_Serie_Historica, 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica_Base.csv", 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_Serie_Historica_Base.csv"), 
            row.names = FALSE)
 
 rm(RS_Serie_Historica)
+
+###Construindo tabela para Canal Endêmico Notificados####
+
+RS_CE_Base_Notificados <- data.frame("SE" = NA)
+
+RS_CE_Base_Notificados[1, 1] <- "2009/10"
+RS_CE_Base_Notificados[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[2, 1] <- "2010/11"
+RS_CE_Base_Notificados[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[3, 1] <- "2011/12"
+RS_CE_Base_Notificados[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[4, 1] <- "2012/13"
+RS_CE_Base_Notificados[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[5, 1] <- "2013/14"
+RS_CE_Base_Notificados[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[6, 1] <- "2014/15"
+RS_CE_Base_Notificados[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[7, 1] <- "2015/16"
+RS_CE_Base_Notificados[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[8, 1] <- "2016/17"
+RS_CE_Base_Notificados[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[9, 1] <- "2017/18"
+RS_CE_Base_Notificados[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[10, 1] <- "2018/19"
+RS_CE_Base_Notificados[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[11, 1] <- "2019/20"
+RS_CE_Base_Notificados[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[12, 1] <- "2020/21"
+RS_CE_Base_Notificados[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Notificados[17, 2:54]))
+
+RS_CE_Base_Notificados[13, 1] <- "2021/22"
+RS_CE_Base_Notificados[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Notificados[17, 2:54]))
+
+colnames (RS_CE_Base_Notificados)[1] <- "Período Sazonal"
+colnames (RS_CE_Base_Notificados)[2:24] <- c(31:53)
+colnames (RS_CE_Base_Notificados)[25:54] <- c(1:30)
+
+#####Gravando tabela base do canal endêmico NOTIFICADOS#####
+
+write.csv (RS_CE_Base_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Base.csv"), 
+           row.names = FALSE)
+
+###Construindo tabela Canal Endêmico Confirmados
+
+RS_CE_Base_Confirmados <- data.frame("SE" = NA)
+
+RS_CE_Base_Confirmados[1, 1] <- "2009/10"
+RS_CE_Base_Confirmados[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[2, 1] <- "2010/11"
+RS_CE_Base_Confirmados[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[3, 1] <- "2011/12"
+RS_CE_Base_Confirmados[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[4, 1] <- "2012/13"
+RS_CE_Base_Confirmados[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[5, 1] <- "2013/14"
+RS_CE_Base_Confirmados[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[6, 1] <- "2014/15"
+RS_CE_Base_Confirmados[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[7, 1] <- "2015/16"
+RS_CE_Base_Confirmados[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[8, 1] <- "2016/17"
+RS_CE_Base_Confirmados[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[9, 1] <- "2017/18"
+RS_CE_Base_Confirmados[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[10, 1] <- "2018/19"
+RS_CE_Base_Confirmados[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[11, 1] <- "2019/20"
+RS_CE_Base_Confirmados[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[12, 1] <- "2020/21"
+RS_CE_Base_Confirmados[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Confirmados[17, 2:54]))
+
+RS_CE_Base_Confirmados[13, 1] <- "2021/22"
+RS_CE_Base_Confirmados[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Confirmados[17, 2:54]))
+
+colnames (RS_CE_Base_Confirmados)[1] <- "Período Sazonal"
+colnames (RS_CE_Base_Confirmados)[2:24] <- c(31:53)
+colnames (RS_CE_Base_Confirmados)[25:54] <- c(1:30)
+
+#####Gravando tabela base do canal endêmico NOTIFICADOS#####
+
+write.csv (RS_CE_Base_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Base.csv"), 
+           row.names = FALSE)
+
+###Construindo tabela para Canal Endêmico Notificados - IVAIPORÃ####
+
+RS_CE_Base_Notificados_SEDE <- data.frame("SE" = NA)
+
+RS_CE_Base_Notificados_SEDE[1, 1] <- "2009/10"
+RS_CE_Base_Notificados_SEDE[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[2, 1] <- "2010/11"
+RS_CE_Base_Notificados_SEDE[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[3, 1] <- "2011/12"
+RS_CE_Base_Notificados_SEDE[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[4, 1] <- "2012/13"
+RS_CE_Base_Notificados_SEDE[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[5, 1] <- "2013/14"
+RS_CE_Base_Notificados_SEDE[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[6, 1] <- "2014/15"
+RS_CE_Base_Notificados_SEDE[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[7, 1] <- "2015/16"
+RS_CE_Base_Notificados_SEDE[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[8, 1] <- "2016/17"
+RS_CE_Base_Notificados_SEDE[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[9, 1] <- "2017/18"
+RS_CE_Base_Notificados_SEDE[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[10, 1] <- "2018/19"
+RS_CE_Base_Notificados_SEDE[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[11, 1] <- "2019/20"
+RS_CE_Base_Notificados_SEDE[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[12, 1] <- "2020/21"
+RS_CE_Base_Notificados_SEDE[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Notificados[6, 2:54]))
+
+RS_CE_Base_Notificados_SEDE[13, 1] <- "2021/22"
+RS_CE_Base_Notificados_SEDE[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Notificados[6, 2:54]))
+
+colnames (RS_CE_Base_Notificados_SEDE)[1] <- "Período Sazonal"
+colnames (RS_CE_Base_Notificados_SEDE)[2:24] <- c(31:53)
+colnames (RS_CE_Base_Notificados_SEDE)[25:54] <- c(1:30)
+
+#####Gravando tabela base do canal endêmico NOTIFICADOS#####
+
+write.csv (RS_CE_Base_Notificados_SEDE, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE_Base.csv"), 
+           row.names = FALSE)
+
+###Construindo tabela Canal Endêmico Confirmados - IVAIPORÃ
+
+RS_CE_Base_Confirmados_SEDE <- data.frame("SE" = NA)
+
+RS_CE_Base_Confirmados_SEDE[1, 1] <- "2009/10"
+RS_CE_Base_Confirmados_SEDE[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[2, 1] <- "2010/11"
+RS_CE_Base_Confirmados_SEDE[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[3, 1] <- "2011/12"
+RS_CE_Base_Confirmados_SEDE[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[4, 1] <- "2012/13"
+RS_CE_Base_Confirmados_SEDE[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[5, 1] <- "2013/14"
+RS_CE_Base_Confirmados_SEDE[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[6, 1] <- "2014/15"
+RS_CE_Base_Confirmados_SEDE[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[7, 1] <- "2015/16"
+RS_CE_Base_Confirmados_SEDE[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[8, 1] <- "2016/17"
+RS_CE_Base_Confirmados_SEDE[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[9, 1] <- "2017/18"
+RS_CE_Base_Confirmados_SEDE[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[10, 1] <- "2018/19"
+RS_CE_Base_Confirmados_SEDE[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[11, 1] <- "2019/20"
+RS_CE_Base_Confirmados_SEDE[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[12, 1] <- "2020/21"
+RS_CE_Base_Confirmados_SEDE[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Confirmados[6, 2:54]))
+
+RS_CE_Base_Confirmados_SEDE[13, 1] <- "2021/22"
+RS_CE_Base_Confirmados_SEDE[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Confirmados[6, 2:54]))
+
+colnames (RS_CE_Base_Confirmados_SEDE)[1] <- "Período Sazonal"
+colnames (RS_CE_Base_Confirmados_SEDE)[2:24] <- c(31:53)
+colnames (RS_CE_Base_Confirmados_SEDE)[25:54] <- c(1:30)
+
+#####Gravando tabela base do canal endêmico NOTIFICADOS#####
+
+write.csv (RS_CE_Base_Confirmados_SEDE, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS,"_CE_Confirmados_SEDE_Base.csv"), 
+           row.names = FALSE)
+
+rm(AUX,
+   AUX01,
+   AUX02,
+   BASE_IBGE,
+   DENGON2022,
+   i,
+   ID_REG,
+   nrow,
+   RS)
+
+
+
+
+
+
 
 

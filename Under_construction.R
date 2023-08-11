@@ -33,7 +33,7 @@ rm(list =ls())
 
 #####      Definindo diretório de trabalho, caso tenha que trabalhar em Windows, acertar o diretório       ####
 
-setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
+setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 
 ###############################################################################################################
 ###############################################################################################################
@@ -163,23 +163,23 @@ CHIKON2022 <- read.dbf("Base_de_Dados/DBF/CHIKON2022.dbf",
 CHIKON2023 <- read.dbf("Base_de_Dados/DBF/CHIKON2023.dbf",
                        as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
-RS22_Serie_Historica_Base <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica_Base.csv",
+RS_Serie_Historica_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_Serie_Historica_Base.csv"),
                                       header = TRUE,
                                       sep = ",")
 
-RS22_CE_Notificados_Base <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados_Base.csv",
+RS_CE_Notificados_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Base.csv"),
                                      header = TRUE,
                                      sep = ",")
 
-RS22_CE_Confirmados_Base <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados_Base.csv",
+RS_CE_Confirmados_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Base.csv"),
                                      header = TRUE,
                                      sep = ",")
 
-RS22_CE_Notificados_IVAIPORÃ_Base <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados_IVAIPORÃ_Base.csv",
+RS_CE_Notificados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE_Base.csv"),
                                               header = TRUE,
                                               sep = ",")
 
-RS22_CE_Confirmados_IVAIPORÃ_Base <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados_IVAIPORÃ_Base.csv",
+RS_CE_Confirmados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SEDE_Base.csv"),
                                               header = TRUE,
                                               sep = ",")
 
@@ -2480,20 +2480,20 @@ assign(paste0("RS", RS, "_22_23_SINAN_DECODIFICADO"), AUX)
 
 ####      Adicionando os dados do período atual na tabela Série Histórica     ####
 
-RS22_Serie_Historica_Base[1, 15] <- sum(RS22_22_23_GERAL$Notificados)
-RS22_Serie_Historica_Base[2, 15] <- sum(RS22_22_23_GERAL$Dengue)
-RS22_Serie_Historica_Base[3, 15] <- sum(RS22_22_23_GERAL$D_S_A)
-RS22_Serie_Historica_Base[4, 15] <- sum(RS22_22_23_GERAL$Dengue_Grave)
-RS22_Serie_Historica_Base[5, 15] <- sum(RS22_22_23_GERAL$Hospitalizacao)
-RS22_Serie_Historica_Base[6, 15] <- sum(RS22_22_23_GERAL$Autoctones)
-RS22_Serie_Historica_Base[7, 15] <- sum(RS22_22_23_GERAL$DENV_I)
-RS22_Serie_Historica_Base[8, 15] <- sum(RS22_22_23_GERAL$DENV_II)
-RS22_Serie_Historica_Base[9, 15] <- sum(RS22_22_23_GERAL$DENV_III)
-RS22_Serie_Historica_Base[10, 15] <- sum(RS22_22_23_GERAL$DENV_IV)
-RS22_Serie_Historica_Base[11, 15] <- sum(RS22_22_23_GERAL$Obitos)
+RS_Serie_Historica_Base[1, 15] <- sum(RS22_22_23_GERAL$Notificados)
+RS_Serie_Historica_Base[2, 15] <- sum(RS22_22_23_GERAL$Dengue)
+RS_Serie_Historica_Base[3, 15] <- sum(RS22_22_23_GERAL$D_S_A)
+RS_Serie_Historica_Base[4, 15] <- sum(RS22_22_23_GERAL$Dengue_Grave)
+RS_Serie_Historica_Base[5, 15] <- sum(RS22_22_23_GERAL$Hospitalizacao)
+RS_Serie_Historica_Base[6, 15] <- sum(RS22_22_23_GERAL$Autoctones)
+RS_Serie_Historica_Base[7, 15] <- sum(RS22_22_23_GERAL$DENV_I)
+RS_Serie_Historica_Base[8, 15] <- sum(RS22_22_23_GERAL$DENV_II)
+RS_Serie_Historica_Base[9, 15] <- sum(RS22_22_23_GERAL$DENV_III)
+RS_Serie_Historica_Base[10, 15] <- sum(RS22_22_23_GERAL$DENV_IV)
+RS_Serie_Historica_Base[11, 15] <- sum(RS22_22_23_GERAL$Obitos)
 
 
-AUX <- as.data.frame(t(RS22_Serie_Historica_Base))
+AUX <- as.data.frame(t(RS_Serie_Historica_Base))
 
 colnames(AUX) <- AUX[1,]
 
@@ -2509,21 +2509,21 @@ AUX <- AUX[,c(12, 1:11)]
 
 rownames(AUX) <- c(1:14)
 
-RS22_Serie_Historica <- AUX
+RS_Serie_Historica <- AUX
 
-rm(AUX, RS22_Serie_Historica_Base)
+rm(AUX, RS_Serie_Historica_Base)
 
-RS22_Serie_Historica[,2] <- as.numeric(RS22_Serie_Historica[,2])
-RS22_Serie_Historica[,3] <- as.numeric(RS22_Serie_Historica[,3])
-RS22_Serie_Historica[,4] <- as.numeric(RS22_Serie_Historica[,4])
-RS22_Serie_Historica[,5] <- as.numeric(RS22_Serie_Historica[,5])
-RS22_Serie_Historica[,6] <- as.numeric(RS22_Serie_Historica[,6])
-RS22_Serie_Historica[,7] <- as.numeric(RS22_Serie_Historica[,7])
-RS22_Serie_Historica[,8] <- as.numeric(RS22_Serie_Historica[,8])
-RS22_Serie_Historica[,9] <- as.numeric(RS22_Serie_Historica[,9])
-RS22_Serie_Historica[,10] <- as.numeric(RS22_Serie_Historica[,10])
-RS22_Serie_Historica[,11] <- as.numeric(RS22_Serie_Historica[,11])
-RS22_Serie_Historica[,12] <- as.numeric(RS22_Serie_Historica[,12])
+RS_Serie_Historica[,2] <- as.numeric(RS_Serie_Historica[,2])
+RS_Serie_Historica[,3] <- as.numeric(RS_Serie_Historica[,3])
+RS_Serie_Historica[,4] <- as.numeric(RS_Serie_Historica[,4])
+RS_Serie_Historica[,5] <- as.numeric(RS_Serie_Historica[,5])
+RS_Serie_Historica[,6] <- as.numeric(RS_Serie_Historica[,6])
+RS_Serie_Historica[,7] <- as.numeric(RS_Serie_Historica[,7])
+RS_Serie_Historica[,8] <- as.numeric(RS_Serie_Historica[,8])
+RS_Serie_Historica[,9] <- as.numeric(RS_Serie_Historica[,9])
+RS_Serie_Historica[,10] <- as.numeric(RS_Serie_Historica[,10])
+RS_Serie_Historica[,11] <- as.numeric(RS_Serie_Historica[,11])
+RS_Serie_Historica[,12] <- as.numeric(RS_Serie_Historica[,12])
 
 ####################################################################################################################
 ################Trabalhando as tabelas base dos Canais Endêmicos####################################################
@@ -2531,8 +2531,8 @@ RS22_Serie_Historica[,12] <- as.numeric(RS22_Serie_Historica[,12])
 
 ######     Canal Endêmico    NOTIFICADOS#####
 
-RS22_CE_Notificados_Base[14, 1] <- "2022/23"
-RS22_CE_Notificados_Base[14, 2:54] <- as.integer(data.frame(RS22_22_23_SE_Notificados[17, 2:54]))
+RS_CE_Notificados_Base[(nrow(RS_CE_Notificados_Base) +1), 1] <- "2022/23"
+RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base), 2:54] <- as.integer(data.frame(RS22_22_23_SE_Notificados[17, 2:54]))
 
 #####################################################################################################################
 #####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
@@ -2542,58 +2542,133 @@ RS22_CE_Notificados_Base[14, 2:54] <- as.integer(data.frame(RS22_22_23_SE_Notifi
 #####               VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                         #############
 #####################################################################################################################
 
-AUX <- RS22_CE_Notificados_Base[,-1]
+AUX <- RS_CE_Notificados_Base[,-1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS22_CE_Notificados_Base[,1]
+AUX2 <- RS_CE_Notificados_Base[, 1]
 
 colnames(AUX) <- AUX2
 
-RS22_CE_Notificados <- AUX
+RS_CE_Notificados <- AUX
 
 ######        Criando a coluna de média no data.frame            #####################
 
-AUX <- apply(RS22_CE_Notificados[,], 1 , mean)
+AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados)-1)], 1 , mean)
 
-RS22_CE_Notificados <- as.data.frame(RS22_CE_Notificados)
+RS_CE_Notificados <- as.data.frame(RS_CE_Notificados)
 
-RS22_CE_Notificados$Media <- AUX
+RS_CE_Notificados$Media <- AUX
 
 ######              Criando a coluna de Desvio Padrão no data frame                ###############
 
-AUX <- apply(RS22_CE_Notificados[,], 1 , sd)
+AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados) -2)], 1 , sd)
 
-RS22_CE_Notificados$Desvio_Padrao <- AUX
+RS_CE_Notificados$Desvio_Padrao <- AUX
 
 ######       Criando a coluna de Média + 2(DP)    ######################
 
-AUX <- RS22_CE_Notificados[, 15:16]
+AUX <- RS_CE_Notificados[, (ncol(RS_CE_Notificados)-1):ncol(RS_CE_Notificados)]
 
 AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
 
-RS22_CE_Notificados$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Notificados$Lim_Superior <- AUX$Lim_Superior
 
-RS22_CE_Notificados[,18] <- rownames(RS22_CE_Notificados)
+RS_CE_Notificados[, (ncol(RS_CE_Notificados)+1)] <- rownames(RS_CE_Notificados)
 
-RS22_CE_Notificados <- RS22_CE_Notificados[, c(18, 1:17)]
+RS_CE_Notificados <- RS_CE_Notificados[, c(ncol(RS_CE_Notificados), 1:(ncol(RS_CE_Notificados) -1))]
 
-RS22_CE_Notificados[,1] <- c(31:53, 1:30)
+RS_CE_Notificados[, 1] <- c(31:53, 1:30)
 
-colnames(RS22_CE_Notificados)[1] <- "Semana_Epidemiológica"
+colnames(RS_CE_Notificados)[1] <- "Semana_Epidemiológica"
 
-rownames(RS22_CE_Notificados) <- c(1:nrow(RS22_CE_Notificados))
+rownames(RS_CE_Notificados) <- c(1: nrow(RS_CE_Notificados))
 
-rm(AUX, AUX2, RS22_CE_Notificados_Base)
+rm(AUX, AUX2, RS_CE_Notificados_Base)
 
-write.csv (RS22_CE_Notificados, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados.csv", 
+write.csv (RS_CE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados.csv"), 
            row.names = FALSE)
+
+###    CANAL ENDÊMICO NOTIFICADOS     ####
+
+###    Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos:   ######
+###                             2015/16, 2019/20 e 2021/22                                  ######
+
+AUX_GRAF <- RS_CE_Notificados[, Periodos_Epidêmicos_RS]
+
+###      Usando apply para tirar a média por semana epidemiológica      ####
+
+AUX_GRAF$Media <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , mean)
+
+###       Usando apply para tirar o desvio padrão por semana epidemiológica      #####
+
+AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
+
+######      Criando a coluna de Média + 2(DP)    ###############
+
+AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
+
+AUX_GRAF$Lim_Superior <- NA
+
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Notificados))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2022/23` <- RS_CE_Notificados$`2022/23`
+
+AUX_GRAF$Sem_Epidemiológica <- RS_CE_Notificados$Semana_Epidemiológica
+
+AUX_GRAF$Sem_EPI <-as.character(c("2022/31",  "2022/32", "2022/33", 
+                                  "2022/34",  "2022/35",  "2022/36",  
+                                  "2022/37",  "2022/38",  "2022/39",  
+                                  "2022/40",  "2022/41",  "2022/42",  
+                                  "2022/43",  "2022/44",  "2022/45",  
+                                  "2022/46",  "2022/47",  "2022/48",  
+                                  "2022/49",  "2022/50",  "2022/51",  
+                                  "2022/52",  "2022/53",  "2023/01",  
+                                  "2023/02",  "2023/03",  "2023/04",  
+                                  "2023/05",  "2023/06",  "2023/07",  
+                                  "2023/08",  "2023/09",  "2023/10", 
+                                  "2023/11",  "2023/12",  "2023/13",  
+                                  "2023/14",  "2023/15",  "2023/16",  
+                                  "2023/17",  "2023/18",  "2023/19",  
+                                  "2023/20",  "2023/21",  "2023/22",  
+                                  "2023/23",  "2023/24",  "2023/25",  
+                                  "2023/26",  "2023/27",  "2023/28",  
+                                  "2023/29",  "2023/30")
+)
+
+RS_22_23_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold")) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos Notificados - 2022/23") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 19)
+  ) +
+  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes(,Media), fill = "#556B2F") +
+  geom_line(aes(,`2022/23`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
 
 ####         Canal Endêmico CONFIRMADOS              ####
 
-RS22_CE_Confirmados_Base[14, 1] <- "2022/23"
-RS22_CE_Confirmados_Base[14, 2:54] <- as.integer(data.frame(RS22_22_23_SE_Confirmados[17, 2:54]))
+RS_CE_Confirmados_Base[(nrow(RS_CE_Confirmados_Base) +1), 1] <- "2022/23"
+RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 2:54] <- as.integer(data.frame(RS22_22_23_SE_Confirmados[17, 2:54]))
 
 #####################################################################################################################
 #####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
@@ -2603,51 +2678,616 @@ RS22_CE_Confirmados_Base[14, 2:54] <- as.integer(data.frame(RS22_22_23_SE_Confir
 #####               VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                         #############
 #####################################################################################################################
 
-AUX <- RS22_CE_Confirmados_Base[,-1]
+AUX <- RS_CE_Confirmados_Base[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS22_CE_Confirmados_Base[,1]
+AUX2 <- RS_CE_Confirmados_Base[, 1]
 
 colnames(AUX) <- AUX2
 
-RS22_CE_Confirmados <- AUX
+RS_CE_Confirmados <- AUX
 
 ######     Criando a coluna de média no data.frame     #####################
 
-AUX <- apply(RS22_CE_Confirmados[,], 1 , mean)
+AUX <- apply(RS_CE_Confirmados[, 1: (ncol(RS_CE_Confirmados)-1)], 1 , mean)
 
-RS22_CE_Confirmados <- as.data.frame(RS22_CE_Confirmados)
+RS_CE_Confirmados <- as.data.frame(RS_CE_Confirmados)
 
-RS22_CE_Confirmados$Media <- AUX
+RS_CE_Confirmados$Media <- AUX
 
 ######     Criando a coluna de Desvio Padrão no data frame     ###############
 
-AUX <- apply(RS22_CE_Confirmados[,], 1 , sd)
+AUX <- apply(RS_CE_Confirmados[, 1:(ncol(RS_CE_Confirmados)-2)], 1 , sd)
 
-RS22_CE_Confirmados$Desvio_Padrao <- AUX
+RS_CE_Confirmados$Desvio_Padrao <- AUX
 
 ######      Criando a coluna de Média + 2(DP)     ###########
 
-AUX <- RS22_CE_Confirmados[, 15:16]
+AUX <- RS_CE_Confirmados[, (ncol(RS_CE_Confirmados)-1):ncol(RS_CE_Confirmados)]
 
 AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
 
-RS22_CE_Confirmados$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Confirmados$Lim_Superior <- AUX$Lim_Superior
 
-RS22_CE_Confirmados[,18] <- rownames(RS22_CE_Confirmados)
+RS_CE_Confirmados[, (ncol(RS_CE_Confirmados)+1)] <- rownames(RS_CE_Confirmados)
 
-RS22_CE_Confirmados <- RS22_CE_Confirmados[, c(18, 1:17)]
+RS_CE_Confirmados <- RS_CE_Confirmados[, c(ncol(RS_CE_Confirmados), 1:(ncol(RS_CE_Confirmados) -1))]
 
-RS22_CE_Confirmados[,1] <- c(31:53, 1:30)
+RS_CE_Confirmados[, 1] <- c(31:53, 1:30)
 
-colnames(RS22_CE_Confirmados)[1] <- "Semana_Epidemiológica"
+colnames(RS_CE_Confirmados)[1] <- "Semana_Epidemiológica"
 
-rownames(RS22_CE_Confirmados) <- c(1:nrow(RS22_CE_Confirmados))
+rownames(RS_CE_Confirmados) <- c(1:nrow(RS_CE_Confirmados))
 
-rm(AUX, AUX2, RS22_CE_Confirmados_Base)
+rm(AUX, AUX2, RS_CE_Confirmados_Base)
 
-write.csv (RS22_CE_Confirmados, 
-           "/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados.csv", 
+write.csv (RS_CE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados.csv"), 
            row.names = FALSE)
+
+###     CANAL ENDÊMICO CONFIRMADOS      ####
+
+###          Puxando os dados da tabela RS22_CE_Confirmados e excluindo os períodos epidêmicos: 
+###                                    2015/16, 2019/20 e 2021/22
+
+AUX_GRAF <- RS_CE_Confirmados[, Periodos_Epidêmicos_RS]
+
+###                   Usando apply para tirar a média por semana epidemiológica
+
+AUX_GRAF$Media <- apply(AUX_GRAF[,-ncol(AUX_GRAF)], 1 , mean)
+
+###                Usando apply para tirar o desvio padrão por semana epidemiológica
+
+AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
+
+######                   Criando a coluna de Média + 2(DP)
+
+AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
+
+AUX_GRAF$Lim_Superior <- NA
+
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+###                      Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados))
+
+###                        Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2022/23` <- RS_CE_Confirmados$`2022/23`
+
+AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados$Semana_Epidemiológica
+
+AUX_GRAF$Sem_EPI <-as.character(c("2022/31",  "2022/32", "2022/33",  
+                                  "2022/34",  "2022/35",  "2022/36", 
+                                  "2022/37",  "2022/38",  "2022/39", 
+                                  "2022/40",  "2022/41",  "2022/42", 
+                                  "2022/43",  "2022/44",  "2022/45",  
+                                  "2022/46",  "2022/47",  "2022/48", 
+                                  "2022/49",  "2022/50",  "2022/51", 
+                                  "2022/52",  "2022/53",  "2023/01", 
+                                  "2023/02",  "2023/03",  "2023/04", 
+                                  "2023/05",  "2023/06",  "2023/07", 
+                                  "2023/08",  "2023/09",  "2023/10", 
+                                  "2023/11",  "2023/12",  "2023/13", 
+                                  "2023/14",  "2023/15",  "2023/16", 
+                                  "2023/17",  "2023/18",  "2023/19", 
+                                  "2023/20",  "2023/21",  "2023/22", 
+                                  "2023/23",  "2023/24",  "2023/25", 
+                                  "2023/26",  "2023/27",  "2023/28", 
+                                  "2023/29",  "2023/30")
+)
+
+RS_22_23_GRAF_CE_Confirmados <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold")) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos CONFIRMADOS - 2022/23") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 19)
+  ) +
+  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes(,Media), fill = "#556B2F") +
+  geom_line(aes(,`2022/23`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+####      Elaborando tabela de casos Prováveis (Casos Notificados - Casos Descartados) 
+####      por semana epidemiológica. Será usado para elaboração do diagrama de controle 
+####      de casos prováveis###
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:24] <- c(31:53)
+
+colnames (AUX)[25:54] <- c(1:30)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(RS22_22_23_SINAN %>%
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202231,
+                                                 CLASSI_FIN == 5)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(RS22_22_23_SINAN %>% 
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202232,
+                                                 CLASSI_FIN == 5) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(RS22_22_23_SINAN %>% 
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202233,
+                                                 CLASSI_FIN == 5) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(RS22_22_23_SINAN %>% 
+                                         filter(ID_MN_RESI == i,
+                                                SEM_PRI ==202234,
+                                                CLASSI_FIN == 5) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(RS22_22_23_SINAN %>% 
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202235,
+                                                 CLASSI_FIN == 5) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(RS22_22_23_SINAN %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202236,
+                                                 CLASSI_FIN == 5) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(RS22_22_23_SINAN %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202237,
+                                                 CLASSI_FIN == 5) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(RS22_22_23_SINAN %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202238,
+                                                 CLASSI_FIN == 5) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202239,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202240,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202241,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202242,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202243,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202244,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202245,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202246,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202247,
+                                                  CLASSI_FIN == 5) %>%       
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202248,
+                                                  CLASSI_FIN == 5) %>%     
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202249,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(RS22_22_23_SINAN %>% 
+                                            filter(ID_MN_RESI == i, 
+                                                   SEM_PRI ==202250,
+                                                   CLASSI_FIN == 5) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202251,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202252,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202253,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202301,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202302,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202303,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202304,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202305,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202306,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202307,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202308,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202309,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202310,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202311,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202312,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202313,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202314,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202315,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202316,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202317,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202318,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202319,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202320,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202321,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202322,
+                                                  CLASSI_FIN == 5) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202323,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202324,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202325,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202326,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202327,
+                                                  CLASSI_FIN == 5) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202328,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(RS22_22_23_SINAN %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202329,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(RS22_22_23_SINAN %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202330,
+                                                  CLASSI_FIN == 5) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_22_23_SE_Descartados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_10_11_SE_Notificados"), AUX), 
+           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_Descartados.csv", 
+           row.names = FALSE)
+
+####Casos prováveis por semana epidemiológica. Este objeto será apagado assim que for incluso no AUX_GRAF####
+
+RS22_22_23_Casos_Provaveis <- (RS22_22_23_SE_Notificados[17, 2: 54] - RS22_22_23_SE_Descartados[17, 2: 54])
+
+rownames(RS22_22_23_Casos_Provaveis)[1] <- "Provaveis"
+
+RS22_22_23_Casos_Provaveis <- t(as.data.frame(RS22_22_23_Casos_Provaveis))
+
+###     CANAL ENDÊMICO Prováveis         ####
+
+####         Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos:
+####                                2015/16, 2019/20 e 2021/22
+
+AUX_GRAF <- RS22_CE_Notificados[, c(2, 3, 4, 5, 6, 7, 9, 10, 11, 13)]
+
+###             Usando apply para tirar a média por semana epidemiológica
+
+AUX_GRAF$Media <- apply(AUX_GRAF[,], 1 , mean)
+
+###             Usando apply para tirar o desvio padrão por semana epidemiológica
+
+AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[,], 1 , sd)
+
+######     Criando a coluna de Média + 2(DP)
+
+AUX_GRAF <- AUX_GRAF[, c(11:12)]
+
+AUX_GRAF$Lim_Superior <- NA
+
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF$Ordem <- c(1: nrow(RS22_CE_Notificados))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2022/23` <- RS22_CE_Notificados$`2022/23`
+
+AUX_GRAF$Sem_Epidemiológica <- RS22_CE_Notificados$Semana_Epidemiológica
+
+AUX_GRAF$Sem_EPI <-as.character(c("2022/31",  "2022/32", "2022/33",  
+                                  "2022/34",  "2022/35",  "2022/36", 
+                                  "2022/37",  "2022/38",  "2022/39", 
+                                  "2022/40",  "2022/41",  "2022/42", 
+                                  "2022/43",  "2022/44",  "2022/45",  
+                                  "2022/46",  "2022/47",  "2022/48",  
+                                  "2022/49",  "2022/50",  "2022/51",  
+                                  "2022/52",  "2022/53",  "2023/01", 
+                                  "2023/02",  "2023/03",  "2023/04",  
+                                  "2023/05",  "2023/06",  "2023/07",  
+                                  "2023/08",  "2023/09",  "2023/10", 
+                                  "2023/11",  "2023/12",  "2023/13",  
+                                  "2023/14",  "2023/15",  "2023/16",  
+                                  "2023/17",  "2023/18",  "2023/19", 
+                                  "2023/20",  "2023/21",  "2023/22", 
+                                  "2023/23",  "2023/24",  "2023/25",  
+                                  "2023/26",  "2023/27",  "2023/28",  
+                                  "2023/29",  "2023/30")
+)
+
+AUX_GRAF[, 8] <- RS22_22_23_Casos_Provaveis[,1]
+
+colnames(AUX_GRAF)[8] <- "Provaveis"
+
+RS22_22_23_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold")) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos PROVÁVEIS - 2022/23") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 19)
+  ) +
+  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes(,Media), fill = "#556B2F") +
+  geom_line(aes(,Provaveis), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+rm(RS22_22_23_Casos_Provaveis)
+
 
