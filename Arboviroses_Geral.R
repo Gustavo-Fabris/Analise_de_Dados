@@ -20208,191 +20208,191 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 2]){
 
 ############Gravando as tabelas para uso posterior#########
 
-write.csv (RS22_09_10_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_09_10_GERAL.csv", row.names = FALSE)
+write.csv (RS22_09_10_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_09_10_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_09_10_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_09_10_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_09_10_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_09_10_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_09_10_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_09_10_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_09_10_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_09_10_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_09_10_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_09_10_SINAN.csv", row.names = FALSE)
+write.csv (RS22_09_10_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_10_11_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_10_11_GERAL.csv", row.names = FALSE)
+write.csv (RS22_10_11_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_10_11_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_10_11_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_10_11_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_10_11_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_10_11_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_10_11_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_10_11_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_10_11_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_10_11_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_10_11_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_10_11_SINAN.csv", row.names = FALSE)
+write.csv (RS22_10_11_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_11_12_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_11_12_GERAL.csv", row.names = FALSE)
+write.csv (RS22_11_12_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_11_12_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_11_12_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_11_12_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_11_12_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_11_12_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_11_12_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_11_12_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_11_12_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_11_12_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_11_12_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_11_12_SINAN.csv", row.names = FALSE)
+write.csv (RS22_11_12_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_12_13_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_12_13_GERAL.csv", row.names = FALSE)
+write.csv (RS22_12_13_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_12_13_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_12_13_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_12_13_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_12_13_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_12_13_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_12_13_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_12_13_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_12_13_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_12_13_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_12_13_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_12_13_SINAN.csv", row.names = FALSE)
+write.csv (RS22_12_13_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_13_14_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_13_14_GERAL.csv", row.names = FALSE)
+write.csv (RS22_13_14_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_13_14_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_13_14_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_13_14_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_13_14_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_13_14_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_13_14_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_13_14_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_13_14_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_13_14_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_13_14_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_13_14_SINAN.csv", row.names = FALSE)
+write.csv (RS22_13_14_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_14_15_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_14_15_GERAL.csv", row.names = FALSE)
+write.csv (RS22_14_15_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_14_15_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_14_15_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_14_15_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_14_15_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_14_15_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_14_15_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_14_15_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_14_15_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_14_15_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_14_15_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_14_15_SINAN.csv", row.names = FALSE)
+write.csv (RS22_14_15_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_GERAL.csv", row.names = FALSE)
+write.csv (RS22_15_16_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_15_16_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_15_16_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_15_16_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_SINAN.csv", row.names = FALSE)
+write.csv (RS22_15_16_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_15_16_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_15_16_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_15_16_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_15_16_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_15_16_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_15_16_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_GERAL.csv", row.names = FALSE)
+write.csv (RS22_16_17_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_16_17_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_16_17_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_16_17_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_SINAN.csv", row.names = FALSE)
+write.csv (RS22_16_17_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_16_17_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_16_17_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_16_17_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_16_17_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_16_17_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_16_17_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_GERAL.csv", row.names = FALSE)
+write.csv (RS22_17_18_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_17_18_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_17_18_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_17_18_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_SINAN.csv", row.names = FALSE)
+write.csv (RS22_17_18_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_17_18_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_17_18_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_17_18_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_17_18_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_17_18_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_17_18_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_GERAL.csv", row.names = FALSE)
+write.csv (RS22_18_19_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_18_19_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_18_19_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_18_19_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_SINAN.csv", row.names = FALSE)
+write.csv (RS22_18_19_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_18_19_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_18_19_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_18_19_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_18_19_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_18_19_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_18_19_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_GERAL.csv", row.names = FALSE)
+write.csv (RS22_19_20_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_19_20_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_19_20_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_19_20_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_SINAN.csv", row.names = FALSE)
+write.csv (RS22_19_20_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_19_20_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_19_20_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_19_20_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_19_20_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_19_20_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_19_20_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_GERAL.csv", row.names = FALSE)
+write.csv (RS22_20_21_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_20_21_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_20_21_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_20_21_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_SINAN.csv", row.names = FALSE)
+write.csv (RS22_20_21_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_20_21_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_20_21_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_20_21_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_20_21_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_20_21_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_20_21_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_GERAL, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_GERAL.csv", row.names = FALSE)
+write.csv (RS22_21_22_GERAL, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_GERAL.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_EXTRA, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_EXTRA.csv", row.names = FALSE)
+write.csv (RS22_21_22_EXTRA, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_EXTRA.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_SE_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_SE_Notificados.csv", row.names = FALSE)
+write.csv (RS22_21_22_SE_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SE_Notificados.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_SE_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_SE_Confirmados.csv", row.names = FALSE)
+write.csv (RS22_21_22_SE_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SE_Confirmados.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_SINAN, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_SINAN.csv", row.names = FALSE)
+write.csv (RS22_21_22_SINAN, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SINAN.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_SINAIS, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_SINAIS.csv", row.names = FALSE)
+write.csv (RS22_21_22_SINAIS, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SINAIS.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_SINAIS_DE_ALARME, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_SINAIS_DE_ALARME.csv", row.names = FALSE)
+write.csv (RS22_21_22_SINAIS_DE_ALARME, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SINAIS_DE_ALARME.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_DENGUE_GRAVE, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_DENGUE_GRAVE.csv", row.names = FALSE)
+write.csv (RS22_21_22_DENGUE_GRAVE, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_DENGUE_GRAVE.csv", row.names = FALSE)
 
-write.csv (RS22_21_22_DOENCAS_PRE_EXISTENTES, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_21_22_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
+write.csv (RS22_21_22_DOENCAS_PRE_EXISTENTES, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_DOENCAS_PRE_EXISTENTES.csv", row.names = FALSE)
 
 ###########################################################################################################################
 ###########################Elaborando tabelas especiais para serem utilizadas no Informe Epidemiológico####################
@@ -20570,7 +20570,7 @@ RS22_Serie_Historica[11, 14] <- sum(RS22_21_22_GERAL$Obitos)
 
 #####Gravando tabela de série histórica#####
 
-write.csv (RS22_Serie_Historica, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_Serie_Historica_Base.csv", row.names = FALSE)
+write.csv (RS22_Serie_Historica, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica_Base.csv", row.names = FALSE)
 
 ###Construindo tabela para Canal Endêmico Notificados####
 
@@ -20621,7 +20621,7 @@ colnames (RS22_CE_Base_Notificados)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
 
-write.csv (RS22_CE_Base_Notificados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_CE_Notificados_Base.csv", row.names = FALSE)
+write.csv (RS22_CE_Base_Notificados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados_Base.csv", row.names = FALSE)
 
 ###Construindo tabela Canal Endêmico Confirmados
 
@@ -20672,7 +20672,7 @@ colnames (RS22_CE_Base_Confirmados)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
 
-write.csv (RS22_CE_Base_Confirmados, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_CE_Confirmados_Base.csv", row.names = FALSE)
+write.csv (RS22_CE_Base_Confirmados, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados_Base.csv", row.names = FALSE)
 
 ###Construindo tabela para Canal Endêmico Notificados - IVAIPORÃ####
 
@@ -20723,7 +20723,7 @@ colnames (RS22_CE_Base_Notificados_IVAIPORÃ)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
 
-write.csv (RS22_CE_Base_Notificados_IVAIPORÃ, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_CE_Notificados_IVAIPORÃ_Base.csv", row.names = FALSE)
+write.csv (RS22_CE_Base_Notificados_IVAIPORÃ, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Notificados_IVAIPORÃ_Base.csv", row.names = FALSE)
 
 ###Construindo tabela Canal Endêmico Confirmados - IVAIPORÃ
 
@@ -20774,7 +20774,7 @@ colnames (RS22_CE_Base_Confirmados_IVAIPORÃ)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
 
-write.csv (RS22_CE_Base_Confirmados_IVAIPORÃ, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Tabulacoes_Primarias/RS22_CE_Confirmados_IVAIPORÃ_Base.csv", row.names = FALSE)
+write.csv (RS22_CE_Base_Confirmados_IVAIPORÃ, "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_CE_Confirmados_IVAIPORÃ_Base.csv", row.names = FALSE)
 
 
 

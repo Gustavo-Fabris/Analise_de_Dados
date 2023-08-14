@@ -1,3 +1,5 @@
+rm(list =ls())
+
 ####Indicando Diretório de Trabalho.#####
 
 setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/DBF/")
@@ -16528,6 +16530,185 @@ RS22_ANTRAB_Serie_Historica <- RS22_ANTRAB_Serie_Historica[-1, ]
 RS22_ANTRAB_Serie_Historica[, 1] <- as.numeric(RS22_ANTRAB_Serie_Historica[, 1])
 
 RS22_ANTRAB_Serie_Historica[, 25] <- c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023")
+
+####  Canal Endêmico  ###
+
+RS_CE_Base_ANTRAB <- data.frame("ANO" = NA)
+
+RS_CE_Base_ANTRAB[1, 1] <- "2012"
+RS_CE_Base_ANTRAB[1, 2:54] <- as.integer(data.frame(RS22_ANTRAB_2012_SE_Notificados[nrow(RS22_ANTRAB_2012_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2013"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2013_SE_Notificados[nrow(RS22_ANTRAB_2013_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2014"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2014_SE_Notificados[nrow(RS22_ANTRAB_2014_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2015"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2015_SE_Notificados[nrow(RS22_ANTRAB_2015_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2016"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2016_SE_Notificados[nrow(RS22_ANTRAB_2016_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2017"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2017_SE_Notificados[nrow(RS22_ANTRAB_2017_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2018"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2018_SE_Notificados[nrow(RS22_ANTRAB_2018_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2019"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2019_SE_Notificados[nrow(RS22_ANTRAB_2019_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2020"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2020_SE_Notificados[nrow(RS22_ANTRAB_2020_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2021"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2021_SE_Notificados[nrow(RS22_ANTRAB_2021_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2022"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2022_SE_Notificados[nrow(RS22_ANTRAB_2022_SE_Notificados), 2:54]))
+
+colnames (RS_CE_Base_ANTRAB)[2:54] <- c(1:53)
+
+####################################################################################################################
+################Trabalhando as tabelas base do Canal Endêmico   ####################################################
+####################################################################################################################
+
+######     Canal Endêmico    NOTIFICADOS#####
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB) +1), 1] <- "2023"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2023_SE_Notificados[nrow(RS22_ANTRAB_2023_SE_Notificados), 2:54]))
+
+#####################################################################################################################
+#####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
+#####                   direto ele transforma as variáveis em caracter.                                 #############
+#####                                                                                                   #############         
+#####                     NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
+#####               VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                         #############
+#####################################################################################################################
+
+AUX <- RS_CE_Base_ANTRAB[, -1]
+
+AUX <- t(AUX)
+
+AUX2 <- RS_CE_Base_ANTRAB[, 1]
+
+colnames(AUX) <- AUX2
+
+RS_CE_ANTRAB <- AUX
+
+######        Criando a coluna de média no data.frame            #####################
+
+AUX <- apply(RS_CE_ANTRAB[, 1: (ncol(RS_CE_ANTRAB)-1)], 1 , mean)
+
+RS_CE_ANTRAB <- as.data.frame(RS_CE_ANTRAB)
+
+RS_CE_ANTRAB$Media <- AUX
+
+######              Criando a coluna de Desvio Padrão no data frame                ###############
+
+AUX <- apply(RS_CE_ANTRAB[, 1: (ncol(RS_CE_ANTRAB) -2)], 1 , sd)
+
+RS_CE_ANTRAB$Desvio_Padrao <- AUX
+
+######       Criando a coluna de Média + 2(DP)    ######################
+
+AUX <- RS_CE_ANTRAB[, (ncol(RS_CE_ANTRAB)-1):ncol(RS_CE_ANTRAB)]
+
+AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+RS_CE_ANTRAB$Lim_Superior <- AUX$Lim_Superior
+
+RS_CE_ANTRAB[, (ncol(RS_CE_ANTRAB)+1)] <- rownames(RS_CE_ANTRAB)
+
+RS_CE_ANTRAB <- RS_CE_ANTRAB[, c(ncol(RS_CE_ANTRAB), 1:(ncol(RS_CE_ANTRAB) -1))]
+
+RS_CE_ANTRAB[, 1] <- c(31:53, 1:30)
+
+colnames(RS_CE_ANTRAB)[1] <- "Semana_Epidemiológica"
+
+rownames(RS_CE_ANTRAB) <- c(1: nrow(RS_CE_ANTRAB))
+
+rm(AUX, AUX2, RS_CE_Base_ANTRAB)
+
+write.csv (RS_CE_ANTRAB, 
+           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", "RS", "_CE_ANTRAB.csv"), 
+           row.names = FALSE)
+
+###    CANAL ENDÊMICO NOTIFICADOS     ####
+
+###    Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos:   ######
+###                             2015/16, 2019/20 e 2021/22                                  ######
+
+AUX_GRAF <- RS_CE_ANTRAB[,]
+
+###      Usando apply para tirar a média por semana epidemiológica      ####
+
+AUX_GRAF$Media <- apply(AUX_GRAF[, ], 1 , mean)
+
+###       Usando apply para tirar o desvio padrão por semana epidemiológica      #####
+
+AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 2:13], 1 , sd)
+
+######      Criando a coluna de Média + 2(DP)    ###############
+
+AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
+
+AUX_GRAF$Lim_Superior <- NA
+
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Ordem <- c(1: nrow(RS_CE_ANTRAB))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2022/23` <- RS_CE_Notificados$`2022/23`
+
+AUX_GRAF$Sem_Epidemiológica <- RS_CE_ANTRAB$Semana_Epidemiológica
+
+AUX_GRAF$Sem_EPI <-as.character(c("2022/1",  "2022/2", "2022/3", 
+                                  "2022/4",  "2022/5",  "2022/6",  
+                                  "2022/7",  "2022/8",  "2022/9",  
+                                  "2022/10",  "2022/11",  "2022/12",  
+                                  "2022/13",  "2022/14",  "2022/15",  
+                                  "2022/16",  "2022/17",  "2022/18",  
+                                  "2022/19",  "2022/20",  "2022/21",  
+                                  "2022/22",  "2022/23",  "2023/24",  
+                                  "2023/25",  "2023/26",  "2023/27",  
+                                  "2023/28",  "2023/29",  "2023/30",  
+                                  "2023/31",  "2023/32",  "2023/33", 
+                                  "2023/34",  "2023/35",  "2023/36",  
+                                  "2023/37",  "2023/38",  "2023/39",  
+                                  "2023/40",  "2023/41",  "2023/42",  
+                                  "2023/43",  "2023/44",  "2023/45",  
+                                  "2023/46",  "2023/47",  "2023/48",  
+                                  "2023/49",  "2023/50",  "2023/51",  
+                                  "2023/52",  "2023/53")
+)
+
+RS_22_23_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold")) +
+  labs(caption = "Fonte",
+       title = "Canal Endêmico Casos Notificados - 2022/23") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 19)
+  ) +
+  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes(,Media), fill = "#556B2F") +
+  geom_line(aes(,`2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
 
 ggplot(RS22_ANTRAB_Serie_Historica, aes(x = V25, y = Notificados)) + 
   theme(axis.text.x = element_text(angle = 60, 
