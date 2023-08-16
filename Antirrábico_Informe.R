@@ -1,3 +1,51 @@
+rm(list =ls())
+####Indicando Diretório de Trabalho.#####
+
+setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
+
+###Libraries###
+
+library(foreign)
+library (dplyr)
+library(ggplot2)
+
+####Planilha com os dados dos municípios e com os códigos do IBGE. Será utilizada nos for loops para buscar dados######## 
+####dos municípios e vinculá-los com os dados da base DBF do SINAN#######################################################
+
+BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
+                    header=TRUE, 
+                    sep=",")
+
+PR_ANTRAB_BASE_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_Serie_Historica.csv",
+                                      header = TRUE,
+                                      sep = ",")
+
+RS_ANTRAB_BASE_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_ANTRAB_BASE_Serie_Historica.csv",
+                                           header = TRUE,
+                                           sep = ",")
+
+RS_CE_BASE_ANTRAB <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv",
+         header = TRUE,
+         sep = ",")
+
+############################################################################################
+####   Definindo o objeto RS para servir de apoio para    ##################################
+####    buscar dados de todas as RS. Usar 1, 2, 3..., 21, 22    ############################
+############################################################################################
+
+RS <- 22   #####  Deve-se colocar AQUI a Regional
+
+######   Criando objeto ID_REG. Será utilizado para selecionar
+######   RS no DBF do SINAN ONLINE.
+
+ID_REG <- as.data.frame(BASE_IBGE[which(BASE_IBGE$RS == RS), 6])
+
+ID_REG <- as.numeric(ID_REG[1,1])
+
+####   Estabelecendo o número de municípios em cada RS
+
+nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
+
 ###################       2023      #########################################
 
 ####Criando um objeto com a base DBF do SINAN#################
@@ -13,9 +61,14 @@ ANTRAB2023$ID_MN_RESI <- as.numeric(as.character(ANTRAB2023$ID_MN_RESI))
 #####################################################################################################################
 #################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
 
-PR_ANTRAB_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
-                                                count()
+PR_ANTRAB_BASE_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
+                                                 count()
 )
+
+write.csv (PR_ANTRAB_BASE_Serie_Historica, 
+           "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_Serie_Historica.csv", 
+           row.names = FALSE)
+
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2023 <- ANTRAB2023 %>% 
@@ -1448,4 +1501,152 @@ write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO"), AUX),
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2023, ANTRAB2023)
+
+######   Série Histórica   ########
+
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 1] <- RS22_ANTRAB_2023_GERAL[17, 5]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 2] <- RS22_ANTRAB_2023_GERAL[17, 6]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 3] <- RS22_ANTRAB_2023_GERAL[17, 7]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 4] <- RS22_ANTRAB_2023_GERAL[17, 8]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 5] <- RS22_ANTRAB_2023_GERAL[17, 9]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 6] <- RS22_ANTRAB_2023_GERAL[17, 10]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 7] <- RS22_ANTRAB_2023_GERAL[17, 11]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 8] <- RS22_ANTRAB_2023_GERAL[17, 12]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 9] <- RS22_ANTRAB_2023_GERAL[17, 13]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 10] <- RS22_ANTRAB_2023_GERAL[17, 14]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 11] <- RS22_ANTRAB_2023_GERAL[17, 15]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 12] <- RS22_ANTRAB_2023_GERAL[17, 16]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 13] <- RS22_ANTRAB_2023_GERAL[17, 17]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 14] <- RS22_ANTRAB_2023_GERAL[17, 18]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 15] <- RS22_ANTRAB_2023_GERAL[17, 19]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 16] <- RS22_ANTRAB_2023_GERAL[17, 20]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 17] <- RS22_ANTRAB_2023_GERAL[17, 21]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 18] <- RS22_ANTRAB_2023_GERAL[17, 22]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 19] <- RS22_ANTRAB_2023_GERAL[17, 23]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 20] <- RS22_ANTRAB_2023_GERAL[17, 24]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 21] <- RS22_ANTRAB_2023_GERAL[17, 25]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 22] <- RS22_ANTRAB_2023_GERAL[17, 26]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 23] <- RS22_ANTRAB_2023_GERAL[17, 27]
+RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 24] <- RS22_ANTRAB_2023_GERAL[17, 28]
+
+write.csv(assign(paste0("RS", RS, "_ANTRAB_Serie_Historica"), RS_ANTRAB_BASE_Serie_Historica),
+          paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_Serie_Historica.csv"),
+          row.names = FALSE)
+
+####################################################################################################################
+################Trabalhando as tabelas base do Canal Endêmico   ####################################################
+####################################################################################################################
+
+######     Canal Endêmico    NOTIFICADOS#####
+
+RS_CE_BASE_ANTRAB[(nrow(RS_CE_BASE_ANTRAB) +1), 1] <- "2023"
+RS_CE_BASE_ANTRAB[nrow(RS_CE_BASE_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2023_SE_Notificados[nrow(RS22_ANTRAB_2023_SE_Notificados), 2:54]))
+
+#####################################################################################################################
+#####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
+#####                   direto ele transforma as variáveis em caracter.                                 #############
+#####                                                                                                   #############         
+#####                     NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
+#####               VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                         #############
+#####################################################################################################################
+
+AUX <- RS_CE_BASE_ANTRAB[, -1]
+
+AUX <- t(AUX)
+
+AUX2 <- RS_CE_BASE_ANTRAB[, 1]
+
+colnames(AUX) <- AUX2
+
+RS_CE_ANTRAB <- AUX
+
+######        Criando a coluna de média no data.frame            #####################
+
+AUX <- apply(RS_CE_ANTRAB[, 1: (ncol(RS_CE_ANTRAB)-1)], 1 , mean)
+
+RS_CE_ANTRAB <- as.data.frame(RS_CE_ANTRAB)
+
+RS_CE_ANTRAB$Media <- AUX
+
+######              Criando a coluna de Desvio Padrão no data frame                ###############
+
+AUX <- apply(RS_CE_ANTRAB[, 1: (ncol(RS_CE_ANTRAB) -2)], 1 , sd)
+
+RS_CE_ANTRAB$Desvio_Padrao <- AUX
+
+######       Criando a coluna de Média + 2(DP)    ######################
+
+AUX <- RS_CE_ANTRAB[, (ncol(RS_CE_ANTRAB)-1):ncol(RS_CE_ANTRAB)]
+
+AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+RS_CE_ANTRAB$Lim_Superior <- AUX$Lim_Superior
+
+RS_CE_ANTRAB[, (ncol(RS_CE_ANTRAB)+1)] <- rownames(RS_CE_ANTRAB)
+
+RS_CE_ANTRAB <- RS_CE_ANTRAB[, c(ncol(RS_CE_ANTRAB), 1:(ncol(RS_CE_ANTRAB) -1))]
+
+RS_CE_ANTRAB[, 1] <- c(1:53)
+
+colnames(RS_CE_ANTRAB)[1] <- "Semana_Epidemiológica"
+
+rownames(RS_CE_ANTRAB) <- c(1: nrow(RS_CE_ANTRAB))
+
+rm(AUX, AUX2, RS_CE_Base_ANTRAB)
+
+write.csv (RS_CE_ANTRAB, 
+           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_CE_ANTRAB.csv"), 
+           row.names = FALSE)
+
+###    CANAL ENDÊMICO NOTIFICADOS     ####
+
+###    Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos:   ######
+###                             2015/16, 2019/20 e 2021/22                                  ######
+
+AUX_GRAF <- RS_CE_ANTRAB[,]
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03", 
+                                  "2023/04",  "2023/05",  "2023/06",  
+                                  "2023/07",  "2023/08",  "2023/09",  
+                                  "2023/10",  "2023/11",  "2023/12",  
+                                  "2023/13",  "2023/14",  "2023/15",  
+                                  "2023/16",  "2023/17",  "2023/18",  
+                                  "2023/19",  "2023/20",  "2023/21",  
+                                  "2023/22",  "2023/23",  "2023/24",  
+                                  "2023/25",  "2023/26",  "2023/27",  
+                                  "2023/28",  "2023/29",  "2023/30",  
+                                  "2023/31",  "2023/32",  "2023/33", 
+                                  "2023/34",  "2023/35",  "2023/36",  
+                                  "2023/37",  "2023/38",  "2023/39",  
+                                  "2023/40",  "2023/41",  "2023/42",  
+                                  "2023/43",  "2023/44",  "2023/45",  
+                                  "2023/46",  "2023/47",  "2023/48",  
+                                  "2023/49",  "2023/50",  "2023/51",  
+                                  "2023/52",  "2023/53")
+)
+
+RS_22_23_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold")) +
+  labs(caption = "Fonte",
+       title = "Canal Endêmico Casos Notificados - 2022/23") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 19)
+  ) +
+  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes(,Media), fill = "#556B2F") +
+  geom_line(aes(,`2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+
 
