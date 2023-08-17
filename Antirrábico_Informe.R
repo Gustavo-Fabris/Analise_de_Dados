@@ -1529,9 +1529,7 @@ RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 22] <- RS22
 RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 23] <- RS22_ANTRAB_2023_GERAL[17, 27]
 RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 24] <- RS22_ANTRAB_2023_GERAL[17, 28]
 
-write.csv(assign(paste0("RS", RS, "_ANTRAB_Serie_Historica"), RS_ANTRAB_BASE_Serie_Historica),
-          paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_Serie_Historica.csv"),
-          row.names = FALSE)
+RS_ANTRAB_BASE_Serie_Historica[, 25] <- as.factor(RS_ANTRAB_BASE_Serie_Historica[, 25])
 
 ####################################################################################################################
 ################Trabalhando as tabelas base do Canal Endêmico   ####################################################
@@ -1648,5 +1646,94 @@ RS_22_23_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
+##############   Gráficos Gerais    ######
 
+#####     Série histórica Paraná    #####
 
+PR_ANTRAB_BASE_Serie_Historica$Ano <- as.factor(PR_ANTRAB_BASE_Serie_Historica$Ano)
+
+ggplot(PR_ANTRAB_BASE_Serie_Historica, aes(x = Ano, y = Notificados)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = .5,
+                                   face = "bold"),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold")) +
+  labs(caption = "Fonte", 
+       x = "Anos",
+       y = "Número de Casos",
+       title = "Série Histórica - PARANÁ",
+       subtitle = "Casos Notificados/2012 - 2023") +
+  theme( panel.grid.major = element_line(color = "#C0C0C0"),
+         panel.grid.minor = element_blank(),
+         panel.background = element_rect(fill = "#F5F5F5"),
+         plot.title = element_text(face = "bold",
+                                   size = 19,
+                                   colour = "#556B2F")) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#EEE8AA") + 
+  geom_label(aes(label = Notificados), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.3) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+####   Serie Histórica regional   ######
+
+ggplot(RS22_ANTRAB_Serie_Historica, aes(x = V25, y = Notificados)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 1,
+                                   face = "bold"),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = "Anos",
+       y = "Número de Casos",
+       title = "Casos Notificados - 22ªRS",
+       subtitle = "2012 - 2023") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Notificados), 
+             size = 3, 
+             alpha = 0.5,
+             nudge_y = 5) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    
+
+AUX <- RS22_ANTRAB_2023_GERAL[17, 12:17]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+colnames(AUX) <- c("Casos", "Label")
+
+ggplot(AUX, aes(x = Label, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 50, 
+                                   vjust = 0.5,
+                                   face = "bold"),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") 
