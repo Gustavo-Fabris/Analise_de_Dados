@@ -35,8 +35,9 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 LEPTONET<- read.dbf(file = "Base_de_Dados/DBF/LEPTONET.DBF",
                        as.is = FALSE)
+AUX <- LEPTONET %>% count(NU_ANO)
 
-ggplot(LEPTONET)+
+ggplot(AUX, aes(x= NU_ANO, y = n))+
   theme(axis.text.x = element_text(angle = 0, 
                                    vjust = 1,
                                    face = "bold"),
@@ -50,8 +51,18 @@ ggplot(LEPTONET)+
         plot.title = element_text(face = "bold",
                                   size = 19,
                                   colour = "#556B2F")) +
-  geom_bar(aes(x= NU_ANO, y = NU_ANO),
+  geom_bar(
            stat = "identity",
            color = "black",
            fill = "green") +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "Série Histórica - Paraná",
+       subtitle = "Casos Notificados/2012 - 2023") +
+  geom_label(aes(label = AUX$n), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.2) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
   
