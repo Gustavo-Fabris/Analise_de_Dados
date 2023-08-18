@@ -42,16 +42,16 @@ Material produzido pode ser encontrado em: https://github.com/Gustavo-Fabris.
 ## Conclusão/recomendações
 A utilização de um diretório padronizado para análise de dados em saúde associado à ferramentas tecnológicas como linguagem R e QGIS permite que haja um aumento da complexidade dos procedimentos de tratamento de dados com consequente sofisticação das informações produzidas. 
 Pontos frágeis do sistema são:   
-    • Baixa adesão dos municípios ao preenchimento das PEM por não haver obrigatoriedade;
-    • O SIG ser um sistema aberto, podendo ser desconfigurado caso seja manipulado por operadores que desconhecem o software; 
-    • Necessidade de conhecimento da linguagem R para criação de scripts; 
-    • Tanto o R quanto o QGIS utilizam dados de arquivos que tem caminho específico no computador, o diretório, apesar de ter como propósito contornar este fato, ainda assim, necessita de ajuste no script R ao ser transferido de computador.
-Pontos que podem ser explorados: 
-    • Utilização do pacotes Flexdashboard e Shine do R para produção de dashboards no lugar do Looker Studio. Sendo necessário que o dashboard fosse inserido em servidor da instituição, fato nem sempre disponível; 
-    • Aprimoramento de scripts utilizando pacote purrr visando substituição de for loops;
-    • Possibilidade de compartilhamento de scripts entre equipes diferentes visando troca de experiências e compartilhamento de códigos;
-    • Aprimoramento de processos de webscrapping;
-    • Elaboração de metodologias alternativas de obtenção de coordenadas geográficas à coleta in loco.
-Recomendações:
+    • Baixa adesão dos municípios ao preenchimento das PEM por não haver obrigatoriedade;  
+    • O SIG ser um sistema aberto, podendo ser desconfigurado caso seja manipulado por operadores que desconhecem o software;   
+    • Necessidade de conhecimento da linguagem R para criação de scripts;   
+    • Tanto o R quanto o QGIS utilizam dados de arquivos que tem caminho específico no computador, o diretório, apesar de ter como propósito contornar este fato, ainda assim, necessita de ajuste no script R ao ser transferido de computador.  
+Pontos que podem ser explorados:   
+    • Utilização do pacotes Flexdashboard e Shine do R para produção de dashboards no lugar do Looker Studio. Sendo necessário que o dashboard fosse inserido em servidor da instituição, fato nem sempre disponível;   
+    • Aprimoramento de scripts utilizando pacote purrr visando substituição de for loops;  
+    • Possibilidade de compartilhamento de scripts entre equipes diferentes visando troca de experiências e compartilhamento de códigos;  
+    • Aprimoramento de processos de webscrapping;  
+    • Elaboração de metodologias alternativas de obtenção de coordenadas geográficas à coleta in loco.  
+Recomendações:  
 Capacitar servidores para utilização de linguagem R e uso de QGIS mostra-se uma ação que deve ser considerada para as Secretarias de Saúde. A popularização da utilização destes instrumentos em saúde pública propiciaria um aumento na qualidade do processo de análise de risco para diferentes agravos. A criação independente de scripts e SIG traria como benefício uma multiplicidade de processos de trabalho personalizados para a região dos operadores/elaboradores dos mesmos.
 
