@@ -41,7 +41,7 @@ Material produzido pode ser encontrado em: https://github.com/Gustavo-Fabris.
 
 ## Conclusão/recomendações
 A utilização de um diretório padronizado para análise de dados em saúde associado à ferramentas tecnológicas como linguagem R e QGIS permite que haja um aumento da complexidade dos procedimentos de tratamento de dados com consequente sofisticação das informações produzidas. 
-Pontos frágeis do sistema são: 
+Pontos frágeis do sistema são:   
     • Baixa adesão dos municípios ao preenchimento das PEM por não haver obrigatoriedade;
     • O SIG ser um sistema aberto, podendo ser desconfigurado caso seja manipulado por operadores que desconhecem o software; 
     • Necessidade de conhecimento da linguagem R para criação de scripts; 
