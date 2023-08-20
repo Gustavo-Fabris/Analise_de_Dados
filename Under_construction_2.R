@@ -500,8 +500,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_09_10_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_09_10_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_SE_Notificados.csv", 
+assign("RS_09_10_SE_Notificados", AUX)
+
+write.csv (RS_09_10_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_09_10_SE_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################
@@ -1222,10 +1224,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_09_10_SE_Confirmados"), AUX)
 
-assign(paste0("RS", "_09_10_SE_Confirmados"), AUX)
+assign("RS_09_10_SE_Confirmados", AUX)
 
-write.csv (assign(paste0("RS", RS, "_09_10_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_09_10_SE_Confirmados.csv", 
+write.csv (RS_09_10_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_09_10_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###################################################################################################
@@ -1971,8 +1973,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_10_11_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_10_11_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_SE_Notificados.csv", 
+assign("RS_10_11_SE_Notificados", AUX)
+
+write.csv (RS_10_11_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_10_11_SE_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################
@@ -2693,8 +2697,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_10_11_SE_Confirmados"), AUX)
 
+assign("RS_10_11_SE_Confirmados", AUX)
+
 write.csv (assign(paste0("RS", RS, "_10_11_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_10_11_SE_Confirmados.csv", 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_10_11_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###################################################################################################
@@ -3440,8 +3446,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_11_12_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_11_12_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_SE_Notificados.csv", 
+assign("RS_11_12_SE_Notificados", AUX)
+
+write.csv (RS_11_12_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_11_12_SE_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################
@@ -4162,8 +4170,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_11_12_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_11_12_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_11_12_SE_Confirmados.csv", 
+assign("RS_11_12_SE_Confirmados", AUX)
+
+write.csv (RS_11_12_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_11_12_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###################################################################################################
@@ -4910,8 +4920,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_12_13_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_12_13_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_SE_Notificados.csv", 
+assign("RS_12_13_SE_Notificados", AUX)
+
+write.csv (RS_12_13_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_12_13_SE_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################
@@ -5632,8 +5644,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_12_13_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_12_13_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_12_13_SE_Confirmados.csv", 
+assign("RS_12_13_SE_Confirmados", AUX)
+
+write.csv (RS_12_13_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_12_13_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###################################################################################################
@@ -6381,8 +6395,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_13_14_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_13_14_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_SE_Notificados.csv", 
+assign("RS_13_14_SE_Notificados", AUX)
+
+write.csv (RS_13_14_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_13_14_SE_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################
@@ -7103,8 +7119,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_13_14_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_13_14_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_13_14_SE_Confirmados.csv", 
+assign("RS_13_14_SE_Confirmados", AUX)
+
+write.csv (RS_13_14_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_13_14_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###################################################################################################
@@ -7852,8 +7870,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_14_15_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_14_15_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_SE_Notificados.csv", 
+assign("RS_14_15_SE_Notificados", AUX)
+
+write.csv (RS_14_15_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_14_15_SE_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################
@@ -8177,390 +8197,330 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX == i), 25] <- as.integer(SINAN_DENGUE_14_15_RS %>%
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201501) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 26] <- as.integer(SINAN_DENGUE_14_15_RS %>%
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201502) %>%
                                            count()
   )
   
   AUX[which(AUX == i), 27] <- as.integer(SINAN_DENGUE_14_15_RS %>%
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201503) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 28] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201504) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 29] <- as.integer(SINAN_DENGUE_14_15_RS %>%
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201505) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 30] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201506) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 31] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201507) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 32] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201508) %>% 
                                            count()
   )
   
   AUX[which(AUX == i), 33] <- as.integer(SINAN_DENGUE_14_15_RS %>%
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201509) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 34] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201510) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 35] <- as.integer(SINAN_DENGUE_14_15_RS %>%
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201511) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 36] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201512) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 37] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201513) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 38] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201514) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 39] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201515) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 40] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201516) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 41] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201517) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 42] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201518) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 43] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201519) %>% 
                                            count()
   )
   
   AUX[which(AUX == i), 44] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201520) %>% 
                                            count()
   )
   
   AUX[which(AUX == i), 45] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201521) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 46] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201522) %>% 
                                            count()
   )
   
   AUX[which(AUX == i), 47] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201523) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 48] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201524) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 49] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201525) %>%
                                            count() 
   )
   
   AUX[which(AUX == i), 50] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201526) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 51] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i,
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201527) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 52] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201528) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 53] <- as.integer(SINAN_DENGUE_14_15_RS %>%  
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201529) %>% 
                                            count() 
   )
   
   AUX[which(AUX == i), 54] <- as.integer(SINAN_DENGUE_14_15_RS %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  CLASSI_FIN == 1 
+                                                  CLASSI_FIN == 10 
                                                   | 
-                                                    CLASSI_FIN == 2 
+                                                    CLASSI_FIN == 11 
                                                   |
-                                                    CLASSI_FIN == 3
-                                                  |
-                                                    CLASSI_FIN == 4,
+                                                    CLASSI_FIN == 12,
                                                   SEM_PRI ==201530) %>% 
                                            count() 
   )
@@ -8574,8 +8534,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_14_15_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_14_15_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_14_15_SE_Confirmados.csv", 
+assign("RS_14_15_SE_Confirmados", AUX)
+
+write.csv (RS_14_15_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_14_15_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###################################################################################################
@@ -8634,14 +8596,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   ###Dengue###
   
   AUX[which(AUX$COD_IBGE == i), 6] <-as.integer(SINAN_DENGUE_14_15_RS %>% 
-                                                  filter(CLASSI_FIN == 1, 
+                                                  filter(CLASSI_FIN == 1 |
+                                                           CLASSI_FIN == 10, 
                                                          ID_MN_RESI == i) %>% 
                                                   count() 
   )
   ###D.S.A.###
   
   AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_DENGUE_14_15_RS %>%  
-                                                   filter(CLASSI_FIN == 2, 
+                                                   filter(CLASSI_FIN == 2 |
+                                                            CLASSI_FIN == 11, 
                                                           ID_MN_RESI == i) %>% 
                                                    count()
   )
@@ -8649,7 +8613,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   ###Dengue Grave###
   
   AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_DENGUE_14_15_RS %>%   
-                                                   filter(CLASSI_FIN == 3 | CLASSI_FIN == 4, 
+                                                   filter(CLASSI_FIN == 3 | CLASSI_FIN == 4 |
+                                                          CLASSI_FIN == 12, 
                                                           ID_MN_RESI == i) %>% 
                                                    count()
   )
@@ -9321,8 +9286,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_15_16_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_15_16_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SE_Notificados.csv", 
+assign("RS_15_16_SE_Notificados", AUX)
+
+write.csv (RS_15_16_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_15_16_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -9935,8 +9902,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_15_16_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_15_16_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_15_16_SE_Confirmados.csv", 
+assign("RS_15_16_SE_Confirmados", AUX)
+
+write.csv (RS_15_16_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_15_16_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -11130,8 +11099,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_16_17_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_16_17_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SE_Notificados.csv", 
+assign("RS_16_17_SE_Notificados", AUX)
+
+write.csv (RS_16_17_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_16_17_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -11744,8 +11715,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_16_17_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_16_17_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_16_17_SE_Confirmados.csv", 
+assign("RS_16_17_SE_Confirmados", AUX)
+
+write.csv (RS_16_17_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_16_17_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -12938,8 +12911,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_17_18_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_17_18_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SE_Notificados.csv", 
+assign("RS_17_18_SE_Notificados", AUX)
+
+write.csv (RS_17_18_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_17_18_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -13552,8 +13527,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_17_18_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_17_18_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_17_18_SE_Confirmados.csv", 
+assign("RS_17_18_SE_Confirmados", AUX)
+
+write.csv (RS_17_18_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_17_18_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -14746,8 +14723,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_18_19_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_18_19_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SE_Notificados.csv", 
+assign("RS_18_19_SE_Notificados", AUX)
+
+write.csv (RS_18_19_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_18_19_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -15360,8 +15339,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_18_19_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_18_19_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_18_19_SE_Confirmados.csv", 
+assign("RS_18_19_SE_Confirmados", AUX)
+
+write.csv (RS_18_19_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_18_19_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -16554,8 +16535,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_19_20_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_19_20_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SE_Notificados.csv", 
+assign("RS_19_20_SE_Notificados", AUX)
+
+write.csv (RS_19_20_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_19_20_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -17168,8 +17151,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_19_20_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_19_20_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_19_20_SE_Confirmados.csv", 
+assign("RS_19_20_SE_Confirmados", AUX)
+
+write.csv (RS_19_20_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_19_20_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -18362,8 +18347,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_20_21_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_20_21_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SE_Notificados.csv", 
+assign("RS_20_21_SE_Notificados", AUX)
+
+write.csv (RS_20_21_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_20_21_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -18976,8 +18963,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_20_21_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_20_21_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_20_21_SE_Confirmados.csv", 
+assign("RS_20_21_SE_Confirmados", AUX)
+
+write.csv (RS_20_21_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_20_21_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -20170,8 +20159,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_21_22_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_21_22_SE_Notificados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SE_Notificados.csv", 
+assign("RS_21_22_SE_Notificados", AUX)
+
+write.csv (RS_21_22_SE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_21_22_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -20784,8 +20775,10 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_21_22_SE_Confirmados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_21_22_SE_Confirmados"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_21_22_SE_Confirmados.csv", 
+assign("RS_21_22_SE_Confirmados", AUX)
+
+write.csv (RS_21_22_SE_Confirmados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_21_22_SE_Confirmados.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -21767,49 +21760,51 @@ rm(RS_Serie_Historica)
 RS_CE_Base_Notificados <- data.frame("SE" = NA)
 
 RS_CE_Base_Notificados[1, 1] <- "2009/10"
-RS_CE_Base_Notificados[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[1, 2:54] <- as.integer(data.frame(RS_09_10_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[2, 1] <- "2010/11"
-RS_CE_Base_Notificados[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[2, 2:54] <- as.integer(data.frame(RS_10_11_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[3, 1] <- "2011/12"
-RS_CE_Base_Notificados[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[3, 2:54] <- as.integer(data.frame(RS_11_12_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[4, 1] <- "2012/13"
-RS_CE_Base_Notificados[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[4, 2:54] <- as.integer(data.frame(RS_12_13_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[5, 1] <- "2013/14"
-RS_CE_Base_Notificados[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[5, 2:54] <- as.integer(data.frame(RS_13_14_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[6, 1] <- "2014/15"
-RS_CE_Base_Notificados[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[6, 2:54] <- as.integer(data.frame(RS_14_15_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[7, 1] <- "2015/16"
-RS_CE_Base_Notificados[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[7, 2:54] <- as.integer(data.frame(RS_15_16_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[8, 1] <- "2016/17"
-RS_CE_Base_Notificados[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[8, 2:54] <- as.integer(data.frame(RS_16_17_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[9, 1] <- "2017/18"
-RS_CE_Base_Notificados[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[9, 2:54] <- as.integer(data.frame(RS_17_18_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[10, 1] <- "2018/19"
-RS_CE_Base_Notificados[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[10, 2:54] <- as.integer(data.frame(RS_18_19_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[11, 1] <- "2019/20"
-RS_CE_Base_Notificados[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[11, 2:54] <- as.integer(data.frame(RS_19_20_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[12, 1] <- "2020/21"
-RS_CE_Base_Notificados[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[12, 2:54] <- as.integer(data.frame(RS_20_21_SE_Notificados[17, 2:54]))
 
 RS_CE_Base_Notificados[13, 1] <- "2021/22"
-RS_CE_Base_Notificados[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Notificados[17, 2:54]))
+RS_CE_Base_Notificados[13, 2:54] <- as.integer(data.frame(RS_21_22_SE_Notificados[17, 2:54]))
 
 colnames (RS_CE_Base_Notificados)[1] <- "Período Sazonal"
 colnames (RS_CE_Base_Notificados)[2:24] <- c(31:53)
 colnames (RS_CE_Base_Notificados)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
+
+assign(paste0("RS", RS, "_CE_Notificados_Base"), RS_CE_Base_Notificados)
 
 write.csv (RS_CE_Base_Notificados, 
            paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Base.csv"), 
@@ -21820,49 +21815,51 @@ write.csv (RS_CE_Base_Notificados,
 RS_CE_Base_Confirmados <- data.frame("SE" = NA)
 
 RS_CE_Base_Confirmados[1, 1] <- "2009/10"
-RS_CE_Base_Confirmados[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[1, 2:54] <- as.integer(data.frame(RS_09_10_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[2, 1] <- "2010/11"
-RS_CE_Base_Confirmados[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[2, 2:54] <- as.integer(data.frame(RS_10_11_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[3, 1] <- "2011/12"
-RS_CE_Base_Confirmados[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[3, 2:54] <- as.integer(data.frame(RS_11_12_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[4, 1] <- "2012/13"
-RS_CE_Base_Confirmados[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[4, 2:54] <- as.integer(data.frame(RS_12_13_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[5, 1] <- "2013/14"
-RS_CE_Base_Confirmados[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[5, 2:54] <- as.integer(data.frame(RS_13_14_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[6, 1] <- "2014/15"
-RS_CE_Base_Confirmados[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[6, 2:54] <- as.integer(data.frame(RS_14_15_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[7, 1] <- "2015/16"
-RS_CE_Base_Confirmados[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[7, 2:54] <- as.integer(data.frame(RS_15_16_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[8, 1] <- "2016/17"
-RS_CE_Base_Confirmados[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[8, 2:54] <- as.integer(data.frame(RS_16_17_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[9, 1] <- "2017/18"
-RS_CE_Base_Confirmados[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[9, 2:54] <- as.integer(data.frame(RS_17_18_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[10, 1] <- "2018/19"
-RS_CE_Base_Confirmados[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[10, 2:54] <- as.integer(data.frame(RS_18_19_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[11, 1] <- "2019/20"
-RS_CE_Base_Confirmados[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[11, 2:54] <- as.integer(data.frame(RS_19_20_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[12, 1] <- "2020/21"
-RS_CE_Base_Confirmados[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[12, 2:54] <- as.integer(data.frame(RS_20_21_SE_Confirmados[17, 2:54]))
 
 RS_CE_Base_Confirmados[13, 1] <- "2021/22"
-RS_CE_Base_Confirmados[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Confirmados[17, 2:54]))
+RS_CE_Base_Confirmados[13, 2:54] <- as.integer(data.frame(RS_21_22_SE_Confirmados[17, 2:54]))
 
 colnames (RS_CE_Base_Confirmados)[1] <- "Período Sazonal"
 colnames (RS_CE_Base_Confirmados)[2:24] <- c(31:53)
 colnames (RS_CE_Base_Confirmados)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
+
+assign(paste0("RS", RS, "_CE_Confirmados_Base"), RS_CE_Base_Confirmados)
 
 write.csv (RS_CE_Base_Confirmados, 
            paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Base.csv"), 
@@ -21873,43 +21870,43 @@ write.csv (RS_CE_Base_Confirmados,
 RS_CE_Base_Notificados_SEDE <- data.frame("SE" = NA)
 
 RS_CE_Base_Notificados_SEDE[1, 1] <- "2009/10"
-RS_CE_Base_Notificados_SEDE[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[1, 2:54] <- as.integer(data.frame(RS_09_10_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[2, 1] <- "2010/11"
-RS_CE_Base_Notificados_SEDE[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[2, 2:54] <- as.integer(data.frame(RS_10_11_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[3, 1] <- "2011/12"
-RS_CE_Base_Notificados_SEDE[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[3, 2:54] <- as.integer(data.frame(RS_11_12_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[4, 1] <- "2012/13"
-RS_CE_Base_Notificados_SEDE[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[4, 2:54] <- as.integer(data.frame(RS_12_13_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[5, 1] <- "2013/14"
-RS_CE_Base_Notificados_SEDE[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[5, 2:54] <- as.integer(data.frame(RS_13_14_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[6, 1] <- "2014/15"
-RS_CE_Base_Notificados_SEDE[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[6, 2:54] <- as.integer(data.frame(RS_14_15_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[7, 1] <- "2015/16"
-RS_CE_Base_Notificados_SEDE[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[7, 2:54] <- as.integer(data.frame(RS_15_16_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[8, 1] <- "2016/17"
-RS_CE_Base_Notificados_SEDE[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[8, 2:54] <- as.integer(data.frame(RS_16_17_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[9, 1] <- "2017/18"
-RS_CE_Base_Notificados_SEDE[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[9, 2:54] <- as.integer(data.frame(RS_17_18_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[10, 1] <- "2018/19"
-RS_CE_Base_Notificados_SEDE[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[10, 2:54] <- as.integer(data.frame(RS_18_19_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[11, 1] <- "2019/20"
-RS_CE_Base_Notificados_SEDE[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[11, 2:54] <- as.integer(data.frame(RS_19_20_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[12, 1] <- "2020/21"
-RS_CE_Base_Notificados_SEDE[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[12, 2:54] <- as.integer(data.frame(RS_20_21_SE_Notificados[6, 2:54]))
 
 RS_CE_Base_Notificados_SEDE[13, 1] <- "2021/22"
-RS_CE_Base_Notificados_SEDE[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Notificados[6, 2:54]))
+RS_CE_Base_Notificados_SEDE[13, 2:54] <- as.integer(data.frame(RS_21_22_SE_Notificados[6, 2:54]))
 
 colnames (RS_CE_Base_Notificados_SEDE)[1] <- "Período Sazonal"
 colnames (RS_CE_Base_Notificados_SEDE)[2:24] <- c(31:53)
@@ -21917,8 +21914,10 @@ colnames (RS_CE_Base_Notificados_SEDE)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
 
+assign(paste0("RS", RS, "_CE_Notificados_Sede_Base"), RS_CE_Base_Notificados_SEDE)
+
 write.csv (RS_CE_Base_Notificados_SEDE, 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE_Base.csv"), 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Sede_Base.csv"), 
            row.names = FALSE)
 
 ###Construindo tabela Canal Endêmico Confirmados - IVAIPORÃ
@@ -21926,43 +21925,43 @@ write.csv (RS_CE_Base_Notificados_SEDE,
 RS_CE_Base_Confirmados_SEDE <- data.frame("SE" = NA)
 
 RS_CE_Base_Confirmados_SEDE[1, 1] <- "2009/10"
-RS_CE_Base_Confirmados_SEDE[1, 2:54] <- as.integer(data.frame(RS22_09_10_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[1, 2:54] <- as.integer(data.frame(RS_09_10_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[2, 1] <- "2010/11"
-RS_CE_Base_Confirmados_SEDE[2, 2:54] <- as.integer(data.frame(RS22_10_11_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[2, 2:54] <- as.integer(data.frame(RS_10_11_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[3, 1] <- "2011/12"
-RS_CE_Base_Confirmados_SEDE[3, 2:54] <- as.integer(data.frame(RS22_11_12_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[3, 2:54] <- as.integer(data.frame(RS_11_12_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[4, 1] <- "2012/13"
-RS_CE_Base_Confirmados_SEDE[4, 2:54] <- as.integer(data.frame(RS22_12_13_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[4, 2:54] <- as.integer(data.frame(RS_12_13_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[5, 1] <- "2013/14"
-RS_CE_Base_Confirmados_SEDE[5, 2:54] <- as.integer(data.frame(RS22_13_14_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[5, 2:54] <- as.integer(data.frame(RS_13_14_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[6, 1] <- "2014/15"
-RS_CE_Base_Confirmados_SEDE[6, 2:54] <- as.integer(data.frame(RS22_14_15_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[6, 2:54] <- as.integer(data.frame(RS_14_15_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[7, 1] <- "2015/16"
-RS_CE_Base_Confirmados_SEDE[7, 2:54] <- as.integer(data.frame(RS22_15_16_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[7, 2:54] <- as.integer(data.frame(RS_15_16_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[8, 1] <- "2016/17"
-RS_CE_Base_Confirmados_SEDE[8, 2:54] <- as.integer(data.frame(RS22_16_17_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[8, 2:54] <- as.integer(data.frame(RS_16_17_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[9, 1] <- "2017/18"
-RS_CE_Base_Confirmados_SEDE[9, 2:54] <- as.integer(data.frame(RS22_17_18_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[9, 2:54] <- as.integer(data.frame(RS_17_18_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[10, 1] <- "2018/19"
-RS_CE_Base_Confirmados_SEDE[10, 2:54] <- as.integer(data.frame(RS22_18_19_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[10, 2:54] <- as.integer(data.frame(RS_18_19_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[11, 1] <- "2019/20"
-RS_CE_Base_Confirmados_SEDE[11, 2:54] <- as.integer(data.frame(RS22_19_20_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[11, 2:54] <- as.integer(data.frame(RS_19_20_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[12, 1] <- "2020/21"
-RS_CE_Base_Confirmados_SEDE[12, 2:54] <- as.integer(data.frame(RS22_20_21_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[12, 2:54] <- as.integer(data.frame(RS_20_21_SE_Confirmados[6, 2:54]))
 
 RS_CE_Base_Confirmados_SEDE[13, 1] <- "2021/22"
-RS_CE_Base_Confirmados_SEDE[13, 2:54] <- as.integer(data.frame(RS22_21_22_SE_Confirmados[6, 2:54]))
+RS_CE_Base_Confirmados_SEDE[13, 2:54] <- as.integer(data.frame(RS_21_22_SE_Confirmados[6, 2:54]))
 
 colnames (RS_CE_Base_Confirmados_SEDE)[1] <- "Período Sazonal"
 colnames (RS_CE_Base_Confirmados_SEDE)[2:24] <- c(31:53)
@@ -21970,8 +21969,10 @@ colnames (RS_CE_Base_Confirmados_SEDE)[25:54] <- c(1:30)
 
 #####Gravando tabela base do canal endêmico NOTIFICADOS#####
 
+assign(paste0("RS", RS, "_CE_Confirmados_SEDE_Base"), RS_CE_Base_Confirmados_SEDE)
+
 write.csv (RS_CE_Base_Confirmados_SEDE, 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS,"_CE_Confirmados_SEDE_Base.csv"), 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS,"_CE_Confirmados_Sede_BASE.csv"), 
            row.names = FALSE)
 
 rm(AUX,
@@ -21982,7 +21983,37 @@ rm(AUX,
    i,
    ID_REG,
    nrow,
-   RS)
+   RS, 
+   RS_09_10_SE_Confirmados,
+   RS_09_10_SE_Notificados,
+   RS_10_11_SE_Confirmados,
+   RS_10_11_SE_Notificados,
+   RS_11_12_SE_Confirmados,
+   RS_11_12_SE_Notificados,
+   RS_12_13_SE_Confirmados,
+   RS_12_13_SE_Notificados,
+   RS_13_14_SE_Confirmados,
+   RS_13_14_SE_Notificados,
+   RS_14_15_SE_Notificados,
+   RS_14_15_SE_Confirmados,
+   RS_15_16_SE_Confirmados,
+   RS_15_16_SE_Notificados,
+   RS_16_17_SE_Confirmados,
+   RS_16_17_SE_Notificados,
+   RS_17_18_SE_Confirmados,
+   RS_17_18_SE_Notificados,
+   RS_18_19_SE_Confirmados,
+   RS_18_19_SE_Notificados,
+   RS_19_20_SE_Confirmados,
+   RS_19_20_SE_Notificados,
+   RS_20_21_SE_Confirmados,
+   RS_20_21_SE_Notificados,
+   RS_21_22_SE_Confirmados,
+   RS_21_22_SE_Notificados,
+   RS_CE_Base_Confirmados_SEDE,
+   RS_CE_Base_Confirmados,
+   RS_CE_Base_Notificados,
+   RS_CE_Base_Notificados_SEDE)
 
 
 

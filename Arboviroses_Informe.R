@@ -58,9 +58,9 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 
 Fonte <- "Fonte: SINAN. BASE DBF acessada em 25/07/2023"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 28/07/2023"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 18/08/2023"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 28/07/2023"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 18/08/2023"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
@@ -9226,7 +9226,7 @@ RS22_GRAF_LACEN_MUNIC <- ggplot (AUX,
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold")) +
-  labs(caption = Fonte, 
+  labs(caption = Fonte_1, 
        x = NULL,
        y = "Número de Amostras",
        title = "AMOSTRAS ENCAMINHADAS/POSITIVAS - 22ªRS",
@@ -9282,7 +9282,7 @@ rm(PR_CHIK_22_23_AUX01, PR_CHIK_22_23_AUX02)
 
 ####Elaborando for loop para criar tabela de dados gerais de notificação da 22ª RS###
 
-PR_CHIK_22_23_GERAL <- BASE_IBGE[,-4]
+PR_CHIK_22_23_GERAL <- BASE_IBGE[,-c(4, 6)]
 
 PR_CHIK_22_23_GERAL$Notificados <- NA
 
@@ -10316,7 +10316,7 @@ annotation_scale(location = "br") +
   theme_minimal() +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
-                               "0,001 - 50" = "#FDF5E6",
+                               "0,001 - 50" = "#FFFACD",
                                "50,001 - 100" = "#EEE8AA",
                                "100,001 - 300" ="#FFD700",
                                "300,001 - 500" = "#DAA520",
@@ -10358,7 +10358,7 @@ PR_22_23_GRAF_INCIDENCIA_PROV_PR <- ggplot() +
   theme_minimal() +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
-                                "0,001 - 50" = "#FDF5E6",
+                                "0,001 - 50" = "#FFFACD",
                                 "50,001 - 100" = "#EEE8AA",
                                 "100,001 - 300" ="#FFD700",
                                 "300,001 - 500" = "#DAA520",
@@ -10402,7 +10402,7 @@ MAPA_BASE_PR <- left_join(MAPA_BASE, PR_CHIK_22_23_GERAL, by = c("name_muni" = "
 
 MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = Notificados,
                                            breaks = c(-Inf, 0, 10, 50, 100, 500, Inf),
-                                           labels = c("0 casos", "0 - 10", "11 - 50", 
+                                           labels = c("0 casos", "1 - 10", "11 - 50", 
                                                       "51 - 100", "101 - 500", ">500"))
 )
 
@@ -10421,7 +10421,7 @@ PR_22_23_GRAF_CHIK_Notificados <- ggplot() +
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Notificações", 
                      values = c("0 casos" = "white", 
-                                "0 - 10" = "#FDF5E6",    
+                                "1 - 10" = "#FFFACD",    
                                 "11 - 50" = "#EEE8AA",
                                   "51 - 100" = "#FFD700",
                                 "101 - 500" = "#DAA520",
@@ -10461,7 +10461,7 @@ PR_22_23_GRAF_CHIK_Incidência <- ggplot() +
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
-                                "0,001 - 50" = "#FDF5E6",
+                                "0,001 - 50" = "#FFFACD",
                                 "50,001 - 100" = "#EEE8AA",
                                 "100,001 - 300" ="#FFD700",
                                 "300,001 - 500" = "#DAA520",
@@ -10494,7 +10494,7 @@ MAPA_BASE_PR <- left_join(MAPA_BASE, PR_ZIKA_22_23_GERAL, by = c("name_muni" = "
 
 MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = NOTIFICADOS,
                                            breaks = c(-Inf, 0, 10, 50, 100, 500, Inf),
-                                           labels = c("0 casos", "0 - 10", "11 - 50", 
+                                           labels = c("0 casos", "1 - 10", "11 - 50", 
                                                       "51 - 100", "101 - 500", ">500"))
 )
 
@@ -10513,7 +10513,7 @@ PR_22_23_ZIKA_CHIK_Notificados <- ggplot() +
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Notificações", 
                      values = c("0 casos" = "white", 
-                                "0 - 10" = "#FDF5E6",    
+                                "1 - 10" = "#FFFACD",    
                                 "11 - 50" = "#EEE8AA",
                                 "51 - 100" = "#FFD700",
                                 "101 - 500" = "#DAA520",
@@ -10553,7 +10553,7 @@ PR_22_23_GRAF_ZIKA_Incidência <- ggplot() +
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
-                                "0,001 - 50" = "#FDF5E6",
+                                "0,001 - 50" = "#FFFACD",
                                 "50,001 - 100" = "#EEE8AA",
                                 "100,001 - 300" ="#FFD700",
                                 "300,001 - 500" = "#DAA520",
@@ -10631,7 +10631,7 @@ MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(RS == 22)
 
 MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = Notificados,
                                            breaks = c(-Inf, 0, 5, 10, 50, 100, 500, Inf),
-                                           labels = c("0 casos", "0 - 5", "6 - 10", "11 - 50", 
+                                           labels = c("0 casos", "1 - 5", "6 - 10", "11 - 50", 
                                                       "51 - 100", "101 - 500", ">500"))
 )
 
@@ -10645,7 +10645,7 @@ RS22_22_23_GRAF_CHK_Not <- ggplot() +
   coord_sf(expand = FALSE) +
   scale_fill_manual (name = "Notificações", 
                      values = c("0 casos" = "white", 
-                                "0 - 5" = "#FDF5E6",
+                                "1 - 5" = "#FFFACD",
                                 "6 - 10" = "#EEE8AA",    
                                 "11 - 50" = "#FFD700",
                                 "51 - 100" = "#DAA520",
@@ -10688,7 +10688,7 @@ RS22_22_23_GRAF_CHK_Conf <- ggplot() +
   theme_minimal() +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
-                                "0,001 - 50" = "#FDF5E6",
+                                "0,001 - 50" = "#FFFACD",
                                 "50,001 - 100" = "#EEE8AA",
                                 "100,001 - 300" ="#FFD700",
                                 "300,001 - 500" = "#DAA520",
@@ -10754,7 +10754,7 @@ RS22_22_23_GRAF_IIP_Ciclo4 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 4º Ciclo/2022 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -10853,7 +10853,7 @@ RS22_22_23_GRAF_IIP_Ciclo5 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 5º Ciclo/2022 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -10895,7 +10895,7 @@ RS22_22_23_GRAF_Tratamento_Ciclo5 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Tratados 5º Ciclo/2022 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -10952,7 +10952,7 @@ RS22_22_23_GRAF_IIP_Ciclo6 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 6º Ciclo/2022 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -10994,7 +10994,7 @@ RS22_22_23_GRAF_Tratamento_Ciclo6 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Tratados 6º Ciclo/2022 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -11051,7 +11051,7 @@ RS22_22_23_GRAF_IIP_Ciclo1 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 1º Ciclo/2023 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -11093,7 +11093,7 @@ RS22_22_23_GRAF_Tratamento_Ciclo1 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Tratados 1º Ciclo/2023 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -11150,7 +11150,7 @@ RS22_22_23_GRAF_IIP_Ciclo2 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 2º Ciclo/2023 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -11192,7 +11192,7 @@ RS22_22_23_GRAF_Tratamento_Ciclo2 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Tratados 2º Ciclo/2023 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -11249,7 +11249,7 @@ RS22_22_23_GRAF_IIP_Ciclo3 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 3º Ciclo/2023 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -11291,7 +11291,7 @@ RS22_22_23_GRAF_Tratamento_Ciclo3 <- ggplot() +
   theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Tratados 3º Ciclo/2023 - 22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),

@@ -66,7 +66,7 @@ Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 28/07/2023"     #
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("30")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("50")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -161,17 +161,59 @@ nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 ####  Base DBF do SINAN. Deve-se baixá-las, renomeá-las e salvá-las no diretório correto  ######
 
 DENGON2022 <- read.dbf(file = "Base_de_Dados/DBF/DENGON2022.dbf", 
-                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
+                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, 
+                                                 NU_ANO, SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC,
+                                                 NU_IDADE_N, CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, 
+                                                 NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, 
+                                                 CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N,
+                                                 LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, 
+                                                 AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, 
+                                                 TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO, 
+                                                 DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, 
+                                                 ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, 
+                                                 GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST,
+                                                 GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
 DENGON2023 <- read.dbf(file = "Base_de_Dados/DBF/DENGON2023.dbf", 
-                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
+                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, 
+                                                 SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, 
+                                                 CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO,
+                                                 NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, 
+                                                 EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, 
+                                                 LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT,
+                                                 AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, 
+                                                 TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO,
+                                                 DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, 
+                                                 ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, 
+                                                 GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST,
+                                                 GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
 
 CHIKON2022 <- read.dbf("Base_de_Dados/DBF/CHIKON2022.dbf",
-                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
+                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT,
+                                                 DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, 
+                                                 CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, 
+                                                 NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, 
+                                                 NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO,
+                                                 DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, 
+                                                 DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO,
+                                                 HOSPITALIZ, DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, 
+                                                 ALRM_PLAQ, ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, 
+                                                 GRAV_INSUF, GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, 
+                                                 GRAV_AST, GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
 CHIKON2023 <- read.dbf("Base_de_Dados/DBF/CHIKON2023.dbf",
-                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
+                       as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, 
+                                                 DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, CS_GESTANT, 
+                                                 CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, 
+                                                 CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, 
+                                                 CONJUNTVIT, ARTRITE, ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, 
+                                                 HEPATOPAT, RENAL, HIPERTENSA, ACIDO_PEPT, AUTO_IMUNE, DT_SORO, RESUL_SORO, DT_PCR, RESUL_PCR_, 
+                                                 SOROTIPO, CLASSI_FIN, CRITERIO, TPAUTOCTO, COUFINF, COMUNINF, CO_BAINF, EVOLUCAO, HOSPITALIZ, 
+                                                 DT_INTERNA, DT_OBITO, DT_ENCERRA, DT_ALRM, ALRM_LETAR, ALRM_HEPAT, ALRM_LIQ, ALRM_HIPOT, ALRM_PLAQ, 
+                                                 ALRM_VOM, ALRM_SANG, ALRM_HEMAT, ALRM_ABDOM, DT_GRAV, GRAV_PULSO, GRAV_CONV, GRAV_ENCH, GRAV_INSUF, 
+                                                 GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, 
+                                                 GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
 RS_Serie_Historica_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_Serie_Historica_Base.csv"),
                                       header = TRUE,
@@ -185,11 +227,11 @@ RS_CE_Confirmados_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arb
                                      header = TRUE,
                                      sep = ",")
 
-RS_CE_Notificados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE_Base.csv"),
+RS_CE_Notificados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Sede_Base.csv"),
                                               header = TRUE,
                                               sep = ",")
 
-RS_CE_Confirmados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SEDE_Base.csv"),
+RS_CE_Confirmados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Sede_BASE.csv"),
                                               header = TRUE,
                                               sep = ",")
 
@@ -616,6 +658,8 @@ AUX[(nrow(AUX)+ 1),2:54] <- apply(AUX[,2:54], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_22_23_SE_Notificados"), AUX)
+
+assign("RS_22_23_SE_Notificados", AUX)
 
 ########################################################################################################
 ###     Construindo um for loop para realizar a tabela de Confirmados por semana epidemiológica      ###
@@ -1229,6 +1273,8 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_22_23_SE_Confirmados"), AUX)
 
+assign("RS_22_23_SE_Confirmados", AUX)
+
 ###################################################################################################
 ####       Elaborando for loop para criar tabela de dados gerais de notificação da 22ª RS      ####
 ###################################################################################################
@@ -1417,6 +1463,8 @@ AUX$Em_Investigacao <- as.integer(AUX$Notificados) - (as.integer(AUX$Dengue + AU
 AUX$Sorotipos <- NA
 
 assign(paste0("RS", RS, "_22_23_GERAL"), AUX)
+
+assign("RS_22_23_GERAL", AUX)
 
 ####################################################################################################
 ####      Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade           #####
@@ -2490,17 +2538,17 @@ assign(paste0("RS", RS, "_22_23_SINAN_DECODIFICADO"), AUX)
 
 ####      Adicionando os dados do período atual na tabela Série Histórica     ####
 
-RS_Serie_Historica_Base[1, 15] <- sum(RS22_22_23_GERAL$Notificados)
-RS_Serie_Historica_Base[2, 15] <- sum(RS22_22_23_GERAL$Dengue)
-RS_Serie_Historica_Base[3, 15] <- sum(RS22_22_23_GERAL$D_S_A)
-RS_Serie_Historica_Base[4, 15] <- sum(RS22_22_23_GERAL$Dengue_Grave)
-RS_Serie_Historica_Base[5, 15] <- sum(RS22_22_23_GERAL$Hospitalizacao)
-RS_Serie_Historica_Base[6, 15] <- sum(RS22_22_23_GERAL$Autoctones)
-RS_Serie_Historica_Base[7, 15] <- sum(RS22_22_23_GERAL$DENV_I)
-RS_Serie_Historica_Base[8, 15] <- sum(RS22_22_23_GERAL$DENV_II)
-RS_Serie_Historica_Base[9, 15] <- sum(RS22_22_23_GERAL$DENV_III)
-RS_Serie_Historica_Base[10, 15] <- sum(RS22_22_23_GERAL$DENV_IV)
-RS_Serie_Historica_Base[11, 15] <- sum(RS22_22_23_GERAL$Obitos)
+RS_Serie_Historica_Base[1, 15] <- sum(RS_22_23_GERAL$Notificados)
+RS_Serie_Historica_Base[2, 15] <- sum(RS_22_23_GERAL$Dengue)
+RS_Serie_Historica_Base[3, 15] <- sum(RS_22_23_GERAL$D_S_A)
+RS_Serie_Historica_Base[4, 15] <- sum(RS_22_23_GERAL$Dengue_Grave)
+RS_Serie_Historica_Base[5, 15] <- sum(RS_22_23_GERAL$Hospitalizacao)
+RS_Serie_Historica_Base[6, 15] <- sum(RS_22_23_GERAL$Autoctones)
+RS_Serie_Historica_Base[7, 15] <- sum(RS_22_23_GERAL$DENV_I)
+RS_Serie_Historica_Base[8, 15] <- sum(RS_22_23_GERAL$DENV_II)
+RS_Serie_Historica_Base[9, 15] <- sum(RS_22_23_GERAL$DENV_III)
+RS_Serie_Historica_Base[10, 15] <- sum(RS_22_23_GERAL$DENV_IV)
+RS_Serie_Historica_Base[11, 15] <- sum(RS_22_23_GERAL$Obitos)
 
 
 AUX <- as.data.frame(t(RS_Serie_Historica_Base))
@@ -2521,8 +2569,6 @@ rownames(AUX) <- c(1:14)
 
 RS_Serie_Historica <- AUX
 
-rm(AUX, RS_Serie_Historica_Base)
-
 RS_Serie_Historica[,2] <- as.numeric(RS_Serie_Historica[,2])
 RS_Serie_Historica[,3] <- as.numeric(RS_Serie_Historica[,3])
 RS_Serie_Historica[,4] <- as.numeric(RS_Serie_Historica[,4])
@@ -2536,6 +2582,8 @@ RS_Serie_Historica[,11] <- as.numeric(RS_Serie_Historica[,11])
 RS_Serie_Historica[,12] <- as.numeric(RS_Serie_Historica[,12])
 
 assign(paste0("RS", RS, "_Serie_Historica"), RS_Serie_Historica) 
+
+rm(AUX, RS_Serie_Historica_Base, RS_22_23_GERAL, RS_Serie_Historica)
 
 ####################################################################################################################
 ################Trabalhando as tabelas base dos Canais Endêmicos####################################################
@@ -3485,7 +3533,7 @@ assign(paste0("RS", "_22_23_SE_Provaveis"), AUX[nrow(AUX), 2:54])
 assign(paste0("RS", RS, "_22_23_SE_Provaveis"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_22_23_SE_Provaveis"), AUX), 
-           "Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_22_23_SE_Descartados.csv", 
+           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_22_23_SE_Descartados.csv"), 
            row.names = FALSE)
 
 ###     CANAL ENDÊMICO Prováveis         ####
@@ -3573,32 +3621,32 @@ rm(RS_22_23_SE_Provaveis)
 
 ###       NOTIFICADOS     ########
 
-AUX_GRAF <- as.data.frame(RS22_22_23_SE_Notificados$Município)
+AUX_GRAF <- as.data.frame(RS_22_23_SE_Notificados$Município)
 
-AUX_GRAF[, 2] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 9])
-AUX_GRAF[, 3] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 8])
-AUX_GRAF[, 4] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 7])
-AUX_GRAF[, 5] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 6])
-AUX_GRAF[, 6] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 5])
-AUX_GRAF[, 7] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 4])
-AUX_GRAF[, 8] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 3])
-AUX_GRAF[, 9] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 2])
-AUX_GRAF[, 10] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE) - 1])
-AUX_GRAF[, 11] <- as.data.frame(RS22_22_23_SE_Notificados[, which(colnames(RS22_22_23_SE_Notificados) == SE)])
+AUX_GRAF[, 2] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 9])
+AUX_GRAF[, 3] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 8])
+AUX_GRAF[, 4] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 7])
+AUX_GRAF[, 5] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 6])
+AUX_GRAF[, 6] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 5])
+AUX_GRAF[, 7] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 4])
+AUX_GRAF[, 8] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 3])
+AUX_GRAF[, 9] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 2])
+AUX_GRAF[, 10] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE) - 1])
+AUX_GRAF[, 11] <- as.data.frame(RS_22_23_SE_Notificados[, which(colnames(RS_22_23_SE_Notificados) == SE)])
 
 colnames(AUX_GRAF)[1] <- "Municipios"
-colnames(AUX_GRAF)[2] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 9]
-colnames(AUX_GRAF)[3] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 8]
-colnames(AUX_GRAF)[4] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 7]
-colnames(AUX_GRAF)[5] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 6]
-colnames(AUX_GRAF)[6] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 5]
-colnames(AUX_GRAF)[7] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 4]
-colnames(AUX_GRAF)[8] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 3]
-colnames(AUX_GRAF)[9] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 2]
-colnames(AUX_GRAF)[10] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE) - 1]
-colnames(AUX_GRAF)[11] <- colnames(RS22_22_23_SE_Notificados)[which(colnames(RS22_22_23_SE_Notificados) == SE)]
+colnames(AUX_GRAF)[2] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 9]
+colnames(AUX_GRAF)[3] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 8]
+colnames(AUX_GRAF)[4] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 7]
+colnames(AUX_GRAF)[5] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 6]
+colnames(AUX_GRAF)[6] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 5]
+colnames(AUX_GRAF)[7] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 4]
+colnames(AUX_GRAF)[8] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 3]
+colnames(AUX_GRAF)[9] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 2]
+colnames(AUX_GRAF)[10] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE) - 1]
+colnames(AUX_GRAF)[11] <- colnames(RS_22_23_SE_Notificados)[which(colnames(RS_22_23_SE_Notificados) == SE)]
 
-AUX_GRAF[17,] <- colnames(AUX_GRAF)
+AUX_GRAF[nrow(AUX_GRAF),] <- colnames(AUX_GRAF)
 
 AUX_GRAF <- AUX_GRAF[c(17, 1:16),]
 
@@ -3610,32 +3658,20 @@ AUX_GRAF <- AUX_GRAF[-1,]
 
 colnames(AUX_GRAF)[1] <- "SE"
 
-AUX_GRAF <- data.frame(SE = AUX_GRAF[, 1],
-                       Arapuã = as.numeric(AUX_GRAF[, 2]),
-                       Ariranha_do_Ivaí = as.numeric(AUX_GRAF[, 3]),
-                       Cândido_de_Abreu = as.numeric(AUX_GRAF[, 4]),
-                       Cruzmaltina = as.numeric(AUX_GRAF[, 5]),
-                       Godoy_Moreira = as.numeric(AUX_GRAF[, 6]),
-                       Ivaiporã = as.numeric(AUX_GRAF[, 7]),
-                       Jardim_Alegre = as.numeric(AUX_GRAF[, 8]),
-                       Lidianópolis = as.numeric(AUX_GRAF[, 9]),
-                       Lunardelli = as.numeric(AUX_GRAF[, 10]),
-                       Manoel_Ribas = as.numeric(AUX_GRAF[, 11]),
-                       Mato_Rico = as.numeric(AUX_GRAF[, 12]),
-                       Nova_Tebas = as.numeric(AUX_GRAF[, 13]),
-                       Rio_Branco_do_Ivaí = as.numeric(AUX_GRAF[, 14]),
-                       Rosário_do_Ivaí = as.numeric(AUX_GRAF[, 15]),
-                       Santa_Maria_do_Oeste = as.numeric(AUX_GRAF[, 16]),
-                       São_João_do_Ivaí = as.numeric(AUX_GRAF[, 17]))
+AUX_GRAF <- as.data.frame(AUX_GRAF)
 
-SE_HIST_NOT_ARAPUÃ <- ggplot (AUX_GRAF, 
+###############  Realizando um for loop para construção dos gráficos   ######
+
+for(i in colnames(AUX_GRAF[-1])){
+
+AUX <- ggplot (AUX_GRAF, 
                               aes(x = reorder(SE, as.numeric(SE)),
-                                  y = Arapuã)) + 
+                                  y = as.numeric(AUX_GRAF[, i]))) + 
   theme(axis.text.x = element_text(face = "bold")) +
   labs(caption = Fonte, 
        x = "Semana Epidemiológica",
        y = "Número de Casos",
-       title = "ARAPUÃ - Notificados") +
+       title = paste0(i, " - Notificados")) +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
@@ -3646,10 +3682,14 @@ SE_HIST_NOT_ARAPUÃ <- ggplot (AUX_GRAF,
            position = "dodge",
            color = "black",
            fill = "#8FBC8F") + 
-  geom_label(aes(label = Arapuã),
+  geom_label(aes(label = AUX_GRAF[, i]),
              alpha = 0.5,
-             nudge_y = 0.01) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+             vjust = 0.1) +
+  scale_y_continuous(expand = expansion(mult = c(0, 1)))
+
+assign(paste0("SE_HIST_NOT_", i), AUX)}
+
+plot (`
 
 SE_HIST_NOT_ARIRANHA <- ggplot (AUX_GRAF, 
                                 aes(x = reorder(SE, as.numeric(SE)), 
