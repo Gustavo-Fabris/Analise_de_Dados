@@ -285,7 +285,7 @@ AUX01 <- DENGON2023 %>%
          SEM_PRI >= 202331)
 
 AUX02 <- DENGON2024 %>% 
-  filter(ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG, 
+  filter((ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG), 
          SEM_PRI <=202430)
 
 SINAN_DENGUE_RS <- rbind(AUX01, 
