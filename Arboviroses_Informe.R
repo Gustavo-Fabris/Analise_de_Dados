@@ -56,11 +56,11 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 21/08/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 30/08/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
 Fonte_1 <- "Fonte: Lacen. Acesso em 28/07/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 21/08/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 30/08/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
@@ -191,7 +191,6 @@ DENGON2024 <- read.dbf(file = "Base_de_Dados/DBF/DENGON2024.dbf",
                                                  GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST,
                                                  GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
-
 CHIKON2023 <- read.dbf("Base_de_Dados/DBF/CHIKON2023.dbf",
                        as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_GEO1,ID_GEO2, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT,
                                                  DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, CS_SEXO, 
@@ -285,7 +284,7 @@ AUX01 <- DENGON2023 %>%
          SEM_PRI >= 202331)
 
 AUX02 <- DENGON2024 %>% 
-  filter((ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG), 
+  filter(ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG, 
          SEM_PRI <=202430)
 
 SINAN_DENGUE_RS <- rbind(AUX01, 
@@ -2704,7 +2703,8 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
 RS_23_24_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
-                                   face = "bold")) +
+                                   face = "bold",
+                                   size = 12)) +
   labs(caption = Fonte,
        title = "Canal Endêmico Casos Notificados - 2023/24") +
   theme(
@@ -2714,12 +2714,19 @@ RS_23_24_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,`2023/24`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Media), 
+            fill = "#556B2F") +
+  geom_line(aes(y = `2023/24`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 
@@ -2840,7 +2847,8 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
 RS_23_24_GRAF_CE_Confirmados <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
-                                   face = "bold")) +
+                                   face = "bold",
+                                   size = 12)) +
   labs(caption = Fonte,
        title = "Canal Endêmico Casos CONFIRMADOS - 2023/24") +
   theme(
@@ -2850,12 +2858,19 @@ RS_23_24_GRAF_CE_Confirmados <- ggplot(AUX_GRAF, aes(Ordem))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,`2023/24`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Media), 
+            fill = "#556B2F") +
+  geom_line(aes(y = `2023/24`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 #####################################################################################################
@@ -3593,9 +3608,11 @@ colnames(AUX_GRAF)[8] <- "Provaveis"
 RS_23_24_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
-                                   face = "bold")) +
+                                   face = "bold",
+                                   size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos PROVÁVEIS - 2023/24") +
+       title = "Canal Endêmico Casos PROVÁVEIS - 2023/24",
+       subtitle = "Casos Prováveis = Casos Notificados + Casos Descartados") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
@@ -3603,12 +3620,19 @@ RS_23_24_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,Provaveis), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Media), 
+            fill = "#556B2F") +
+  geom_line(aes(y = Provaveis), 
+            stat = "identity", 
+            color = "black",
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 rm(RS_23_24_SE_Provaveis)
@@ -3646,7 +3670,7 @@ colnames(AUX_GRAF)[11] <- colnames(RS_23_24_SE_Notificados)[which(colnames(RS_23
 
 AUX_GRAF[nrow(AUX_GRAF),] <- colnames(AUX_GRAF)
 
-AUX_GRAF <- AUX_GRAF[c(17, 1:16),]
+AUX_GRAF <- AUX_GRAF[c(nrow(AUX_GRAF), 1:(nrow(AUX_GRAF) -1)), ]
 
 AUX_GRAF <- t(AUX_GRAF)
 
@@ -3658,381 +3682,70 @@ colnames(AUX_GRAF)[1] <- "SE"
 
 AUX_GRAF <- as.data.frame(AUX_GRAF)
 
-AUX_GRAF <- data.frame(SE = AUX_GRAF[, 1],
-                       Arapuã = as.numeric(AUX_GRAF[, 2]),
-                       Ariranha_do_Ivaí = as.numeric(AUX_GRAF[, 3]),
-                       Cândido_de_Abreu = as.numeric(AUX_GRAF[, 4]),
-                       Cruzmaltina = as.numeric(AUX_GRAF[, 5]),
-                       Godoy_Moreira = as.numeric(AUX_GRAF[, 6]),
-                       Ivaiporã = as.numeric(AUX_GRAF[, 7]),
-                       Jardim_Alegre = as.numeric(AUX_GRAF[, 8]),
-                       Lidianópolis = as.numeric(AUX_GRAF[, 9]),
-                       Lunardelli = as.numeric(AUX_GRAF[, 10]),
-                       Manoel_Ribas = as.numeric(AUX_GRAF[, 11]),
-                       Mato_Rico = as.numeric(AUX_GRAF[, 12]),
-                       Nova_Tebas = as.numeric(AUX_GRAF[, 13]),
-                       Rio_Branco_do_Ivaí = as.numeric(AUX_GRAF[, 14]),
-                       Rosário_do_Ivaí = as.numeric(AUX_GRAF[, 15]),
-                       Santa_Maria_do_Oeste = as.numeric(AUX_GRAF[, 16]),
-                       São_João_do_Ivaí = as.numeric(AUX_GRAF[, 17]))
+AUX_GRAF[, 2: ncol(AUX_GRAF)] <- apply(AUX_GRAF[, 2: ncol(AUX_GRAF)], 2, as.numeric)
+rownames(AUX_GRAF) <- 1: nrow(AUX_GRAF)
 
-###############  Realizando um for loop para construção dos gráficos   ######
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
 
-SE_HIST_NOT_ARAPUÃ <- ggplot (AUX_GRAF, 
-                              aes(x = reorder(SE, as.numeric(SE)), 
-                                  y = Arapuã)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ARAPUÃ - Notificados")+
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Arapuã),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+###############  Criando uma função para o tema do gráfico   ##################
 
-SE_HIST_NOT_ARIRANHA <- ggplot (AUX_GRAF, 
-                                aes(x = reorder(SE, as.numeric(SE)), 
-                                    y = Ariranha_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ARIRANHA DO IVAÍ - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Ariranha_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+Theme_Hist <- function(){ 
+  theme_minimal(base_size = 10) %+replace%  
+    theme(
+      axis.text.x = element_text(face = "bold"),
+      panel.grid.major = element_line(color = "#C0C0C0"),
+      panel.grid.minor = element_blank(),
+      panel.background = element_rect(fill = "#F5F5F5"),
+      plot.title = element_text(face = "bold", 
+                                size = 15, 
+                                colour = "#556B2F")
+    )
+}
 
-SE_HIST_NOT_CANDIDO <- ggplot (AUX_GRAF, 
-                               aes(x = reorder(SE, as.numeric(SE)), 
-                                   y = Cândido_de_Abreu)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "CÂNDIDO DE ABREU - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Cândido_de_Abreu),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+######   Criando o conjunto de gráficos dos histogramas via Lapply.  ######
 
-SE_HIST_NOT_CRUZMALTINA <- ggplot (AUX_GRAF, 
-                                   aes(x = reorder(SE, as.numeric(SE)),
-                                       y = Cruzmaltina)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "CRUZMALTINA - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Cruzmaltina),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+AUX_HIST_NOT_LIST <- AUX_GRAF %>%
+  pivot_longer(-SE, names_to = "Municipios") %>% 
+  mutate(
+    SE = SE,
+    Municipios = gsub("_", " ", Municipios)
+  ) %>%
+  group_split(Municipios) %>% 
+  lapply(\(dados) {
+    titulo <- dados$Municipios %>% 
+      unique() %>% 
+      paste0(" - Notificados")
+    ggplot(dados, aes(x = SE, 
+                      y = value)
+    ) + 
+      geom_col(color = "black", 
+               fill = "#8FBC8F") + 
+      geom_label(aes(label = value), 
+                 alpha = 0.5, 
+                 vjust = 0.1) +
+      labs(
+        caption = Fonte, 
+        x = "Semana Epidemiológica",
+        y = "Número de Casos",
+        title = titulo
+      ) +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+      Theme_Hist()
+  })
 
-SE_HIST_NOT_GODOY <- ggplot (AUX_GRAF, 
-                             aes(x = reorder(SE, as.numeric(SE)), 
-                                 y = Godoy_Moreira)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "GODOY MOREIRA - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Godoy_Moreira),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+RS_23_24_GRAF_Histograma_Notificados_01 <- (AUX_HIST_NOT_LIST[[1]] + AUX_HIST_NOT_LIST[[2]]) / 
+  (AUX_HIST_NOT_LIST[[3]] + AUX_HIST_NOT_LIST[[4]]) / 
+  (AUX_HIST_NOT_LIST[[5]] + AUX_HIST_NOT_LIST[[6]]) / 
+  (AUX_HIST_NOT_LIST[[7]] + AUX_HIST_NOT_LIST[[8]]) 
 
-SE_HIST_NOT_IVAIPORA <- ggplot (AUX_GRAF, 
-                                aes(x = reorder(SE, as.numeric(SE)),
-                                    y = Ivaiporã)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "IVAIPORÃ - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Ivaiporã),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+RS_23_24_GRAF_Histograma_Notificados_02 <- (AUX_HIST_NOT_LIST[[9]] + AUX_HIST_NOT_LIST[[10]]) / 
+  (AUX_HIST_NOT_LIST[[11]] + AUX_HIST_NOT_LIST[[12]]) / 
+  (AUX_HIST_NOT_LIST[[13]] + AUX_HIST_NOT_LIST[[14]]) / 
+  (AUX_HIST_NOT_LIST[[15]] + AUX_HIST_NOT_LIST[[16]]) 
 
-SE_HIST_NOT_JARDIM <- ggplot (AUX_GRAF, 
-                              aes(x = reorder(SE, as.numeric(SE)), 
-                                  y = Jardim_Alegre)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "JARDIM ALEGRE - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Jardim_Alegre),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_LIDIANÓPOLIS <- ggplot (AUX_GRAF, 
-                                    aes(x = reorder(SE, as.numeric(SE)),
-                                        y = Lidianópolis)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "LIDIANÓPOLIS - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Lidianópolis),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-RS22_23_24_GRAF_Histograma_Notificados_01 <- (SE_HIST_NOT_ARAPUÃ + SE_HIST_NOT_ARIRANHA) / (SE_HIST_NOT_CANDIDO + SE_HIST_NOT_CRUZMALTINA) / (SE_HIST_NOT_GODOY + SE_HIST_NOT_IVAIPORA) / (SE_HIST_NOT_JARDIM + SE_HIST_NOT_LIDIANÓPOLIS) 
-
-SE_HIST_NOT_LUNARDELLI <- ggplot (AUX_GRAF, 
-                                  aes(x = reorder(SE, as.numeric(SE)), 
-                                      y = Lunardelli)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "LUNARDELLI - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Lunardelli),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_MANOEL_RIBAS <- ggplot (AUX_GRAF, 
-                                    aes(x = reorder(SE, as.numeric(SE)), 
-                                        y = Manoel_Ribas)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "MANOEL RIBAS - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Manoel_Ribas),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_MATO_RICO <- ggplot (AUX_GRAF, 
-                                 aes(x = reorder(SE, as.numeric(SE)), 
-                                     y = Mato_Rico)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "MATO RICO - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Mato_Rico),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_NOVA_TEBAS <- ggplot (AUX_GRAF, 
-                                  aes(x = reorder(SE, as.numeric(SE)),
-                                      y = Nova_Tebas)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "NOVA TEBAS - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Nova_Tebas),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_RBI <- ggplot (AUX_GRAF, 
-                           aes(x = reorder(SE, as.numeric(SE)), 
-                               y = Rio_Branco_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "RIO BRANCO DO IVAÍ - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Rio_Branco_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_RSI <- ggplot (AUX_GRAF, 
-                           aes(x = reorder(SE, as.numeric(SE)),
-                               y = Rosário_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ROSÁRIO DO IVAÍ - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Rosário_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_SMO <- ggplot (AUX_GRAF, 
-                           aes(x = reorder(SE, as.numeric(SE)), 
-                               y = Santa_Maria_do_Oeste)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "SANTA MARIA DO OESTE - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = Santa_Maria_do_Oeste),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_NOT_SJI <- ggplot (AUX_GRAF, 
-                           aes(x = reorder(SE, as.numeric(SE)), 
-                               y = São_João_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "SÃO JOÃO DO IVAÍ - Notificados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#8FBC8F") + 
-  geom_label(aes(label = São_João_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-RS22_23_24_GRAF_Histograma_Notificados_02 <- (SE_HIST_NOT_LUNARDELLI + SE_HIST_NOT_MANOEL_RIBAS) / (SE_HIST_NOT_MATO_RICO + SE_HIST_NOT_NOVA_TEBAS) / (SE_HIST_NOT_RBI + SE_HIST_NOT_RSI) / (SE_HIST_NOT_SMO + SE_HIST_NOT_SJI) 
 
 ###     Confirmados    #####
 
@@ -4073,380 +3786,56 @@ AUX_GRAF <- AUX_GRAF[-1,]
 
 colnames(AUX_GRAF)[1] <- "SE"
 
-AUX_GRAF <- data.frame(SE = AUX_GRAF[, 1],
-                       Arapuã = as.numeric(AUX_GRAF[, 2]),
-                       Ariranha_do_Ivaí = as.numeric(AUX_GRAF[, 3]),
-                       Cândido_de_Abreu = as.numeric(AUX_GRAF[, 4]),
-                       Cruzmaltina = as.numeric(AUX_GRAF[, 5]),
-                       Godoy_Moreira = as.numeric(AUX_GRAF[, 6]),
-                       Ivaiporã = as.numeric(AUX_GRAF[, 7]),
-                       Jardim_Alegre = as.numeric(AUX_GRAF[, 8]),
-                       Lidianópolis = as.numeric(AUX_GRAF[, 9]),
-                       Lunardelli = as.numeric(AUX_GRAF[, 10]),
-                       Manoel_Ribas = as.numeric(AUX_GRAF[, 11]),
-                       Mato_Rico = as.numeric(AUX_GRAF[, 12]),
-                       Nova_Tebas = as.numeric(AUX_GRAF[, 13]),
-                       Rio_Branco_do_Ivaí = as.numeric(AUX_GRAF[, 14]),
-                       Rosário_do_Ivaí = as.numeric(AUX_GRAF[, 15]),
-                       Santa_Maria_do_Oeste = as.numeric(AUX_GRAF[, 16]),
-                       São_João_do_Ivaí = as.numeric(AUX_GRAF[, 17]))
+AUX_GRAF <- as.data.frame(AUX_GRAF)
 
-SE_HIST_CONF_ARAPUÃ <- ggplot (AUX_GRAF, 
-                               aes(x = reorder(SE, as.numeric(SE)),
-                                   y = Arapuã)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ARAPUÃ - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           position = "dodge",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Arapuã),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+AUX_GRAF[, 2: ncol(AUX_GRAF)] <- apply(AUX_GRAF[, 2: ncol(AUX_GRAF)], 2, as.numeric)
+rownames(AUX_GRAF) <- 1: nrow(AUX_GRAF)
 
-SE_HIST_CONF_ARIRANHA <- ggplot (AUX_GRAF, 
-                                 aes(x = reorder(SE, as.numeric(SE)), 
-                                     y = Ariranha_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ARIRANHA DO IVAÍ - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Ariranha_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
 
-SE_HIST_CONF_CANDIDO <- ggplot (AUX_GRAF, 
-                                aes(x = reorder(SE, as.numeric(SE)), 
-                                    y = Cândido_de_Abreu)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "CÂNDIDO DE ABREU - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Cândido_de_Abreu),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+######   Criando o conjunto de gráficos dos histogramas via Lapply.  ######
 
-SE_HIST_CONF_CRUZMALTINA <- ggplot (AUX_GRAF, 
-                                    aes(x = reorder(SE, as.numeric(SE)),
-                                        y = Cruzmaltina)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "CRUZMALTINA - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Cruzmaltina),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+AUX_HIST_CONF_LIST <- AUX_GRAF %>%
+  pivot_longer(-SE, names_to = "Municipios") %>% 
+  mutate(
+    SE = SE,
+    Municipios = gsub("_", " ", Municipios)
+  ) %>%
+  group_split(Municipios) %>% 
+  lapply(\(dados) {
+    titulo <- dados$Municipios %>% 
+      unique() %>% 
+      paste0(" - Confirmados")
+    ggplot(dados, aes(x = SE, 
+                      y = value)
+    ) + 
+      geom_col(color = "black", 
+               fill = "#8C7853") + 
+      geom_label(aes(label = value), 
+                 alpha = 0.5, 
+                 vjust = 0.1) +
+      labs(
+        caption = Fonte, 
+        x = "Semana Epidemiológica",
+        y = "Número de Casos",
+        title = titulo
+      ) +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+      Theme_Hist()
+  })
 
-SE_HIST_CONF_GODOY <- ggplot (AUX_GRAF, 
-                              aes(x = reorder(SE, as.numeric(SE)), 
-                                  y = Godoy_Moreira)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "GODOY MOREIRA - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Godoy_Moreira),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+RS_23_24_GRAF_Histograma_Confirmados_01 <- (AUX_HIST_CONF_LIST[[1]] + AUX_HIST_CONF_LIST[[2]]) / 
+  (AUX_HIST_CONF_LIST[[3]] + AUX_HIST_CONF_LIST[[4]]) / 
+  (AUX_HIST_CONF_LIST[[5]] + AUX_HIST_CONF_LIST[[6]]) / 
+  (AUX_HIST_CONF_LIST[[7]] + AUX_HIST_CONF_LIST[[8]]) 
 
-SE_HIST_CONF_IVAIPORA <- ggplot (AUX_GRAF, 
-                                 aes(x = reorder(SE, as.numeric(SE)),
-                                     y = Ivaiporã)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "IVAIPORÃ - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Ivaiporã),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_JARDIM <- ggplot (AUX_GRAF, 
-                               aes(x = reorder(SE, as.numeric(SE)), 
-                                   y = Jardim_Alegre)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "JARDIM ALEGRE - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Jardim_Alegre),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_LIDIANÓPOLIS <- ggplot (AUX_GRAF, 
-                                     aes(x = reorder(SE, as.numeric(SE)),
-                                         y = Lidianópolis)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "LIDIANÓPOLIS - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Lidianópolis),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-RS22_23_24_GRAF_Histograma_Confirmados_01 <- (SE_HIST_CONF_ARAPUÃ + SE_HIST_CONF_ARIRANHA) / (SE_HIST_CONF_CANDIDO + SE_HIST_CONF_CRUZMALTINA) / (SE_HIST_CONF_GODOY + SE_HIST_CONF_IVAIPORA) / (SE_HIST_CONF_JARDIM + SE_HIST_CONF_LIDIANÓPOLIS) 
-
-SE_HIST_CONF_LUNARDELLI <- ggplot (AUX_GRAF, 
-                                   aes(x = reorder(SE, as.numeric(SE)), 
-                                       y = Lunardelli)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "LUNARDELLI - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Lunardelli),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_MANOEL_RIBAS <- ggplot (AUX_GRAF, 
-                                     aes(x = reorder(SE, as.numeric(SE)), 
-                                         y = Manoel_Ribas)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "MANOEL RIBAS - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Manoel_Ribas),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_MATO_RICO <- ggplot (AUX_GRAF, 
-                                  aes(x = reorder(SE, as.numeric(SE)), 
-                                      y = Mato_Rico)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "MATO RICO - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Mato_Rico),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_NOVA_TEBAS <- ggplot (AUX_GRAF, 
-                                   aes(x = reorder(SE, as.numeric(SE)),
-                                       y = Nova_Tebas)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "NOVA TEBAS - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Nova_Tebas),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_RBI <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)), 
-                                y = Rio_Branco_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "RIO BRANCO DO IVAÍ - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Rio_Branco_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_RSI <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)),
-                                y = Rosário_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ROSÁRIO DO IVAÍ - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Rosário_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_SMO <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)), 
-                                y = Santa_Maria_do_Oeste)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "SANTA MARIA DO OESTE - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = Santa_Maria_do_Oeste),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_CONF_SJI <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)), 
-                                y = São_João_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "SÃO JOÃO DO IVAÍ - Confirmados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#B0C4DE") + 
-  geom_label(aes(label = São_João_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-RS22_23_24_GRAF_Histograma_Confirmados_02 <- (SE_HIST_CONF_LUNARDELLI + SE_HIST_CONF_MANOEL_RIBAS) / (SE_HIST_CONF_MATO_RICO + SE_HIST_CONF_NOVA_TEBAS) / (SE_HIST_CONF_RBI + SE_HIST_CONF_RSI) / (SE_HIST_CONF_SMO + SE_HIST_CONF_SJI) 
+RS_23_24_GRAF_Histograma_Confirmados_02 <- (AUX_HIST_CONF_LIST[[9]] + AUX_HIST_CONF_LIST[[10]]) / 
+  (AUX_HIST_CONF_LIST[[11]] + AUX_HIST_CONF_LIST[[12]]) / 
+  (AUX_HIST_CONF_LIST[[13]] + AUX_HIST_CONF_LIST[[14]]) / 
+  (AUX_HIST_CONF_LIST[[15]] + AUX_HIST_CONF_LIST[[16]]) 
 
 ######Histogramas
 
@@ -4489,382 +3878,55 @@ AUX_GRAF <- AUX_GRAF[-1,]
 
 colnames(AUX_GRAF)[1] <- "SE"
 
-AUX_GRAF <- data.frame(SE = AUX_GRAF[, 1],
-                       Arapuã = as.numeric(AUX_GRAF[, 2]),
-                       Ariranha_do_Ivaí = as.numeric(AUX_GRAF[, 3]),
-                       Cândido_de_Abreu = as.numeric(AUX_GRAF[, 4]),
-                       Cruzmaltina = as.numeric(AUX_GRAF[, 5]),
-                       Godoy_Moreira = as.numeric(AUX_GRAF[, 6]),
-                       Ivaiporã = as.numeric(AUX_GRAF[, 7]),
-                       Jardim_Alegre = as.numeric(AUX_GRAF[, 8]),
-                       Lidianópolis = as.numeric(AUX_GRAF[, 9]),
-                       Lunardelli = as.numeric(AUX_GRAF[, 10]),
-                       Manoel_Ribas = as.numeric(AUX_GRAF[, 11]),
-                       Mato_Rico = as.numeric(AUX_GRAF[, 12]),
-                       Nova_Tebas = as.numeric(AUX_GRAF[, 13]),
-                       Rio_Branco_do_Ivaí = as.numeric(AUX_GRAF[, 14]),
-                       Rosário_do_Ivaí = as.numeric(AUX_GRAF[, 15]),
-                       Santa_Maria_do_Oeste = as.numeric(AUX_GRAF[, 16]),
-                       São_João_do_Ivaí = as.numeric(AUX_GRAF[, 17]))
+AUX_GRAF <- as.data.frame(AUX_GRAF)
 
-SE_HIST_PROV_ARAPUÃ <- ggplot (AUX_GRAF, 
-                               aes(x = reorder(SE, as.numeric(SE)),
-                                   y = Arapuã)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica", 
-       y = "Número de Casos",
-       title = "ARAPUÃ - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           position = "dodge",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Arapuã),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+AUX_GRAF[, 2: ncol(AUX_GRAF)] <- apply(AUX_GRAF[, 2: ncol(AUX_GRAF)], 2, as.numeric)
+rownames(AUX_GRAF) <- 1: nrow(AUX_GRAF)
 
-SE_HIST_PROV_ARIRANHA <- ggplot (AUX_GRAF, 
-                                 aes(x = reorder(SE, as.numeric(SE)), 
-                                     y = Ariranha_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ARIRANHA DO IVAÍ - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Ariranha_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
+colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
 
-SE_HIST_PROV_CANDIDO <- ggplot (AUX_GRAF, 
-                                aes(x = reorder(SE, as.numeric(SE)), 
-                                    y = Cândido_de_Abreu)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "CÂNDIDO DE ABREU - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Cândido_de_Abreu),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+AUX_HIST_PROV_LIST <- AUX_GRAF %>%
+  pivot_longer(-SE, names_to = "Municipios") %>% 
+  mutate(
+    SE = SE,
+    Municipios = gsub("_", " ", Municipios)
+  ) %>%
+  group_split(Municipios) %>% 
+  lapply(\(dados) {
+    titulo <- dados$Municipios %>% 
+      unique() %>% 
+      paste0(" - Prováveis")
+    ggplot(dados, aes(x = SE, 
+                      y = value)
+    ) + 
+      geom_col(color = "black", 
+               fill = "#CFB53B") + 
+      geom_label(aes(label = value), 
+                 alpha = 0.5, 
+                 vjust = 0.1) +
+      labs(
+        caption = Fonte, 
+        x = "Semana Epidemiológica",
+        y = "Número de Casos",
+        title = titulo
+      ) +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+      Theme_Hist()
+  })
 
-SE_HIST_PROV_CRUZMALTINA <- ggplot (AUX_GRAF, 
-                                    aes(x = reorder(SE, as.numeric(SE)),
-                                        y = Cruzmaltina)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "CRUZMALTINA - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Cruzmaltina),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+RS_23_24_GRAF_Histograma_Provaveis_01 <- (AUX_HIST_PROV_LIST[[1]] + AUX_HIST_PROV_LIST[[2]]) / 
+  (AUX_HIST_PROV_LIST[[3]] + AUX_HIST_PROV_LIST[[4]]) / 
+  (AUX_HIST_PROV_LIST[[5]] + AUX_HIST_PROV_LIST[[6]]) / 
+  (AUX_HIST_PROV_LIST[[7]] + AUX_HIST_PROV_LIST[[8]]) 
 
-SE_HIST_PROV_GODOY <- ggplot (AUX_GRAF, 
-                              aes(x = reorder(SE, as.numeric(SE)), 
-                                  y = Godoy_Moreira)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "GODOY MOREIRA - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Godoy_Moreira),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+RS_23_24_GRAF_Histograma_Provaveis_02 <- (AUX_HIST_PROV_LIST[[9]] + AUX_HIST_PROV_LIST[[10]]) / 
+  (AUX_HIST_PROV_LIST[[11]] + AUX_HIST_PROV_LIST[[12]]) / 
+  (AUX_HIST_PROV_LIST[[13]] + AUX_HIST_PROV_LIST[[14]]) / 
+  (AUX_HIST_PROV_LIST[[15]] + AUX_HIST_PROV_LIST[[16]]) 
 
-SE_HIST_PROV_IVAIPORA <- ggplot (AUX_GRAF, 
-                                 aes(x = reorder(SE, as.numeric(SE)),
-                                     y = Ivaiporã)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "IVAIPORÃ - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Ivaiporã),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_JARDIM <- ggplot (AUX_GRAF, 
-                               aes(x = reorder(SE, as.numeric(SE)), 
-                                   y = Jardim_Alegre)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "JARDIM ALEGRE - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Jardim_Alegre),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_LIDIANÓPOLIS <- ggplot (AUX_GRAF, 
-                                     aes(x = reorder(SE, as.numeric(SE)),
-                                         y = Lidianópolis)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "LIDIANÓPOLIS - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Lidianópolis),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-RS22_23_24_GRAF_Histograma_Provaveis_01 <- (SE_HIST_PROV_ARAPUÃ + SE_HIST_PROV_ARIRANHA) / (SE_HIST_PROV_CANDIDO + SE_HIST_PROV_CRUZMALTINA) / (SE_HIST_PROV_GODOY + SE_HIST_PROV_IVAIPORA) / (SE_HIST_PROV_JARDIM + SE_HIST_PROV_LIDIANÓPOLIS) 
-
-SE_HIST_PROV_LUNARDELLI <- ggplot (AUX_GRAF, 
-                                   aes(x = reorder(SE, as.numeric(SE)), 
-                                       y = Lunardelli)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "LUNARDELLI - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Lunardelli),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_MANOEL_RIBAS <- ggplot (AUX_GRAF, 
-                                     aes(x = reorder(SE, as.numeric(SE)), 
-                                         y = Manoel_Ribas)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "MANOEL RIBAS - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Manoel_Ribas),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_MATO_RICO <- ggplot (AUX_GRAF, 
-                                  aes(x = reorder(SE, as.numeric(SE)), 
-                                      y = Mato_Rico)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "MATO RICO - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Mato_Rico),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_NOVA_TEBAS <- ggplot (AUX_GRAF, 
-                                   aes(x = reorder(SE, as.numeric(SE)),
-                                       y = Nova_Tebas)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "NOVA TEBAS - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Nova_Tebas),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_RBI <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)), 
-                                y = Rio_Branco_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "RIO BRANCO DO IVAÍ - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Rio_Branco_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_RSI <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)),
-                                y = Rosário_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "ROSÁRIO DO IVAÍ - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Rosário_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_SMO <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)), 
-                                y = Santa_Maria_do_Oeste)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "SANTA MARIA DO OESTE - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = Santa_Maria_do_Oeste),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-SE_HIST_PROV_SJI <- ggplot (AUX_GRAF, 
-                            aes(x = reorder(SE, as.numeric(SE)), 
-                                y = São_João_do_Ivaí)) + 
-  theme(axis.text.x = element_text(face = "bold")) +
-  labs(caption = Fonte, 
-       x = "Semana Epidemiológica",
-       y = "Número de Casos",
-       title = "SÃO JOÃO DO IVAÍ - Prováveis") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 15,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "#708090") + 
-  geom_label(aes(label = São_João_do_Ivaí),
-             alpha = 0.5,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-RS22_23_24_GRAF_Histograma_Provaveis_02 <- (SE_HIST_PROV_LUNARDELLI + SE_HIST_PROV_MANOEL_RIBAS) / (SE_HIST_PROV_MATO_RICO + SE_HIST_PROV_NOVA_TEBAS) / (SE_HIST_PROV_RBI + SE_HIST_PROV_RSI) / (SE_HIST_PROV_SMO + SE_HIST_PROV_SJI) 
-
-rm(AUX_GRAF)
 
 ################################################################
 ################################################################
@@ -4900,7 +3962,7 @@ RS22_Serie_Historica_GRAF_Not_Conf <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = "Período Sazonal",
        y = "Número de Casos",
-       title = "CASOS NOTIFICADOS/CONFIRMADOS 22ªRS (2009/10 - 2023/24)") +
+       title = paste0("CASOS NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2009/10 - 2023/24)")) +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
@@ -4945,16 +4007,16 @@ RS22_Serie_Historica_GRAF_Hospitalizados <- ggplot (RS_Serie_Historica,
   theme(axis.text.x = element_text(angle = 50, 
                                    vjust = .5,
                                    face = "bold",
-                                   size = 12)) +
+                                   size = 14)) +
   labs(caption = Fonte, 
        x = "Período Sazonal",
        y = "Número de Casos",
-       title = "CASOS HOSPITALIZADOS 22ªRS (2009/10 - 2023/24)") +
+       title = paste0("CASOS HOSPITALIZADOS ", RS, "ªRS (2009/10 - 2023/24)") )+
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity", 
            fill = "#0F815D",
@@ -4974,16 +4036,17 @@ RS22_Serie_Historica_GRAF_Sorotipo <- ggplot (RS_Serie_Historica,
   theme(axis.text.x = element_text(angle = 50, 
                                    vjust = .5,
                                    face = "bold",
-                                   size = 12)) +
+                                   size = 14)) +
   labs(caption = Fonte, 
        x = "Período Sazonal",
        y = "Número de Casos",
-       title = "SOROTIPO CIRCULANTE 22ªRS (2009/10 - 2023/24)") +
+       title = paste0("SOROTIPO CIRCULANTE ", RS, "ªRS (2009/10 - 2023/24)"),
+       subtitle = "Sorotipo viral identificado via Pesquisa de Arbovírus pelo LACEN/PR")+
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(
     aes( y = DENV_I, fill = "DENV I"),
@@ -4998,7 +4061,8 @@ RS22_Serie_Historica_GRAF_Sorotipo <- ggplot (RS_Serie_Historica,
              nudge_x = -.20,
              vjust = 0.1) + 
   scale_fill_manual(name = "", 
-                    values = c("DENV I" = "#3CB371", "DENV II" = "#2F657E")) +
+                    values = c("DENV I" = "#3CB371", 
+                               "DENV II" = "#2F657E")) +
   theme(legend.position = "bottom") +
   geom_bar(
     aes( y = DENV_II, 
@@ -5027,15 +4091,17 @@ RS22_Serie_Historica_GRAF_Encerramento <- ggplot (RS22_23_24_GERAL,
   ) +
   labs(caption = Fonte, 
        y = "Número de Casos",
-       title = "CRITÉRIO DE ENCERRAMENTO/MUNICÍPIO") +
+       title = "CRITÉRIO DE ENCERRAMENTO/MUNICÍPIO",
+       subtitle = "Casos confirmados e casos descartados") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(
-    aes( y = Criterio_Encerramento_Lab, fill = "Laboratorial"),
+    aes( y = Criterio_Encerramento_Lab, 
+         fill = "Laboratorial"),
     stat = "identity",
     color = "black",
     width = .4,
@@ -5064,7 +4130,7 @@ RS22_Serie_Historica_GRAF_Encerramento <- ggplot (RS22_23_24_GERAL,
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) 
 
 ####################################################
 ###        Sintomas Confirmados e Notificados    ###
@@ -5112,8 +4178,8 @@ RS22_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = "Sintomas",
        y = "Número de Casos",
-       title = "PREVALÊNCIA DE SINTOMAS NOS CASOS NOTIFICADOS/CONFIRMADOS 22ªRS - 2023/24",
-       subtitle = "Sinais Clínicos em Notificações de DENGUE Assinalados no Campo 33 da Ficha do SINAN") +
+       title = paste0("SINAIS/SINTOMAS NOS CASOS NOTIFICADOS E CONFIRMADOS ", RS, "ªRS - 2023/24"),
+       subtitle = "Sinais Clínicos/Sintomas em Notificações de DENGUE Assinalados no Campo 33 da Ficha do SINAN") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
@@ -5148,70 +4214,63 @@ RS22_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF,
              size = 3, 
              alpha = 0.5,
              nudge_x = .20,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+             vjust = 0.3) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2)))
 
 ###########################################################################
-#####      Casos Notificados por município - Período sazonal atual     ####
+#####      Casos Notificados/Confirmados por município - Período sazonal atual     ####
 ###########################################################################
 
-RS22_23_24_GRAF_Notificados <- ggplot (RS22_23_24_GERAL, 
-                                       aes(x = Município, 
-                                           y = Notificados)) + 
+AUX_GRAF <- data.frame (Municípios = RS22_23_24_GERAL[, 2],
+                        Notificados = RS22_23_24_GERAL[, 5],
+                        Confirmados = (RS22_23_24_GERAL[, 6] + 
+                                         RS22_23_24_GERAL[, 7] + 
+                                         RS22_23_24_GERAL[, 8]
+                        )
+)
+RS22_23_24_GRAF_Not_Conf <- ggplot (AUX_GRAF, 
+                                    aes(x = Municípios)) + 
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold")) +
   labs(caption = Fonte, 
        x = "Municípios",
        y = "Número de Casos",
-       title = "CASOS NOTIFICADOS/MUNICÍPIO - 2023/24") +
+       title = "CASOS NOTIFICADOS E CONFIRMADOS/MUNICÍPIO - 2023/24") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
+                                   size = 24,
+                                   colour = "#556B2F"),
+         legend.position = "bottom") +
+  geom_bar(aes(y = Notificados,
+               fill = "Notificados"),
+           stat = "identity",
            color = "black",
-           fill = "#046236") + 
-  geom_label(aes(label = Notificados), 
+           width = .4,
+           position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados), 
              size = 3, 
              alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-###########################################################################
-#####      Casos Confirmados por município - Período sazonal atual     ####
-###########################################################################
-
-AUX_GRAF <- data.frame (Municípios = RS22_23_24_GERAL[, 2],
-                        Confirmados = (RS22_23_24_GERAL[, 6] + 
-                                         RS22_23_24_GERAL[, 7] + 
-                                         RS22_23_24_GERAL[, 8]
-                        )
-)
-RS22_23_24_GRAF_Confirmados <- ggplot (AUX_GRAF, 
-                                       aes(x = Municípios, 
-                                           y = Confirmados)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
-  labs(caption = Fonte, 
-       y = "Número de Casos",
-       title = "CASOS CONFIRMADOS/MUNICÍPIO - 2023/24") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 19,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
+             vjust = 0.1,
+             nudge_x = -.20)  +
+  geom_bar(aes(y = Confirmados,
+               fill = "Confirmados"),
+           stat = "identity",
            color = "black",
-           fill = "#8E1C21") + 
-  geom_label(aes(label = Confirmados), 
+           width = .4,
+           position = position_nudge(x = .20)) + 
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados), 
              size = 3, 
              alpha = 0.5,
-             vjust = 0.1)  +
+             vjust = 0.1,
+             nudge_x = .20) +
+  scale_fill_manual(name = "", 
+                    values = c("Notificados" = "#046236", 
+                               "Confirmados" = "#8E1C21")) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ###########################################################################
@@ -5232,7 +4291,7 @@ RS22_23_24_GRAF_Autoctones <- ggplot (RS22_23_24_GERAL,
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -5261,7 +4320,7 @@ RS22_23_24_GRAF_Investigacao <- ggplot (RS22_23_24_GERAL,
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -5286,12 +4345,13 @@ RS22_23_24_GRAF_Incidencia <- ggplot (RS22_23_24_GERAL,
   labs(caption = Fonte, 
        x = "Municípios",
        y = "Número de Casos",
-       title = "INCIDÊNCIA/MUNICÍPIO (CASOS AUTÓCTONES) - 2023/24") +
+       title = "INCIDÊNCIA/MUNICÍPIO (CASOS AUTÓCTONES) - 2023/24",
+       subtitle = "Casos/100.000 habitantes") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -5320,7 +4380,7 @@ RS22_23_24_GRAF_Descartados <- ggplot (RS22_23_24_GERAL,
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -5348,7 +4408,7 @@ RS22_23_24_GRAF_Hospitalizados <- ggplot (RS22_23_24_GERAL,
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -5374,22 +4434,22 @@ RS22_23_24_GRAF_Inconclusivos <- ggplot (AUX_GRAF,
                                    face = "bold")) +
   labs(caption = Fonte, 
        y = "Número de Casos",
-       title = "CASOS INCONCLUSIVOS/MUNICÍPIO - 2023/24") +
+       title = "CASOS INCONCLUSIVOS/MUNICÍPIO - 2023/24",
+       subtitle = "Casos notificados e encerrados automaticamente pelo sistema após 60 dias") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 19,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "#8E1C21") + 
+           fill = "#856363") + 
   geom_label(aes(label = Inconclusivos), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1)  +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
-
 
 ####################################################################################################################
 ############      Trabalhando a tabela base do Canal Endêmico - IVAIPORÃ      ######################################
@@ -5451,6 +4511,7 @@ rm(AUX, AUX2, RS_CE_Notificados_SEDE_Base)
 write.csv (RS_CE_Notificados_SEDE, 
            paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE.csv"), 
            row.names = FALSE)
+
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
 ###CANAL ENDÊMICO NOTIFICADOS - IVAIPORÃ####
@@ -5497,19 +4558,21 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",  "2023/34", 
 RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
-                                   face = "bold")) +
+                                   face = "bold",
+                                   size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos Notificados IVAIPORÃ - 2023/24") +
+       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 19)
+                              size = 24,
+                              colour = "#556B2F")
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,`2023/24`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes( y = Media), fill = "#556B2F") +
+  geom_line(aes( y = `2023/24`), stat = "identity", color = "black", linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
@@ -5619,7 +4682,8 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",  "2023/34", 
 RS_23_24_GRAF_CE_Confirmados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
-                                   face = "bold")) +
+                                   face = "bold",
+                                   size = 12)) +
   labs(caption = Fonte,
        title = "Canal Endêmico Casos CONFIRMADOS Ivaiporã- 2023/24") +
   theme(
@@ -5627,11 +4691,12 @@ RS_23_24_GRAF_CE_Confirmados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 19)
+                              size = 24,
+                              colour = "#556B2F")
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,`2023/24`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes(y = Media), fill = "#556B2F") +
+  geom_line(aes(y = `2023/24`), stat = "identity", color = "black", linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
@@ -5698,26 +4763,35 @@ colnames(AUX_GRAF)[8] <- "Provaveis"
 RS_23_24_GRAF_CE_Provaveis_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
-                                   face = "bold")) +
+                                   face = "bold",
+                                   size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos PROVÁVEIS Ivaiporã - 2023/24") +
+       title = "Canal Endêmico Casos PROVÁVEIS Ivaiporã - 2023/24",
+       subtitle = "Casos Prováveis = Casos Notificados - Casos Descartados") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 19)
+                              size = 24,
+                              colour = "#556B2F")
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,Provaveis), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Media), 
+            fill = "#556B2F") +
+  geom_line(aes(y = Provaveis), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 rm(RS_23_24_Casos_Provaveis_SEDE, AUX_GRAF)
-
 
 ##########################################################################################################################################
 ###################################   Vigilância Laboratorial  ###########################################################################
@@ -5843,20 +4917,20 @@ rm(AUX)
 #####################  Realizando a contagem de exames por SE PESQ ARBO GERAL  #############################################################
 
 RS22_23_24_SE_PESQ_ARB <- matrix(data = NA, 
-                                 nrow = 16, 
+                                 nrow = nrow, 
                                  ncol = 54)
 
 RS22_23_24_SE_PESQ_ARB <- as.data.frame(RS22_23_24_SE_PESQ_ARB)
 
 colnames(RS22_23_24_SE_PESQ_ARB)[1] <- "Município" 
 
-RS22_23_24_SE_PESQ_ARB[,1] <- BASE_IBGE[which(BASE_IBGE$RS == 22), 3]
+RS22_23_24_SE_PESQ_ARB[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 
 colnames (RS22_23_24_SE_PESQ_ARB)[2:24] <- c(31:53)
 
 colnames (RS22_23_24_SE_PESQ_ARB)[25:54] <- c(1:30)
 
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_23_24_SE_PESQ_ARB[which(RS22_23_24_SE_PESQ_ARB == i), 2] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                 filter(Municipio_Residencia == i,
@@ -6336,15 +5410,15 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   )
 }
 
-RS22_23_24_SE_PESQ_ARB[17,2:54] <- apply(RS22_23_24_SE_PESQ_ARB[,2:54], 2, sum)
+RS22_23_24_SE_PESQ_ARB[(nrow(RS22_23_24_SE_PESQ_ARB)+1),2:54] <- apply(RS22_23_24_SE_PESQ_ARB[,2:54], 2, sum)
 
-RS22_23_24_SE_PESQ_ARB[17,1] <- "Total"
+RS22_23_24_SE_PESQ_ARB[nrow(RS22_23_24_SE_PESQ_ARB),1] <- "Total"
 
 ############################################################################################################################################
 #####################  Realizando a contagem de exames por SE PESQ ARBO  DETECTÁVEIS GERAL  #############################################################
 
 RS22_23_24_SE_PESQ_ARB_DETECTAVEL <- matrix(data = NA, 
-                                            nrow = 16, 
+                                            nrow = nrow, 
                                             ncol = 54)
 
 RS22_23_24_SE_PESQ_ARB_DETECTAVEL <- as.data.frame(RS22_23_24_SE_PESQ_ARB_DETECTAVEL)
@@ -6731,28 +5805,28 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   )
 }
 
-RS22_23_24_SE_PESQ_ARB_DETECTAVEL[17,2:54] <- apply(RS22_23_24_SE_PESQ_ARB_DETECTAVEL[,2:54], 2, sum)
+RS22_23_24_SE_PESQ_ARB_DETECTAVEL[(nrow(RS22_23_24_SE_PESQ_ARB_DETECTAVEL)+1),2:54] <- apply(RS22_23_24_SE_PESQ_ARB_DETECTAVEL[,2:54], 2, sum)
 
-RS22_23_24_SE_PESQ_ARB_DETECTAVEL[17,1] <- "Total"
+RS22_23_24_SE_PESQ_ARB_DETECTAVEL[nrow(RS22_23_24_SE_PESQ_ARB_DETECTAVEL),1] <- "Total"
 
 ############################################################################################################################################
 #####################  Realizando a contagem de exames por SE UNIDADE SENTINELA #############################################################
 
 RS22_23_24_SE_US <- matrix(data = NA, 
-                           nrow = 16, 
+                           nrow = nrow, 
                            ncol = 54)
 
 RS22_23_24_SE_US <- as.data.frame(RS22_23_24_SE_US)
 
 colnames(RS22_23_24_SE_US)[1] <- "Município" 
 
-RS22_23_24_SE_US[,1] <- BASE_IBGE[which(BASE_IBGE$RS == 22), 3]
+RS22_23_24_SE_US[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 
 colnames (RS22_23_24_SE_US)[2:24] <- c(31:53)
 
 colnames (RS22_23_24_SE_US)[25:54] <- c(1:30)
 
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_23_24_SE_US[which(RS22_23_24_SE_US == i), 2] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                     filter(Municipio_Residencia == i,
@@ -7285,29 +6359,29 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   )
 }
 
-RS22_23_24_SE_US[17,2:54] <- apply(RS22_23_24_SE_US[,2:54], 2, sum)
+RS22_23_24_SE_US[(nrow(RS22_23_24_SE_US)+1),2:54] <- apply(RS22_23_24_SE_US[,2:54], 2, sum)
 
-RS22_23_24_SE_US[17,1] <- "Total"
+RS22_23_24_SE_US[nrow(RS22_23_24_SE_US),1] <- "Total"
 
 
 ############################################################################################################################################
 #####################  Realizando a contagem de exames por SE UNIDADE SENTINELA DETECTÁVEL #############################################################
 
 RS22_23_24_SE_US_DETECTAVEL <- matrix(data = NA, 
-                                      nrow = 16, 
+                                      nrow = nrow, 
                                       ncol = 54)
 
 RS22_23_24_SE_US_DETECTAVEL <- as.data.frame(RS22_23_24_SE_US_DETECTAVEL)
 
 colnames(RS22_23_24_SE_US_DETECTAVEL)[1] <- "Município" 
 
-RS22_23_24_SE_US_DETECTAVEL[,1] <- BASE_IBGE[which(BASE_IBGE$RS == 22), 3]
+RS22_23_24_SE_US_DETECTAVEL[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 
 colnames (RS22_23_24_SE_US_DETECTAVEL)[2:24] <- c(31:53)
 
 colnames (RS22_23_24_SE_US_DETECTAVEL)[25:54] <- c(1:30)
 
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_23_24_SE_US_DETECTAVEL[which(RS22_23_24_SE_US_DETECTAVEL == i), 2] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                           filter(Municipio_Residencia == i,
@@ -7734,28 +6808,30 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   )
 }
 
-RS22_23_24_SE_US_DETECTAVEL[17,2:54] <- apply(RS22_23_24_SE_US_DETECTAVEL[,2:54], 2, sum)
+RS22_23_24_SE_US_DETECTAVEL[(nrow(RS22_23_24_SE_US_DETECTAVEL)+1), 2:54] <- apply(RS22_23_24_SE_US_DETECTAVEL[, 2:54], 
+                                                                                  2, 
+                                                                                  sum)
 
-RS22_23_24_SE_US_DETECTAVEL[17,1] <- "Total"
+RS22_23_24_SE_US_DETECTAVEL[nrow(RS22_23_24_SE_US_DETECTAVEL), 1] <- "Total"
 
 ############################################################################################################################################
 #####################  Realizando a contagem de exames por SE SOROLOGIA GERAL  #############################################################
 
 RS22_23_24_SE_SOROLOGIA <- matrix(data = NA, 
-                                  nrow = 16, 
+                                  nrow = nrow, 
                                   ncol = 54)
 
 RS22_23_24_SE_SOROLOGIA <- as.data.frame(RS22_23_24_SE_SOROLOGIA)
 
 colnames(RS22_23_24_SE_SOROLOGIA)[1] <- "Município" 
 
-RS22_23_24_SE_SOROLOGIA[,1] <- BASE_IBGE[which(BASE_IBGE$RS == 22), 3]
+RS22_23_24_SE_SOROLOGIA[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 
 colnames (RS22_23_24_SE_SOROLOGIA)[2:24] <- c(31:53)
 
 colnames (RS22_23_24_SE_SOROLOGIA)[25:54] <- c(1:30)
 
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_23_24_SE_SOROLOGIA[which(RS22_23_24_SE_SOROLOGIA == i), 2] <- as.integer(RS22_23_24_LACEN_SOROLOGIA%>%
                                                                                   filter(Municipio_Residencia == i,
@@ -8288,28 +7364,30 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   )
 }
 
-RS22_23_24_SE_SOROLOGIA[17,2:54] <- apply(RS22_23_24_SE_SOROLOGIA[,2:54], 2, sum)
+RS22_23_24_SE_SOROLOGIA[(nrow(RS22_23_24_SE_SOROLOGIA) +1), 2:54] <- apply(RS22_23_24_SE_SOROLOGIA[, 2:54], 
+                                                                           2, 
+                                                                           sum)
 
-RS22_23_24_SE_SOROLOGIA[17,1] <- "Total"
+RS22_23_24_SE_SOROLOGIA[nrow(RS22_23_24_SE_SOROLOGIA),1] <- "Total"
 
 ############################################################################################################################################
 #####################  Realizando a contagem de exames por SE SOROLOGIA REAGENTES GERAL  #############################################################
 
 RS22_23_24_SE_SOROLOGIA_REAGENTE <- matrix(data = NA, 
-                                           nrow = 16, 
+                                           nrow = nrow, 
                                            ncol = 54)
 
 RS22_23_24_SE_SOROLOGIA_REAGENTE <- as.data.frame(RS22_23_24_SE_SOROLOGIA_REAGENTE)
 
 colnames(RS22_23_24_SE_SOROLOGIA_REAGENTE)[1] <- "Município" 
 
-RS22_23_24_SE_SOROLOGIA_REAGENTE[,1] <- BASE_IBGE[which(BASE_IBGE$RS == 22), 3]
+RS22_23_24_SE_SOROLOGIA_REAGENTE[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 
 colnames (RS22_23_24_SE_SOROLOGIA_REAGENTE)[2:24] <- c(31:53)
 
 colnames (RS22_23_24_SE_SOROLOGIA_REAGENTE)[25:54] <- c(1:30)
 
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_23_24_SE_SOROLOGIA_REAGENTE[which(RS22_23_24_SE_SOROLOGIA_REAGENTE == i), 2] <- as.integer(RS22_23_24_LACEN_SOROLOGIA%>%
                                                                                                     filter(Municipio_Residencia == i,
@@ -8683,11 +7761,11 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   )
 }
 
-RS22_23_24_SE_SOROLOGIA_REAGENTE[17,2:54] <- apply(RS22_23_24_SE_SOROLOGIA_REAGENTE[,2:54], 
-                                                   2, 
-                                                   sum)
+RS22_23_24_SE_SOROLOGIA_REAGENTE[(nrow(RS22_23_24_SE_SOROLOGIA_REAGENTE) +1), 2:54] <- apply(RS22_23_24_SE_SOROLOGIA_REAGENTE[, 2:54], 
+                                                                                             2, 
+                                                                                             sum)
 
-RS22_23_24_SE_SOROLOGIA_REAGENTE[17,1] <- "Total"
+RS22_23_24_SE_SOROLOGIA_REAGENTE[nrow(RS22_23_24_SE_SOROLOGIA_REAGENTE),1] <- "Total"
 
 #############################################################################################################################
 #############################################################################################################################
@@ -8736,7 +7814,7 @@ RS22_23_24_GRAF_US_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = IVAIPORÃ))  +
   theme(axis.text.x = element_text(face = "bold",
                                    angle = 80,
                                    vjust = .5,
-                                   size = 8)) +
+                                   size = 12)) +
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "Número de Amostras Encaminhadas",
@@ -8745,7 +7823,7 @@ RS22_23_24_GRAF_US_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = IVAIPORÃ))  +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 15,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -8780,7 +7858,7 @@ RS22_23_24_GRAF_US_DETEC <-  ggplot(AUX, aes(x = Sem_EPI, y = PORC_US_DETEC))  +
   theme(axis.text.x = element_text(face = "bold",
                                    angle = 80,
                                    vjust = .5,
-                                   size = 8)) +
+                                   size = 12)) +
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "% de Amostras Encaminhadas Positivas",
@@ -8789,7 +7867,7 @@ RS22_23_24_GRAF_US_DETEC <-  ggplot(AUX, aes(x = Sem_EPI, y = PORC_US_DETEC))  +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 15,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -8841,7 +7919,7 @@ RS22_23_24_GRAF_SORO_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = Total))  +
   theme(axis.text.x = element_text(face = "bold",
                                    angle = 80,
                                    vjust = .5,
-                                   size = 8)) +
+                                   size = 12)) +
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "Número de Amostras",
@@ -8850,7 +7928,7 @@ RS22_23_24_GRAF_SORO_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = Total))  +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 15,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -8911,7 +7989,7 @@ RS22_23_24_GRAF_SORO_REAG <- ggplot(AUX, aes(x = Sem_EPI, y = PORC_SORO_REAG))  
   theme(axis.text.x = element_text(face = "bold",
                                    angle = 80,
                                    vjust = .5,
-                                   size = 8)) +
+                                   size = 12)) +
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "% de Amostras Encaminhadas Reagentes",
@@ -8920,7 +7998,7 @@ RS22_23_24_GRAF_SORO_REAG <- ggplot(AUX, aes(x = Sem_EPI, y = PORC_SORO_REAG))  
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 15,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
@@ -8931,13 +8009,13 @@ RS22_23_24_GRAF_SORO_REAG <- ggplot(AUX, aes(x = Sem_EPI, y = PORC_SORO_REAG))  
 ####################  LACEN - MUNICÍPIOS   ##########################################################################
 #####################################################################################################################
 
-AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == 22), 3])
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
 
-AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == 22), 2]
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
 
-AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == 22), 5]
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
 
-AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == 22), 1]
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
 
 AUX <- AUX[,c(4, 1, 2, 3)]
 
@@ -8949,7 +8027,7 @@ AUX$Pesq_Arb <- NA
 
 AUX$Pesq_Arb_Detec <- NA
 
-for(i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   ###Sorologia/Município###  
   AUX[which(AUX$Município == i), 5] <- as.integer(RS22_23_24_LACEN_SOROLOGIA %>% 
@@ -8983,8 +8061,7 @@ AUX$ENCAMINHADAS <- (AUX$Sorologia + AUX$Pesq_Arb)
 AUX$POSITIVAS <- (AUX$Sorologia_Reag + AUX$Pesq_Arb_Detec)
 
 RS22_GRAF_LACEN_MUNIC <- ggplot (AUX, 
-                                 aes(x = Município)
-) + 
+                                 aes(x = Município)) + 
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold")) +
@@ -8997,7 +8074,7 @@ RS22_GRAF_LACEN_MUNIC <- ggplot (AUX,
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold",
-                                   size = 20,
+                                   size = 24,
                                    colour = "#556B2F")) +
   geom_bar(
     aes( y = ENCAMINHADAS, fill = "ENCAMINHADAS"),
@@ -9374,7 +8451,24 @@ PR_23_24_SINAN_DECODIFICADO_CHIK[,20] <- PR_23_24_SINAN_DECODIFICADO_CHIK_AUX[, 
 
 rm (PR_23_24_SINAN_DECODIFICADO_CHIK_AUX)
 
-colnames(PR_23_24_SINAN_DECODIFICADO_CHIK)<- c("RS", "SINAN", "Latitude", "Longitude", "Agravo", "Data_Notificacao", "ANO", "SE_Notificacao", "Data_Primeiros_Sintomas", "SE_Primeiros_Sintomas", "UF_Notificacao", "Municipio", "Nome", "Data_Nascimento", "Idade", "Sexo", "Gestante", "Escolaridade", "Nome_Mae", "Municipio_Residencia", "UF_Residencia", "RS_Residencia", "Logradouro", "Numero", "Bairro", "CEP", "Zona", "Data_Digitacao", "Data_Investigacao", "Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", "Dor_retroorbital", "Diabetes", "Doenca_Hematologica", "Hepatopatia", "Doenca_Renal", "Hipertensao", "Doenca_Acido_Peptica", "Doenca_Auto_Imune", "Data_Sorologia", "Resultado_Sorologia", "Data_PCR", "Resultado_PCR", "Sorotipo", "Classificacao_Final", "Critério_Encerramento", "Autoctone", "UF_Infeccao", "Municipio_Infeccao", "Bairro_Infeccao", "Evolucao", "Hospitalizado", "Data_Internamento", "Data_Obito", "Data_Encerramento", "Data_SNA", "Letargia", "Hepatomegalia", "Acumulo_Liquidos", "Hipotensao_Lipotimia", "Queda_Abrupta_Plaquetas", "Vomitos_Persistentes", "Hemorragias", "Aumento_Hematocrito", "Dor_Abdominal", "Data_Dengue_Grave", "Pulso_Debil", "PA_Convergente", "TPC", "Acumulo_Liq_Insuficiencia_Resp", "Taquicardia", "Extremidades_Frias", "Hipotensao", "Hematemese", "Melena", "Metrorragia_", "Sangramento_SNC", "Aumento_AST_ALT", "Miocardite", "Alteracao_Consciencia", "Outros_Orgaos", "Manifestacao_Hemorragica", "Epistaxe", "Gengivorragia", "Metrorragia", "Observacoes" )
+colnames(PR_23_24_SINAN_DECODIFICADO_CHIK)<- c("RS", "SINAN", "Latitude", "Longitude", "Agravo", "Data_Notificacao", 
+                                               "ANO", "SE_Notificacao", "Data_Primeiros_Sintomas", "SE_Primeiros_Sintomas", 
+                                               "UF_Notificacao", "Municipio", "Nome", "Data_Nascimento", "Idade", "Sexo", "Gestante", 
+                                               "Escolaridade", "Nome_Mae", "Municipio_Residencia", "UF_Residencia", "RS_Residencia", 
+                                               "Logradouro", "Numero", "Bairro", "CEP", "Zona", "Data_Digitacao", "Data_Investigacao",
+                                               "Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", 
+                                               "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", 
+                                               "Dor_retroorbital", "Diabetes", "Doenca_Hematologica", "Hepatopatia", "Doenca_Renal", 
+                                               "Hipertensao", "Doenca_Acido_Peptica", "Doenca_Auto_Imune", "Data_Sorologia", 
+                                               "Resultado_Sorologia", "Data_PCR", "Resultado_PCR", "Sorotipo", "Classificacao_Final", 
+                                               "Critério_Encerramento", "Autoctone", "UF_Infeccao", "Municipio_Infeccao", "Bairro_Infeccao", 
+                                               "Evolucao", "Hospitalizado", "Data_Internamento", "Data_Obito", "Data_Encerramento", "Data_SNA", 
+                                               "Letargia", "Hepatomegalia", "Acumulo_Liquidos", "Hipotensao_Lipotimia", "Queda_Abrupta_Plaquetas", 
+                                               "Vomitos_Persistentes", "Hemorragias", "Aumento_Hematocrito", "Dor_Abdominal", 
+                                               "Data_Dengue_Grave", "Pulso_Debil", "PA_Convergente", "TPC", "Acumulo_Liq_Insuficiencia_Resp", 
+                                               "Taquicardia", "Extremidades_Frias", "Hipotensao", "Hematemese", "Melena", "Metrorragia_", 
+                                               "Sangramento_SNC", "Aumento_AST_ALT", "Miocardite", "Alteracao_Consciencia", "Outros_Orgaos", 
+                                               "Manifestacao_Hemorragica", "Epistaxe", "Gengivorragia", "Metrorragia", "Observacoes" )
 
 PR_23_24_CHIK_SINAIS_NOTIFICADOS <- tibble(Febre = as.integer(PR_23_24_SINAN_DECODIFICADO_CHIK %>% 
                                                                 filter(Febre == "SIM" ) %>%
@@ -9520,12 +8614,12 @@ PR_23_24_GRAF_SINAIS_CHIK <- ggplot (AUX_GRAF,
   theme(axis.text.x = element_text(angle = 80, 
                                    vjust = .5,
                                    face = "bold",
-                                   size = 14)) +
+                                   size = 12)) +
   labs(caption = Fonte, 
        x = "Sintomas",
        y = "Número de Casos",
-       title = "PREVALÊNCIA DE SINTOMAS EM CASOS NOTIFICADOS/CONFIRMADOS PARANÁ - 2023/24",
-       subtitle = "Sinais Clínicos em Notificações de CHIKUNGUNYA Assinalados no Campo 33 da Ficha do SINAN") +
+       title = "SINAIS/SINTOMAS EM CASOS NOTIFICADOS E CONFIRMADOS PARANÁ - 2023/24",
+       subtitle = "Sinais/Sintomas Clínicos em Notificações de CHIKUNGUNYA Assinalados no Campo 33 da Ficha do SINAN") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
@@ -9545,7 +8639,8 @@ PR_23_24_GRAF_SINAIS_CHIK <- ggplot (AUX_GRAF,
              nudge_x = -.20,
              vjust = 0.1) + 
   scale_fill_manual(name = "", 
-                    values = c("Notificados" = "#4D5656", "Confirmados" = "#B03A2E")) +
+                    values = c("Notificados" = "#4D5656", 
+                               "Confirmados" = "#B03A2E")) +
   theme(legend.position = "bottom") +
   geom_bar(aes( y = Confirmados, 
                 fill = "Confirmados"),
@@ -9558,8 +8653,8 @@ PR_23_24_GRAF_SINAIS_CHIK <- ggplot (AUX_GRAF,
              size = 3, 
              alpha = 0.5,
              nudge_x = .20,
-             vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+             vjust = 0.3) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2)))
 
 ###############################################################################################################
 ################   Dengue Paraná   ######################################
@@ -9736,10 +8831,388 @@ PR_DENGUE_23_24_GERAL$Total <- as.integer(PR_DENGUE_23_24_GERAL$Dengue + PR_DENG
 
 PR_DENGUE_23_24_GERAL <- PR_DENGUE_23_24_GERAL[, c(1, 3, 4, 5, 19, 6, 7, 8, 22, 9, 21, 17, 16, 10, 18, 11, 20, 12, 13,14, 15)]
 
-################################################################################################
-################################################################################################
+######################################################################################################
+###         Elaborando tabelas de sinais e sintomas. Possível somente a partir de 2015.            ###
+######################################################################################################
 
+AUX <- data.frame(RS = BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
+AUX$Municipio <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Febre <- NA
+
+AUX$Cefaleia <- NA
+
+AUX$Mialgia <- NA
+
+AUX$Exantema <- NA
+
+AUX$Vomitos <- NA
+
+AUX$Nausea <- NA
+
+AUX$Dor_nas_Costas <- NA
+
+AUX$Conjuntivite <- NA
+
+AUX$Artrite  <- NA
+
+AUX$Artralgia <- NA
+
+AUX$Petequias <- NA
+
+AUX$Leucopenia <- NA
+
+AUX$Dor_Retroorbital <- NA
+
+AUX$Prova_do_Laco_Positiva <- NA
+
+###Elaborando for loop para sinais e sintomas.###
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 4] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          FEBRE == 1) %>%
+                                                   count()
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CEFALEIA == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          MIALGIA == 1) %>%
+                                                   count()
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          EXANTEMA == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          VOMITO == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9]<- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                  filter(ID_MN_RESI == i,
+                                                         NAUSEA == 1) %>%
+                                                  count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10]<- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          DOR_COSTAS == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CONJUNTVIT == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           ARTRITE == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           ARTRALGIA == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           PETEQUIA_N == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           LEUCOPENIA == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           DOR_RETRO == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           LACO == 1) %>%
+                                                    count()
+  )
+}
+
+PR_23_24_SINAIS_Notificados <- AUX
+
+###    Elaborando tabelas de sinais e sintomas. Possível somente a partir de 2015.         ###
+
+AUX <- data.frame(RS = BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
+
+AUX$Municipio <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Febre <- NA
+
+AUX$Cefaleia <- NA
+
+AUX$Mialgia <- NA
+
+AUX$Exantema <- NA
+
+AUX$Vomitos <- NA
+
+AUX$Nausea <- NA
+
+AUX$Dor_nas_Costas <- NA
+
+AUX$Conjuntivite <- NA
+
+AUX$Artrite  <- NA
+
+AUX$Artralgia <- NA
+
+AUX$Petequias <- NA
+
+AUX$Leucopenia <- NA
+
+AUX$Dor_Retroorbital <- NA
+
+AUX$Prova_do_Laco_Positiva <- NA
+
+###   Elaborando for loop para sinais e sintomas.   ###
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 4] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12,
+                                                          FEBRE == 1) %>%
+                                                   count()
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12,
+                                                          CEFALEIA == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12,
+                                                          MIALGIA == 1) %>%
+                                                   count()
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12,
+                                                          EXANTEMA == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12,
+                                                          VOMITO == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9]<- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                  filter(ID_MN_RESI == i,
+                                                         CLASSI_FIN == 10 
+                                                         | 
+                                                           CLASSI_FIN == 11 
+                                                         |
+                                                           CLASSI_FIN == 12,
+                                                         NAUSEA == 1) %>%
+                                                  count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10]<- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                   filter(ID_MN_RESI == i,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12,
+                                                          DOR_COSTAS == 1) %>%
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           CONJUNTVIT == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           ARTRITE == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           ARTRALGIA == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           PETEQUIA_N == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           LEUCOPENIA == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           DOR_RETRO == 1) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                    filter(ID_MN_RESI == i,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12,
+                                                           LACO == 1) %>%
+                                                    count()
+  )
+}
+
+PR_23_24_SINAIS_Confirmados <- AUX
+
+######  Construção do Gráfico de SInais Estadual   #####
+
+PR_DENGUE_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF, 
+                                       aes(x = Sintomas)) + 
+  theme(axis.text.x = element_text(angle = 80, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 14),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F"),
+        legend.position = "bottom") +
+  labs(caption = Fonte, 
+       x = "Sintomas",
+       y = "Número de Casos",
+       title = "SINAIS/SINTOMAS NOS CASOS NOTIFICADOS E CONFIRMADOS PARANÁ - 2023/24",
+       subtitle = "Sinais Clínicos/Sintomas em Notificações de DENGUE Assinalados no Campo 33 da Ficha do SINAN") +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", 
+                    values = c("Notificados" = "#9F9F5F", 
+                               "Confirmados" = "#4E2F2F")) +
+  geom_bar(
+    aes( y = Confirmados, 
+         fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.3) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2)))
+
+###############################################################################################
+################################################################################################
 #####################################################################################################################
 
 #####     Planilhas Google Sheets. Realizando o download das planilhas do                  ######
@@ -9785,7 +9258,7 @@ RS22_23_24_RG_MUNICIPIOS <- read_sheet("https://docs.google.com/spreadsheets/d/1
 ###Por alguma razão a planilha veio como lista###
 
 RS22_23_24_RG_MUNICIPIOS <- as.data.frame(lapply(RS22_23_24_RG_MUNICIPIOS, 
-                                               unlist))
+                                                 unlist))
 
 RS22_23_24_RG_LOCALIDADES <- read_sheet("https://docs.google.com/spreadsheets/d/1w4DS_c-b4kqXzjHqGOw9MbyTZlNZLj23RY4KPr3TYSc/edit#gid=877642872")
 
@@ -9795,7 +9268,7 @@ RS22_23_24_PE <- read_sheet("https://docs.google.com/spreadsheets/d/1-0cJFjUwLEp
 ####Por alguma razão a planilha veio como uma lista####
 
 #RS22_23_24_PE <- as.data.frame(lapply(RS22_23_24_PE, 
- #                                    unlist))
+#                                    unlist))
 
 RS22_23_24_ASSISTENCIA <- read_sheet("https://docs.google.com/spreadsheets/d/17pPCkkUonz0KVh6_Tdp10eon4bGN1IOGhCrFuuaHy5g/edit#gid=863361484",
                                      sheet = "Consolidado")
@@ -10023,13 +9496,15 @@ PR_23_24_GRAF_SOROTIPO_PR <- ggplot() +
                                 "I, III" ="#A0522D")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE)+
-  labs(caption = Fonte, 
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
        title = "Sorotipo Circulante - Paraná") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")
   ) +
   geom_sf(data = RS22_Dissolvida, 
@@ -10064,14 +9539,16 @@ PR_23_24_GRAF_INCIDENCIA_PR <- ggplot() +
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE)+
-  labs(caption = Fonte, 
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
        title = "Incidência de Dengue - Paraná",
        subtitle = "Casos Autóctones por 100.000 Habitantes") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")
   ) +
   geom_sf(data = RS22_Dissolvida, 
@@ -10106,7 +9583,9 @@ PR_23_24_GRAF_INCIDENCIA_PROV_PR <- ggplot() +
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE) +
-  labs(caption = Fonte, 
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
        title = "Incidência de Dengue - Paraná",
        subtitle = "Casos Prováveis por 100.000 Habitantes
 Casos Prováveis = Casos Notificados - Casos Descartados") + 
@@ -10114,7 +9593,7 @@ Casos Prováveis = Casos Notificados - Casos Descartados") +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")
   ) +
   geom_sf(data = RS22_Dissolvida, 
@@ -10143,7 +9622,7 @@ MAPA_BASE_PR <- left_join(MAPA_BASE, PR_CHIK_23_24_GERAL, by = c("name_muni" = "
 
 MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = Notificados,
                                            breaks = c(-Inf, 0, 10, 50, 100, 500, Inf),
-                                           labels = c("0 casos", "0 - 10", "11 - 50", 
+                                           labels = c("0 casos", "1 - 10", "11 - 50", 
                                                       "51 - 100", "101 - 500", ">500"))
 )
 
@@ -10158,20 +9637,22 @@ PR_23_24_GRAF_CHIK_Notificados <- ggplot() +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Notificações", 
                      values = c("0 casos" = "white", 
-                                "0 - 10" = "#FDF5E6",    
+                                "1 - 10" = "#FDF5E6",    
                                 "11 - 50" = "#EEE8AA",
                                 "51 - 100" = "#FFD700",
                                 "101 - 500" = "#DAA520",
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE) +
-  labs(caption = Fonte, 
-       title = "Chikungunya - Paraná",
-       subtitle = "Casos Notificados") +
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Casos Notificados de Chikungunya - Paraná",
+       subtitle = "Números absolutos") +
   geom_sf(data = RS22_Dissolvida, fill = "grey") +
   geom_sf_label(data = RS22_Dissolvida, 
                 aes(label = "22 RS"),
@@ -10198,7 +9679,7 @@ PR_23_24_GRAF_CHIK_Incidência <- ggplot() +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
@@ -10209,9 +9690,11 @@ PR_23_24_GRAF_CHIK_Incidência <- ggplot() +
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE) +
-  labs(caption = Fonte, 
-       title = "Chikungunya - Paraná",
-       subtitle = "Incidência - Casos por 100.000 hab") +
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Incidência de Chikungunya - Paraná",
+       subtitle = "Casos autóctones por 100.000 hab") +
   geom_sf(data = RS22_Dissolvida, fill = "grey") +
   geom_sf_label(data = RS22_Dissolvida, 
                 aes(label = "22 RS"),
@@ -10250,7 +9733,7 @@ PR_23_24_ZIKA_CHIK_Notificados <- ggplot() +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Notificações", 
                      values = c("0 casos" = "white", 
@@ -10261,9 +9744,11 @@ PR_23_24_ZIKA_CHIK_Notificados <- ggplot() +
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE) +
-  labs(caption = Fonte, 
-       title = "Zika - Paraná",
-       subtitle = "Casos Notificados") +
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Casos Notificados de Zika - Paraná",
+       subtitle = "Números absolutos") +
   geom_sf(data = RS22_Dissolvida, fill = "grey") +
   geom_sf_label(data = RS22_Dissolvida, 
                 aes(label = "22 RS"),
@@ -10290,7 +9775,7 @@ PR_23_24_GRAF_ZIKA_Incidência <- ggplot() +
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")) +
   scale_fill_manual (name = "Casos/100.000 hab",
                      values = c("0 casos" = "white", 
@@ -10301,9 +9786,11 @@ PR_23_24_GRAF_ZIKA_Incidência <- ggplot() +
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE) +
-  labs(caption = Fonte, 
-       title = "Zika - Paraná",
-       subtitle = "Incidência - Casos por 100.000 hab") +
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Incidência de Zika - Paraná",
+       subtitle = "Casos autóctones por 100.000 hab") +
   geom_sf(data = RS22_Dissolvida, fill = "grey") +
   geom_sf_label(data = RS22_Dissolvida, 
                 aes(label = "22 RS"),
@@ -10317,47 +9804,54 @@ MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_23_24_GERAL,
                           by = c("name_muni" = "Município")
 )
 
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(RS == 22)
+MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(RS == RS)
 
-AUX_MAP <- MAPA_BASE_RS %>% filter(Sorotipos == "I,")
-AUX_MAP_1 <- MAPA_BASE_RS %>% filter(Sorotipos == "II,")
-AUX_MAP_2 <- MAPA_BASE_RS %>% filter(Sorotipos == "III,")
-AUX_MAP_3 <- MAPA_BASE_RS %>% filter(Sorotipos == "I,II,")
-AUX_MAP_4 <- MAPA_BASE_RS %>% filter(Sorotipos == "I,II,III,")
-AUX_MAP_4 <- MAPA_BASE_RS %>% filter(Sorotipos == "II,III,")
+AUX_I <- MAPA_BASE_RS %>%   filter(DENV_I > 0 & DENV_II == 0 & DENV_III == 0 & DENV_IV == 0)
+AUX_II <- MAPA_BASE_RS %>% filter(DENV_I == 0 & DENV_II > 0 & DENV_III == 0 & DENV_IV == 0)
+AUX_III <- MAPA_BASE_RS %>% filter(DENV_I > 0 & DENV_II > 0 & DENV_III == 0 & DENV_IV == 0)
+AUX_IV <- MAPA_BASE_RS %>% filter(DENV_I > 0 & DENV_II > 0 & DENV_III > 0 & DENV_IV == 0)
+AUX_V <- MAPA_BASE_RS %>% filter(DENV_I > 0 & DENV_II == 0 & DENV_III > 0 & DENV_IV == 0)
+AUX_VI <- MAPA_BASE_RS %>% filter(DENV_I == 0 & DENV_II > 0 & DENV_III > 0 & DENV_IV == 0)
 
 RS22_23_24_GRAF_Sorotipo <- ggplot() + 
   geom_sf(data = MAPA_BASE_RS, 
           color = "black", 
           fill = "white") + 
-  geom_sf(data = AUX_MAP, 
+  geom_sf(data = AUX_I, 
           color ="black", 
           aes(fill = "I")) +  
-  geom_sf(data = AUX_MAP_1, 
+  geom_sf(data = AUX_II, 
           color ="black", 
           aes(fill = "II")) + 
-  geom_sf(data = AUX_MAP_2, 
-          color ="black", 
-          aes(fill = "III")) + 
-  geom_sf(data = AUX_MAP_3, 
+  geom_sf(data = AUX_III, 
           color ="black", 
           aes(fill = "I, II")) + 
+  geom_sf(data = AUX_IV, 
+          color ="black", 
+          aes(fill = "I, II, III")) +
+  geom_sf(data = AUX_V, 
+          color ="black", 
+          aes(fill = "I, III")) + 
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  coord_sf(expand = FALSE) +
+  theme_minimal() +
   scale_fill_manual (name = "Sorotipos",
                      values = c("I" = "green", 
                                 "II" = "blue",
-                                "I, II" = "#228B22")) +
+                                "I, II" = "#2F4F4F",
+                                "I, III" ="#A0522D")) +
   theme(legend.position = "bottom") +
-  labs(caption = Fonte, 
-       title = "Sorotipo Circulante - 22ªRS") + 
+  coord_sf(expand = FALSE)+
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Sorotipo Circulante - 22ª Regional de Saúde") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")
   ) 
 
@@ -10393,13 +9887,16 @@ RS22_23_24_GRAF_CHK_Not <- ggplot() +
                                 "101 - 500" = "#FF8C00",
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
-  labs(caption = Fonte, 
-       title = "Chikungunya Notificados - 22ªRS") + 
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Chikungunya Casos Notificados - 22ªRS",
+       subtitle = "Números absolutos") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")
   ) 
 
@@ -10436,14 +9933,16 @@ RS22_23_24_GRAF_CHK_Conf <- ggplot() +
                                 ">500" = "#DC143C")) +
   theme(legend.position = "bottom") +
   coord_sf(expand = FALSE) +
-  labs(caption = Fonte, 
-       title = "Chikungunya Incidência - 22ªRS",
-       subtitle = "Casos AUTÓCTONES/100.000 habitantes")+ 
+  labs(x = NULL,
+       y = NULL,
+       caption = Fonte, 
+       title = "Incidência de Chikungunya - 22ªRS",
+       subtitle = "Casos autóctones por 100.000 habitantes")+ 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
-                                   size = 14,
+                                   size = 24,
                                    colour = "#556B2F")
   ) 
 
@@ -10492,17 +9991,18 @@ RS22_23_24_GRAF_IIP_Ciclo4 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Índice de Infestação Predial 4º Ciclo/2023 - 22ªRS") + 
+       title = "Índice de Infestação Predial 4º Ciclo/2023",
+       subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   ) 
 
 ###########    Tratamento 4º Ciclo  ###################################
@@ -10534,17 +10034,18 @@ RS22_23_24_GRAF_Tratamento_Ciclo4 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Porcentual de Imóveis Tratados 4º Ciclo/2023 - 22ªRS") + 
+       title = "Porcentual de Imóveis Visitados 4º Ciclo/2023",
+       subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   )
 
 #########################################################################################################################
@@ -10591,17 +10092,18 @@ RS22_23_24_GRAF_IIP_Ciclo5 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Índice de Infestação Predial 5º Ciclo/2023 - 22ªRS") + 
+       title = "Índice de Infestação Predial 5º Ciclo/2023",
+       subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   ) 
 
 ###########    Tratamento 5º Ciclo  ###################################
@@ -10633,17 +10135,18 @@ RS22_23_24_GRAF_Tratamento_Ciclo5 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Porcentual de Imóveis Tratados 5º Ciclo/2023 - 22ªRS") + 
+       title = "Porcentual de Imóveis Visitados 5º Ciclo/2023",
+       subtitle = "22ªRS")+ 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   )
 
 #########################################################################################################################
@@ -10690,17 +10193,18 @@ RS22_23_24_GRAF_IIP_Ciclo6 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Índice de Infestação Predial 6º Ciclo/2023 - 22ªRS") + 
+       title = "Índice de Infestação Predial 6º Ciclo/2023",
+       subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   ) 
 
 ###########    Tratamento 6º Ciclo  ###################################
@@ -10732,17 +10236,18 @@ RS22_23_24_GRAF_Tratamento_Ciclo6 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Porcentual de Imóveis Tratados 6º Ciclo/2023 - 22ªRS") + 
+       title = "Porcentual de Imóveis Visitados 6º Ciclo/2023",
+       subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   )
 
 #########################################################################################################################
@@ -10789,17 +10294,18 @@ RS22_23_24_GRAF_IIP_Ciclo1 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Índice de Infestação Predial 1º Ciclo/2024 - 22ªRS") + 
+       title = "Índice de Infestação Predial 1º Ciclo/2024",
+       subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   ) 
 
 ###########    Tratamento 1º Ciclo  ###################################
@@ -10831,17 +10337,18 @@ RS22_23_24_GRAF_Tratamento_Ciclo1 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Porcentual de Imóveis Tratados 1º Ciclo/2024 - 22ªRS") + 
+       title = "Porcentual de Imóveis Visitados 1º Ciclo/2024",
+       subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   )
 
 #########################################################################################################################
@@ -10888,17 +10395,18 @@ RS22_23_24_GRAF_IIP_Ciclo2 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Índice de Infestação Predial 2º Ciclo/2024 - 22ªRS") + 
+       title = "Índice de Infestação Predial 2º Ciclo/2024",
+       subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   ) 
 
 ###########    Tratamento 2º Ciclo  ###################################
@@ -10930,17 +10438,18 @@ RS22_23_24_GRAF_Tratamento_Ciclo2 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Porcentual de Imóveis Tratados 2º Ciclo/2024 - 22ªRS") + 
+       title = "Porcentual de Imóveis Visitados 2º Ciclo/2024",
+       subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   )
 
 #########################################################################################################################
@@ -10987,17 +10496,18 @@ RS22_23_24_GRAF_IIP_Ciclo3 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Índice de Infestação Predial 3º Ciclo/2024 - 22ªRS") + 
+       title = "Índice de Infestação Predial 3º Ciclo/2024",
+       subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   ) 
 
 ###########    Tratamento 3º Ciclo  ###################################
@@ -11029,19 +10539,19 @@ RS22_23_24_GRAF_Tratamento_Ciclo3 <- ggplot() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr", 
                          which_north = "true") +
-  theme(legend.position = "right") +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Porcentual de Imóveis Tratados 3º Ciclo/2024 - 22ªRS") + 
+       title = "Porcentual de Imóveis Visitados 3º Ciclo/2024",
+       subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F")
+                                   colour = "#556B2F"),
+         legend.position = "bottom"
   )
-
 
 #####     Salvando os Gráficos e Mapas
 
@@ -11073,7 +10583,7 @@ dev.off()
 
 ####           Canal Endêmico Prováveis - Pag 05
 
-RS22_23_24_INFORME_Pag_05 <- RS_23_24_GRAF_CE_Provaveis
+RS22_23_24_INFORME_Pag_05 <- RS22_23_24_GRAF_Incidencia
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_05.png", 
     width = 33,
@@ -11087,7 +10597,7 @@ dev.off()
 
 ###            Notificados/Confirmados - Pag 06
 
-RS22_23_24_INFORME_Pag_06 <- ((RS22_23_24_GRAF_Notificados + RS22_23_24_GRAF_Confirmados)/ (RS22_23_24_GRAF_Autoctones + RS22_23_24_GRAF_Investigacao))
+RS22_23_24_INFORME_Pag_06 <- (RS22_23_24_GRAF_Not_Conf / RS22_23_24_GRAF_Autoctones / RS22_23_24_GRAF_Investigacao)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_06.png", 
     width = 36,
@@ -11100,7 +10610,7 @@ dev.off()
 
 ###      Autóctones/Descartados
 
-RS22_23_24_INFORME_Pag_07 <- ((RS22_23_24_GRAF_Descartados + RS22_23_24_GRAF_Hospitalizados)/ RS22_23_24_GRAF_Incidencia)
+RS22_23_24_INFORME_Pag_07 <- (RS22_23_24_GRAF_Hospitalizados / RS22_23_24_GRAF_Descartados / RS22_23_24_GRAF_Inconclusivos)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_07.png", 
     width = 36,
@@ -11114,7 +10624,7 @@ dev.off()
 
 ###    Em Investigação/Incidência
 
-RS22_23_24_INFORME_Pag_08 <- (RS22_Serie_Historica_GRAF_Encerramento / RS22_23_24_GRAF_SINAIS)
+RS22_23_24_INFORME_Pag_08 <- (RS22_Serie_Historica_GRAF_Encerramento / PR_DENGUE_23_24_GRAF_SINAIS / RS22_23_24_GRAF_SINAIS)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_08.png", 
     width = 33,
@@ -11125,61 +10635,49 @@ RS22_23_24_INFORME_Pag_08
 
 dev.off()
 
-#### LACEN Municípios
-
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_09A.png", 
-    width = 33,
-    height = 20,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_Inconclusivos
-
-dev.off()
-
 ####  Canais Endêmicos IVAIPORÃ
 
-RS_23_24_CE_SEDE_I <- RS_23_24_GRAF_CE_Notificados_SEDE
+RS_23_24_CE_SEDE <- (RS_23_24_GRAF_CE_Notificados_SEDE / RS_23_24_GRAF_CE_Provaveis_SEDE / RS_23_24_GRAF_CE_Confirmados_SEDE)
 
-RS_23_24_CE_SEDE_II <- (RS_23_24_GRAF_CE_Confirmados_SEDE / RS_23_24_GRAF_CE_Provaveis_SEDE)
-
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_09B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_09.png", 
     width = 33,
-    height = 20,
+    height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS_23_24_CE_SEDE_I
+RS_23_24_CE_SEDE
 
 dev.off()
+
+###      Histogramas Notificados - Pag 10
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_10.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS_23_24_CE_SEDE_II
+RS_23_24_GRAF_Histograma_Notificados_01
 
 dev.off()
 
-
-###      Histogramas Notificados - Pag 11
+###        Histogramas Notificados - Pag 11
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_11.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS22_23_24_GRAF_Histograma_Notificados_01
+RS_23_24_GRAF_Histograma_Notificados_02
 
 dev.off()
 
-###        Histogramas Notificados - Pag 12
+###      Histogramas Confirmados - ##PAG 12
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_12.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS22_23_24_GRAF_Histograma_Notificados_02
+RS_23_24_GRAF_Histograma_Confirmados_01
 
 dev.off()
 
@@ -11190,18 +10688,18 @@ png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_2
     height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS22_23_24_GRAF_Histograma_Confirmados_01
+RS_23_24_GRAF_Histograma_Confirmados_02
 
 dev.off()
 
-###      Histogramas Confirmados - ##PAG 14
+###     Histogramas Prováveis - ##PAG 14
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_14.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS22_23_24_GRAF_Histograma_Confirmados_02
+RS_23_24_GRAF_Histograma_Provaveis_01
 
 dev.off()
 
@@ -11212,23 +10710,12 @@ png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_2
     height = 40,
     units = "cm", pointsize = 8, res = 300)
 
-RS22_23_24_GRAF_Histograma_Provaveis_01
-
-dev.off()
-
-###     Histogramas Prováveis - ##PAG 16
-
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_16.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_Histograma_Provaveis_02
+RS_23_24_GRAF_Histograma_Provaveis_02
 
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_SOROTIPO_PR / RS22_23_24_GRAF_Sorotipo)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_16.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11238,7 +10725,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_US_TOTAL / RS22_23_24_GRAF_US_DETEC)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_18A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17A.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11248,7 +10735,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_SORO_TOTAL / RS22_23_24_GRAF_SORO_REAG)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_18B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17B.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11259,7 +10746,7 @@ dev.off()
 
 ##### Exames Municípios  
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_19.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_18.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11269,7 +10756,7 @@ RS22_GRAF_LACEN_MUNIC
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_INCIDENCIA_PR / PR_23_24_GRAF_INCIDENCIA_PROV_PR)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_20.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_19.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11279,7 +10766,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_CHIK_Notificados / PR_23_24_GRAF_CHIK_Incidência)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_20.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11289,7 +10776,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- PR_23_24_GRAF_SINAIS_CHIK 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_22A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21A.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11299,7 +10786,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_CHK_Not + RS22_23_24_GRAF_CHK_Conf) 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_22B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21B.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11309,6 +10796,18 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_ZIKA_CHIK_Notificados / PR_23_24_GRAF_ZIKA_Incidência)
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_22.png", 
+    width = 33,
+    height = 40,
+    units = "cm", pointsize = 8, res = 300)
+
+RS22_23_24_GRAF_1
+
+dev.off()
+
+RS22_23_24_GRAF_1 <- ((RS22_23_24_GRAF_IIP_Ciclo4 + RS22_23_24_GRAF_Tratamento_Ciclo4) / 
+                        (RS22_23_24_GRAF_IIP_Ciclo5 + RS22_23_24_GRAF_Tratamento_Ciclo5) / 
+                        (RS22_23_24_GRAF_IIP_Ciclo6 + RS22_23_24_GRAF_Tratamento_Ciclo6))
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_23.png", 
     width = 33,
     height = 40,
@@ -11318,7 +10817,9 @@ RS22_23_24_GRAF_1
 
 dev.off()
 
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_IIP_Ciclo4 / RS22_23_24_GRAF_Tratamento_Ciclo4)
+RS22_23_24_GRAF_1 <- ((RS22_23_24_GRAF_IIP_Ciclo1 + RS22_23_24_GRAF_Tratamento_Ciclo1) / 
+                        (RS22_23_24_GRAF_IIP_Ciclo2 + RS22_23_24_GRAF_Tratamento_Ciclo2) / 
+                        (RS22_23_24_GRAF_IIP_Ciclo3 + RS22_23_24_GRAF_Tratamento_Ciclo3))
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_24.png", 
     width = 33,
     height = 40,
@@ -11328,166 +10829,86 @@ RS22_23_24_GRAF_1
 
 dev.off()
 
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_IIP_Ciclo5 / RS22_23_24_GRAF_Tratamento_Ciclo5)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_25.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_1
-
-dev.off()
-
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_IIP_Ciclo6 / RS22_23_24_GRAF_Tratamento_Ciclo6)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_26.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_1
-
-dev.off()
-
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_IIP_Ciclo1 / RS22_23_24_GRAF_Tratamento_Ciclo1)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_27.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_1
-
-dev.off()
-
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_IIP_Ciclo2 / RS22_23_24_GRAF_Tratamento_Ciclo2)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_28.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_1
-
-dev.off()
-
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_IIP_Ciclo3 / RS22_23_24_GRAF_Tratamento_Ciclo3)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_29.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_23_24_GRAF_1
-
-dev.off()
-
-rm(RS22_23_24_GRAF_Autoctones, 
-   SE_HIST_PROV_GODOY, 
-   SE_HIST_NOT_ARAPUÃ, 
-   SE_HIST_NOT_GODOY, 
-   SE_HIST_CONF_MANOEL_RIBAS, 
-   RS22_23_24_INFORME_Pag_05, 
-   RS22_23_24_INFORME_Pag_06, 
-   RS22_23_24_INFORME_Pag_08, 
-   RS22_23_24_INFORME_Pag_07, 
-   RS22_23_24_Resumida, 
-   RS22_23_24_INFORME_Pag_03, 
-   RS22_23_24_INFORME_Pag_04, 
-   SE_HIST_CONF_MATO_RICO, 
-   SE_HIST_CONF_RSI, 
-   SE_HIST_CONF_RBI, 
-   SE_HIST_CONF_NOVA_TEBAS, 
-   SE_HIST_NOT_IVAIPORA, 
-   SE_HIST_CONF_SMO, 
-   SE_HIST_CONF_SJI, 
-   SE_HIST_NOT_ARIRANHA, 
-   SE_HIST_NOT_CANDIDO, 
-   SE_HIST_NOT_CRUZMALTINA, 
-   SE_HIST_NOT_RBI, 
-   SE_HIST_NOT_NOVA_TEBAS, 
-   SE_HIST_NOT_MATO_RICO,  
-   SE_HIST_NOT_MANOEL_RIBAS, 
-   SE_HIST_NOT_LUNARDELLI, 
-   SE_HIST_NOT_LIDIANÓPOLIS, 
-   SE_HIST_NOT_JARDIM, 
-   SE_HIST_PROV_CANDIDO, 
-   SE_HIST_NOT_SMO, 
-   SE_HIST_NOT_SJI, 
-   SE_HIST_NOT_RSI,  
-   SE_HIST_PROV_CRUZMALTINA, 
-   SE_HIST_PROV_ARIRANHA, 
-   SE_HIST_PROV_ARAPUÃ,  
-   SE_HIST_PROV_LUNARDELLI, 
-   SE_HIST_PROV_LIDIANÓPOLIS, 
-   SE_HIST_PROV_JARDIM, 
-   SE_HIST_PROV_IVAIPORA,  
-   RS22_23_24_GRAF_Incidencia, 
-   RS22_Serie_Historica_GRAF_Hospitalizados, 
-   RS22_Serie_Historica_GRAF_Not_Conf, 
+rm(RS22_Serie_Historica_GRAF_Not_Conf,
    RS22_Serie_Historica_GRAF_Sorotipo, 
-   SE_HIST_PROV_MATO_RICO, 
-   SE_HIST_PROV_MANOEL_RIBAS, 
-   SE_HIST_PROV_SMO, 
-   RS22_23_24_GRAF_Histograma_Provaveis_01, 
-   RS22_23_24_GRAF_Histograma_Provaveis_02, 
-   RS22_23_24_GRAF_Hospitalizados, 
-   SE_HIST_PROV_SJI, 
-   SE_HIST_PROV_RSI, 
-   SE_HIST_PROV_RBI, 
-   SE_HIST_PROV_NOVA_TEBAS, 
-   RS22_23_24_GRAF_SINAIS, 
-   RS22_23_24_GRAF_Notificados, 
-   RS22_23_24_GRAF_Investigacao, 
-   RS22_23_24_GRAF_Descartados, 
-   RS22_23_24_GRAF_Histograma_Notificados_01, 
-   RS22_23_24_GRAF_Histograma_Notificados_02, 
-   SE_HIST_CONF_ARAPUÃ, 
-   SE_HIST_CONF_IVAIPORA, 
-   SE_HIST_CONF_JARDIM, 
-   SE_HIST_CONF_LIDIANÓPOLIS, 
-   SE_HIST_CONF_LUNARDELLI, 
-   SE_HIST_CONF_ARIRANHA, 
-   SE_HIST_CONF_CANDIDO, 
-   SE_HIST_CONF_CRUZMALTINA, 
-   SE_HIST_CONF_GODOY, 
-   RS22_23_24_GRAF_Confirmados, 
-   RS22_23_24_GRAF_Histograma_Confirmados_01, 
-   RS22_23_24_GRAF_Histograma_Confirmados_02,
-   RS22_Serie_Historica_GRAF_Encerramento,
+   RS22_Serie_Historica_GRAF_Hospitalizados,
+   RS_23_24_GRAF_CE_Notificados,
+   RS_23_24_GRAF_CE_Provaveis,
+   RS_23_24_GRAF_CE_Confirmados,
+   RS22_23_24_GRAF_Incidencia,
+   RS22_23_24_GRAF_Not_Conf,
+   RS22_23_24_GRAF_Autoctones,
+   RS22_23_24_GRAF_Investigacao,
+   RS22_23_24_GRAF_Hospitalizados,
+   RS22_23_24_GRAF_Descartados,
+   RS22_23_24_GRAF_Inconclusivos,
+   RS22_23_24_GRAF_IIP_Ciclo4,
+   RS22_23_24_GRAF_Tratamento_Ciclo4,
+   RS22_23_24_GRAF_IIP_Ciclo5,
+   RS22_23_24_GRAF_Tratamento_Ciclo5,
+   RS22_23_24_GRAF_IIP_Ciclo6,
+   RS22_23_24_GRAF_Tratamento_Ciclo6,
+   RS22_23_24_GRAF_IIP_Ciclo1, 
+   RS22_23_24_GRAF_Tratamento_Ciclo1,
+   RS22_23_24_GRAF_IIP_Ciclo2,
+   RS22_23_24_GRAF_Tratamento_Ciclo2,
+   RS22_23_24_GRAF_IIP_Ciclo3,
+   RS22_23_24_GRAF_Tratamento_Ciclo3,
    AUX,
-   AUX_2,
-   BASE_IBGE,
-   BASE_IBGE_BRASIL,
-   RS22_23_24_GRAF_1,
-   RS22_23_24_GRAF_SORO_REAG,
-   RS22_23_24_GRAF_SORO_TOTAL,
-   RS22_23_24_GRAF_US_DETEC,
-   RS22_23_24_GRAF_US_TOTAL,
-   Fonte,
-   Fonte_1,
-   Fonte_2,
-   i,
-   SE,
    AUX_GRAF,
+   AUX_2,
    AUX_I,
    AUX_II,
    AUX_III,
    AUX_IV,
    AUX_MAP,
-   AUX_MAP_1,
-   AUX_MAP_2,
-   AUX_MAP_3,
-   AUX_MAP_4,
    AUX_V,
    AUX_VI,
-   CHIKON2023,
-   CHIKON2024,
+   AUX01,
+   AUX02,
+   AUX_HIST_CONF_LIST,
+   AUX_HIST_NOT_LIST,
+   AUX_HIST_PROV_LIST,
    MAPA_BASE,
    MAPA_BASE_PR,
    MAPA_BASE_RS,
-   RS22_Dissolvida,
+   BASE_IBGE,
+   BASE_IBGE_BRASIL,
+   CHIKON2023,
+   CHIKON2024,
    SINAN_DENGUE_RS,
    SINAN_CHIK_RS,
+   RS22_Serie_Historica_GRAF_Encerramento,
    RS22_GRAF_LACEN_MUNIC,
-   AUX01,
-   AUX02,
+   RS22_Dissolvida,
+   RS22_23_24_Resumida,
+   RS22_23_24_INFORME_Pag_03,
+   RS22_23_24_INFORME_Pag_04,
+   RS22_23_24_INFORME_Pag_05,
+   RS22_23_24_INFORME_Pag_06,
+   RS22_23_24_INFORME_Pag_07,
+   RS22_23_24_INFORME_Pag_08,
+   Fonte,
+   Fonte_1,
+   Fonte_2,
+   i,
+   ID_REG,
+   nrow,
+   Periodos_Epidêmicos_RS,
+   Periodos_Epidêmicos_SEDE,
+   RS,
+   SE,
+   Theme_Hist,
+   RS_23_24_GRAF_Histograma_Confirmados_01,
+   RS_23_24_GRAF_Histograma_Confirmados_02,
+   RS_23_24_GRAF_Histograma_Notificados_01,
+   RS_23_24_GRAF_Histograma_Notificados_02,
+   RS_23_24_GRAF_Histograma_Provaveis_01,
+   RS_23_24_GRAF_Histograma_Provaveis_02,
+   RS_23_24_GRAF_CE_Confirmados_SEDE,
+   RS_23_24_GRAF_CE_Notificados_SEDE,
+   RS_23_24_GRAF_CE_Provaveis_SEDE,
+   RS_23_24_CE_SEDE,
    PR_23_24_GRAF_CHIK_Incidência,
    PR_23_24_GRAF_CHIK_Notificados,
    PR_23_24_GRAF_INCIDENCIA_PR,
@@ -11495,35 +10916,30 @@ rm(RS22_23_24_GRAF_Autoctones,
    PR_23_24_GRAF_SINAIS_CHIK,
    PR_23_24_GRAF_SOROTIPO_PR,
    PR_23_24_GRAF_ZIKA_Incidência,
-   ID_REG,
-   nrow,
-   Periodos_Epidêmicos_RS,
-   Periodos_Epidêmicos_SEDE,
-   RS,
-   RS_23_24_CE_SEDE_I,
-   RS_23_24_CE_SEDE_II,
+   PR_23_24_CHIK_SINAIS_Confirmados,
+   PR_23_24_CHIK_SINAIS_NOTIFICADOS,
+   PR_23_24_SINAIS_Confirmados,
+   PR_23_24_SINAIS_Notificados,
    PR_23_24_ZIKA_CHIK_Notificados,
+   PR_DENGUE_23_24_GRAF_SINAIS,
+   RS22_23_24_GRAF_1,
    RS22_23_24_GRAF_CHK_Conf,
    RS22_23_24_GRAF_CHK_Not,
-   RS22_23_24_GRAF_IIP_Ciclo1,
-   RS22_23_24_GRAF_IIP_Ciclo2,
-   RS22_23_24_GRAF_IIP_Ciclo3,
-   RS22_23_24_GRAF_IIP_Ciclo4,
-   RS22_23_24_GRAF_IIP_Ciclo5,
-   RS22_23_24_GRAF_IIP_Ciclo6,
-   RS22_23_24_GRAF_Tratamento_Ciclo1,
-   RS22_23_24_GRAF_Tratamento_Ciclo2,
-   RS22_23_24_GRAF_Tratamento_Ciclo3,
-   RS22_23_24_GRAF_Tratamento_Ciclo4,
-   RS22_23_24_GRAF_Tratamento_Ciclo5,
-   RS22_23_24_GRAF_Tratamento_Ciclo6,
-   RS22_23_24_GRAF_Inconclusivos,
+   RS22_23_24_GRAF_SINAIS,
+   RS22_23_24_GRAF_SORO_REAG,
+   RS22_23_24_GRAF_SORO_TOTAL,
    RS22_23_24_GRAF_Sorotipo,
-   RS_23_24_GRAF_CE_Confirmados,
-   RS_23_24_GRAF_CE_Confirmados_SEDE,
-   RS_23_24_GRAF_CE_Notificados,
-   RS_23_24_GRAF_CE_Notificados_SEDE,
-   RS_23_24_GRAF_CE_Provaveis,
-   RS_23_24_GRAF_CE_Provaveis_SEDE)
+   RS22_23_24_GRAF_US_DETEC,
+   RS22_23_24_GRAF_US_TOTAL,
+   PR_CHIK_23_24_SINAN,
+   RS_23_24_SE_Confirmados,
+   RS_23_24_SE_Notificados,
+   RS_CE_Confirmados,
+   RS_CE_Confirmados_SEDE,
+   RS_CE_Notificados,
+   RS_CE_Notificados_SEDE,
+   RS_Serie_Historica
+)
 
 warnings()
+
