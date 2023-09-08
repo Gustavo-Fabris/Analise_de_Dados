@@ -56,11 +56,11 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 30/08/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 05/09/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 28/07/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 06/09/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 30/08/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 06/09/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
@@ -1635,6 +1635,270 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 }                                             
 
 assign(paste0("RS", RS, "_23_24_EXTRA"), AUX)
+
+####################################################################################################
+####      Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade           #####
+#####                              CONFIRMADOS                                                 #####
+####################################################################################################
+
+AUX <- data.frame(RS = BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
+
+AUX$Municipio <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Menos_1_ano <- NA
+
+AUX$Um_a_Cinco_Anos <- NA
+
+AUX$Cinco_a_Doze_Anos <- NA
+
+AUX$Doze_a_Dezoito_Anos <- NA
+
+AUX$Dezoito_a_Cinq_Nove <- NA
+
+AUX$Maior_Sessenta <- NA
+
+AUX$Area_Urbana <- NA
+
+AUX$Area_Rural <- NA
+
+AUX$Sexo_Feminino <- NA
+
+AUX$Sexo_Masculino <- NA
+
+AUX$Analfabeto <- NA
+
+AUX$Fundamental_Incompleto <- NA
+
+AUX$Fundamental <- NA
+
+AUX$Ens_Medio_Incompleto <- NA
+
+AUX$Ens_Medio<- NA
+
+AUX$Ens_Superior_Incompleto<- NA
+
+AUX$Ens_Superior<- NA
+
+AUX$Escolaridade_Ignorada<- NA
+
+###      For Loop para geração da tabela RS22_Extra       ###
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 4] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i,  
+                                                          NU_IDADE_N <=3012,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i,  
+                                                          NU_IDADE_N > 4000 
+                                                          & 
+                                                            NU_IDADE_N <=4005,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          NU_IDADE_N > 4005 
+                                                          & 
+                                                            NU_IDADE_N <=4012,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i, 
+                                                          NU_IDADE_N > 4012 
+                                                          & 
+                                                            NU_IDADE_N <=4018,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i, 
+                                                          NU_IDADE_N > 4018 
+                                                          & 
+                                                            NU_IDADE_N <= 4059,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>%
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i, 
+                                                          NU_IDADE_N > 4059,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>%
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ZONA == 1,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ZONA == 2,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12]  <- as.integer(SINAN_DENGUE_RS %>% 
+                                                     filter(ID_MN_RESI == i, 
+                                                            CS_SEXO == "F",
+                                                            CLASSI_FIN == 10 
+                                                            | 
+                                                              CLASSI_FIN == 11 
+                                                            |
+                                                              CLASSI_FIN == 12) %>% 
+                                                     count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_SEXO == "M",
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14]<- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i, 
+                                                          CS_ESCOL_N == 0,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_ESCOL_N == 1 
+                                                           | 
+                                                             CS_ESCOL_N == 2 
+                                                           | 
+                                                             CS_ESCOL_N == 3,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>%
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_ESCOL_N == 4,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_ESCOL_N == 5,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 18] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_ESCOL_N == 6,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 19] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_ESCOL_N == 7,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 20] <- as.integer(SINAN_DENGUE_RS %>% 
+                                                    filter(ID_MN_RESI == i, 
+                                                           CS_ESCOL_N == 8,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count() 
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 21]<- as.integer(SINAN_DENGUE_RS %>% 
+                                                   filter(ID_MN_RESI == i, 
+                                                          CS_ESCOL_N == 9,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count() 
+  )
+}                                             
+
+assign(paste0("RS", RS, "_23_24_EXTRA_Confirmados"), AUX)
 
 ######################################################################################################
 ###         Elaborando tabelas de sinais e sintomas. Possível somente a partir de 2015.            ###
@@ -3934,8 +4198,209 @@ RS_23_24_GRAF_Histograma_Provaveis_02 <- (AUX_HIST_PROV_LIST[[9]] + AUX_HIST_PRO
 ################################################################
 ################################################################
 
-####     Construção de data frame auxiliar para             ###
-####    ser utilizado pelo R na construção dos gráficos     ###
+#########   Criando uma função para theme()
+
+Theme <- function(){
+  theme(axis.text.x = element_text(angle = 50, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 14),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 24,
+                                  colour = "#556B2F"),
+        legend.position = "bottom")
+  }
+
+#######  Gráficos de dados EXTRA  ######
+
+####  Faixa etária  ####
+
+AUX_GRAF <- tibble(Rotulos = colnames(RS22_23_24_EXTRA[4:9]),
+                   Ordem = as.factor(1:(9-3)),
+                   Notificados = apply(RS22_23_24_EXTRA[, 4:9], 2, sum),
+                   Confirmados = apply(RS22_23_24_EXTRA_Confirmados[, 4:9], 2, sum) 
+                   )
+
+AUX_GRAF[,1] <- c("< 1 ano", "1 |-- 5 anos", "5 |-- 12 anos", 
+                  "12 |-- 18 anos", "18 |-- 60 anos", "> 60 anos")
+
+RS22_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF, 
+                             aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#118395", "Confirmados" = "#3B9511")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+   scale_x_discrete(breaks = c(1:6),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme() 
+
+##########   Escolaridade   #####
+
+AUX_GRAF <- tibble(Rotulos = colnames(RS22_23_24_EXTRA[14:21]),
+                   Ordem = as.factor(1:(21-13)),
+                   Notificados = apply(RS22_23_24_EXTRA[, 14:21], 2, sum),
+                   Confirmados = apply(RS22_23_24_EXTRA_Confirmados[, 14:21], 2, sum) )
+
+AUX_GRAF[,1] <- c("Analfabeto", "Fundamental Incompleto", "Fundamental", "Médio Incompleto", 
+                  "Médio", "Superior Incompleto", "Superior", "Ignorado")
+
+RS22_GRAF_Escolaridade <- ggplot (AUX_GRAF, 
+                             aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("ESCOLARIADE NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#C4BF7A", "Confirmados" = "#C4A37A")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:(21-13)),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+#########   ZONA de ocorrência  #####
+
+AUX_GRAF <- tibble(Rotulos = colnames(RS22_23_24_EXTRA[10:11]),
+                   Ordem = as.factor(1:2),
+                   Notificados = apply(RS22_23_24_EXTRA[, 10:11], 2, sum),
+                   Confirmados = apply(RS22_23_24_EXTRA_Confirmados[, 10:11], 2, sum) )
+
+AUX_GRAF[,1] <- c("Urbana", "Rural")
+
+RS22_GRAF_Zona <- ggplot (AUX_GRAF, 
+                     aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#614352", "Confirmados" = "#436155")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+######  SEXO  ####
+
+AUX_GRAF <- tibble(Rotulos = colnames(RS22_23_24_EXTRA[12:13]),
+                   Ordem = as.factor(1:2),
+                   Notificados = apply(RS22_23_24_EXTRA[, 12:13], 2, sum),
+                   Confirmados = apply(RS22_23_24_EXTRA_Confirmados[, 12:13], 2, sum) )
+
+AUX_GRAF[,1] <- c("Feminino", "Masculino")
+
+RS22_GRAF_Sexo <- ggplot (AUX_GRAF, 
+                     aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("SEXO NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#541E98", "Confirmados" = "#98941E")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  theme(axis.text.x = element_text(angle = 0)) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+#####   Séries Históricas   ####
 
 AUX_GRAF <- as.data.frame(RS_Serie_Historica$Periodo)
 
@@ -3953,23 +4418,13 @@ colnames(AUX_GRAF) <- c("Periodo", "Notificados", "Confirmados")
 ####        Criando gráfico de barras lado a lado Série Histórica Notificados e Confirmados.    #####################
 #####################################################################################################################
 
-RS22_Serie_Historica_GRAF_Not_Conf <- ggplot (AUX_GRAF, 
+RS22_GRAF_Serie_Historica_Not_Conf <- ggplot (AUX_GRAF, 
                                               aes(x = Periodo)) + 
-  theme(axis.text.x = element_text(angle = 50, 
-                                   vjust = .5,
-                                   face = "bold",
-                                   size = 14)) +
-  labs(caption = Fonte, 
-       x = "Período Sazonal",
+    labs(caption = Fonte, 
+       x = NULL,
        y = "Número de Casos",
        title = paste0("CASOS NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2009/10 - 2023/24)")) +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(
+    geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
     color = "black",
@@ -3982,7 +4437,6 @@ RS22_Serie_Historica_GRAF_Not_Conf <- ggplot (AUX_GRAF,
              nudge_x = -.20,
              vjust = 0.1) + 
   scale_fill_manual(name = "", values = c("Notificados" = "#556B2F", "Confirmados" = "#FF6347")) +
-  theme(legend.position = "bottom") +
   geom_bar(
     aes( y = Confirmados, fill = "Confirmados"),
     stat = "identity",
@@ -3995,29 +4449,20 @@ RS22_Serie_Historica_GRAF_Not_Conf <- ggplot (AUX_GRAF,
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
 
 ###############################################################
 #####     Série Histórica de casos Hospitalizados       #######
 ###############################################################
 
-RS22_Serie_Historica_GRAF_Hospitalizados <- ggplot (RS_Serie_Historica, 
+RS22_GRAF_Serie_Historica_Hospitalizados <- ggplot (RS_Serie_Historica, 
                                                     aes(x = Periodo, 
                                                         y = Hospitalizados)) + 
-  theme(axis.text.x = element_text(angle = 50, 
-                                   vjust = .5,
-                                   face = "bold",
-                                   size = 14)) +
   labs(caption = Fonte, 
-       x = "Período Sazonal",
+       x = NULL,
        y = "Número de Casos",
        title = paste0("CASOS HOSPITALIZADOS ", RS, "ªRS (2009/10 - 2023/24)") )+
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity", 
            fill = "#0F815D",
            color = "black") + 
@@ -4025,30 +4470,21 @@ RS22_Serie_Historica_GRAF_Hospitalizados <- ggplot (RS_Serie_Historica,
              alpha = 0.5,
              size =3,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
 
 ############################################################
 #####        Série Histórica Sorotipo Circulante      ######
 ############################################################
 
-RS22_Serie_Historica_GRAF_Sorotipo <- ggplot (RS_Serie_Historica, 
+RS22_GRAF_Serie_Historica_Sorotipo <- ggplot (RS_Serie_Historica, 
                                               aes(x = Periodo)) + 
-  theme(axis.text.x = element_text(angle = 50, 
-                                   vjust = .5,
-                                   face = "bold",
-                                   size = 14)) +
   labs(caption = Fonte, 
-       x = "Período Sazonal",
+       x = NULL,
        y = "Número de Casos",
        title = paste0("SOROTIPO CIRCULANTE ", RS, "ªRS (2009/10 - 2023/24)"),
        subtitle = "Sorotipo viral identificado via Pesquisa de Arbovírus pelo LACEN/PR")+
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(
+    geom_bar(
     aes( y = DENV_I, fill = "DENV I"),
     stat = "identity",
     color = "black",
@@ -4063,7 +4499,6 @@ RS22_Serie_Historica_GRAF_Sorotipo <- ggplot (RS_Serie_Historica,
   scale_fill_manual(name = "", 
                     values = c("DENV I" = "#3CB371", 
                                "DENV II" = "#2F657E")) +
-  theme(legend.position = "bottom") +
   geom_bar(
     aes( y = DENV_II, 
          fill = "DENV II"),
@@ -4077,29 +4512,21 @@ RS22_Serie_Historica_GRAF_Sorotipo <- ggplot (RS_Serie_Historica,
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
 
 #########################################
 #####   Critério de Encerramento   ######
 #########################################
 
-RS22_Serie_Historica_GRAF_Encerramento <- ggplot (RS22_23_24_GERAL, 
-                                                  aes(x = Município)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")
-  ) +
-  labs(caption = Fonte, 
+RS22_GRAF_23_24_Encerramento <- ggplot (RS22_23_24_GERAL, 
+                                  aes(x = Município)) + 
+    labs(caption = Fonte, 
+         x = NULL,
        y = "Número de Casos",
        title = "CRITÉRIO DE ENCERRAMENTO/MUNICÍPIO",
        subtitle = "Casos confirmados e casos descartados") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(
+   geom_bar(
     aes( y = Criterio_Encerramento_Lab, 
          fill = "Laboratorial"),
     stat = "identity",
@@ -4116,7 +4543,6 @@ RS22_Serie_Historica_GRAF_Encerramento <- ggplot (RS22_23_24_GERAL,
                     values = c("Laboratorial" = "#3CB371", 
                                "Clínico-epidemiológico" = "#2F657E")
   ) +
-  theme(legend.position = "bottom") +
   geom_bar(
     aes( y = Criterio_Encerramento_Clin_Epid, 
          fill = "Clínico-epidemiológico"),
@@ -4130,7 +4556,9 @@ RS22_Serie_Historica_GRAF_Encerramento <- ggplot (RS22_23_24_GERAL,
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ####################################################
 ###        Sintomas Confirmados e Notificados    ###
@@ -4169,24 +4597,16 @@ AUX_GRAF[12,3] <- sum(RS22_23_24_SINAIS_Confirmados[, 15])
 AUX_GRAF[13,3] <- sum(RS22_23_24_SINAIS_Confirmados[, 16])
 AUX_GRAF[14,3] <- sum(RS22_23_24_SINAIS_Confirmados[, 17])
 
-RS22_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF, 
+AUX_GRAF[,1] <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", "Artrite", "Artralgia Intensa", "Petéquias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital")
+
+RS22_GRAF_23_24_SINAIS <- ggplot (AUX_GRAF, 
                                   aes(x = Sintomas)) + 
-  theme(axis.text.x = element_text(angle = 80, 
-                                   vjust = .5,
-                                   face = "bold",
-                                   size = 14)) +
   labs(caption = Fonte, 
-       x = "Sintomas",
+       x = NULL,
        y = "Número de Casos",
        title = paste0("SINAIS/SINTOMAS NOS CASOS NOTIFICADOS E CONFIRMADOS ", RS, "ªRS - 2023/24"),
        subtitle = "Sinais Clínicos/Sintomas em Notificações de DENGUE Assinalados no Campo 33 da Ficha do SINAN") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 19,
-                                   colour = "#556B2F")) +
-  geom_bar(
+   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
     color = "black",
@@ -4201,7 +4621,6 @@ RS22_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF,
   scale_fill_manual(name = "", 
                     values = c("Notificados" = "#4D5656", 
                                "Confirmados" = "#B03A2E")) +
-  theme(legend.position = "bottom") +
   geom_bar(
     aes( y = Confirmados, 
          fill = "Confirmados"),
@@ -4215,7 +4634,9 @@ RS22_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF,
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.3) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.2)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####      Casos Notificados/Confirmados por município - Período sazonal atual     ####
@@ -4228,23 +4649,14 @@ AUX_GRAF <- data.frame (Municípios = RS22_23_24_GERAL[, 2],
                                          RS22_23_24_GERAL[, 8]
                         )
 )
-RS22_23_24_GRAF_Not_Conf <- ggplot (AUX_GRAF, 
+
+RS22_GRAF_23_24_Not_Conf <- ggplot (AUX_GRAF, 
                                     aes(x = Municípios)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       x = "Municípios",
+       x = NULL,
        y = "Número de Casos",
        title = "CASOS NOTIFICADOS E CONFIRMADOS/MUNICÍPIO - 2023/24") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F"),
-         legend.position = "bottom") +
-  geom_bar(aes(y = Notificados,
+    geom_bar(aes(y = Notificados,
                fill = "Notificados"),
            stat = "identity",
            color = "black",
@@ -4271,28 +4683,21 @@ RS22_23_24_GRAF_Not_Conf <- ggplot (AUX_GRAF,
   scale_fill_manual(name = "", 
                     values = c("Notificados" = "#046236", 
                                "Confirmados" = "#8E1C21")) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####      Casos autóctones por município - Período sazonal atual      ####
 ###########################################################################
 
-RS22_23_24_GRAF_Autoctones <- ggplot (RS22_23_24_GERAL, 
+RS22_GRAF_23_24_Autoctones <- ggplot (RS22_23_24_GERAL, 
                                       aes(x = Município, 
                                           y = Autoctones)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       x = "Municípios",
+       x = NULL,
        y = "Número de Casos",
        title = "CASOS AUTÓCTONES/MUNICÍPIO - 2023/24") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#BDB76B") + 
@@ -4300,59 +4705,44 @@ RS22_23_24_GRAF_Autoctones <- ggplot (RS22_23_24_GERAL,
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))  +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####  Casos em investigação por município - Período sazonal atual     ####
 ###########################################################################
 
-RS22_23_24_GRAF_Investigacao <- ggplot (RS22_23_24_GERAL, 
+RS22_GRAF_23_24_Investigacao <- ggplot (RS22_23_24_GERAL, 
                                         aes(x = Município, 
                                             y = Em_Investigacao)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       x = "Municípios",
+       x = NULL,
        y = "Número de Casos",
        title = "CASOS EM INVESTIGAÇÃO/MUNICÍPIO - 2023/24") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
+   geom_bar(stat = "identity",
            color = "black",
            fill = "#EEE8AA") + 
   geom_label(aes(label = Em_Investigacao), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))  +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####      Incidência por município - Período sazonal atual            ####
 ###########################################################################
 
-
-RS22_23_24_GRAF_Incidencia <- ggplot (RS22_23_24_GERAL, 
+RS22_GRAF_23_24_Incidencia <- ggplot (RS22_23_24_GERAL, 
                                       aes(x = Município, 
                                           y = Incidencia)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       x = "Municípios",
+       x = NULL,
        y = "Número de Casos",
        title = "INCIDÊNCIA/MUNICÍPIO (CASOS AUTÓCTONES) - 2023/24",
        subtitle = "Casos/100.000 habitantes") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#8FBC8F") + 
@@ -4360,63 +4750,51 @@ RS22_23_24_GRAF_Incidencia <- ggplot (RS22_23_24_GERAL,
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####      Casos descartados por município - Período sazonal atual     ####
 ###########################################################################
 
-RS22_23_24_GRAF_Descartados <- ggplot (RS22_23_24_GERAL, 
+RS22_GRAF_23_24_Descartados <- ggplot (RS22_23_24_GERAL, 
                                        aes(x = Município, 
                                            y = Descartados)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       x = "Municípios",
+       x = NULL,
        y = "Número de Casos",
        title = "CASOS DESCARTADOS/MUNICÍPIO - 2023/24") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
+   geom_bar(stat = "identity",
            color = "black",
            fill = "#8FBC8F") + 
   geom_label(aes(label = Descartados),
              alpha = 0.5,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####   Casos hospitalizados por município - Período sazonal atual     ####
 ###########################################################################
 
-RS22_23_24_GRAF_Hospitalizados <- ggplot (RS22_23_24_GERAL, 
+RS22_GRAF_23_24_Hospitalizados <- ggplot (RS22_23_24_GERAL, 
                                           aes(x = Município, 
                                               y = Hospitalizacao)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       x = "Municípios",
+       x = NULL,
        y = "Número de Casos",
        title = "CASOS HOSPITALIZADOS/MUNICÍPIO - 2023/24") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
+    geom_bar(stat = "identity",
            color = "black",
            fill = "#D2B48C") + 
   geom_label(aes(label = Hospitalizacao),
              alpha = 0.5,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ###########################################################################
 #####      Casos Inconclusivos por município - Período sazonal atual   ####
@@ -4426,30 +4804,24 @@ AUX_GRAF <- data.frame (Municípios = RS22_23_24_GERAL[, 2],
                         Inconclusivos = (RS22_23_24_GERAL[, 20]
                         )
 )
-RS22_23_24_GRAF_Inconclusivos <- ggplot (AUX_GRAF, 
+
+RS22_GRAF_23_24_Inconclusivos <- ggplot (AUX_GRAF, 
                                          aes(x = Municípios, 
                                              y = Inconclusivos)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
-       y = "Número de Casos",
+       y = NULL,
        title = "CASOS INCONCLUSIVOS/MUNICÍPIO - 2023/24",
        subtitle = "Casos notificados e encerrados automaticamente pelo sistema após 60 dias") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity",
+    geom_bar(stat = "identity",
            color = "black",
            fill = "#856363") + 
   geom_label(aes(label = Inconclusivos), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 ####################################################################################################################
 ############      Trabalhando a tabela base do Canal Endêmico - IVAIPORÃ      ######################################
@@ -4801,7 +5173,7 @@ rm(RS_23_24_Casos_Provaveis_SEDE, AUX_GRAF)
 ###############################  Buscando CSV com dados do LACEN   ########################################################################
 ###########################################################################################################################################
 
-RS22_23_24_LACEN_PESQ_ARBO <- read.csv("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_PESQUISA_ARBOVIRUS_22_23.csv",
+RS22_23_24_LACEN_PESQ_ARBO <- read.csv("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_PESQUISA_ARBOVIRUS_23_24.csv",
                                        header = TRUE,
                                        sep = ",")
 
@@ -4859,7 +5231,7 @@ RS22_23_24_LACEN_PESQ_ARBO[, 24] <- as.factor(RS22_23_24_LACEN_PESQ_ARBO[, 24])
 ###############################  Buscando CSV com dados do LACEN   ########################################################################
 ###########################################################################################################################################
 
-RS22_23_24_LACEN_SOROLOGIA <- read.csv("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_SOROLOGIA_22_23.csv",
+RS22_23_24_LACEN_SOROLOGIA <- read.csv("/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_SOROLOGIA_23_24.csv",
                                        header = TRUE,
                                        sep = ",")
 
@@ -7810,25 +8182,17 @@ AUX$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
 )
 
 
-RS22_23_24_GRAF_US_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = IVAIPORÃ))  + 
-  theme(axis.text.x = element_text(face = "bold",
-                                   angle = 80,
-                                   vjust = .5,
-                                   size = 12)) +
+RS22_GRAF_23_24_US_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = IVAIPORÃ))  + 
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "Número de Amostras Encaminhadas",
        title = "Quantidade de Amostras Encaminhadas/SE - Unidade Sentinela") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#EEE8AA") + 
-  scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.5))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 85))
 
 #######  Separando a quantidade de casos detectáveis da U.S.   ##########################
 
@@ -7854,28 +8218,20 @@ AUX$PORC_US_DETEC <- as.numeric(AUX$PORC_US_DETEC)
 
 #############  Criando gráfico com dados de detectáveis  ##############
 
-RS22_23_24_GRAF_US_DETEC <-  ggplot(AUX, aes(x = Sem_EPI, y = PORC_US_DETEC))  + 
-  theme(axis.text.x = element_text(face = "bold",
-                                   angle = 80,
-                                   vjust = .5,
-                                   size = 12)) +
+RS22_GRAF_23_24_US_DETEC <-  ggplot(AUX, aes(x = Sem_EPI, y = PORC_US_DETEC))  + 
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "% de Amostras Encaminhadas Positivas",
        title = "Taxa de Amostras Positivas/SE - Unidade Sentinela") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#EEE8AA") + 
   scale_y_continuous(expand = expansion(mult = c(0, 
-                                                 0.001)
-  )
-  )
+                                                 0.001))
+                     ) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 85))
+
 
 ################################################################################################################
 ######################  Amostras encaminhadas para o LACEN (sorologia e pesq. de arbovírus)  ###################
@@ -7916,25 +8272,16 @@ AUX$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
 
 
 RS22_23_24_GRAF_SORO_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = Total))  + 
-  theme(axis.text.x = element_text(face = "bold",
-                                   angle = 80,
-                                   vjust = .5,
-                                   size = 12)) +
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "Número de Amostras",
        title = "Quantidade de Amostras (Sorologia) Encaminhadas/SE - 22ª RS") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#9ad2b0") + 
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 85))
 
 #######  Amostras Encaminhadas ao LACEN que tiveram resultado REAGENTE ENZIMAIMUNOENSAIO   ##################
 #############################################################################################################
@@ -7986,24 +8333,16 @@ AUX$PORC_SORO_REAG <- as.numeric(AUX$PORC_SORO_REAG)
 #############  Criando gráfico com dados de detectáveis  ##############
 
 RS22_23_24_GRAF_SORO_REAG <- ggplot(AUX, aes(x = Sem_EPI, y = PORC_SORO_REAG))  + 
-  theme(axis.text.x = element_text(face = "bold",
-                                   angle = 80,
-                                   vjust = .5,
-                                   size = 12)) +
   labs(caption = Fonte_1, 
        x = "Semana Epidemiológica",
        y = "% de Amostras Encaminhadas Reagentes",
        title = "Taxa de Amostras (Sorologia) Reagentes/SE - 22ª RS") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#9ad2b0") + 
-  scale_y_continuous(expand = expansion(mult = c(0, 0.001)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.001))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 85))
 
 #####################################################################################################################
 ####################  LACEN - MUNICÍPIOS   ##########################################################################
@@ -8062,20 +8401,11 @@ AUX$POSITIVAS <- (AUX$Sorologia_Reag + AUX$Pesq_Arb_Detec)
 
 RS22_GRAF_LACEN_MUNIC <- ggplot (AUX, 
                                  aes(x = Município)) + 
-  theme(axis.text.x = element_text(angle = 85, 
-                                   vjust = .5,
-                                   face = "bold")) +
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Amostras",
        title = "AMOSTRAS ENCAMINHADAS/POSITIVAS - 22ªRS",
        subtitle = "Amostras de sorologia + pesquisa de arbovírus") +
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold",
-                                   size = 24,
-                                   colour = "#556B2F")) +
   geom_bar(
     aes( y = ENCAMINHADAS, fill = "ENCAMINHADAS"),
     stat = "identity",
@@ -8089,7 +8419,6 @@ RS22_GRAF_LACEN_MUNIC <- ggplot (AUX,
              nudge_x = -.20,
              vjust = 0.1) + 
   scale_fill_manual(name = "", values = c("ENCAMINHADAS" = "#556B2F", "POSITIVAS" = "#FF6347")) +
-  theme(legend.position = "bottom") +
   geom_bar(
     aes( y = POSITIVAS, fill = "POSITIVAS"),
     stat = "identity",
@@ -8102,7 +8431,9 @@ RS22_GRAF_LACEN_MUNIC <- ggplot (AUX,
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 75))
 
 #####################################################################################################################
 #####################  Dados Estaduais   ############################################################################
@@ -8575,7 +8906,7 @@ PR_23_24_CHIK_SINAIS_Confirmados <- tibble(Febre = as.integer(PR_23_24_SINAN_DEC
 #colnames(PR_23_24_CHIK_SINAIS_NOTIFICADOS) <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", "Dor_Retroorbital")
 
 
-AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", "Dor_Retroorbital"),
+AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor nas Costas", "Conjuntivite", "Artrite", "Artralgia Intensa", "Petequias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital"),
                        Notificados = NA,
                        Confirmados = NA)
 
@@ -8835,331 +9166,198 @@ PR_DENGUE_23_24_GERAL <- PR_DENGUE_23_24_GERAL[, c(1, 3, 4, 5, 19, 6, 7, 8, 22, 
 ###         Elaborando tabelas de sinais e sintomas. Possível somente a partir de 2015.            ###
 ######################################################################################################
 
-AUX <- data.frame(RS = BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
+PR_23_24_DENGUE_SINAIS_Notificados <- tibble(Febre = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                                  filter(FEBRE == 1 ) %>%
+                                                                  count()),
+                                             Mialgia = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                    filter(MIALGIA == 1 ) %>%
+                                                                    count()),
+                                             Cefaleia = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                     filter(CEFALEIA == 1) %>%
+                                                                     count()),
+                                             Exantema = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                     filter(EXANTEMA == 1) %>%
+                                                                     count()),
+                                             Vomito = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                   filter(VOMITO == 1) %>%
+                                                                   count()),
+                                             Nausea = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                   filter(NAUSEA == 1) %>%
+                                                                   count()),
+                                             Dor_nas_Costas = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                           filter(DOR_COSTAS == 1) %>%
+                                                                           count()),
+                                             Conjuntivite = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                         filter(CONJUNTVIT == 1) %>%
+                                                                         count()),
+                                             Artrite = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                    filter(ARTRITE == 1) %>%
+                                                                    count()),
+                                             Artralgia_Intensa = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                              filter(ARTRALGIA == 1) %>%
+                                                                              count()),
+                                             Petequias = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                      filter(PETEQUIA_N == 1) %>%
+                                                                      count()),
+                                             Leucopenia = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                       filter(LEUCOPENIA == 1) %>%
+                                                                       count()),
+                                             Prova_do_Laco_Positiva = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                                   filter(LACO == 1) %>%
+                                                                                   count()),
+                                             Dor_retroorbital = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                             filter(DOR_RETRO == 1) %>%
+                                                                             count())
+)
+colnames(PR_23_24_DENGUE_SINAIS_Notificados) <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", "Artrite", "Artralgia Intensa", "Petéquias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital")
 
-AUX$Municipio <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+PR_23_24_DENGUE_SINAIS_Confirmados <- tibble(Febre = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                                  filter(FEBRE == 1,
+                                                                         CLASSI_FIN == 10 
+                                                                         | 
+                                                                           CLASSI_FIN == 11 
+                                                                         |
+                                                                           CLASSI_FIN == 12                                                            |                                                              CLASSI_FIN == 11                                                            |                                                             CLASSI_FIN == 12,) %>%
+                                                                  count()),
+                                             Mialgia = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                    filter(MIALGIA == 1,
+                                                                           CLASSI_FIN == 10 
+                                                                           | 
+                                                                             CLASSI_FIN == 11 
+                                                                           |
+                                                                             CLASSI_FIN == 12) %>%
+                                                                    count()),
+                                             Cefaleia = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                     filter(CEFALEIA == 1,
+                                                                            CLASSI_FIN == 10 
+                                                                            | 
+                                                                              CLASSI_FIN == 11 
+                                                                            |
+                                                                              CLASSI_FIN == 12) %>%
+                                                                     count()),
+                                             Exantema = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                     filter(EXANTEMA == 1,
+                                                                            CLASSI_FIN == 10 
+                                                                            | 
+                                                                              CLASSI_FIN == 11 
+                                                                            |
+                                                                              CLASSI_FIN == 12) %>%
+                                                                     count()),
+                                             Vomito = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                   filter(VOMITO == 1,
+                                                                          CLASSI_FIN == 10 
+                                                                          | 
+                                                                            CLASSI_FIN == 11 
+                                                                          |
+                                                                            CLASSI_FIN == 12) %>%
+                                                                   count()),
+                                             Nausea = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                   filter(NAUSEA == 1,
+                                                                          CLASSI_FIN == 10 
+                                                                          | 
+                                                                            CLASSI_FIN == 11 
+                                                                          |
+                                                                            CLASSI_FIN == 12) %>%
+                                                                   count()),
+                                             Dor_nas_Costas = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                           filter(DOR_COSTAS == 1,
+                                                                                  CLASSI_FIN == 10 
+                                                                                  | 
+                                                                                    CLASSI_FIN == 11 
+                                                                                  |
+                                                                                    CLASSI_FIN == 12) %>%
+                                                                           count()),
+                                             Conjuntivite = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                         filter(CONJUNTVIT == 1,
+                                                                                CLASSI_FIN == 10 
+                                                                                | 
+                                                                                  CLASSI_FIN == 11 
+                                                                                |
+                                                                                  CLASSI_FIN == 12) %>%
+                                                                         count()),
+                                             Artrite = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                    filter(ARTRITE == 1,
+                                                                           CLASSI_FIN == 10 
+                                                                           | 
+                                                                             CLASSI_FIN == 11 
+                                                                           |
+                                                                             CLASSI_FIN == 12) %>%
+                                                                    count()),
+                                             Artralgia_Intensa = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                              filter(ARTRALGIA == 1,
+                                                                                     CLASSI_FIN == 10 
+                                                                                     | 
+                                                                                       CLASSI_FIN == 11 
+                                                                                     |
+                                                                                       CLASSI_FIN == 12) %>%
+                                                                              count()),
+                                             Petequias = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                      filter(PETEQUIA_N == 1,
+                                                                             CLASSI_FIN == 10 
+                                                                             | 
+                                                                               CLASSI_FIN == 11 
+                                                                             |
+                                                                               CLASSI_FIN == 12) %>%
+                                                                      count()),
+                                             Leucopenia = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                       filter(LEUCOPENIA == 1,
+                                                                              CLASSI_FIN == 10 
+                                                                              | 
+                                                                                CLASSI_FIN == 11 
+                                                                              |
+                                                                                CLASSI_FIN == 12) %>%
+                                                                       count()),
+                                             Prova_do_Laco_Positiva = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                                   filter(LACO == 1,
+                                                                                          CLASSI_FIN == 10 
+                                                                                          | 
+                                                                                            CLASSI_FIN == 11 
+                                                                                          |
+                                                                                            CLASSI_FIN == 12) %>%
+                                                                                   count()),
+                                             Dor_retroorbital = as.integer(PR_DENGUE_23_24_SINAN %>%
+                                                                             filter(DOR_RETRO == 1,
+                                                                                    CLASSI_FIN == 10 
+                                                                                    | 
+                                                                                      CLASSI_FIN == 11 
+                                                                                    |
+                                                                                      CLASSI_FIN == 12) %>%
+                                                                             count())
+)
 
-AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", "Artrite", "Artralgia Intensa", "Petéquias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital"),
+                       Notificados = NA,
+                       Confirmados = NA)
 
-AUX$Febre <- NA
+AUX_GRAF[1,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 1]
+AUX_GRAF[2,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 2]
+AUX_GRAF[3,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 3]
+AUX_GRAF[4,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 4]
+AUX_GRAF[5,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 5]
+AUX_GRAF[6,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 6]
+AUX_GRAF[7,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 7]
+AUX_GRAF[8,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 8]
+AUX_GRAF[9,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 9]
+AUX_GRAF[10,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 10]
+AUX_GRAF[11,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 11]
+AUX_GRAF[12,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 12]
+AUX_GRAF[13,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 13]
+AUX_GRAF[14,2] <- PR_23_24_DENGUE_SINAIS_Notificados[, 14]
 
-AUX$Cefaleia <- NA
-
-AUX$Mialgia <- NA
-
-AUX$Exantema <- NA
-
-AUX$Vomitos <- NA
-
-AUX$Nausea <- NA
-
-AUX$Dor_nas_Costas <- NA
-
-AUX$Conjuntivite <- NA
-
-AUX$Artrite  <- NA
-
-AUX$Artralgia <- NA
-
-AUX$Petequias <- NA
-
-AUX$Leucopenia <- NA
-
-AUX$Dor_Retroorbital <- NA
-
-AUX$Prova_do_Laco_Positiva <- NA
-
-###Elaborando for loop para sinais e sintomas.###
-
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
-  
-  AUX[which(AUX$COD_IBGE == i), 4] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          FEBRE == 1) %>%
-                                                   count()
-  )
-  
-  
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CEFALEIA == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          MIALGIA == 1) %>%
-                                                   count()
-  )
-  
-  
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          EXANTEMA == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          VOMITO == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 9]<- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                  filter(ID_MN_RESI == i,
-                                                         NAUSEA == 1) %>%
-                                                  count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 10]<- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          DOR_COSTAS == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CONJUNTVIT == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           ARTRITE == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           ARTRALGIA == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           PETEQUIA_N == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           LEUCOPENIA == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           DOR_RETRO == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           LACO == 1) %>%
-                                                    count()
-  )
-}
-
-PR_23_24_SINAIS_Notificados <- AUX
-
-###    Elaborando tabelas de sinais e sintomas. Possível somente a partir de 2015.         ###
-
-AUX <- data.frame(RS = BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
-
-AUX$Municipio <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
-
-AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
-
-AUX$Febre <- NA
-
-AUX$Cefaleia <- NA
-
-AUX$Mialgia <- NA
-
-AUX$Exantema <- NA
-
-AUX$Vomitos <- NA
-
-AUX$Nausea <- NA
-
-AUX$Dor_nas_Costas <- NA
-
-AUX$Conjuntivite <- NA
-
-AUX$Artrite  <- NA
-
-AUX$Artralgia <- NA
-
-AUX$Petequias <- NA
-
-AUX$Leucopenia <- NA
-
-AUX$Dor_Retroorbital <- NA
-
-AUX$Prova_do_Laco_Positiva <- NA
-
-###   Elaborando for loop para sinais e sintomas.   ###
-
-for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
-  
-  AUX[which(AUX$COD_IBGE == i), 4] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CLASSI_FIN == 10 
-                                                          | 
-                                                            CLASSI_FIN == 11 
-                                                          |
-                                                            CLASSI_FIN == 12,
-                                                          FEBRE == 1) %>%
-                                                   count()
-  )
-  
-  
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CLASSI_FIN == 10 
-                                                          | 
-                                                            CLASSI_FIN == 11 
-                                                          |
-                                                            CLASSI_FIN == 12,
-                                                          CEFALEIA == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CLASSI_FIN == 10 
-                                                          | 
-                                                            CLASSI_FIN == 11 
-                                                          |
-                                                            CLASSI_FIN == 12,
-                                                          MIALGIA == 1) %>%
-                                                   count()
-  )
-  
-  
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CLASSI_FIN == 10 
-                                                          | 
-                                                            CLASSI_FIN == 11 
-                                                          |
-                                                            CLASSI_FIN == 12,
-                                                          EXANTEMA == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CLASSI_FIN == 10 
-                                                          | 
-                                                            CLASSI_FIN == 11 
-                                                          |
-                                                            CLASSI_FIN == 12,
-                                                          VOMITO == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 9]<- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                  filter(ID_MN_RESI == i,
-                                                         CLASSI_FIN == 10 
-                                                         | 
-                                                           CLASSI_FIN == 11 
-                                                         |
-                                                           CLASSI_FIN == 12,
-                                                         NAUSEA == 1) %>%
-                                                  count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 10]<- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                   filter(ID_MN_RESI == i,
-                                                          CLASSI_FIN == 10 
-                                                          | 
-                                                            CLASSI_FIN == 11 
-                                                          |
-                                                            CLASSI_FIN == 12,
-                                                          DOR_COSTAS == 1) %>%
-                                                   count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           CONJUNTVIT == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           ARTRITE == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           ARTRALGIA == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           PETEQUIA_N == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           LEUCOPENIA == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           DOR_RETRO == 1) %>%
-                                                    count()
-  )
-  
-  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(PR_DENGUE_23_24_SINAN %>%
-                                                    filter(ID_MN_RESI == i,
-                                                           CLASSI_FIN == 10 
-                                                           | 
-                                                             CLASSI_FIN == 11 
-                                                           |
-                                                             CLASSI_FIN == 12,
-                                                           LACO == 1) %>%
-                                                    count()
-  )
-}
-
-PR_23_24_SINAIS_Confirmados <- AUX
+AUX_GRAF[1,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 1]
+AUX_GRAF[2,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 2]
+AUX_GRAF[3,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 3]
+AUX_GRAF[4,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 4]
+AUX_GRAF[5,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 5]
+AUX_GRAF[6,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 6]
+AUX_GRAF[7,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 7]
+AUX_GRAF[8,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 8]
+AUX_GRAF[9,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 9]
+AUX_GRAF[10,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 10]
+AUX_GRAF[11,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 11]
+AUX_GRAF[12,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 12]
+AUX_GRAF[13,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 13]
+AUX_GRAF[14,3] <- PR_23_24_DENGUE_SINAIS_Confirmados[, 14]
 
 ######  Construção do Gráfico de SInais Estadual   #####
 
@@ -9211,6 +9409,286 @@ PR_DENGUE_23_24_GRAF_SINAIS <- ggplot (AUX_GRAF,
              vjust = 0.3) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2)))
 
+####################################################################################################
+####      Elaborando Quadro com dados de sexo, idade, zona de moradia e escolaridade           #####
+####################################################################################################
+
+AUX01 <- tibble(Menos_1_ano = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                           filter(NU_IDADE_N <=3012) %>% 
+                                           count()),
+                Um_a_Cinco_Anos = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                               filter(NU_IDADE_N > 4000 
+                                                      & 
+                                                        NU_IDADE_N <=4005) %>% 
+                                               count()),
+                Cinco_a_Doze_Anos = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                 filter(NU_IDADE_N > 4005 
+                                                        & 
+                                                          NU_IDADE_N <=4012) %>% 
+                                                 count()),
+                Doze_a_Dezoito_Anos = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                   filter(NU_IDADE_N > 4012 
+                                                          & 
+                                                            NU_IDADE_N <=4018) %>% 
+                                                   count()),
+                Dezoito_a_Cinq_Nove = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                   filter(NU_IDADE_N > 4018 
+                                                          & 
+                                                            NU_IDADE_N <= 4059) %>%
+                                                   count()),
+                Maior_Sessenta = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                              filter(NU_IDADE_N > 4059 ) %>%
+                                              count()),
+                Area_Urbana = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                           filter(CS_ZONA == 1) %>% 
+                                           count()),
+                Area_Rural = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                          filter(CS_ZONA == 2) %>% 
+                                          count()), 
+                Sexo_Feminino = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                             filter(CS_SEXO == "F") %>% 
+                                             count()),
+                Sexo_Masculino = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                              filter(CS_SEXO == "M") %>% 
+                                              count()),
+                Analfabeto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                          filter(CS_ESCOL_N == 0) %>% 
+                                          count()),
+                Fundamental_Incompleto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                      filter(CS_ESCOL_N == 1 
+                                                             | 
+                                                               CS_ESCOL_N == 2 
+                                                             | 
+                                                               CS_ESCOL_N == 3) %>%
+                                                      count()),
+                Fundamental = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                           filter(CS_ESCOL_N == 4) %>% 
+                                           count()),
+                Ens_Medio_Incompleto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                    filter(CS_ESCOL_N == 5) %>% 
+                                                    count()),
+                Ens_Medio = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                         filter(CS_ESCOL_N == 6) %>% 
+                                         count()),
+                Ens_Superior_Incompleto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                       filter(CS_ESCOL_N == 7) %>% 
+                                                       count()),
+                Ens_Superior = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                            filter(CS_ESCOL_N == 8) %>% 
+                                            count()),
+                Escolaridade_Ignorad = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                    filter(CS_ESCOL_N == 9) %>% 
+                                                    count()))
+
+AUX02 <- tibble(Menos_1_ano = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                           filter(NU_IDADE_N <=3012,
+                                                  CLASSI_FIN == 10 
+                                                  | 
+                                                    CLASSI_FIN == 11 
+                                                  |
+                                                    CLASSI_FIN == 12) %>% 
+                                           count()),
+                Um_a_Cinco_Anos = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                               filter(NU_IDADE_N > 4000 
+                                                      & 
+                                                        NU_IDADE_N <=4005,
+                                                      CLASSI_FIN == 10 
+                                                      | 
+                                                        CLASSI_FIN == 11 
+                                                      |
+                                                        CLASSI_FIN == 12) %>% 
+                                               count()),
+                Cinco_a_Doze_Anos = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                 filter(NU_IDADE_N > 4005 
+                                                        & 
+                                                          NU_IDADE_N <=4012,
+                                                        CLASSI_FIN == 10 
+                                                        | 
+                                                          CLASSI_FIN == 11 
+                                                        |
+                                                          CLASSI_FIN == 12) %>% 
+                                                 count()),
+                Doze_a_Dezoito_Anos = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                   filter(NU_IDADE_N > 4012 
+                                                          & 
+                                                            NU_IDADE_N <=4018,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
+                                                   count()),
+                Dezoito_a_Cinq_Nove = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                   filter(NU_IDADE_N > 4018 
+                                                          & 
+                                                            NU_IDADE_N <= 4059,
+                                                          CLASSI_FIN == 10 
+                                                          | 
+                                                            CLASSI_FIN == 11 
+                                                          |
+                                                            CLASSI_FIN == 12) %>%
+                                                   count()),
+                Maior_Sessenta = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                              filter(NU_IDADE_N > 4059,
+                                                     CLASSI_FIN == 10 
+                                                     | 
+                                                       CLASSI_FIN == 11 
+                                                     |
+                                                       CLASSI_FIN == 12) %>%
+                                              count()),
+                Area_Urbana = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                           filter(CS_ZONA == 1,
+                                                  CLASSI_FIN == 10 
+                                                  | 
+                                                    CLASSI_FIN == 11 
+                                                  |
+                                                    CLASSI_FIN == 12) %>% 
+                                           count()),
+                Area_Rural = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                          filter(CS_ZONA == 2,
+                                                 CLASSI_FIN == 10 
+                                                 | 
+                                                   CLASSI_FIN == 11 
+                                                 |
+                                                   CLASSI_FIN == 12) %>% 
+                                          count()), 
+                Sexo_Feminino = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                             filter(CS_SEXO == "F",
+                                                    CLASSI_FIN == 10 
+                                                    | 
+                                                      CLASSI_FIN == 11 
+                                                    |
+                                                      CLASSI_FIN == 12) %>% 
+                                             count()),
+                Sexo_Masculino = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                              filter(CS_SEXO == "M",
+                                                     CLASSI_FIN == 10 
+                                                     | 
+                                                       CLASSI_FIN == 11 
+                                                     |
+                                                       CLASSI_FIN == 12) %>% 
+                                              count()),
+                Analfabeto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                          filter(CS_ESCOL_N == 0,
+                                                 CLASSI_FIN == 10 
+                                                 | 
+                                                   CLASSI_FIN == 11 
+                                                 |
+                                                   CLASSI_FIN == 12) %>% 
+                                          count()),
+                Fundamental_Incompleto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                      filter(CS_ESCOL_N == 1 
+                                                             | 
+                                                               CS_ESCOL_N == 2 
+                                                             | 
+                                                               CS_ESCOL_N == 3,
+                                                             CLASSI_FIN == 10 
+                                                             | 
+                                                               CLASSI_FIN == 11 
+                                                             |
+                                                               CLASSI_FIN == 12) %>%
+                                                      count()),
+                Fundamental = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                           filter(CS_ESCOL_N == 4,
+                                                  CLASSI_FIN == 10 
+                                                  | 
+                                                    CLASSI_FIN == 11 
+                                                  |
+                                                    CLASSI_FIN == 12) %>% 
+                                           count()),
+                Ens_Medio_Incompleto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                    filter(CS_ESCOL_N == 5,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count()),
+                Ens_Medio = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                         filter(CS_ESCOL_N == 6,
+                                                CLASSI_FIN == 10 
+                                                | 
+                                                  CLASSI_FIN == 11 
+                                                |
+                                                  CLASSI_FIN == 12) %>% 
+                                         count()),
+                Ens_Superior_Incompleto = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                       filter(CS_ESCOL_N == 7,
+                                                              CLASSI_FIN == 10 
+                                                              | 
+                                                                CLASSI_FIN == 11 
+                                                              |
+                                                                CLASSI_FIN == 12) %>% 
+                                                       count()),
+                Ens_Superior = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                            filter(CS_ESCOL_N == 8,
+                                                   CLASSI_FIN == 10 
+                                                   | 
+                                                     CLASSI_FIN == 11 
+                                                   |
+                                                     CLASSI_FIN == 12) %>% 
+                                            count()),
+                Escolaridade_Ignorad = as.integer(PR_DENGUE_23_24_SINAN %>% 
+                                                    filter(CS_ESCOL_N == 9,
+                                                           CLASSI_FIN == 10 
+                                                           | 
+                                                             CLASSI_FIN == 11 
+                                                           |
+                                                             CLASSI_FIN == 12) %>% 
+                                                    count()))
+
+AUX_GRAF <- tibble(Rotulos = colnames(AUX01[1:6]),
+                   Ordem = as.factor(1:(7-1)),
+                   Notificados = t(AUX01[,1:6]),
+                   Confirmados = t(AUX02[,1:6]) 
+)
+
+AUX_GRAF[,1] <- c("< 1 ano", "1 |-- 5 anos", "5 |-- 12 anos", 
+                  "12 |-- 18 anos", "18 |-- 60 anos", "> 60 anos")
+
+colnames(AUX_GRAF)[3] <- "Notificados"
+
+colnames(AUX_GRAF)[4] <- "Confirmados"
+
+PR_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF, 
+                                  aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#118395", "Confirmados" = "#3B9511")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:6),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+
+
+
 ###############################################################################################
 ################################################################################################
 #####################################################################################################################
@@ -9257,8 +9735,8 @@ RS22_23_24_RG_MUNICIPIOS <- read_sheet("https://docs.google.com/spreadsheets/d/1
 
 ###Por alguma razão a planilha veio como lista###
 
-RS22_23_24_RG_MUNICIPIOS <- as.data.frame(lapply(RS22_23_24_RG_MUNICIPIOS, 
-                                                 unlist))
+#RS22_23_24_RG_MUNICIPIOS <- as.data.frame(lapply(RS22_23_24_RG_MUNICIPIOS, 
+  #                                               unlist))
 
 RS22_23_24_RG_LOCALIDADES <- read_sheet("https://docs.google.com/spreadsheets/d/1w4DS_c-b4kqXzjHqGOw9MbyTZlNZLj23RY4KPr3TYSc/edit#gid=877642872")
 
@@ -9348,6 +9826,8 @@ write.csv(RS22_23_24_CICLOS_LOCALIDADES,
 write.csv(RS22_23_24_CICLOS_MUNICIPIOS, 
           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_CICLOS_MUNICIPIOS.csv",
           row.names = FALSE)
+
+RS22_23_24_RG_MUNICIPIOS <- RS22_23_24_RG_MUNICIPIOS[, -15]
 
 write.csv(RS22_23_24_RG_MUNICIPIOS, 
           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_RG_MUNICIPIOS.csv",
@@ -10557,7 +11037,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo3 <- ggplot() +
 
 ###      Série Histórica - Pag_03
 
-RS22_23_24_INFORME_Pag_03 <- (RS22_Serie_Historica_GRAF_Not_Conf / RS22_Serie_Historica_GRAF_Sorotipo /RS22_Serie_Historica_GRAF_Hospitalizados)
+RS22_23_24_INFORME_Pag_03 <- (RS22_GRAF_Serie_Historica_Not_Conf / RS22_GRAF_Serie_Historica_Sorotipo /RS22_GRAF_Serie_Historica_Hospitalizados)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_03.png", 
     width = 33,
@@ -10583,7 +11063,7 @@ dev.off()
 
 ####           Canal Endêmico Prováveis - Pag 05
 
-RS22_23_24_INFORME_Pag_05 <- RS22_23_24_GRAF_Incidencia
+RS22_23_24_INFORME_Pag_05 <- RS22_GRAF_23_24_Incidencia
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_05.png", 
     width = 33,
@@ -10597,7 +11077,7 @@ dev.off()
 
 ###            Notificados/Confirmados - Pag 06
 
-RS22_23_24_INFORME_Pag_06 <- (RS22_23_24_GRAF_Not_Conf / RS22_23_24_GRAF_Autoctones / RS22_23_24_GRAF_Investigacao)
+RS22_23_24_INFORME_Pag_06 <- (RS22_GRAF_23_24_Not_Conf / RS22_GRAF_23_24_Autoctones / RS22_GRAF_23_24_Investigacao)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_06.png", 
     width = 36,
@@ -10610,7 +11090,7 @@ dev.off()
 
 ###      Autóctones/Descartados
 
-RS22_23_24_INFORME_Pag_07 <- (RS22_23_24_GRAF_Hospitalizados / RS22_23_24_GRAF_Descartados / RS22_23_24_GRAF_Inconclusivos)
+RS22_23_24_INFORME_Pag_07 <- (RS22_GRAF_23_24_Hospitalizados / RS22_GRAF_23_24_Descartados / RS22_GRAF_23_24_Inconclusivos)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_07.png", 
     width = 36,
@@ -10624,11 +11104,11 @@ dev.off()
 
 ###    Em Investigação/Incidência
 
-RS22_23_24_INFORME_Pag_08 <- (RS22_Serie_Historica_GRAF_Encerramento / PR_DENGUE_23_24_GRAF_SINAIS / RS22_23_24_GRAF_SINAIS)
+RS22_23_24_INFORME_Pag_08 <- (RS22_GRAF_23_24_Encerramento / PR_DENGUE_23_24_GRAF_SINAIS / RS22_GRAF_23_24_SINAIS)
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_08.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_INFORME_Pag_08
@@ -10651,8 +11131,8 @@ dev.off()
 ###      Histogramas Notificados - Pag 10
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_10.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS_23_24_GRAF_Histograma_Notificados_01
@@ -10662,8 +11142,8 @@ dev.off()
 ###        Histogramas Notificados - Pag 11
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_11.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS_23_24_GRAF_Histograma_Notificados_02
@@ -10673,8 +11153,8 @@ dev.off()
 ###      Histogramas Confirmados - ##PAG 12
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_12.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS_23_24_GRAF_Histograma_Confirmados_01
@@ -10684,8 +11164,8 @@ dev.off()
 ###      Histogramas Confirmados - ##PAG 13
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_13.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS_23_24_GRAF_Histograma_Confirmados_02
@@ -10695,8 +11175,8 @@ dev.off()
 ###     Histogramas Prováveis - ##PAG 14
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_14.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS_23_24_GRAF_Histograma_Provaveis_01
@@ -10706,8 +11186,8 @@ dev.off()
 ###     Histogramas Prováveis - ##PAG 15
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_15.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS_23_24_GRAF_Histograma_Provaveis_02
@@ -10716,18 +11196,18 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_SOROTIPO_PR / RS22_23_24_GRAF_Sorotipo)
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_16.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
 
 dev.off()
 
-RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_US_TOTAL / RS22_23_24_GRAF_US_DETEC)
+RS22_23_24_GRAF_1 <- (RS22_GRAF_23_24_US_TOTAL / RS22_GRAF_23_24_US_DETEC)
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17A.png", 
-    width = 33,
-    height = 20,
+    width = 36,
+    height = 23,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10736,8 +11216,8 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_SORO_TOTAL / RS22_23_24_GRAF_SORO_REAG)
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17B.png", 
-    width = 33,
-    height = 20,
+    width = 36,
+    height = 23,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10747,8 +11227,8 @@ dev.off()
 ##### Exames Municípios  
 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_18.png", 
-    width = 33,
-    height = 20,
+    width = 36,
+    height = 23,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_GRAF_LACEN_MUNIC
@@ -10757,8 +11237,8 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_INCIDENCIA_PR / PR_23_24_GRAF_INCIDENCIA_PROV_PR)
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_19.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10767,8 +11247,8 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_CHIK_Notificados / PR_23_24_GRAF_CHIK_Incidência)
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_20.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10777,8 +11257,8 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- PR_23_24_GRAF_SINAIS_CHIK 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21A.png", 
-    width = 33,
-    height = 20,
+    width = 36,
+    height = 23,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10787,8 +11267,8 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_CHK_Not + RS22_23_24_GRAF_CHK_Conf) 
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21B.png", 
-    width = 33,
-    height = 20,
+    width = 36,
+    height = 23,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10797,8 +11277,8 @@ dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_ZIKA_CHIK_Notificados / PR_23_24_GRAF_ZIKA_Incidência)
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_22.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10809,8 +11289,8 @@ RS22_23_24_GRAF_1 <- ((RS22_23_24_GRAF_IIP_Ciclo4 + RS22_23_24_GRAF_Tratamento_C
                         (RS22_23_24_GRAF_IIP_Ciclo5 + RS22_23_24_GRAF_Tratamento_Ciclo5) / 
                         (RS22_23_24_GRAF_IIP_Ciclo6 + RS22_23_24_GRAF_Tratamento_Ciclo6))
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_23.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
@@ -10821,8 +11301,8 @@ RS22_23_24_GRAF_1 <- ((RS22_23_24_GRAF_IIP_Ciclo1 + RS22_23_24_GRAF_Tratamento_C
                         (RS22_23_24_GRAF_IIP_Ciclo2 + RS22_23_24_GRAF_Tratamento_Ciclo2) / 
                         (RS22_23_24_GRAF_IIP_Ciclo3 + RS22_23_24_GRAF_Tratamento_Ciclo3))
 png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_24.png", 
-    width = 33,
-    height = 40,
+    width = 36,
+    height = 46,
     units = "cm", pointsize = 8, res = 300)
 
 RS22_23_24_GRAF_1
