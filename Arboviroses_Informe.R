@@ -9637,6 +9637,9 @@ AUX02 <- tibble(Menos_1_ano = as.integer(PR_DENGUE_23_24_SINAN %>%
                                                              CLASSI_FIN == 12) %>% 
                                                     count()))
 
+
+####   Faixa etária   ####
+
 AUX_GRAF <- tibble(Rotulos = colnames(AUX01[1:6]),
                    Ordem = as.factor(1:(7-1)),
                    Notificados = t(AUX01[,1:6]),
@@ -9644,7 +9647,7 @@ AUX_GRAF <- tibble(Rotulos = colnames(AUX01[1:6]),
 )
 
 AUX_GRAF[,1] <- c("< 1 ano", "1 |-- 5 anos", "5 |-- 12 anos", 
-                  "12 |-- 18 anos", "18 |-- 60 anos", "> 60 anos")
+                  "12 |-- 18 anos", "18 |-- 60 anos", "≥ 60 anos")
 
 colnames(AUX_GRAF)[3] <- "Notificados"
 
@@ -9686,8 +9689,148 @@ PR_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF,
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   Theme()
 
+##########   Escolaridade   #####
 
+AUX_GRAF <- tibble(Rotulos = colnames(AUX01[11:18]),
+                   Ordem = as.factor(1:(18-10)),
+                   Notificados = t(AUX01[, 11:18]),
+                   Confirmados = t(AUX02[, 11:18]))
 
+AUX_GRAF[,1] <- c("Analfabeto", "Fundamental Incompleto", "Fundamental", "Médio Incompleto", 
+                  "Médio", "Superior Incompleto", "Superior", "Ignorado")
+
+colnames(AUX_GRAF)[3:4] <- c("Notificados", "Confirmados")
+
+PR_GRAF_Escolaridade <- ggplot (AUX_GRAF, 
+                                aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ESCOLARIADE NOTIFICADOS/CONFIRMADOS PARANÁ (2023/24)") +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#C4BF7A", "Confirmados" = "#C4A37A")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:(21-13)),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+#########   ZONA de ocorrência  #####
+
+AUX_GRAF <- tibble(Rotulos = colnames(AUX01[7:8]),
+                   Ordem = as.factor(1:2),
+                   Notificados = t(AUX01[, 7:8]),
+                   Confirmados = t(AUX02[, 7:8]))
+
+AUX_GRAF[,1] <- c("Urbana", "Rural")
+
+colnames(AUX_GRAF)[3:4] <- c("Notificados", "Confirmados")
+
+PR_GRAF_Zona <- ggplot (AUX_GRAF, 
+                        aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS PARANÁ (2023/24)") +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#614352", "Confirmados" = "#436155")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+######  SEXO  ####
+
+AUX_GRAF <- tibble(Rotulos = colnames(AUX01[9:10]),
+                   Ordem = as.factor(1:2),
+                   Notificados = t(AUX01[, 9:10]),
+                   Confirmados = t(AUX02[, 9:10]))
+
+AUX_GRAF[,1] <- c("Feminino", "Masculino")
+
+colnames(AUX_GRAF)[3:4] <- c("Notificados", "Confirmados")
+
+PR_GRAF_Sexo <- ggplot (AUX_GRAF, 
+                        aes(x = Ordem)) + 
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = "SEXO NOTIFICADOS/CONFIRMADOS PARANÁ (2023/24)") +
+  geom_bar(
+    aes( y = Notificados, fill = "Notificados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = -.20)) + 
+  geom_label(aes(y = Notificados,
+                 label = Notificados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) + 
+  scale_fill_manual(name = "", values = c("Notificados" = "#541E98", "Confirmados" = "#98941E")) +
+  geom_bar(
+    aes( y = Confirmados, fill = "Confirmados"),
+    stat = "identity",
+    color = "black",
+    width = .4,
+    position = position_nudge(x = .20)) +
+  geom_label(aes(y = Confirmados,
+                 label = Confirmados),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  theme(axis.text.x = element_text(angle = 0)) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX_GRAF$Rotulos) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
 
 ###############################################################################################
 ################################################################################################
@@ -11309,19 +11452,19 @@ RS22_23_24_GRAF_1
 
 dev.off()
 
-rm(RS22_Serie_Historica_GRAF_Not_Conf,
-   RS22_Serie_Historica_GRAF_Sorotipo, 
-   RS22_Serie_Historica_GRAF_Hospitalizados,
+rm(RS22_GRAF_Serie_Historica_Not_Conf,
+   RS22_GRAF_Serie_Historica_Sorotipo, 
+   RS22_GRAF_Serie_Historica_Hospitalizados,
    RS_23_24_GRAF_CE_Notificados,
    RS_23_24_GRAF_CE_Provaveis,
    RS_23_24_GRAF_CE_Confirmados,
-   RS22_23_24_GRAF_Incidencia,
-   RS22_23_24_GRAF_Not_Conf,
-   RS22_23_24_GRAF_Autoctones,
-   RS22_23_24_GRAF_Investigacao,
-   RS22_23_24_GRAF_Hospitalizados,
-   RS22_23_24_GRAF_Descartados,
-   RS22_23_24_GRAF_Inconclusivos,
+   RS22_GRAF_23_24_Incidencia,
+   RS22_GRAF_23_24_Not_Conf,
+   RS22_GRAF_23_24_Autoctones,
+   RS22_GRAF_23_24_Investigacao,
+   RS22_GRAF_23_24_Hospitalizados,
+   RS22_GRAF_23_24_Descartados,
+   RS22_GRAF_23_24_Inconclusivos,
    RS22_23_24_GRAF_IIP_Ciclo4,
    RS22_23_24_GRAF_Tratamento_Ciclo4,
    RS22_23_24_GRAF_IIP_Ciclo5,
@@ -11403,14 +11546,14 @@ rm(RS22_Serie_Historica_GRAF_Not_Conf,
    PR_23_24_ZIKA_CHIK_Notificados,
    PR_DENGUE_23_24_GRAF_SINAIS,
    RS22_23_24_GRAF_1,
-   RS22_23_24_GRAF_CHK_Conf,
-   RS22_23_24_GRAF_CHK_Not,
-   RS22_23_24_GRAF_SINAIS,
-   RS22_23_24_GRAF_SORO_REAG,
-   RS22_23_24_GRAF_SORO_TOTAL,
-   RS22_23_24_GRAF_Sorotipo,
-   RS22_23_24_GRAF_US_DETEC,
-   RS22_23_24_GRAF_US_TOTAL,
+   RS22_GRAF_23_24_CHK_Conf,
+   RS22_GRAF_23_24_CHK_Not,
+   RS22_GRAF_23_24_SINAIS,
+   RS22_GRAF_23_24_SORO_REAG,
+   RS22_GRAF_23_24_SORO_TOTAL,
+   RS22_GRAF_23_24_Sorotipo,
+   RS22_GRAF_23_24_US_DETEC,
+   RS22_GRAF_23_24_US_TOTAL,
    PR_CHIK_23_24_SINAN,
    RS_23_24_SE_Confirmados,
    RS_23_24_SE_Notificados,

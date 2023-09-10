@@ -1,32 +1,69 @@
 rm(list =ls())
-####Indicando Diretório de Trabalho.#####
+###############################################################################################################
+###############################################################################################################
+##                                                                                                           ##
+##    Script elaborado em ambiente LINUX. Para replicação deve ser ajustado os caminhos dos diretórios       ##
+##    ################################################################################################       ##
+##                                                                                                           ##
+##    Até o ponto em que é necessario autenticação de acesso à internet todos os passos abaixo são           ##
+##    reprodutíveis em qualquer computador desde que os itens abaixo sejam executados corretamente.          ##
+##    #############################################################################################          ## 
+##                                                                                                           ##
+##    /home/gustavo/Área de trabalho/Análise_de_Dados/Arboviroses_Geral deve ser previamente rodado          ##
+##    para que o script abaixo funcione.                                                                     ##
+##    ############################################################################################           ##
+##                                                                                                           ##
+###############################################################################################################
+###############################################################################################################
+
+###########################         Localizações   #########################
+
+###   Linhas          Assunto                         Linhas              Assunto
+###   83 - 97         libraries                 ### 2459 - 2599         Canais Endêmicos
+###   104 - 154       Bases de dados            ### 
+###   156 - 2170      Tabelas período atual
+###   2184 - 2444     Decodificação SINAN
+###   2455 - 2504     Série histórica
+
+#####      Definindo diretório de trabalho, caso tenha que trabalhar em Windows, acertar o diretório       ####
 
 setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 
-###Libraries###
+###############################################################################################################
+###############################################################################################################
+##                                                                                                           ##
+##               OS PASSOS ABAIXO (ATÉ LINHA 80) DEVEM SER SEGUIDOS PARA FUNCIONAMENTO!!!                    ##
+##    ################################################################################################       ##
+##                                                                                                           ##
+##            Lembrar que OBRIGATORIAMENTE deve ser baixados as bases DBF de 2009 até 2024                   ##
+##            As bases DBF devem ser salvas no formato DENGON2009, DENGON2012... até DENGON2024              ##
+##            A base DENGON2024 deve ser baixada diariamente e salva no local correto para que               ## 
+##            o sistema esteja sempre atualizado!!!                                                          ##
+##            Os dados do LACEN devem ser baixados da GAL                                                    ##
+##            Estes arquivos devem ser alocados no diretório abaixo:                                         ##
+##            /home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/DBF ou /Base_de_Dados/LACEN      ##
+##    ############################################################################################           ##
+##                                                                                                           ##
+###############################################################################################################
+###############################################################################################################
 
-library(foreign)
-library (dplyr)
-library(ggplot2)
-
-####Planilha com os dados dos municípios e com os códigos do IBGE. Será utilizada nos for loops para buscar dados######## 
-####dos municípios e vinculá-los com os dados da base DBF do SINAN#######################################################
+###################       2023      #########################################
 
 BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
                     header=TRUE, 
                     sep=",")
 
-PR_ANTRAB_BASE_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_Serie_Historica.csv",
+PR_ANTRAB_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_BASE_Serie_Historica.csv",
                                       header = TRUE,
                                       sep = ",")
 
-RS_ANTRAB_BASE_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_ANTRAB_BASE_Serie_Historica.csv",
-                                           header = TRUE,
-                                           sep = ",")
+RS_ANTRAB_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_ANTRAB_BASE_Serie_Historica.csv",
+                                      header = TRUE,
+                                      sep = ",")
 
 RS_CE_BASE_ANTRAB <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv",
-         header = TRUE,
-         sep = ",")
+                              header = TRUE,
+                              sep = ",")
 
 ############################################################################################
 ####   Definindo o objeto RS para servir de apoio para    ##################################
@@ -34,7 +71,6 @@ RS_CE_BASE_ANTRAB <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_CE_Bas
 ############################################################################################
 
 RS <- 22   #####  Deve-se colocar AQUI a Regional
-
 ######   Criando objeto ID_REG. Será utilizado para selecionar
 ######   RS no DBF do SINAN ONLINE.
 
@@ -46,7 +82,6 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
-###################       2023      #########################################
 
 ####Criando um objeto com a base DBF do SINAN#################
 
@@ -61,14 +96,9 @@ ANTRAB2023$ID_MN_RESI <- as.numeric(as.character(ANTRAB2023$ID_MN_RESI))
 #####################################################################################################################
 #################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
 
-PR_ANTRAB_BASE_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
+PR_ANTRAB_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
                                                  count()
 )
-
-write.csv (PR_ANTRAB_BASE_Serie_Historica, 
-           "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_Serie_Historica.csv", 
-           row.names = FALSE)
-
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2023 <- ANTRAB2023 %>% 
@@ -1032,7 +1062,7 @@ AUX$Primata <- NA
 
 AUX$Raposa <- NA
 
-AUX$Herbivaro_Domestico <- NA
+AUX$Herbivoro_Domestico <- NA
 
 AUX$Outra <- NA
 
@@ -1504,32 +1534,32 @@ rm(SINAN_ANTRAB_2023, ANTRAB2023)
 
 ######   Série Histórica   ########
 
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 1] <- RS22_ANTRAB_2023_GERAL[17, 5]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 2] <- RS22_ANTRAB_2023_GERAL[17, 6]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 3] <- RS22_ANTRAB_2023_GERAL[17, 7]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 4] <- RS22_ANTRAB_2023_GERAL[17, 8]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 5] <- RS22_ANTRAB_2023_GERAL[17, 9]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 6] <- RS22_ANTRAB_2023_GERAL[17, 10]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 7] <- RS22_ANTRAB_2023_GERAL[17, 11]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 8] <- RS22_ANTRAB_2023_GERAL[17, 12]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 9] <- RS22_ANTRAB_2023_GERAL[17, 13]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 10] <- RS22_ANTRAB_2023_GERAL[17, 14]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 11] <- RS22_ANTRAB_2023_GERAL[17, 15]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 12] <- RS22_ANTRAB_2023_GERAL[17, 16]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 13] <- RS22_ANTRAB_2023_GERAL[17, 17]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 14] <- RS22_ANTRAB_2023_GERAL[17, 18]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 15] <- RS22_ANTRAB_2023_GERAL[17, 19]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 16] <- RS22_ANTRAB_2023_GERAL[17, 20]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 17] <- RS22_ANTRAB_2023_GERAL[17, 21]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 18] <- RS22_ANTRAB_2023_GERAL[17, 22]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 19] <- RS22_ANTRAB_2023_GERAL[17, 23]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 20] <- RS22_ANTRAB_2023_GERAL[17, 24]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 21] <- RS22_ANTRAB_2023_GERAL[17, 25]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 22] <- RS22_ANTRAB_2023_GERAL[17, 26]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 23] <- RS22_ANTRAB_2023_GERAL[17, 27]
-RS_ANTRAB_BASE_Serie_Historica[nrow(RS_ANTRAB_BASE_Serie_Historica), 24] <- RS22_ANTRAB_2023_GERAL[17, 28]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 1] <- RS22_ANTRAB_2023_GERAL[17, 5]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 2] <- RS22_ANTRAB_2023_GERAL[17, 6]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 3] <- RS22_ANTRAB_2023_GERAL[17, 7]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 4] <- RS22_ANTRAB_2023_GERAL[17, 8]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 5] <- RS22_ANTRAB_2023_GERAL[17, 9]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 6] <- RS22_ANTRAB_2023_GERAL[17, 10]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 7] <- RS22_ANTRAB_2023_GERAL[17, 11]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 8] <- RS22_ANTRAB_2023_GERAL[17, 12]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 9] <- RS22_ANTRAB_2023_GERAL[17, 13]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 10] <- RS22_ANTRAB_2023_GERAL[17, 14]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 11] <- RS22_ANTRAB_2023_GERAL[17, 15]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 12] <- RS22_ANTRAB_2023_GERAL[17, 16]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 13] <- RS22_ANTRAB_2023_GERAL[17, 17]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 14] <- RS22_ANTRAB_2023_GERAL[17, 18]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 15] <- RS22_ANTRAB_2023_GERAL[17, 19]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 16] <- RS22_ANTRAB_2023_GERAL[17, 20]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 17] <- RS22_ANTRAB_2023_GERAL[17, 21]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 18] <- RS22_ANTRAB_2023_GERAL[17, 22]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 19] <- RS22_ANTRAB_2023_GERAL[17, 23]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 20] <- RS22_ANTRAB_2023_GERAL[17, 24]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 21] <- RS22_ANTRAB_2023_GERAL[17, 25]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 22] <- RS22_ANTRAB_2023_GERAL[17, 26]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 23] <- RS22_ANTRAB_2023_GERAL[17, 27]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 24] <- RS22_ANTRAB_2023_GERAL[17, 28]
 
-RS_ANTRAB_BASE_Serie_Historica[, 25] <- as.factor(RS_ANTRAB_BASE_Serie_Historica[, 25])
+RS_ANTRAB_Serie_Historica[, 25] <- as.factor(RS_ANTRAB_Serie_Historica[, 25])
 
 ####################################################################################################################
 ################Trabalhando as tabelas base do Canal Endêmico   ####################################################
@@ -1625,12 +1655,13 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",
                                   "2023/52",  "2023/53")
 )
 
-RS_22_23_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
+RS_GRAF_2023_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold")) +
   labs(caption = "Fonte",
-       title = "Canal Endêmico Casos Notificados - 2022/23") +
+       title = "Diagrama de Controle - 2023",
+       subtitle = "Atendimentos Antirrábicos NOTIFICADOS") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
@@ -1638,21 +1669,38 @@ RS_22_23_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(,Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(,Media), fill = "#556B2F") +
-  geom_line(aes(,`2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Media), 
+            fill = "#556B2F") +
+  geom_line(aes(y = `2023`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/Diagrama_de_Controle.png", 
+    width = 33,
+    height = 20,
+    units = "cm", pointsize = 8, res = 300)
+
+RS_2023_GRAF_CE_Notificados
+
+dev.off()
 
 ##############   Gráficos Gerais    ######
 
 #####     Série histórica Paraná    #####
 
-PR_ANTRAB_BASE_Serie_Historica$Ano <- as.factor(PR_ANTRAB_BASE_Serie_Historica$Ano)
+PR_ANTRAB_Serie_Historica$Ano <- as.factor(PR_ANTRAB_Serie_Historica$Ano)
 
-ggplot(PR_ANTRAB_BASE_Serie_Historica, aes(x = Ano, y = Notificados)) +
+PR_GRAF_Serie_Historica <- ggplot(PR_ANTRAB_Serie_Historica, aes(x = Ano, 
+                                      y = Notificados)) +
   theme(axis.text.x = element_text(angle = 0, 
                                    vjust = .5,
                                    face = "bold"),
@@ -1664,7 +1712,7 @@ ggplot(PR_ANTRAB_BASE_Serie_Historica, aes(x = Ano, y = Notificados)) +
        x = "Anos",
        y = "Número de Casos",
        title = "Série Histórica - PARANÁ",
-       subtitle = "Casos Notificados/2012 - 2023") +
+       subtitle = "Casos Notificados (2012 - 2023)") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
@@ -1682,7 +1730,8 @@ ggplot(PR_ANTRAB_BASE_Serie_Historica, aes(x = Ano, y = Notificados)) +
 
 ####   Serie Histórica regional   ######
 
-ggplot(RS22_ANTRAB_Serie_Historica, aes(x = V25, y = Notificados)) +
+RS_GRAF_Serie_Historica <- ggplot(RS_ANTRAB_Serie_Historica, aes(x = V25, 
+                                      y = Notificados)) +
   theme(axis.text.x = element_text(angle = 0, 
                                    vjust = 1,
                                    face = "bold"),
@@ -1699,8 +1748,8 @@ ggplot(RS22_ANTRAB_Serie_Historica, aes(x = V25, y = Notificados)) +
   labs(caption = "Fonte", 
        x = "Anos",
        y = "Número de Casos",
-       title = "Casos Notificados - 22ªRS",
-       subtitle = "2012 - 2023") +
+       title = "Série Histórica - 22ªRS",
+       subtitle = "Casos Notificados (2012 - 2023)") +
   geom_bar(stat = "identity",
            color = "black",
            fill = "green") +
@@ -1710,7 +1759,7 @@ ggplot(RS22_ANTRAB_Serie_Historica, aes(x = V25, y = Notificados)) +
              nudge_y = 5) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
-#####    
+#####    Faixa Etária  ####
 
 AUX <- RS22_ANTRAB_2023_GERAL[17, 12:17]
 
@@ -1718,12 +1767,20 @@ AUX[2,] <- as.factor(colnames(AUX))
 
 AUX <- as.data.frame(t(AUX))
 
-colnames(AUX) <- c("Casos", "Label")
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
 
-ggplot(AUX, aes(x = Label, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 50, 
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[,2] <- c("< 1 ano", "1 |-- 5 anos", "5 |-- 12 anos", 
+                  "12 |-- 18 anos", "18 |-- 60 anos", "≥ 60 anos")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
                                    vjust = 0.5,
-                                   face = "bold"),
+                                   face = "bold",
+                                   size = 12),
         axis.text.y = element_text(angle = 90,
                                    vjust = 0.5,
                                    hjust = 0.5,
@@ -1734,6 +1791,300 @@ ggplot(AUX, aes(x = Label, y = Casos)) +
         plot.title = element_text(face = "bold",
                                   size = 19,
                                   colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "FAIXA ETÁRIA CASOS NOTIFICADOS - 22ªRS") +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") 
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:6),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    Escolariadade  ####
+
+AUX <- RS22_ANTRAB_2023_GERAL[17, 18:26]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Analfabeto", "Fundamental 
+Incompleto", "Fundamental", "Médio 
+Incompleto", 
+                  "Médio", "Superior 
+Incompleto", "Superior", "Não se Aplica", "Ignorado")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ESCOLARIDADE CASOS NOTIFICADOS - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:9),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    Zona de ocorrência  ####
+
+AUX <- RS22_ANTRAB_2023_GERAL[17, 6:9]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Urbana", "Rural", "Periurbana", "Ignorados")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ZONA DE OCORRÊNCIA CASOS NOTIFICADOS - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:4),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    Sexo    ####
+
+AUX <- RS22_ANTRAB_2023_GERAL[17, 10:11]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Feminino", "Masculino")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ZONA DE OCORRÊNCIA CASOS NOTIFICADOS - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    Espécie Agressora    ####
+
+AUX <- RS22_ANTRAB_2023_AGRESSOR[17, 5:11]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Canina", "Felina", "Quiróptera", "Primata", "Raposa", "Herbívoro 
+Doméstico", "Outra")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ESPÉCIE AGRESSORA - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:7),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    cONDIÇÃO DO ANIMAL    ####
+
+AUX <- RS22_ANTRAB_2023_COND_ANIMAL_ACID[17, 5:8]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Sadio", "Suspeito", "Raivoso", "Morto/Desaparecido")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "CONDIÇÃO DO ANIMAL AGRESSOR - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:4),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    cONDIÇÃO DO ANIMAL    ####
+
+AUX <- RS22_ANTRAB_2023_COND_ANIMAL_ACID[17, 5:8]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Sadio", "Suspeito", "Raivoso", "Morto/Desaparecido")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "CONDIÇÃO DO ANIMAL AGRESSOR - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:4),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+
