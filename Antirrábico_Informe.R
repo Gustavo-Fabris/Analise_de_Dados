@@ -15,7 +15,12 @@ rm(list =ls())
 ##                                                                                                           ##
 ###############################################################################################################
 ###############################################################################################################
+############################################################################################
+####   Definindo o objeto RS para servir de apoio para    ##################################
+####    buscar dados de todas as RS. Usar 1, 2, 3..., 21, 22    ############################
+############################################################################################
 
+RS <- 22   #####  Deve-se colocar AQUI a Regional
 ###########################         Localizações   #########################
 
 ###   Linhas          Assunto                         Linhas              Assunto
@@ -46,7 +51,20 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 ##                                                                                                           ##
 ###############################################################################################################
 ###############################################################################################################
-
+library(patchwork)
+library(foreign)
+library (dplyr)
+library (googlesheets4)
+library (ggplot2)
+###Não sei usar o httpuv!!!###
+library (httpuv)
+library(stringr)
+library(lubridate)
+#library(xlsx)
+library(geobr)
+library(ggspatial)
+library(ggplot2)
+library(tidyr)
 ###################       2023      #########################################
 
 BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
@@ -65,12 +83,6 @@ RS_CE_BASE_ANTRAB <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_CE_Bas
                               header = TRUE,
                               sep = ",")
 
-############################################################################################
-####   Definindo o objeto RS para servir de apoio para    ##################################
-####    buscar dados de todas as RS. Usar 1, 2, 3..., 21, 22    ############################
-############################################################################################
-
-RS <- 22   #####  Deve-se colocar AQUI a Regional
 ######   Criando objeto ID_REG. Será utilizado para selecionar
 ######   RS no DBF do SINAN ONLINE.
 
@@ -87,7 +99,6 @@ nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
 ANTRAB2023 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2023.DBF",
                        as.is = FALSE)
-
 
 ####Alterando o formato da coluna ID_MN_RESI de forma que ela seja passível de vincular no for loop#################
 
@@ -1620,7 +1631,7 @@ colnames(RS_CE_ANTRAB)[1] <- "Semana_Epidemiológica"
 
 rownames(RS_CE_ANTRAB) <- c(1: nrow(RS_CE_ANTRAB))
 
-rm(AUX, AUX2, RS_CE_Base_ANTRAB)
+rm(AUX, AUX2, RS_CE_BASE_ANTRAB)
 
 write.csv (RS_CE_ANTRAB, 
            paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_CE_ANTRAB.csv"), 
@@ -1684,12 +1695,12 @@ RS_GRAF_2023_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
                      label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/Diagrama_de_Controle.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RAIVA/Diagrama_de_Controle.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
 
-RS_2023_GRAF_CE_Notificados
+RS_GRAF_2023_CE_Notificados
 
 dev.off()
 
@@ -2087,4 +2098,215 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
+#####    Tratamento Indicado    ####
 
+AUX <- RS22_ANTRAB_2023_TRATAMENTO[17, 5:10]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Dispensa de 
+Tratamento", "Observação do 
+Animal", "Observação do 
+Animal e Vacina", "Vacina", "Sorovacinação", "Esquema de 
+Reexposição")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "TRATAMENTO REALIZADO - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:6),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    Tipo de Exposição    ####
+
+AUX <- RS22_ANTRAB_2023_EXPOSICAO[17, 5:9]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Contato
+Indireto", "Arranhadura", "Lambedura", "Mordedura", "Outro")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "TIPO DE FERIMENTO - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:5),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####    Animal Observável    ####
+
+AUX <- RS22_ANTRAB_2023_OBSERVAVEL[17, 5:6]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Sim", "Não")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "ANIMAL OBSERVÁVEL - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+
+#####    Soroterapia    ####
+
+AUX <- RS22_ANTRAB_2023_SOROTERAPIA[17, 5:7]
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Sim", "Não", "Ignorado")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+ggplot(AUX, aes(x = Ordem, y = Casos)) +
+  theme(axis.text.x = element_text(angle = 0, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "UTILIZAÇÃO DE SORO/IMUNOGLOBULINA - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_x_discrete(breaks = c(1:3),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#####   Notificados por município   ####
+
+AUX <- RS22_ANTRAB_2023_GERAL[1 : (nrow(RS22_ANTRAB_2023_GERAL) -1), c(2, 5)]
+
+ggplot(AUX, aes(x = Município, y = Notificados)) +
+  theme(axis.text.x = element_text(angle = 70, 
+                                   vjust = 0.5,
+                                   face = "bold",
+                                   size = 12),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 19,
+                                  colour = "#556B2F")) +
+  geom_bar(stat = "identity")
+
+rm(AUX, AUX_GRAF, BASE_IBGE, RS_CE_ANTRAB)

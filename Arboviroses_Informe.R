@@ -56,11 +56,11 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 05/09/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 12/09/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 06/09/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 13/09/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 06/09/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 13/09/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
@@ -4232,7 +4232,8 @@ RS22_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = paste0("FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+       title = paste0("FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS 
+(2023/24)")) +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
@@ -4261,7 +4262,11 @@ RS22_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF,
    scale_x_discrete(breaks = c(1:6),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme() 
+  Theme() + 
+  theme(axis.text.x = element_text(angle = 65),
+                plot.title = element_text(face = "bold",
+                                          size = 16,
+                                          colour = "#556B2F"))
 
 ##########   Escolaridade   #####
 
@@ -4270,15 +4275,19 @@ AUX_GRAF <- tibble(Rotulos = colnames(RS22_23_24_EXTRA[14:21]),
                    Notificados = apply(RS22_23_24_EXTRA[, 14:21], 2, sum),
                    Confirmados = apply(RS22_23_24_EXTRA_Confirmados[, 14:21], 2, sum) )
 
-AUX_GRAF[,1] <- c("Analfabeto", "Fundamental Incompleto", "Fundamental", "Médio Incompleto", 
-                  "Médio", "Superior Incompleto", "Superior", "Ignorado")
+AUX_GRAF[,1] <- c("Analfabeto", "Fundamental 
+Incompleto", "Fundamental", "Médio 
+Incompleto", 
+                  "Médio", "Superior 
+Incompleto", "Superior", "Ignorado")
 
 RS22_GRAF_Escolaridade <- ggplot (AUX_GRAF, 
                              aes(x = Ordem)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = paste0("ESCOLARIADE NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+       title = paste0("ESCOLARIADE NOTIFICADOS/CONFIRMADOS ", RS, "ªRS 
+(2023/24)")) +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
@@ -4307,7 +4316,11 @@ RS22_GRAF_Escolaridade <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:(21-13)),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 65),
+        plot.title = element_text(face = "bold",
+                                  size = 16,
+                                  colour = "#556B2F"))
 
 #########   ZONA de ocorrência  #####
 
@@ -4323,7 +4336,8 @@ RS22_GRAF_Zona <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = paste0("ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+       title = paste0("ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS 
+(2023/24)")) +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
@@ -4352,7 +4366,11 @@ RS22_GRAF_Zona <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:2),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.title = element_text(face = "bold",
+                                  size = 16,
+                                  colour = "#556B2F"))
 
 ######  SEXO  ####
 
@@ -4398,7 +4416,11 @@ RS22_GRAF_Sexo <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:2),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.title = element_text(face = "bold",
+                                  size = 16,
+                                  colour = "#556B2F"))
 
 #####   Séries Históricas   ####
 
@@ -9658,7 +9680,8 @@ PR_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = paste0("FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2023/24)")) +
+       title = "FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS PARANÁ
+(2023/24)") +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
@@ -9687,7 +9710,11 @@ PR_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:6),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 65),
+        plot.title = element_text(face = "bold",
+                                  size = 16,
+                                  colour = "#556B2F"))
 
 ##########   Escolaridade   #####
 
@@ -9696,8 +9723,11 @@ AUX_GRAF <- tibble(Rotulos = colnames(AUX01[11:18]),
                    Notificados = t(AUX01[, 11:18]),
                    Confirmados = t(AUX02[, 11:18]))
 
-AUX_GRAF[,1] <- c("Analfabeto", "Fundamental Incompleto", "Fundamental", "Médio Incompleto", 
-                  "Médio", "Superior Incompleto", "Superior", "Ignorado")
+AUX_GRAF[,1] <- c("Analfabeto", "Fundamental 
+Incompleto", "Fundamental", "Médio 
+Incompleto", 
+                  "Médio", "Superior 
+Incompleto", "Superior", "Ignorado")
 
 colnames(AUX_GRAF)[3:4] <- c("Notificados", "Confirmados")
 
@@ -9706,7 +9736,8 @@ PR_GRAF_Escolaridade <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = "ESCOLARIADE NOTIFICADOS/CONFIRMADOS PARANÁ (2023/24)") +
+       title = "ESCOLARIADE NOTIFICADOS/CONFIRMADOS PARANÁ 
+(2023/24)") +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
@@ -9735,7 +9766,11 @@ PR_GRAF_Escolaridade <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:(21-13)),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 65),
+        plot.title = element_text(face = "bold",
+                                  size = 16,
+                                  colour = "#556B2F"))
 
 #########   ZONA de ocorrência  #####
 
@@ -9753,7 +9788,8 @@ PR_GRAF_Zona <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = "ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS PARANÁ (2023/24)") +
+       title = "ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS PARANÁ 
+(2023/24)") +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
@@ -9782,7 +9818,11 @@ PR_GRAF_Zona <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:2),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.title = element_text(face = "bold",
+                                  size = 16,
+                                  colour = "#556B2F"))
 
 ######  SEXO  ####
 
@@ -9830,7 +9870,11 @@ PR_GRAF_Sexo <- ggplot (AUX_GRAF,
   scale_x_discrete(breaks = c(1:2),
                    labels = AUX_GRAF$Rotulos) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme()
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+               plot.title = element_text(face = "bold",
+                                         size = 16,
+                                         colour = "#556B2F"))
 
 ###############################################################################################
 ################################################################################################
@@ -11182,7 +11226,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo3 <- ggplot() +
 
 RS22_23_24_INFORME_Pag_03 <- (RS22_GRAF_Serie_Historica_Not_Conf / RS22_GRAF_Serie_Historica_Sorotipo /RS22_GRAF_Serie_Historica_Hospitalizados)
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_03.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_03.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11195,7 +11239,7 @@ dev.off()
 
 RS22_23_24_INFORME_Pag_04 <- (RS_23_24_GRAF_CE_Notificados / RS_23_24_GRAF_CE_Provaveis / RS_23_24_GRAF_CE_Confirmados)
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_04.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_04.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11208,7 +11252,7 @@ dev.off()
 
 RS22_23_24_INFORME_Pag_05 <- RS22_GRAF_23_24_Incidencia
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_05.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_23_24_INFORME_Pag_05.png", 
     width = 33,
     height = 20,
     units = "cm", pointsize = 8, res = 300)
@@ -11222,7 +11266,7 @@ dev.off()
 
 RS22_23_24_INFORME_Pag_06 <- (RS22_GRAF_23_24_Not_Conf / RS22_GRAF_23_24_Autoctones / RS22_GRAF_23_24_Investigacao)
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_06.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_23_24_INFORME_Pag_06.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11235,7 +11279,7 @@ dev.off()
 
 RS22_23_24_INFORME_Pag_07 <- (RS22_GRAF_23_24_Hospitalizados / RS22_GRAF_23_24_Descartados / RS22_GRAF_23_24_Inconclusivos)
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_07.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_23_24_INFORME_Pag_07.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11249,7 +11293,7 @@ dev.off()
 
 RS22_23_24_INFORME_Pag_08 <- (RS22_GRAF_23_24_Encerramento / PR_DENGUE_23_24_GRAF_SINAIS / RS22_GRAF_23_24_SINAIS)
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_08.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_23_24_INFORME_Pag_08.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11258,11 +11302,25 @@ RS22_23_24_INFORME_Pag_08
 
 dev.off()
 
+####   EXTRA  #####
+
+RS22_23_24_INFORME_PAG_09 <- ((PR_GRAF_Faixa_Etaria + RS22_GRAF_Faixa_Etaria) / (PR_GRAF_Escolaridade + RS22_GRAF_Escolaridade)/
+                                (PR_GRAF_Sexo + RS22_GRAF_Sexo) / (PR_GRAF_Zona + RS22_GRAF_Zona))
+
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_23_24_INFORME_Pag_09.png", 
+    width = 36,
+    height = 46,
+    units = "cm", pointsize = 8, res = 300)
+
+RS22_23_24_INFORME_PAG_09
+
+dev.off()
+
 ####  Canais Endêmicos IVAIPORÃ
 
 RS_23_24_CE_SEDE <- (RS_23_24_GRAF_CE_Notificados_SEDE / RS_23_24_GRAF_CE_Provaveis_SEDE / RS_23_24_GRAF_CE_Confirmados_SEDE)
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_09.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_23_24_INFORME_Pag_10.png", 
     width = 33,
     height = 40,
     units = "cm", pointsize = 8, res = 300)
@@ -11273,7 +11331,7 @@ dev.off()
 
 ###      Histogramas Notificados - Pag 10
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_10.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_11.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11284,7 +11342,7 @@ dev.off()
 
 ###        Histogramas Notificados - Pag 11
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_11.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_12.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11295,7 +11353,7 @@ dev.off()
 
 ###      Histogramas Confirmados - ##PAG 12
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_12.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_13.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11306,7 +11364,7 @@ dev.off()
 
 ###      Histogramas Confirmados - ##PAG 13
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_13.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_14.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11317,7 +11375,7 @@ dev.off()
 
 ###     Histogramas Prováveis - ##PAG 14
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_14.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_15.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11328,7 +11386,7 @@ dev.off()
 
 ###     Histogramas Prováveis - ##PAG 15
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_15.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_16.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11338,7 +11396,7 @@ RS_23_24_GRAF_Histograma_Provaveis_02
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_SOROTIPO_PR / RS22_23_24_GRAF_Sorotipo)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_16.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_17.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11348,7 +11406,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_GRAF_23_24_US_TOTAL / RS22_GRAF_23_24_US_DETEC)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_18A.png", 
     width = 36,
     height = 23,
     units = "cm", pointsize = 8, res = 300)
@@ -11358,7 +11416,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_SORO_TOTAL / RS22_23_24_GRAF_SORO_REAG)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_17B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_18B.png", 
     width = 36,
     height = 23,
     units = "cm", pointsize = 8, res = 300)
@@ -11369,7 +11427,7 @@ dev.off()
 
 ##### Exames Municípios  
 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_18.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_19.png", 
     width = 36,
     height = 23,
     units = "cm", pointsize = 8, res = 300)
@@ -11379,7 +11437,7 @@ RS22_GRAF_LACEN_MUNIC
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_INCIDENCIA_PR / PR_23_24_GRAF_INCIDENCIA_PROV_PR)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_19.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_20.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11389,7 +11447,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_GRAF_CHIK_Notificados / PR_23_24_GRAF_CHIK_Incidência)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_20.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_21.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11399,7 +11457,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- PR_23_24_GRAF_SINAIS_CHIK 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21A.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_22A.png", 
     width = 36,
     height = 23,
     units = "cm", pointsize = 8, res = 300)
@@ -11409,7 +11467,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (RS22_23_24_GRAF_CHK_Not + RS22_23_24_GRAF_CHK_Conf) 
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_21B.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_22B.png", 
     width = 36,
     height = 23,
     units = "cm", pointsize = 8, res = 300)
@@ -11419,7 +11477,7 @@ RS22_23_24_GRAF_1
 dev.off()
 
 RS22_23_24_GRAF_1 <- (PR_23_24_ZIKA_CHIK_Notificados / PR_23_24_GRAF_ZIKA_Incidência)
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_22.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_23.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11431,7 +11489,7 @@ dev.off()
 RS22_23_24_GRAF_1 <- ((RS22_23_24_GRAF_IIP_Ciclo4 + RS22_23_24_GRAF_Tratamento_Ciclo4) / 
                         (RS22_23_24_GRAF_IIP_Ciclo5 + RS22_23_24_GRAF_Tratamento_Ciclo5) / 
                         (RS22_23_24_GRAF_IIP_Ciclo6 + RS22_23_24_GRAF_Tratamento_Ciclo6))
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_23.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_24.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11443,7 +11501,7 @@ dev.off()
 RS22_23_24_GRAF_1 <- ((RS22_23_24_GRAF_IIP_Ciclo1 + RS22_23_24_GRAF_Tratamento_Ciclo1) / 
                         (RS22_23_24_GRAF_IIP_Ciclo2 + RS22_23_24_GRAF_Tratamento_Ciclo2) / 
                         (RS22_23_24_GRAF_IIP_Ciclo3 + RS22_23_24_GRAF_Tratamento_Ciclo3))
-png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS22_23_24_INFORME_Pag_24.png", 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_23_24_INFORME_Pag_25.png", 
     width = 36,
     height = 46,
     units = "cm", pointsize = 8, res = 300)
@@ -11501,7 +11559,7 @@ rm(RS22_GRAF_Serie_Historica_Not_Conf,
    CHIKON2024,
    SINAN_DENGUE_RS,
    SINAN_CHIK_RS,
-   RS22_Serie_Historica_GRAF_Encerramento,
+   RS22_GRAF_23_24_Encerramento,
    RS22_GRAF_LACEN_MUNIC,
    RS22_Dissolvida,
    RS22_23_24_Resumida,
@@ -11541,17 +11599,17 @@ rm(RS22_GRAF_Serie_Historica_Not_Conf,
    PR_23_24_GRAF_ZIKA_Incidência,
    PR_23_24_CHIK_SINAIS_Confirmados,
    PR_23_24_CHIK_SINAIS_NOTIFICADOS,
-   PR_23_24_SINAIS_Confirmados,
-   PR_23_24_SINAIS_Notificados,
+   PR_23_24_DENGUE_SINAIS_Confirmados,
+   PR_23_24_DENGUE_SINAIS_Notificados,
    PR_23_24_ZIKA_CHIK_Notificados,
    PR_DENGUE_23_24_GRAF_SINAIS,
    RS22_23_24_GRAF_1,
-   RS22_GRAF_23_24_CHK_Conf,
-   RS22_GRAF_23_24_CHK_Not,
+   RS22_23_24_GRAF_CHK_Conf,
+   RS22_23_24_GRAF_CHK_Not,
    RS22_GRAF_23_24_SINAIS,
-   RS22_GRAF_23_24_SORO_REAG,
-   RS22_GRAF_23_24_SORO_TOTAL,
-   RS22_GRAF_23_24_Sorotipo,
+   RS22_23_24_GRAF_SORO_REAG,
+   RS22_23_24_GRAF_SORO_TOTAL,
+   RS22_23_24_GRAF_Sorotipo,
    RS22_GRAF_23_24_US_DETEC,
    RS22_GRAF_23_24_US_TOTAL,
    PR_CHIK_23_24_SINAN,
