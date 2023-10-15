@@ -2307,6 +2307,17 @@ ggplot(AUX, aes(x = Município, y = Notificados)) +
         plot.title = element_text(face = "bold",
                                   size = 19,
                                   colour = "#556B2F")) +
-  geom_bar(stat = "identity")
+  labs(caption = "Fonte", 
+       x = NULL,
+       y = "Número de Casos",
+       title = "UTILIZAÇÃO DE SORO/IMUNOGLOBULINA - 22ªRS") +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green") +
+  geom_label(aes(label = Notificados), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 rm(AUX, AUX_GRAF, BASE_IBGE, RS_CE_ANTRAB)

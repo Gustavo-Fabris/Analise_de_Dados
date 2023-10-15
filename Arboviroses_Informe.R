@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 12/09/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 26/09/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 13/09/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 27/09/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 13/09/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 27/09/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("40")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("41")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -6781,7 +6781,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 31,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>%
+                                                                                                 Resultado == "Detectável ") %>%
                                                                                           count()
   )
   
@@ -6789,7 +6789,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 32,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>% 
+                                                                                                 Resultado == "Detectável ") %>% 
                                                                                           count()
   )
   
@@ -6797,7 +6797,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 33,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>% 
+                                                                                                 Resultado == "Detectável ") %>% 
                                                                                           count()
   )
   
@@ -6805,7 +6805,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                          filter(Municipio_Residencia == i,
                                                                                                 SE == 34,
                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                Resultado == "Detectável") %>% 
+                                                                                                Resultado == "Detectável ") %>% 
                                                                                          count()
   )
   
@@ -6813,7 +6813,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 35,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>% 
+                                                                                                 Resultado == "Detectável ") %>% 
                                                                                           count() 
   )
   
@@ -6821,7 +6821,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 36,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>%
+                                                                                                 Resultado == "Detectável ") %>%
                                                                                           count()
   )
   
@@ -6829,7 +6829,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 37,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>% 
+                                                                                                 Resultado == "Detectável ") %>% 
                                                                                           count() 
   )
   
@@ -6837,7 +6837,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                           filter(Municipio_Residencia == i,
                                                                                                  SE == 38,
                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável") %>% 
+                                                                                                 Resultado == "Detectável ") %>% 
                                                                                           count() 
   )
   
@@ -6845,7 +6845,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 39,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count()
   )
   
@@ -6853,7 +6853,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 40,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count() 
   )
   
@@ -6861,7 +6861,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 41,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count() 
   )
   
@@ -6869,7 +6869,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 42,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count() 
   )
   
@@ -6877,7 +6877,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 43,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
+                                                                                                  Resultado == "Detectável ") %>% 
                                                                                            count() 
   )
   
@@ -6885,7 +6885,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 44,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count() 
   )
   
@@ -6893,7 +6893,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 45,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count() 
   )
   
@@ -6901,7 +6901,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 46,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count()
   )
   
@@ -6909,7 +6909,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 47,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%       
+                                                                                                  Resultado == "Detectável ") %>%       
                                                                                            count() 
   )
   
@@ -6917,7 +6917,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 48,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%     
+                                                                                                  Resultado == "Detectável ") %>%     
                                                                                            count() 
   )
   
@@ -6925,7 +6925,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                            filter(Municipio_Residencia == i,
                                                                                                   SE == 49,
                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
+                                                                                                  Resultado == "Detectável ") %>%
                                                                                            count() 
   )
   
@@ -8218,7 +8218,7 @@ RS22_GRAF_23_24_US_TOTAL <- ggplot(AUX, aes(x = Sem_EPI, y = IVAIPORÃ))  +
 
 #######  Separando a quantidade de casos detectáveis da U.S.   ##########################
 
-AUX_2 <- as.data.frame(RS22_23_24_SE_PESQ_ARB_DETECTAVEL[6, ])
+AUX_2 <- as.data.frame(RS22_23_24_SE_US_DETECTAVEL[6, ])
 
 AUX_2 <- AUX_2[, -1]
 
@@ -9918,12 +9918,15 @@ RS22_23_24_CICLOS_MUNICIPIOS <- read_sheet("https://docs.google.com/spreadsheets
 
 RS22_23_24_CICLOS_MUNICIPIOS[is.na(RS22_23_24_CICLOS_MUNICIPIOS)] <- 200
 
+#RS22_23_24_CICLOS_MUNICIPIOS <- as.data.frame(lapply(RS22_23_24_CICLOS_MUNICIPIOS, 
+#                                               unlist))
+
 RS22_23_24_RG_MUNICIPIOS <- read_sheet("https://docs.google.com/spreadsheets/d/156vSolLfaMg-RQ1cNJfA4MlelHHWbvNrIdrql8rs2gE/edit#gid=1585473376")
 
 ###Por alguma razão a planilha veio como lista###
 
-#RS22_23_24_RG_MUNICIPIOS <- as.data.frame(lapply(RS22_23_24_RG_MUNICIPIOS, 
-  #                                               unlist))
+RS22_23_24_RG_MUNICIPIOS <- as.data.frame(lapply(RS22_23_24_RG_MUNICIPIOS, 
+                                                 unlist))
 
 RS22_23_24_RG_LOCALIDADES <- read_sheet("https://docs.google.com/spreadsheets/d/1w4DS_c-b4kqXzjHqGOw9MbyTZlNZLj23RY4KPr3TYSc/edit#gid=877642872")
 
