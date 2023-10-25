@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 26/09/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 24/10/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 27/09/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 25/10/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 27/09/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 25/10/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("41")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("43")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -1365,7 +1365,11 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   AUX[which(AUX$COD_IBGE == i), 10]<- as.integer(SINAN_DENGUE_RS %>% 
                                                    filter(ID_MN_RESI == i, 
                                                           TPAUTOCTO == 1,
-                                                          CLASSI_FIN == 10) %>% 
+                                                          CLASSI_FIN == 10 
+                                                          |
+                                                            CLASSI_FIN == 11
+                                                          |
+                                                            CLASSI_FIN == 12) %>% 
                                                    count() 
   )
   
@@ -5331,7 +5335,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 31,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>%
                                                                                 count()
   )
   
@@ -5340,7 +5345,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 32,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count()
   )
   
@@ -5349,7 +5355,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 33,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count()
   )
   
@@ -5358,7 +5365,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                       SE == 34,
                                                                                       Status_Exame == "Resultado Liberado" |
                                                                                         Status_Exame == "Automação em Processo" |
-                                                                                        Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem") %>% 
                                                                                count()
   )
   
@@ -5367,7 +5375,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 35,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count() 
   )
   
@@ -5376,7 +5385,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 36,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>%
                                                                                 count()
   )
   
@@ -5385,7 +5395,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 37,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count() 
   )
   
@@ -5394,7 +5405,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        SE == 38,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automação em Processo" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                         Status_Exame == "Disponivel para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count() 
   )
   
@@ -5403,7 +5415,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 39,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5412,7 +5425,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 40,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5421,7 +5435,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 41,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5430,7 +5445,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 42,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5439,7 +5455,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 43,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
   )
   
@@ -5448,7 +5465,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 44,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5457,7 +5475,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 45,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5466,7 +5485,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 46,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5475,7 +5495,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 47,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%       
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%       
                                                                                  count() 
   )
   
@@ -5484,7 +5505,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 48,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%     
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%     
                                                                                  count() 
   )
   
@@ -5493,7 +5515,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 49,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5502,7 +5525,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                          SE == 50,
                                                                                          Status_Exame == "Resultado Liberado" |
                                                                                            Status_Exame == "Automação em Processo" |
-                                                                                           Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                   count() 
   )
   
@@ -5511,7 +5535,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 51,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5520,7 +5545,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 52,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5529,7 +5555,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 53,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5538,7 +5565,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 1,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5547,7 +5575,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 2,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5556,7 +5585,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 3,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5565,7 +5595,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 4,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5574,7 +5605,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 5,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5583,7 +5615,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 6,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5592,7 +5625,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 7,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count()
   )
   
@@ -5601,7 +5635,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 8,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5610,7 +5645,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 9,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5619,7 +5655,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 10,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
   )
   
@@ -5628,7 +5665,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 11,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
   )
   
@@ -5637,7 +5675,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 12,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5646,7 +5685,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 13,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5655,7 +5695,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 14,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
   )
   
@@ -5664,7 +5705,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 15,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5673,7 +5715,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 16,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5682,7 +5725,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 17,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5691,7 +5735,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 18,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5700,7 +5745,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 19,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5709,7 +5755,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 20,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5718,7 +5765,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 21,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5727,7 +5775,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 22,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
   )
   
@@ -5736,7 +5785,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 23,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5745,7 +5795,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 24,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5754,7 +5805,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 25,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5763,7 +5815,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 26,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count()
   )
   
@@ -5772,7 +5825,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 27,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>% 
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
   )
   
@@ -5781,7 +5835,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 28,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5790,7 +5845,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 29,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
   
@@ -5799,7 +5855,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         SE == 30,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automação em Processo" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar") %>%
+                                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
   )
 }
@@ -5830,371 +5887,371 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 2] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 31,
-                                                                                                             Resultado == "Detectável") %>%
+                                                                                                             Resultado == "Detectável ") %>%
                                                                                                       count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 3] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 32,
-                                                                                                             Resultado == "Detectável") %>% 
+                                                                                                             Resultado == "Detectável ") %>% 
                                                                                                       count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 4] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 33,
-                                                                                                             Resultado == "Detectável") %>% 
+                                                                                                             Resultado == "Detectável ") %>% 
                                                                                                       count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i),5] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                      filter(Municipio_Residencia == i,
                                                                                                             SE == 34,
-                                                                                                            Resultado == "Detectável") %>% 
+                                                                                                            Resultado == "Detectável ") %>% 
                                                                                                      count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 6] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 35,
-                                                                                                             Resultado == "Detectável") %>% 
+                                                                                                             Resultado == "Detectável ") %>% 
                                                                                                       count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 7] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 36,
-                                                                                                             Resultado == "Detectável") %>%
+                                                                                                             Resultado == "Detectável ") %>%
                                                                                                       count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 8] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 37,
-                                                                                                             Resultado == "Detectável") %>% 
+                                                                                                             Resultado == "Detectável ") %>% 
                                                                                                       count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 9] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                       filter(Municipio_Residencia == i,
                                                                                                              SE == 38,
-                                                                                                             Resultado == "Detectável") %>% 
+                                                                                                             Resultado == "Detectável ") %>% 
                                                                                                       count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 10] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 39,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 11] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 40,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 12] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 41,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 13] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 42,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 14] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 43,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 15] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 44,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 16] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 45,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 17] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 46,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 18] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 47,
-                                                                                                              Resultado == "Detectável") %>%       
+                                                                                                              Resultado == "Detectável ") %>%       
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 19] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 48,
-                                                                                                              Resultado == "Detectável") %>%     
+                                                                                                              Resultado == "Detectável ") %>%     
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 20] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 49,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i),  21] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                         filter(Municipio_Residencia == i,
                                                                                                                SE == 50,
-                                                                                                               Resultado == "Detectável") %>%
+                                                                                                               Resultado == "Detectável ") %>%
                                                                                                         count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 22] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 51,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 23] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 52,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 24] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 53,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 25] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 1,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 26] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 2,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 27] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 3,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 28] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 4,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 29] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 5,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 30] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 6,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 31] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 7,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 32] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 8,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 33] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 9,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 34] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 10,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 35] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 11,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 36] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 12,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 37] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 13,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 38] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 14,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 39] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 15,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 40] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 16,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 41] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 17,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 42] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 18,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 43] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 19,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 44] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 20,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 45] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 21,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 46] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 22,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 47] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 23,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 48] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 24,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 49] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 25,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 50] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 26,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count()
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 51] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 27,
-                                                                                                              Resultado == "Detectável") %>% 
+                                                                                                              Resultado == "Detectável ") %>% 
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 52] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 28,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 53] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>%
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 29,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
   
   RS22_23_24_SE_PESQ_ARB_DETECTAVEL[which(RS22_23_24_SE_PESQ_ARB_DETECTAVEL == i), 54] <- as.integer(RS22_23_24_LACEN_PESQ_ARBO%>% 
                                                                                                        filter(Municipio_Residencia == i,
                                                                                                               SE == 30,
-                                                                                                              Resultado == "Detectável") %>%
+                                                                                                              Resultado == "Detectável ") %>%
                                                                                                        count() 
   )
 }
