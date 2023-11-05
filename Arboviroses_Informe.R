@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 24/10/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 30/10/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 25/10/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 01/11/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 25/10/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 01/11/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("43")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("44")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -9404,7 +9404,10 @@ PR_23_24_DENGUE_SINAIS_Confirmados <- tibble(Febre = as.integer(PR_DENGUE_23_24_
                                                                              count())
 )
 
-AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", "Artrite", "Artralgia Intensa", "Petéquias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital"),
+AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", 
+                                    "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", 
+                                    "Artrite", "Artralgia Intensa", "Petéquias", "Leucopenia", 
+                                    "Prova do Laco Positiva", "Dor Retroorbital"),
                        Notificados = NA,
                        Confirmados = NA)
 
@@ -10038,17 +10041,17 @@ sheet_write(RS22_23_24_Resumida, ss = "https://docs.google.com/spreadsheets/d/1b
 ####  Fazendo o Dowload da planilha estadual do google drive para manter controle de sorotipos igual Estado.  ###
 #### foi feito upload prévio da planilha baseada no SINAN. 
 
-PR_DENGUE_23_24_GERAL <- read_sheet("https://docs.google.com/spreadsheets/d/1DNR7tyVt2tZ6ItiwJN96Bb-I4nODOmcP0G_oG0Tf_28/edit?pli=1#gid=111480216", 
-                                    sheet= "Dengue_Estado")
+#PR_DENGUE_23_24_GERAL <- read_sheet("https://docs.google.com/spreadsheets/d/1DNR7tyVt2tZ6ItiwJN96Bb-I4nODOmcP0G_oG0Tf_28/edit?pli=1#gid=111480216", 
+#                                    sheet= "Dengue_Estado")
 
-PR_DENGUE_23_24_GERAL <- PR_DENGUE_23_24_GERAL[, -c(22:29)]
+#PR_DENGUE_23_24_GERAL <- PR_DENGUE_23_24_GERAL[, -c(22:29)]
 
 ###########Incluindo Sorotipos na Planilha RS22_23_24_GERAL. Essa etapa está sendo realizada somente agora pois depende da tabela 
 ###########PR_23_24_DENGUE_MUNICÍPIOS, a qual só foi realizado o download neste ponto do script###########
 
-for (i in RS22_23_24_GERAL$Município){
-  RS22_23_24_GERAL[which(RS22_23_24_GERAL$Município  == i), 22] <- as.character(PR_DENGUE_23_24_GERAL[which(PR_DENGUE_23_24_GERAL$Município_sem_Código  == i), 22])
-}
+#for (i in RS22_23_24_GERAL$Município){
+#  RS22_23_24_GERAL[which(RS22_23_24_GERAL$Município  == i), 22] <- as.character(PR_DENGUE_23_24_GERAL[which(PR_DENGUE_23_24_GERAL$Município_sem_Código  == i), 22])
+#}
 
 write.csv(PR_DENGUE_23_24_GERAL, 
           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_DENGUE_MUNICIPIOS.csv",
@@ -10269,7 +10272,7 @@ PR_23_24_GRAF_INCIDENCIA_PR <- ggplot() +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Incidência de Dengue - Paraná",
+       title = "Incidência Casos Autóctones de Dengue - Paraná",
        subtitle = "Casos Autóctones por 100.000 Habitantes") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
@@ -10313,7 +10316,7 @@ PR_23_24_GRAF_INCIDENCIA_PROV_PR <- ggplot() +
   labs(x = NULL,
        y = NULL,
        caption = Fonte, 
-       title = "Incidência de Dengue - Paraná",
+       title = "Incidência Casos Prováveis de Dengue - Paraná",
        subtitle = "Casos Prováveis por 100.000 Habitantes
 Casos Prováveis = Casos Notificados - Casos Descartados") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),

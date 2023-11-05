@@ -17,6 +17,10 @@ BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv",
                     header=TRUE, 
                     sep=",")
 
+######  Definindo a fonte dos gráficos   #####
+
+Fonte <- "SINAN: Base DBF. Acessada em"
+
 ############################################################################################
 ####   Definindo o objeto RS para servir de apoio para    ##################################
 ####    buscar dados de todas as RS. Usar 1, 2, 3..., 21, 22    ############################
@@ -1749,27 +1753,115 @@ rm(SINAN_LEPTO_2023)
 ##############################################################################################################################
 #######################    Gráficos Informe    ###############################################################################
 
+##### Criando uma função para o tema dos gráficos   #######
+
+Tema_Graf <- function() {theme(axis.text.x = element_text(angle = 75, 
+                                                          vjust = 0.5,
+                                                          face = "bold"),
+                               axis.text.y = element_text(angle = 90,
+                                                          vjust = 0.5,
+                                                          hjust = 0.5,
+                                                          face = "bold"),
+                               panel.grid.major = element_line(color = "#C0C0C0"),
+                               panel.grid.minor = element_blank(),
+                               panel.background = element_rect(fill = "#F5F5F5"),
+                               plot.title = element_text(face = "bold",
+                                                         size = 19,
+                                                         colour = "#556B2F")) 
+}
+
 ######   Zona 2023   ####
 
 AUX <- RS22_LEPTO_2023_GERAL[- 17, c(2, 7:9)]
 
 RS_GRAF_ZONA <- ggplot(AUX, aes(x = Município)) +
-  theme(axis.text.x = element_text(angle = 75, 
-                                   vjust = 0.5,
-                                   face = "bold"),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  geom_bar(aes(y = Zona_Urbana),
-           stat = "identity")
+  geom_bar(aes(y = Zona_Urbana,
+               fill = "Urbana"),
+           stat = "identity", 
+           color = "black",
+           width = .3,
+           position = position_nudge(x = -.30)
+           ) +
+  geom_label(aes(y = Zona_Urbana,
+             label = Zona_Urbana),
+             size = 3, 
+             alpha = 0.5,
+             nudge_x = -.30,
+             vjust = 0.1) +
+  geom_bar(aes(y = Zona_Rural,
+               fill = "Rural"),
+           stat = "identity",
+           color = "black",
+           width = .3,
+           position = position_nudge(x = -.0)
+           ) +
+  geom_label(aes(y= Zona_Rural,
+                 label = Zona_Rural),
+             size =3,
+             alpha = 0.5,
+             nudge_x = -.00,
+             vjust = 0.1) +
+  geom_bar(aes(y = Zona_Periurbana,
+               fill = "Periurbana"),
+           stat = "identity",
+           color = "black",
+           width = .3,
+           position = position_nudge(x = .30)
+  ) +
+  geom_label(aes(y= Zona_Periurbana,
+                 label = Zona_Periurbana),
+             size =3,
+             alpha = 0.5,
+             nudge_x = .30,
+             vjust = 0.1) +
+  scale_fill_manual(name = "", values = c("Urbana" = "#C4BF7A", 
+                                          "Rural" = "#C4A37A", 
+                                          "Periurbana" = "grey")) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("ZONA DE OCORRÊNCIA/MUNICÍPIO ", RS, "ªRS - 2023")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Tema_Graf()
   
+######   Sexo/Município 2023   ####
+
+AUX <- RS22_LEPTO_2023_GERAL[-17, c(2, 11:12)]
+
+RS_GRAF_SEXO <- ggplot(AUX, aes(x = Município)) +
+  geom_bar(aes(y = Feminino,
+               fill = "Feminino"),
+           color = "black",
+           stat = "identity",
+           width = .4,
+           position = position_nudge(x = -.20)) +
+  geom_label(aes(y = Feminino,
+                 label = Feminino),
+             size =3,
+             alpha = 0.5,
+             nudge_x = -.20,
+             vjust = 0.1) +
+  geom_bar(aes(y = Masculino,
+               fill = "Masculino"),
+           color = "black",
+           stat = "identity",
+           width = .4,
+           position = position_nudge(x = .20)) +
+  geom_label(aes(y = Masculino,
+                 label = Masculino),
+             size =3,
+             alpha = 0.5,
+             nudge_x = .20,
+             vjust = 0.1) +
+  scale_fill_manual(name = "", values = c("Feminino" = "#C4BF7A", 
+                                          "Masculino" = "#C4A37A")) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Número de Casos",
+       title = paste0("SEXO/MUNICÍPIO ", RS, "ªRS - 2023")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Tema_Graf()
+             
 
 #############    criando gráfico de série histórica PARANÁ    #######
 
@@ -1964,7 +2056,8 @@ PR_GRAF_Serie_Historica_ZONA <- ggplot(AUX_GRAF, aes(x= NU_ANO))+
              alpha = 0.5,
              nudge_x = .20,
              vjust = 0.2) +
-  scale_fill_manual(name = "", values = c("Urbano" = "#556B2F", "Rural" = "#FF6347")) +
+  scale_fill_manual(name = "", values = c("Urbano" = "#556B2F", 
+                                          "Rural" = "#FF6347")) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 #################   Série Histórica   zona  22RS #####
@@ -2024,7 +2117,7 @@ RS_GRAF_Serie_Historica_ZONA <- ggplot(AUX_GRAF, aes(x= NU_ANO))+
   labs(caption = "Fonte", 
        x = NULL,
        y = "Número de Casos",
-       title = paste0("Série Histórica -", RS, "ªRS"),
+       title = paste0("Série Histórica - ", RS, "ªRS"),
        subtitle = "Casos Confirmados 2009 a 2023") +
   geom_label(aes(y = AUX_GRAF$Urbano,
                  label = AUX_GRAF$Urbano), 
