@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 30/10/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 07/11/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 01/11/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 08/11/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 01/11/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 08/11/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("44")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("45")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -5334,7 +5334,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 31,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                 count()
@@ -5344,7 +5344,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 32,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count()
@@ -5354,7 +5354,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 33,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count()
@@ -5364,7 +5364,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                filter(Municipio_Residencia == i,
                                                                                       SE == 34,
                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                        Status_Exame == "Automação em Processo" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
                                                                                         Status_Exame == "Disponivel para Encaminhar" |
                                                                                         Status_Exame == "Aguardando Triagem") %>% 
                                                                                count()
@@ -5374,7 +5374,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 35,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count() 
@@ -5384,7 +5384,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 36,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>%
                                                                                 count()
@@ -5394,7 +5394,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 37,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count() 
@@ -5404,7 +5404,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                 filter(Municipio_Residencia == i,
                                                                                        SE == 38,
                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automação em Processo" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem") %>% 
                                                                                 count() 
@@ -5414,7 +5414,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 39,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5424,7 +5424,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 40,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5434,7 +5434,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 41,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5444,7 +5444,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 42,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5454,7 +5454,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 43,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
@@ -5464,7 +5464,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 44,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5474,7 +5474,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 45,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5484,7 +5484,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 46,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5494,7 +5494,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 47,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%       
                                                                                  count() 
@@ -5504,7 +5504,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 48,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%     
                                                                                  count() 
@@ -5514,7 +5514,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 49,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5524,7 +5524,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 50,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Disponivel para Encaminhar" |
                                                                                            Status_Exame == "Aguardando Triagem") %>%
                                                                                   count() 
@@ -5534,7 +5534,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 51,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5544,7 +5544,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 52,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5554,7 +5554,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 53,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5564,7 +5564,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 1,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5574,7 +5574,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 2,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5584,7 +5584,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 3,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5594,7 +5594,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 4,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5604,7 +5604,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 5,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5614,7 +5614,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 6,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5624,7 +5624,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 7,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count()
@@ -5634,7 +5634,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 8,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5644,7 +5644,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 9,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5654,7 +5654,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 10,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
@@ -5664,7 +5664,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 11,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
@@ -5674,7 +5674,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 12,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5684,7 +5684,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 13,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5694,7 +5694,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 14,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
@@ -5704,7 +5704,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 15,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5714,7 +5714,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 16,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5724,7 +5724,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 17,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5734,7 +5734,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 18,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5744,7 +5744,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 19,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5754,7 +5754,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 20,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5764,7 +5764,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 21,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5774,7 +5774,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 22,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count()
@@ -5784,7 +5784,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 23,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5794,7 +5794,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 24,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5804,7 +5804,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 25,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5814,7 +5814,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 26,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count()
@@ -5824,7 +5824,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 27,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>% 
                                                                                  count() 
@@ -5834,7 +5834,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 28,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5844,7 +5844,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 29,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -5854,7 +5854,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 30,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
                                                                                           Status_Exame == "Aguardando Triagem") %>%
                                                                                  count() 
@@ -6283,7 +6283,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 31,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                     count()
@@ -6293,7 +6293,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 32,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                     count()
@@ -6303,7 +6303,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 33,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                     count()
@@ -6313,7 +6313,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                    filter(Municipio_Residencia == i,
                                                                           SE == 34,
                                                                           Status_Exame == "Resultado Liberado" |
-                                                                            Status_Exame == "Automação em Processo" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                             Status_Exame == "Disponivel para Encaminhar",
                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                    count()
@@ -6323,7 +6323,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 35,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                     count() 
@@ -6333,7 +6333,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 36,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                     count()
@@ -6343,7 +6343,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 37,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                     count() 
@@ -6353,7 +6353,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                     filter(Municipio_Residencia == i,
                                                                            SE == 38,
                                                                            Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automação em Processo" |
+                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar",
                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                     count() 
@@ -6363,7 +6363,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 39,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6373,7 +6373,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 40,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6383,7 +6383,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 41,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6393,7 +6393,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 42,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6403,7 +6403,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 43,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count() 
@@ -6413,7 +6413,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 44,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6423,7 +6423,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 45,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6433,7 +6433,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 46,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6443,7 +6443,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 47,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%       
                                                                      count() 
@@ -6453,7 +6453,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 48,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%     
                                                                      count() 
@@ -6463,7 +6463,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 49,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6473,7 +6473,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                       filter(Municipio_Residencia == i,
                                                                              SE == 50,
                                                                              Status_Exame == "Resultado Liberado" |
-                                                                               Status_Exame == "Automação em Processo" |
+                                                                               Status_Exame == "Automaçăo em Processamento" |
                                                                                Status_Exame == "Disponivel para Encaminhar",
                                                                              Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                       count() 
@@ -6483,7 +6483,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 51,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6493,7 +6493,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 52,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6503,7 +6503,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 53,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6513,7 +6513,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 1,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6523,7 +6523,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 2,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6533,7 +6533,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 3,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6543,7 +6543,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 4,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6553,7 +6553,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 5,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6563,7 +6563,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 6,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6573,7 +6573,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 7,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count()
@@ -6583,7 +6583,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 8,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6593,7 +6593,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 9,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6603,7 +6603,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 10,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count() 
@@ -6613,7 +6613,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 11,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count() 
@@ -6623,7 +6623,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 12,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6633,7 +6633,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 13,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6643,7 +6643,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 14,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count() 
@@ -6653,7 +6653,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 15,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6663,7 +6663,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 16,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6673,7 +6673,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 17,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6683,7 +6683,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 18,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6693,7 +6693,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 19,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6703,7 +6703,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 20,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6713,7 +6713,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 21,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6723,7 +6723,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 22,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count()
@@ -6733,7 +6733,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 23,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6743,7 +6743,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 24,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6753,7 +6753,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 25,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6763,7 +6763,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 26,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count()
@@ -6773,7 +6773,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 27,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
                                                                      count() 
@@ -6783,7 +6783,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 28,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6793,7 +6793,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 29,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -6803,7 +6803,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                      filter(Municipio_Residencia == i,
                                                                             SE == 30,
                                                                             Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automação em Processo" |
+                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                               Status_Exame == "Disponivel para Encaminhar",
                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
                                                                      count() 
@@ -7288,7 +7288,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 31,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                   count()
@@ -7298,7 +7298,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 32,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                   count()
@@ -7308,7 +7308,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 33,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                   count()
@@ -7318,7 +7318,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  filter(Municipio_Residencia == i,
                                                                                         SE == 34,
                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automação em Processo" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Exame em Análise" |
                                                                                           Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                  count()
@@ -7328,7 +7328,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 35,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                   count() 
@@ -7338,7 +7338,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 36,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                   count()
@@ -7348,7 +7348,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 37,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                   count() 
@@ -7358,7 +7358,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                   filter(Municipio_Residencia == i,
                                                                                          SE == 38,
                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automação em Processo" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Exame em Análise" |
                                                                                            Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                   count() 
@@ -7368,7 +7368,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 39,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7378,7 +7378,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 40,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7388,7 +7388,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 41,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7398,7 +7398,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 42,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7408,7 +7408,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 43,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count() 
@@ -7418,7 +7418,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 44,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7428,7 +7428,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 45,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7438,7 +7438,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 46,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7448,7 +7448,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 47,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%       
                                                                                    count() 
@@ -7458,7 +7458,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 48,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%     
                                                                                    count() 
@@ -7468,7 +7468,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 49,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7478,7 +7478,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                     filter(Municipio_Residencia == i,
                                                                                            SE == 50,
                                                                                            Status_Exame == "Resultado Liberado" |
-                                                                                             Status_Exame == "Automação em Processo" |
+                                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                                              Status_Exame == "Exame em Análise" |
                                                                                              Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                     count() 
@@ -7488,7 +7488,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 51,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7498,7 +7498,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 52,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7508,7 +7508,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 53,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7518,7 +7518,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 1,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7528,7 +7528,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 2,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7538,7 +7538,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 3,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7548,7 +7548,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 4,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7558,7 +7558,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 5,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7568,7 +7568,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 6,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7578,7 +7578,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 7,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count()
@@ -7588,7 +7588,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 8,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7598,7 +7598,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 9,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7608,7 +7608,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 10,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count() 
@@ -7618,7 +7618,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 11,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count() 
@@ -7628,7 +7628,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 12,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7638,7 +7638,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 13,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7648,7 +7648,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 14,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count() 
@@ -7658,7 +7658,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 15,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7668,7 +7668,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 16,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7678,7 +7678,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 17,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7688,7 +7688,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 18,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7698,7 +7698,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 19,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7708,7 +7708,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 20,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7718,7 +7718,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 21,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7728,7 +7728,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 22,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count()
@@ -7738,7 +7738,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 23,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7748,7 +7748,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 24,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7758,7 +7758,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 25,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7768,7 +7768,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 26,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count()
@@ -7778,7 +7778,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 27,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>% 
                                                                                    count() 
@@ -7788,7 +7788,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 28,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7798,7 +7798,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 29,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
@@ -7808,7 +7808,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                    filter(Municipio_Residencia == i,
                                                                                           SE == 30,
                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automação em Processo" |
+                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                             Status_Exame == "Exame em Análise" |
                                                                                             Status_Exame == "Disponivel para Encaminhar") %>%
                                                                                    count() 
