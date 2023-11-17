@@ -1901,6 +1901,8 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica <- tibble(Ano = "2009", Notificados = AUX[nrow(AUX), 5])
+
 assign(paste0("RS", RS, "_PECONHENTOS_2009_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2009_GERAL"), AUX), 
@@ -2234,6 +2236,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2009_TIPO_ACID"), AUX)
 
@@ -4834,6 +4838,8 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2009_MAN_SIST_ESP_ABELHA"), AUX
            paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2009_MAN_SIST_ESP_ABELHA.csv"), 
            row.names = FALSE)
 
+rm(SINAN_PECONHENTOS_2009)
+
 ##################################################################
 ###############    2010   ########################################
 ##################################################################
@@ -6700,6 +6706,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[2, 1] <- "2010" 
+RS_Serie_Historica[2, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2010_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2010_GERAL"), AUX), 
@@ -7033,6 +7042,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2010_TIPO_ACID"), AUX)
 
@@ -11499,6 +11510,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[3, 1] <- "2011" 
+RS_Serie_Historica[3, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2011_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2011_GERAL"), AUX), 
@@ -11834,6 +11848,8 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2011_TIPO_ACID"), AUX)
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2011_TIPO_ACID"), AUX), 
            paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2011_TIPO_ACID.csv"), 
@@ -16298,6 +16314,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[4, 1] <- "2012" 
+RS_Serie_Historica[4, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2012_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2012_GERAL"), AUX), 
@@ -16631,6 +16650,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2012_TIPO_ACID"), AUX)
 
@@ -21097,6 +21118,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[5, 1] <- "2013" 
+RS_Serie_Historica[5, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2013_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2013_GERAL"), AUX), 
@@ -21430,6 +21454,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2013_TIPO_ACID"), AUX)
 
@@ -25898,6 +25924,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[6, 1] <- "2014" 
+RS_Serie_Historica[6, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2014_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2014_GERAL"), AUX), 
@@ -26231,6 +26260,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2014_TIPO_ACID"), AUX)
 
@@ -30699,6 +30730,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[7, 1] <- "2015" 
+RS_Serie_Historica[7, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2015_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_GERAL"), AUX), 
@@ -31032,6 +31066,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2015_TIPO_ACID"), AUX)
 
@@ -35500,6 +35536,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[8, 1] <- "2016" 
+RS_Serie_Historica[8, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2016_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_GERAL"), AUX), 
@@ -35833,6 +35872,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2016_TIPO_ACID"), AUX)
 
@@ -40301,6 +40342,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[9, 1] <- "2017" 
+RS_Serie_Historica[9, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2017_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_GERAL"), AUX), 
@@ -40634,6 +40678,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2017_TIPO_ACID"), AUX)
 
@@ -45102,6 +45148,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[10, 1] <- "2018" 
+RS_Serie_Historica[10, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2018_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_GERAL"), AUX), 
@@ -45435,6 +45484,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2018_TIPO_ACID"), AUX)
 
@@ -49903,6 +49954,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[11, 1] <- "2019" 
+RS_Serie_Historica[11, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2019_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_GERAL"), AUX), 
@@ -50236,6 +50290,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2019_TIPO_ACID"), AUX)
 
@@ -54704,6 +54760,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[12, 1] <- "2020" 
+RS_Serie_Historica[12, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2020_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_GERAL"), AUX), 
@@ -55037,6 +55096,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2020_TIPO_ACID"), AUX)
 
@@ -59505,6 +59566,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[13, 1] <- "2021" 
+RS_Serie_Historica[13, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2021_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_GERAL"), AUX), 
@@ -59838,6 +59902,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2021_TIPO_ACID"), AUX)
 
@@ -64306,6 +64372,9 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+RS_Serie_Historica[14, 1] <- "2022" 
+RS_Serie_Historica[14, 2] <- AUX[nrow(AUX), 5]
+
 assign(paste0("RS", RS, "_PECONHENTOS_2022_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_GERAL"), AUX), 
@@ -64639,6 +64708,8 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), 3:9] <- AUX[nrow(AUX), 5:11]
 
 assign(paste0("RS", RS, "_PECONHENTOS_2022_TIPO_ACID"), AUX)
 
@@ -67241,11 +67312,32 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_MAN_SIST_ESP_ABELHA"), AUX
 
 rm(SINAN_PECONHENTOS_2022)
 
+#######################################################################################################################################
+#######################################################################################################################################
+#####################    Objetos especiais para serem utilizados no informe     #######################################################
 
+######    Série Histórica     #########
 
-
-
-
+rm(i,
+   ID_REG,
+   nrow,
+   AUX,
+   BASE_IBGE,
+   RS,
+   PECONHENTO2009,
+   PECONHENTO2010,
+   PECONHENTO2011,
+   PECONHENTO2012,
+   PECONHENTO2013,
+   PECONHENTO2014,
+   PECONHENTO2015,
+   PECONHENTO2016,
+   PECONHENTO2017,
+   PECONHENTO2018,
+   PECONHENTO2019,
+   PECONHENTO2020,
+   PECONHENTO2021,
+   PECONHENTO2022)
 
 
 

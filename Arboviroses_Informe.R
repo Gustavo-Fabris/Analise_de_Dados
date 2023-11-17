@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 07/11/2024"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 14/11/2024"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 08/11/2024"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 16/11/2024"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 08/11/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 16/11/2024"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("45")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("46")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -5336,7 +5336,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>%
+                                                                                         Status_Exame == "Aguardando Triagem" |
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                 count()
   )
   
@@ -5346,7 +5347,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                         Status_Exame == "Aguardando Triagem"|
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                 count()
   )
   
@@ -5356,7 +5358,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                         Status_Exame == "Aguardando Triagem"|
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                 count()
   )
   
@@ -5366,7 +5369,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                       Status_Exame == "Resultado Liberado" |
                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                        Status_Exame == "Aguardando Triagem") %>% 
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                count()
   )
   
@@ -5376,7 +5380,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                         Status_Exame == "Aguardando Triagem"|
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                 count() 
   )
   
@@ -5386,7 +5391,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>%
+                                                                                         Status_Exame == "Aguardando Triagem"|
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                 count()
   )
   
@@ -5396,7 +5402,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                         Status_Exame == "Aguardando Triagem"|
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                 count() 
   )
   
@@ -5406,7 +5413,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                         Status_Exame == "Aguardando Triagem"|
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                 count() 
   )
   
@@ -5416,7 +5424,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5426,7 +5435,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5436,7 +5446,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5446,7 +5457,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5456,7 +5468,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count() 
   )
   
@@ -5466,7 +5479,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5476,7 +5490,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5486,7 +5501,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5496,7 +5512,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%       
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%       
                                                                                  count() 
   )
   
@@ -5506,7 +5523,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%     
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%     
                                                                                  count() 
   )
   
@@ -5516,7 +5534,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5526,7 +5545,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                          Status_Exame == "Resultado Liberado" |
                                                                                            Status_Exame == "Automaçăo em Processamento" |
                                                                                            Status_Exame == "Disponivel para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>%
+                                                                                           Status_Exame == "Aguardando Triagem"|
+                                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                   count() 
   )
   
@@ -5536,7 +5556,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5546,7 +5567,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5556,7 +5578,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5566,7 +5589,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5576,7 +5600,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5586,7 +5611,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5596,7 +5622,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5606,7 +5633,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5616,7 +5644,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5626,7 +5655,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count()
   )
   
@@ -5636,7 +5666,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5646,7 +5677,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5656,7 +5688,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count() 
   )
   
@@ -5666,7 +5699,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count() 
   )
   
@@ -5676,7 +5710,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5686,7 +5721,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5696,7 +5732,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count() 
   )
   
@@ -5706,7 +5743,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5716,7 +5754,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5726,7 +5765,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5736,7 +5776,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5746,7 +5787,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5756,7 +5798,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5766,7 +5809,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5776,7 +5820,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count()
   )
   
@@ -5786,7 +5831,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5796,7 +5842,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5806,7 +5853,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5816,7 +5864,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count()
   )
   
@@ -5826,7 +5875,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
                                                                                  count() 
   )
   
@@ -5836,7 +5886,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5846,7 +5897,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
   
@@ -5856,7 +5908,8 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem") %>%
+                                                                                          Status_Exame == "Aguardando Triagem"|
+                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
                                                                                  count() 
   )
 }
