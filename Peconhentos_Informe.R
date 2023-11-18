@@ -17,6 +17,25 @@ BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv",
                     header=TRUE, 
                     sep=",")
 
+CE_BASE_Notificados <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Peconhentos/RS22_CE_BASE_Notificados.csv",
+                                header = TRUE,
+                                sep = ",")
+
+CE_BASE_Aranhas_Notificados <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Peconhentos/RS22_CE_BASE_Aranhas_Notificados.csv",
+                                        header = TRUE,
+                                        sep = ",")
+
+CE_BASE_Serpentes_Notificados <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Peconhentos/RS22_CE_BASE_Serpentes_Notificados.csv",
+                                          header = TRUE,
+                                          sep= ",")
+
+CE_BASE_Escorpioes_Notificados <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Peconhentos/RS22_CE_BASE_Escorpioes_Notificados.csv",
+                                           header = TRUE,
+                                           sep = ",")
+RS_Serie_Historica <- read.csv(file ="Base_de_Dados/Tabulacoes_R/Peconhentos/RS22_Serie_Historica.csv",
+                               header = TRUE,
+                               sep = ",")
+
 ############################################################################################
 ####   Definindo o objeto RS para servir de apoio para    ##################################
 ####    buscar dados de todas as RS. Usar 1, 2, 3..., 21, 22    ############################
@@ -30,6 +49,10 @@ RS <- 22   #####  Deve-se colocar AQUI a Regional
 ID_REG <- as.data.frame(BASE_IBGE[which(BASE_IBGE$RS == RS), 6])
 
 ID_REG <- as.numeric(ID_REG[1,1])
+
+#########   Criando objeto Fonte para ser utilizado pelos gráficos   ######
+
+Fonte <- "ttttttttt"
 
 ####   Estabelecendo o número de municípios em cada RS
 
@@ -4836,6 +4859,107 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_MAN_SIST_ESP_ABELHA"), AUX
 
 rm(SINAN_PECONHENTOS_2023)
 
+######################################################################################################################################
+######################################################################################################################################
+######################          FIM FIM FIM FIM FIM FIM     ##########################################################################
 
 
+############################    Gráficos e Mapas    ##################################################################################
 
+############ Criando uma função Theme para ser utilizado por todos os gráficos      ##################################################
+
+Theme <- function(){
+  theme(axis.text.x = element_text(angle = 50, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 14),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 24,
+                                  colour = "#556B2F"),
+        legend.position = "bottom")
+}
+
+######################################################################################################################################
+################    Séries Históricas      ######################################
+
+RS_Serie_Historica[, 1] <- as.factor(RS_Serie_Historica[, 1])
+
+
+assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados"), ggplot(RS_Serie_Historica, aes(x = Ano,
+                                        y = Notificados)) +
+                  geom_bar(stat = "identity",
+                           color = "black",
+                           fill = "#856363") +
+         labs(caption = Fonte, 
+              y = "Número de Casos",
+              x = NULL,
+              title = "SÉRIE HISTÓRICA DE CASOS NOTIFICADOS - 2009 a 2023",
+              subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
+         geom_label(aes(label = Notificados), 
+                    size = 3, 
+                    alpha = 0.5,
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+         Theme() +
+         theme(axis.text.x = element_text(angle = 0))
+)
+
+assign(paste0("RS", RS, "_GRAF_Serie_Historica_Serpentes"), ggplot(RS_Serie_Historica, aes(x = Ano,
+                                                                                             y = Serpente)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#856363") +
+         labs(caption = Fonte, 
+              y = "Número de Casos",
+              x = NULL,
+              title = "SÉRIE HISTÓRICA DE CASOS NOTIFICADOS (SERPENTES) - 2009 a 2023",
+              subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
+         geom_label(aes(label = Serpente), 
+                    size = 3, 
+                    alpha = 0.5,
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+         Theme() +
+         theme(axis.text.x = element_text(angle = 0))
+)
+
+assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados_Aranhas"), ggplot(RS_Serie_Historica, aes(x = Ano,
+                                                                                             y = Aranha)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#856363") +
+         labs(caption = Fonte, 
+              y = "Número de Casos",
+              x = NULL,
+              title = "SÉRIE HISTÓRICA DE CASOS NOTIFICADOS (ARANHAS) - 2009 a 2023",
+              subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
+         geom_label(aes(label = Aranha), 
+                    size = 3, 
+                    alpha = 0.5,
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+         Theme() +
+         theme(axis.text.x = element_text(angle = 0))
+)
+
+assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados_Escorpioes"), ggplot(RS_Serie_Historica, aes(x = Ano,
+                                                                                             y = Escorpiao)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#856363") +
+         labs(caption = Fonte, 
+              y = "Número de Casos",
+              x = NULL,
+              title = "SÉRIE HISTÓRICA DE CASOS NOTIFICADOS (ESCORPIÕES) - 2009 a 2023",
+              subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
+         geom_label(aes(label = Escorpiao), 
+                    size = 3, 
+                    alpha = 0.5,
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+         Theme() +
+         theme(axis.text.x = element_text(angle = 0))
+)

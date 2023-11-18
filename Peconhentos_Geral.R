@@ -1210,6 +1210,12 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados <- AUX[nrow(AUX),]
+
+colnames(CE_BASE_Aranhas_Notificados)[1] <- "Ano"
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2009"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2009_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2009_SE_ARANHAS_Notificados"), AUX), 
@@ -1610,6 +1616,12 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados <- AUX[nrow(AUX),]
+
+colnames(CE_BASE_Escorpioes_Notificados)[1] <- "Ano"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2009"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2009_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -2198,7 +2210,7 @@ AUX$Abelha <- NA
 
 AUX$Outros <- NA
 
-AUX$ignorado <- NA
+AUX$Ignorado <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
@@ -6023,6 +6035,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2010"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2010_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2010_SE_ARANHAS_Notificados"), AUX), 
@@ -6423,6 +6439,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2010"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2010_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -10835,6 +10855,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2011"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2011_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2011_SE_ARANHAS_Notificados"), AUX), 
@@ -11235,6 +11259,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2011"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2011_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -15647,6 +15675,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2012"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2012_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2012_SE_ARANHAS_Notificados"), AUX), 
@@ -16047,6 +16079,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2012"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2012_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -20459,6 +20495,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2013"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2013_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2013_SE_ARANHAS_Notificados"), AUX), 
@@ -20859,6 +20899,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2013"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2013_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -25273,6 +25317,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2014"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2014_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2014_SE_ARANHAS_Notificados"), AUX), 
@@ -25673,6 +25721,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2014"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2014_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -30087,6 +30139,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2015"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_ARANHAS_Notificados"), AUX), 
@@ -30487,6 +30543,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2015"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -34901,6 +34961,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2016"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_ARANHAS_Notificados"), AUX), 
@@ -35301,6 +35365,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2016"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -39715,6 +39783,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2017"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_ARANHAS_Notificados"), AUX), 
@@ -40115,6 +40187,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2017"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -44529,6 +44605,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2018"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_ARANHAS_Notificados"), AUX), 
@@ -44929,6 +45009,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2018"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -49343,6 +49427,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2019"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_ARANHAS_Notificados"), AUX), 
@@ -49743,6 +49831,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2019"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -54157,6 +54249,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2020"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_ARANHAS_Notificados"), AUX), 
@@ -54557,6 +54653,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2020"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -58971,6 +59071,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2021"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_ARANHAS_Notificados"), AUX), 
@@ -59371,6 +59475,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2021"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -63785,6 +63893,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 1] <- "2022"
+
 assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_ARANHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_ARANHAS_Notificados"), AUX), 
@@ -64185,6 +64297,10 @@ AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
 AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados) +1, ] <- AUX[nrow(AUX),]
+
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 1] <- "2022"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_ESCORPIOES_Notificados"), AUX)
 
@@ -67431,6 +67547,26 @@ rm(SINAN_PECONHENTOS_2022)
 #######################################################################################################################################
 #######################################################################################################################################
 #####################    Objetos especiais para serem utilizados no informe     #######################################################
+
+write.csv (RS_Serie_Historica, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_Serie_Historica.csv"), 
+           row.names = FALSE)
+
+write.csv (CE_BASE_Aranhas_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_BASE_Aranhas_Notificados.csv"), 
+           row.names = FALSE)
+
+write.csv (CE_BASE_Serpentes_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_BASE_Serpentes_Notificados.csv"), 
+           row.names = FALSE)
+
+write.csv (CE_BASE_Escorpioes_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_BASE_Escorpioes_Notificados.csv"), 
+           row.names = FALSE)
+
+write.csv (CE_BASE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_BASE_Notificados.csv"), 
+           row.names = FALSE)
 
 ######    Série Histórica     #########
 
