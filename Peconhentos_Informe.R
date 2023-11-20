@@ -4866,6 +4866,107 @@ rm(SINAN_PECONHENTOS_2023)
 
 ############################    Gráficos e Mapas    ##################################################################################
 
+###############################       Canais Endêmicos    ############################################################################
+
+#####################################   NOTIFICADOS      #############################################################################
+
+CE_BASE_Notificados[(nrow(CE_BASE_Notificados) +1), 1] <- "2023"
+CE_BASE_Notificados[nrow(CE_BASE_Notificados), 2:54] <- as.integer(data.frame(RS22_PECONHENTOS_2023_SE_Notificados[nrow(RS22_PECONHENTOS_2023_SE_Notificados), 2:54]))
+
+#####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
+#####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
+##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
+
+AUX <- CE_BASE_Notificados[, -1]
+
+AUX <- t(AUX)
+
+AUX2 <- CE_BASE_Notificados[, 1]
+
+colnames(AUX) <- AUX2
+
+CE_BASE_Notificados <- AUX
+
+######Criando a coluna de média no data.frame#####################
+
+AUX <- apply(CE_BASE_Notificados[,1: (ncol(CE_BASE_Notificados)-1)], 1 , mean)
+
+CE_BASE_Notificados <- as.data.frame(CE_BASE_Notificados)
+
+CE_BASE_Notificados$Media <- AUX
+
+######Criando a coluna de Desvio Padrão no data frame###############
+
+AUX <- apply(CE_BASE_Notificados[,1: (ncol(CE_BASE_Notificados) -2)], 1 , sd)
+
+CE_BASE_Notificados$Desvio_Padrao <- AUX
+
+###### Criando a coluna de Média + 2(DP)
+
+AUX <- CE_BASE_Notificados[, (ncol(CE_BASE_Notificados)-1):ncol(CE_BASE_Notificados)]
+
+AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+CE_BASE_Notificados$Lim_Superior <- AUX$Lim_Superior
+
+CE_BASE_Notificados[, (ncol(CE_BASE_Notificados)+1)] <- rownames(CE_BASE_Notificados)
+
+CE_BASE_Notificados <- CE_BASE_Notificados[, c(ncol(CE_BASE_Notificados), 1:(ncol(CE_BASE_Notificados) -1))]
+
+CE_BASE_Notificados[,1] <- c(1:53)
+
+colnames(CE_BASE_Notificados)[1] <- "Semana_Epidemiológica"
+
+rownames(CE_BASE_Notificados) <- c(1:nrow(CE_BASE_Notificados))
+
+rm(AUX, AUX2)
+
+write.csv (CE_BASE_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_Notificados.csv"), 
+           row.names = FALSE)
+
+AUX_GRAF <- CE_BASE_Notificados[, c(ncol(CE_BASE_Notificados), ncol(CE_BASE_Notificados) -1, ncol(CE_BASE_Notificados) -2)]
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Notificados))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2023` <- CE_BASE_Notificados$`2023`
+
+AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
+                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
+                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
+                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
+                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
+                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
+                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
+                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+
+RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#556B2F")
+  ) +
+  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes( y = Media), fill = "#556B2F") +
+  geom_line(aes( y = `2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
 ############ Criando uma função Theme para ser utilizado por todos os gráficos      ##################################################
 
 Theme <- function(){
@@ -4881,6 +4982,309 @@ Theme <- function(){
                                   colour = "#556B2F"),
         legend.position = "bottom")
 }
+
+################################################       ARANHAS     #####################################################################
+
+CE_BASE_Aranhas_Notificados[(nrow(CE_BASE_Aranhas_Notificados) +1), 1] <- "2023"
+CE_BASE_Aranhas_Notificados[nrow(CE_BASE_Aranhas_Notificados), 2:54] <- as.integer(data.frame(RS22_PECONHENTOS_2023_SE_ARANHAS_Notificados[nrow(RS22_PECONHENTOS_2023_SE_ARANHAS_Notificados), 2:54]))
+
+#####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
+#####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
+##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
+
+AUX <- CE_BASE_Aranhas_Notificados[, -1]
+
+AUX <- t(AUX)
+
+AUX2 <- CE_BASE_Aranhas_Notificados[, 1]
+
+colnames(AUX) <- AUX2
+
+CE_BASE_Aranhas_Notificados <- AUX
+
+######Criando a coluna de média no data.frame#####################
+
+AUX <- apply(CE_BASE_Aranhas_Notificados[,1: (ncol(CE_BASE_Aranhas_Notificados)-1)], 1 , mean)
+
+CE_BASE_Aranhas_Notificados <- as.data.frame(CE_BASE_Aranhas_Notificados)
+
+CE_BASE_Aranhas_Notificados$Media <- AUX
+
+######Criando a coluna de Desvio Padrão no data frame###############
+
+AUX <- apply(CE_BASE_Aranhas_Notificados[,1: (ncol(CE_BASE_Aranhas_Notificados) -2)], 1 , sd)
+
+CE_BASE_Aranhas_Notificados$Desvio_Padrao <- AUX
+
+###### Criando a coluna de Média + 2(DP)
+
+AUX <- CE_BASE_Aranhas_Notificados[, (ncol(CE_BASE_Aranhas_Notificados)-1):ncol(CE_BASE_Aranhas_Notificados)]
+
+AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+CE_BASE_Aranhas_Notificados$Lim_Superior <- AUX$Lim_Superior
+
+CE_BASE_Aranhas_Notificados[, (ncol(CE_BASE_Aranhas_Notificados)+1)] <- rownames(CE_BASE_Aranhas_Notificados)
+
+CE_BASE_Aranhas_Notificados <- CE_BASE_Aranhas_Notificados[, c(ncol(CE_BASE_Aranhas_Notificados), 1:(ncol(CE_BASE_Aranhas_Notificados) -1))]
+
+CE_BASE_Aranhas_Notificados[,1] <- c(1:53)
+
+colnames(CE_BASE_Notificados)[1] <- "Semana_Epidemiológica"
+
+rownames(CE_BASE_Aranhas_Notificados) <- c(1:nrow(CE_BASE_Aranhas_Notificados))
+
+rm(AUX, AUX2)
+
+write.csv (CE_BASE_Aranhas_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_Aranhas_Notificados.csv"), 
+           row.names = FALSE)
+
+AUX_GRAF <- CE_BASE_Aranhas_Notificados[, c(ncol(CE_BASE_Aranhas_Notificados), ncol(CE_BASE_Aranhas_Notificados) -1, ncol(CE_BASE_Aranhas_Notificados) -2)]
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Aranhas_Notificados))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2023` <- CE_BASE_Aranhas_Notificados$`2023`
+
+AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
+                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
+                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
+                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
+                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
+                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
+                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
+                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+
+RS_23_24_GRAF_CE_Notificados_Aranhas_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#556B2F")
+  ) +
+  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes( y = Media), fill = "#556B2F") +
+  geom_line(aes( y = `2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+################################################       Serpentes     #####################################################################
+
+CE_BASE_Serpentes_Notificados[(nrow(CE_BASE_Serpentes_Notificados) +1), 1] <- "2023"
+CE_BASE_Serpentes_Notificados[nrow(CE_BASE_Serpentes_Notificados), 2:54] <- as.integer(data.frame(RS22_PECONHENTOS_2023_SE_SERPENTES_Notificados[nrow(RS22_PECONHENTOS_2023_SE_SERPENTES_Notificados), 2:54]))
+
+#####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
+#####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
+##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
+
+AUX <- CE_BASE_Serpentes_Notificados[, -1]
+
+AUX <- t(AUX)
+
+AUX2 <- CE_BASE_Serpentes_Notificados[, 1]
+
+colnames(AUX) <- AUX2
+
+CE_BASE_Serpentes_Notificados <- AUX
+
+######Criando a coluna de média no data.frame#####################
+
+AUX <- apply(CE_BASE_Serpentes_Notificados[,1: (ncol(CE_BASE_Serpentes_Notificados)-1)], 1 , mean)
+
+CE_BASE_Serpentes_Notificados <- as.data.frame(CE_BASE_Serpentes_Notificados)
+
+CE_BASE_Serpentes_Notificados$Media <- AUX
+
+######Criando a coluna de Desvio Padrão no data frame###############
+
+AUX <- apply(CE_BASE_Serpentes_Notificados[,1: (ncol(CE_BASE_Serpentes_Notificados) -2)], 1 , sd)
+
+CE_BASE_Serpentes_Notificados$Desvio_Padrao <- AUX
+
+###### Criando a coluna de Média + 2(DP)
+
+AUX <- CE_BASE_Serpentes_Notificados[, (ncol(CE_BASE_Serpentes_Notificados)-1):ncol(CE_BASE_Serpentes_Notificados)]
+
+AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+CE_BASE_Serpentes_Notificados$Lim_Superior <- AUX$Lim_Superior
+
+CE_BASE_Serpentes_Notificados[, (ncol(CE_BASE_Serpentes_Notificados)+1)] <- rownames(CE_BASE_Serpentes_Notificados)
+
+CE_BASE_Serpentes_Notificados <- CE_BASE_Serpentes_Notificados[, c(ncol(CE_BASE_Serpentes_Notificados), 1:(ncol(CE_BASE_Serpentes_Notificados) -1))]
+
+CE_BASE_Serpentes_Notificados[,1] <- c(1:53)
+
+colnames(CE_BASE_Notificados)[1] <- "Semana_Epidemiológica"
+
+rownames(CE_BASE_Serpentes_Notificados) <- c(1:nrow(CE_BASE_Serpentes_Notificados))
+
+rm(AUX, AUX2)
+
+write.csv (CE_BASE_Serpentes_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_Serpentes_Notificados.csv"), 
+           row.names = FALSE)
+
+AUX_GRAF <- CE_BASE_Serpentes_Notificados[, c(ncol(CE_BASE_Serpentes_Notificados), ncol(CE_BASE_Serpentes_Notificados) -1, ncol(CE_BASE_Serpentes_Notificados) -2)]
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Serpentes_Notificados))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2023` <- CE_BASE_Serpentes_Notificados$`2023`
+
+AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
+                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
+                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
+                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
+                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
+                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
+                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
+                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+
+RS_23_24_GRAF_CE_Notificados_Serpentes_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#556B2F")
+  ) +
+  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes( y = Media), fill = "#556B2F") +
+  geom_line(aes( y = `2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+plot(RS_23_24_GRAF_CE_Notificados_SEDE)
+
+plot(RS_23_24_GRAF_CE_Notificados_Aranhas_SEDE)
+
+plot(RS_23_24_GRAF_CE_Notificados_Serpentes_SEDE)
+
+################################################       Escorpioes     #####################################################################
+
+CE_BASE_Escorpioes_Notificados[(nrow(CE_BASE_Escorpioes_Notificados) +1), 1] <- "2023"
+CE_BASE_Escorpioes_Notificados[nrow(CE_BASE_Escorpioes_Notificados), 2:54] <- as.integer(data.frame(RS22_PECONHENTOS_2023_SE_ESCORPIOES_Notificados[nrow(RS22_PECONHENTOS_2023_SE_ESCORPIOES_Notificados), 2:54]))
+
+#####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
+#####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
+##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
+
+AUX <- CE_BASE_Escorpioes_Notificados[, -1]
+
+AUX <- t(AUX)
+
+AUX2 <- CE_BASE_Escorpioes_Notificados[, 1]
+
+colnames(AUX) <- AUX2
+
+CE_BASE_Escorpioes_Notificados <- AUX
+
+######Criando a coluna de média no data.frame#####################
+
+AUX <- apply(CE_BASE_Escorpioes_Notificados[,1: (ncol(CE_BASE_Escorpioes_Notificados)-1)], 1 , mean)
+
+CE_BASE_Escorpioes_Notificados <- as.data.frame(CE_BASE_Escorpioes_Notificados)
+
+CE_BASE_Escorpioes_Notificados$Media <- AUX
+
+######Criando a coluna de Desvio Padrão no data frame###############
+
+AUX <- apply(CE_BASE_Escorpioes_Notificados[,1: (ncol(CE_BASE_Escorpioes_Notificados) -2)], 1 , sd)
+
+CE_BASE_Escorpioes_Notificados$Desvio_Padrao <- AUX
+
+###### Criando a coluna de Média + 2(DP)
+
+AUX <- CE_BASE_Escorpioes_Notificados[, (ncol(CE_BASE_Escorpioes_Notificados)-1):ncol(CE_BASE_Escorpioes_Notificados)]
+
+AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+
+CE_BASE_Escorpioes_Notificados$Lim_Superior <- AUX$Lim_Superior
+
+CE_BASE_Escorpioes_Notificados[, (ncol(CE_BASE_Escorpioes_Notificados)+1)] <- rownames(CE_BASE_Escorpioes_Notificados)
+
+CE_BASE_Escorpioes_Notificados <- CE_BASE_Escorpioes_Notificados[, c(ncol(CE_BASE_Escorpioes_Notificados), 1:(ncol(CE_BASE_Escorpioes_Notificados) -1))]
+
+CE_BASE_Escorpioes_Notificados[,1] <- c(1:53)
+
+colnames(CE_BASE_Notificados)[1] <- "Semana_Epidemiológica"
+
+rownames(CE_BASE_Escorpioes_Notificados) <- c(1:nrow(CE_BASE_Escorpioes_Notificados))
+
+rm(AUX, AUX2)
+
+write.csv (CE_BASE_Escorpioes_Notificados, 
+           paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_CE_Escorpioes_Notificados.csv"), 
+           row.names = FALSE)
+
+AUX_GRAF <- CE_BASE_Escorpioes_Notificados[, c(ncol(CE_BASE_Escorpioes_Notificados), ncol(CE_BASE_Escorpioes_Notificados) -1, ncol(CE_BASE_Escorpioes_Notificados) -2)]
+
+###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
+AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Escorpioes_Notificados))
+
+###Puxando o período sazonal atual para o gráfico de linhas
+
+AUX_GRAF$`2023` <- CE_BASE_Escorpioes_Notificados$`2023`
+
+AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
+                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
+                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
+                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
+                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
+                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
+                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
+                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+
+RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 85, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#DC143C"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#556B2F")
+  ) +
+  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
+  geom_area(aes( y = Media), fill = "#556B2F") +
+  geom_line(aes( y = `2023`), stat = "identity", color = "black", linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ######################################################################################################################################
 ################    Séries Históricas      ######################################
