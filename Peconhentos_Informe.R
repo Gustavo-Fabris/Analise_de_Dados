@@ -52,7 +52,7 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 #########   Criando objeto Fonte para ser utilizado pelos gráficos   ######
 
-Fonte <- "ttttttttt"
+Fonte <- "Fonte: SINAN. Base DBF acessada em 23/11/2023"
 
 ####   Estabelecendo o número de municípios em cada RS
 
@@ -75,7 +75,6 @@ assign(paste0("RS", RS, "_PECONHENTOS_2023_SINAN"), SINAN_PECONHENTOS_2023)
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_SINAN"), SINAN_PECONHENTOS_2023), 
            paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_SINAN.csv"), 
            row.names = FALSE)
-
 
 ############################################################################################################################
 ############      Filtrando os dados por SE NOTIFICADOS para elaborar o Canal Endêmico   ###################################
@@ -1926,6 +1925,8 @@ AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2023_GERAL"), AUX)
 
+assign(paste0("RS_PECONHENTOS_2023_GERAL"), AUX)
+
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_GERAL"), AUX), 
            paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_GERAL.csv"), 
            row.names = FALSE)
@@ -2259,6 +2260,8 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2023_TIPO_ACID"), AUX)
+
+assign(paste0("RS_PECONHENTOS_2023_TIPO_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_TIPO_ACID"), AUX), 
            paste0("Base_de_Dados/Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_TIPO_ACID.csv"), 
@@ -4935,29 +4938,30 @@ AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Notificados))
 
 AUX_GRAF$`2023` <- CE_BASE_Notificados$`2023`
 
-AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
-                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
-                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
-                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
-                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
-                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
-                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
-                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07", 
+                                  "08",  "09",  "10",  "11",  "12",  "13",  "14",  
+                                  "15",  "16",  "17",  "18",  "19",  "20",  "21",  
+                                  "22",  "23",  "24",  "25",  "26",  "27",  "28",  
+                                  "28",  "30",  "31",  "32",  "33", "34",  "35",  
+                                  "36",  "37",  "38",  "39",  "40",  "41",  "42",  
+                                  "43",  "44",  "45",  "46",  "47",  "48",  "49",  
+                                  "50",  "51",  "52",  "53"))
 
-RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
-  theme(axis.text.x = element_text(angle = 85, 
+assign(paste0("RS", RS, "_GRAF_CE_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = .5,
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+       title = "Acidentes com Animais Peçonhentos",
+       subtitle = paste0("Canal Endêmico ", RS, "ª Regional de Saúde")) +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
                               size = 24,
-                              colour = "#556B2F")
+                              colour = "black")
   ) +
   geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
   geom_area(aes( y = Media), fill = "#556B2F") +
@@ -4965,23 +4969,7 @@ RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-############ Criando uma função Theme para ser utilizado por todos os gráficos      ##################################################
-
-Theme <- function(){
-  theme(axis.text.x = element_text(angle = 50, 
-                                   vjust = .5,
-                                   face = "bold",
-                                   size = 14),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 24,
-                                  colour = "#556B2F"),
-        legend.position = "bottom")
-}
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
 
 ################################################       ARANHAS     #####################################################################
 
@@ -5050,29 +5038,30 @@ AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Aranhas_Notificados))
 
 AUX_GRAF$`2023` <- CE_BASE_Aranhas_Notificados$`2023`
 
-AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
-                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
-                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
-                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
-                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
-                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
-                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
-                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07", 
+                                  "08",  "09",  "10",  "11",  "12",  "13",  "14",  
+                                  "15",  "16",  "17",  "18",  "19",  "20",  "21",  
+                                  "22",  "23",  "24",  "25",  "26",  "27",  "28",  
+                                  "28",  "30",  "31",  "32",  "33", "34",  "35",  
+                                  "36",  "37",  "38",  "39",  "40",  "41",  "42",  
+                                  "43",  "44",  "45",  "46",  "47",  "48",  "49",  
+                                  "50",  "51",  "52",  "53"))
 
-RS_23_24_GRAF_CE_Notificados_Aranhas_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
-  theme(axis.text.x = element_text(angle = 85, 
+assign(paste0("RS", RS, "_GRAF_CE_Notificados_Aranhas"), ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = .5,
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+       title = "Acidentes com Aranhas",
+       subtitle = paste0("Canal Endêmico ", RS, "ª Regional de Saúde"))+
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
                               size = 24,
-                              colour = "#556B2F")
+                              colour = "black")
   ) +
   geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
   geom_area(aes( y = Media), fill = "#556B2F") +
@@ -5080,7 +5069,7 @@ RS_23_24_GRAF_CE_Notificados_Aranhas_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
 
 ################################################       Serpentes     #####################################################################
 
@@ -5149,29 +5138,30 @@ AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Serpentes_Notificados))
 
 AUX_GRAF$`2023` <- CE_BASE_Serpentes_Notificados$`2023`
 
-AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
-                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
-                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
-                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
-                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
-                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
-                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
-                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07", 
+                                  "08",  "09",  "10",  "11",  "12",  "13",  "14",  
+                                  "15",  "16",  "17",  "18",  "19",  "20",  "21",  
+                                  "22",  "23",  "24",  "25",  "26",  "27",  "28",  
+                                  "28",  "30",  "31",  "32",  "33", "34",  "35",  
+                                  "36",  "37",  "38",  "39",  "40",  "41",  "42",  
+                                  "43",  "44",  "45",  "46",  "47",  "48",  "49",  
+                                  "50",  "51",  "52",  "53"))
 
-RS_23_24_GRAF_CE_Notificados_Serpentes_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
-  theme(axis.text.x = element_text(angle = 85, 
+assign(paste0("RS", RS, "_GRAF_CE_Notificados_Serpentes"), ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = .5,
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+       title = "Acidentes com Serpentes",
+       paste0("Canal Endêmico ", RS, "ª Regional de Saúde")) +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
                               size = 24,
-                              colour = "#556B2F")
+                              colour = "black")
   ) +
   geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
   geom_area(aes( y = Media), fill = "#556B2F") +
@@ -5179,13 +5169,8 @@ RS_23_24_GRAF_CE_Notificados_Serpentes_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
 
-plot(RS_23_24_GRAF_CE_Notificados_SEDE)
-
-plot(RS_23_24_GRAF_CE_Notificados_Aranhas_SEDE)
-
-plot(RS_23_24_GRAF_CE_Notificados_Serpentes_SEDE)
 
 ################################################       Escorpioes     #####################################################################
 
@@ -5254,29 +5239,30 @@ AUX_GRAF$Ordem <- c(1: nrow(CE_BASE_Escorpioes_Notificados))
 
 AUX_GRAF$`2023` <- CE_BASE_Escorpioes_Notificados$`2023`
 
-AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03",  "2023/04",  "2023/05",  "2023/06",  "2023/07", 
-                                  "2023/08",  "2023/09",  "2023/10",  "2023/11",  "2023/12",  "2023/13",  "2023/14",  
-                                  "2023/15",  "2023/16",  "2023/17",  "2023/18",  "2023/19",  "2023/20",  "2023/21",  
-                                  "2023/22",  "2023/23",  "2024/24",  "2024/25",  "2024/26",  "2024/27",  "2024/28",  
-                                  "2024/28",  "2024/30",  "2024/31",  "2024/32",  "2024/33", "2024/34",  "2024/35",  
-                                  "2024/36",  "2024/37",  "2024/38",  "2024/39",  "2024/40",  "2024/41",  "2024/42",  
-                                  "2024/43",  "2024/44",  "2024/45",  "2024/46",  "2024/47",  "2024/48",  "2024/49",  
-                                  "2024/50",  "2024/51",  "2024/52",  "2024/53"))
+AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07", 
+                                  "08",  "09",  "10",  "11",  "12",  "13",  "14",  
+                                  "15",  "16",  "17",  "18",  "19",  "20",  "21",  
+                                  "22",  "23",  "24",  "25",  "26",  "27",  "28",  
+                                  "28",  "30",  "31",  "32",  "33", "34",  "35",  
+                                  "36",  "37",  "38",  "39",  "40",  "41",  "42",  
+                                  "43",  "44",  "45",  "46",  "47",  "48",  "49",  
+                                  "50",  "51",  "52",  "53"))
 
-RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
-  theme(axis.text.x = element_text(angle = 85, 
+assign(paste0("RS", RS, "_GRAF_CE_Notificados_Escorpioes"), ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
                                    vjust = .5,
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2023/24") +
+       title = "Acidentes com Escorpiões",
+       paste0("Canal Endêmico ", RS, "ª Regional de Saúde")) +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
                               size = 24,
-                              colour = "#556B2F")
+                              colour = "black")
   ) +
   geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
   geom_area(aes( y = Media), fill = "#556B2F") +
@@ -5284,13 +5270,34 @@ RS_23_24_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
   scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
+
+############ Criando uma função Theme para ser utilizado por todos os gráficos      ##################################################
+
+Theme <- function(){
+  theme(axis.text.x = element_text(angle = 50, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 14),
+        panel.grid.major = element_line(color = "#C0C0C0"),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "#F5F5F5"),
+        plot.title = element_text(face = "bold",
+                                  size = 24,
+                                  colour = "#556B2F"),
+        legend.position = "bottom")
+}
 
 ######################################################################################################################################
 ################    Séries Históricas      ######################################
 
-RS_Serie_Historica[, 1] <- as.factor(RS_Serie_Historica[, 1])
+RS_Serie_Historica[nrow(RS_Serie_Historica) +1, 2] <- RS_PECONHENTOS_2023_GERAL[nrow(RS_PECONHENTOS_2023_GERAL), 5]
 
+RS_Serie_Historica[nrow(RS_Serie_Historica), 1] <- "2023"
+
+RS_Serie_Historica[nrow(RS_Serie_Historica), c(3:9)] <- RS_PECONHENTOS_2023_TIPO_ACID[nrow(RS_PECONHENTOS_2023_TIPO_ACID), c(5:11)]
+
+RS_Serie_Historica[, 1] <- as.factor(RS_Serie_Historica[, 1])
 
 assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados"), ggplot(RS_Serie_Historica, aes(x = Ano,
                                         y = Notificados)) +
@@ -5367,3 +5374,43 @@ assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados_Escorpioes"), ggplot(
          Theme() +
          theme(axis.text.x = element_text(angle = 0))
 )
+
+################    Dados do Período atual    ##############
+
+AUX_GRAF <- RS_PECONHENTOS_2023_GERAL[nrow(RS_PECONHENTOS_2023_GERAL), 6:9]
+
+AUX_GRAF[2, ] <- colnames(AUX_GRAF)
+
+AUX_GRAF <- t(AUX_GRAF)
+
+colnames(AUX_GRAF)[1] <- "Dados"
+
+colnames(AUX_GRAF)[2] <- "Rotulos"
+
+AUX_GRAF <- as.data.frame(AUX_GRAF)
+
+AUX_GRAF$Ordem <- as.factor(1: nrow(AUX_GRAF))
+
+AUX_GRAF[, 1] <- as.numeric(AUX_GRAF[, 1])
+
+assign(paste0("RS", RS, "_GRAF_ZONA_OCORRENCIA"), ggplot(AUX_GRAF, aes(x = Rotulos)) +
+                                                           geom_bar(aes(y = Dados),
+                                                         stat = "identity"))
+
+RS22_GRAF_ZONA_OCORRENCIA
+rm(AUX_GRAF,
+   BASE_IBGE,
+   CE_BASE_Aranhas_Notificados,
+   CE_BASE_Escorpioes_Notificados,
+   CE_BASE_Notificados,
+   CE_BASE_Serpentes_Notificados,
+   PECONHENTO2023,
+   RS_Serie_Historica,
+   RS_PECONHENTOS_2023_GERAL,
+   RS_PECONHENTOS_2023_TIPO_ACID,
+   Fonte,
+   i,
+   ID_REG,
+   nrow,
+   RS,
+   Theme)
