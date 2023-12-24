@@ -66,7 +66,7 @@ Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 20/12/2023"     #
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("5")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -2854,10 +2854,15 @@ rm(AUX, RS_Serie_Historica_Base, RS_23_24_GERAL)
 ################Trabalhando as tabelas base dos Canais Endêmicos####################################################
 ####################################################################################################################
 
+#######     Eliminando a SE 53 Inexistente no período no ano 2023    #####
+
+RS_CE_Notificados_Base <- RS_CE_Notificados_Base[, -24]
+RS_23_24_SE_Notificados <- RS_23_24_SE_Notificados[, -24]
+
 ######     Canal Endêmico    NOTIFICADOS#####
 
 RS_CE_Notificados_Base[(nrow(RS_CE_Notificados_Base) +1), 1] <- "2023/24"
-RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base), 2:54] <- as.integer(data.frame(RS22_23_24_SE_Notificados[nrow(RS22_23_24_SE_Notificados), 2:54]))
+RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base), 2:53] <- as.integer(data.frame(RS_23_24_SE_Notificados[nrow(RS_23_24_SE_Notificados), 2:53]))
 
 #####################################################################################################################
 #####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
@@ -2903,7 +2908,7 @@ RS_CE_Notificados[, (ncol(RS_CE_Notificados)+1)] <- rownames(RS_CE_Notificados)
 
 RS_CE_Notificados <- RS_CE_Notificados[, c(ncol(RS_CE_Notificados), 1:(ncol(RS_CE_Notificados) -1))]
 
-RS_CE_Notificados[, 1] <- c(31:53, 1:30)
+RS_CE_Notificados[, 1] <- c(31:52, 1:30)
 
 colnames(RS_CE_Notificados)[1] <- "Semana_Epidemiológica"
 
@@ -2955,7 +2960,7 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
                                   "2023/43",  "2023/44",  "2023/45",  
                                   "2023/46",  "2023/47",  "2023/48",  
                                   "2023/49",  "2023/50",  "2023/51",  
-                                  "2023/52",  "2023/53",  "2024/01",  
+                                  "2023/52",  "2024/01",  
                                   "2024/02",  "2024/03",  "2024/04",  
                                   "2024/05",  "2024/06",  "2024/07",  
                                   "2024/08",  "2024/09",  "2024/10", 
@@ -2993,15 +2998,19 @@ RS_23_24_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
             linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), 
+  scale_x_continuous(breaks = c(1:52), 
                      label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
-
 ####         Canal Endêmico CONFIRMADOS              ####
 
+#######     Eliminando a SE 53 Inexistente no período no ano 2023    #####
+
+RS_CE_Confirmados_Base <- RS_CE_Confirmados_Base[, -24]
+RS_23_24_SE_Confirmados <- RS_23_24_SE_Confirmados[, -24]
+
 RS_CE_Confirmados_Base[(nrow(RS_CE_Confirmados_Base) +1), 1] <- "2023/24"
-RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 2:54] <- as.integer(data.frame(RS22_23_24_SE_Confirmados[17, 2:54]))
+RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 2:53] <- as.integer(data.frame(RS_23_24_SE_Confirmados[17, 2:53]))
 
 #####################################################################################################################
 #####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
@@ -3047,7 +3056,7 @@ RS_CE_Confirmados[, (ncol(RS_CE_Confirmados)+1)] <- rownames(RS_CE_Confirmados)
 
 RS_CE_Confirmados <- RS_CE_Confirmados[, c(ncol(RS_CE_Confirmados), 1:(ncol(RS_CE_Confirmados) -1))]
 
-RS_CE_Confirmados[, 1] <- c(31:53, 1:30)
+RS_CE_Confirmados[, 1] <- c(31:52, 1:30)
 
 colnames(RS_CE_Confirmados)[1] <- "Semana_Epidemiológica"
 
@@ -3099,7 +3108,7 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
                                   "2023/43",  "2023/44",  "2023/45",  
                                   "2023/46",  "2023/47",  "2023/48", 
                                   "2023/49",  "2023/50",  "2023/51", 
-                                  "2023/52",  "2023/53",  "2024/01", 
+                                  "2023/52",  "2024/01", 
                                   "2024/02",  "2024/03",  "2024/04", 
                                   "2024/05",  "2024/06",  "2024/07", 
                                   "2024/08",  "2024/09",  "2024/10", 
@@ -3137,7 +3146,7 @@ RS_23_24_GRAF_CE_Confirmados <- ggplot(AUX_GRAF, aes(Ordem))  +
             linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), 
+  scale_x_continuous(breaks = c(1:52), 
                      label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
@@ -3809,7 +3818,7 @@ AUX[nrow(AUX), 1] <- "Total"
 
 ####Casos prováveis por semana epidemiológica. Este objeto será apagado assim que for incluso no AUX_GRAF####
 
-assign(paste0("RS", "_23_24_SE_Provaveis"), AUX[nrow(AUX), 2:54])
+assign(paste0("RS", "_23_24_SE_Provaveis"), AUX)
 
 assign(paste0("RS", RS, "_23_24_SE_Provaveis"), AUX)
 
@@ -3841,6 +3850,7 @@ AUX_GRAF$Lim_Superior <- NA
 AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados))
 
 ###Puxando o período sazonal atual para o gráfico de linhas
@@ -3856,7 +3866,7 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
                                   "2023/43",  "2023/44",  "2023/45",  
                                   "2023/46",  "2023/47",  "2023/48",  
                                   "2023/49",  "2023/50",  "2023/51",  
-                                  "2023/52",  "2023/53",  "2024/01", 
+                                  "2023/52",  "2024/01", 
                                   "2024/02",  "2024/03",  "2024/04",  
                                   "2024/05",  "2024/06",  "2024/07",  
                                   "2024/08",  "2024/09",  "2024/10", 
@@ -3869,7 +3879,9 @@ AUX_GRAF$Sem_EPI <-as.character(c("2023/31",  "2023/32", "2023/33",
                                   "2024/29",  "2024/30")
 )
 
-AUX_GRAF[, 8] <- t(RS_23_24_SE_Provaveis)
+RS_23_24_SE_Provaveis <- RS_23_24_SE_Provaveis[, -24]
+
+AUX_GRAF[, 8] <- t(RS_23_24_SE_Provaveis[nrow(RS_23_24_SE_Provaveis),-1 ])
 
 colnames(AUX_GRAF)[8] <- "Provaveis"
 
@@ -3899,11 +3911,9 @@ RS_23_24_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
             linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:53), 
+  scale_x_continuous(breaks = c(1:52), 
                      label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-rm(RS_23_24_SE_Provaveis)
 
 #######################################################
 ######     Histogramas Municipais   ###################
@@ -3911,6 +3921,25 @@ rm(RS_23_24_SE_Provaveis)
 
 ###       NOTIFICADOS     ########
 
+RS_23_24_SE_Notificados[nrow(RS_23_24_SE_Notificados) +1, 2:ncol(RS_23_24_SE_Notificados)] <- c("2023/31",  "2023/32", "2023/33",  
+                                  "2023/34",  "2023/35",  "2023/36", 
+                                  "2023/37",  "2023/38",  "2023/39", 
+                                  "2023/40",  "2023/41",  "2023/42", 
+                                  "2023/43",  "2023/44",  "2023/45",  
+                                  "2023/46",  "2023/47",  "2023/48",  
+                                  "2023/49",  "2023/50",  "2023/51",  
+                                  "2023/52",  "2024/01", 
+                                  "2024/02",  "2024/03",  "2024/04",  
+                                  "2024/05",  "2024/06",  "2024/07",  
+                                  "2024/08",  "2024/09",  "2024/10", 
+                                  "2024/11",  "2024/12",  "2024/13",  
+                                  "2024/14",  "2024/15",  "2024/16",  
+                                  "2024/17",  "2024/18",  "2024/19", 
+                                  "2024/20",  "2024/21",  "2024/22", 
+                                  "2024/23",  "2024/24",  "2024/25",  
+                                  "2024/26",  "2024/27",  "2024/28",  
+                                  "2024/29",  "2024/30")
+                                
 AUX_GRAF <- as.data.frame(RS_23_24_SE_Notificados$Município)
 
 AUX_GRAF[, 2] <- as.data.frame(RS_23_24_SE_Notificados[, which(colnames(RS_23_24_SE_Notificados) == SE) - 9])
@@ -3936,7 +3965,9 @@ colnames(AUX_GRAF)[9] <- colnames(RS_23_24_SE_Notificados)[which(colnames(RS_23_
 colnames(AUX_GRAF)[10] <- colnames(RS_23_24_SE_Notificados)[which(colnames(RS_23_24_SE_Notificados) == SE) - 1]
 colnames(AUX_GRAF)[11] <- colnames(RS_23_24_SE_Notificados)[which(colnames(RS_23_24_SE_Notificados) == SE)]
 
-AUX_GRAF[nrow(AUX_GRAF),] <- colnames(AUX_GRAF)
+AUX_GRAF[nrow(AUX_GRAF), 1] <- "Municipios"
+
+AUX_GRAF <- AUX_GRAF[-(nrow(AUX_GRAF)-1),]
 
 AUX_GRAF <- AUX_GRAF[c(nrow(AUX_GRAF), 1:(nrow(AUX_GRAF) -1)), ]
 
@@ -3951,6 +3982,7 @@ colnames(AUX_GRAF)[1] <- "SE"
 AUX_GRAF <- as.data.frame(AUX_GRAF)
 
 AUX_GRAF[, 2: ncol(AUX_GRAF)] <- apply(AUX_GRAF[, 2: ncol(AUX_GRAF)], 2, as.numeric)
+
 rownames(AUX_GRAF) <- 1: nrow(AUX_GRAF)
 
 colnames(AUX_GRAF) <- str_replace(colnames(AUX_GRAF), " ", "_")
@@ -4014,37 +4046,57 @@ RS_23_24_GRAF_Histograma_Notificados_02 <- (AUX_HIST_NOT_LIST[[9]] + AUX_HIST_NO
   (AUX_HIST_NOT_LIST[[13]] + AUX_HIST_NOT_LIST[[14]]) / 
   (AUX_HIST_NOT_LIST[[15]] + AUX_HIST_NOT_LIST[[16]]) 
 
-
 ###     Confirmados    #####
 
-AUX_GRAF <- as.data.frame(RS22_23_24_SE_Confirmados$Município)
+RS_23_24_SE_Confirmados[nrow(RS_23_24_SE_Confirmados) +1, 2:ncol(RS_23_24_SE_Confirmados)] <- c("2023/31",  "2023/32", "2023/33",  
+                                                                                                "2023/34",  "2023/35",  "2023/36", 
+                                                                                                "2023/37",  "2023/38",  "2023/39", 
+                                                                                                "2023/40",  "2023/41",  "2023/42", 
+                                                                                                "2023/43",  "2023/44",  "2023/45",  
+                                                                                                "2023/46",  "2023/47",  "2023/48",  
+                                                                                                "2023/49",  "2023/50",  "2023/51",  
+                                                                                                "2023/52",  "2024/01", 
+                                                                                                "2024/02",  "2024/03",  "2024/04",  
+                                                                                                "2024/05",  "2024/06",  "2024/07",  
+                                                                                                "2024/08",  "2024/09",  "2024/10", 
+                                                                                                "2024/11",  "2024/12",  "2024/13",  
+                                                                                                "2024/14",  "2024/15",  "2024/16",  
+                                                                                                "2024/17",  "2024/18",  "2024/19", 
+                                                                                                "2024/20",  "2024/21",  "2024/22", 
+                                                                                                "2024/23",  "2024/24",  "2024/25",  
+                                                                                                "2024/26",  "2024/27",  "2024/28",  
+                                                                                                "2024/29",  "2024/30")
 
-AUX_GRAF[, 2] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 9])
-AUX_GRAF[, 3] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 8])
-AUX_GRAF[, 4] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 7])
-AUX_GRAF[, 5] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 6])
-AUX_GRAF[, 6] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 5])
-AUX_GRAF[, 7] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 4])
-AUX_GRAF[, 8] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 3])
-AUX_GRAF[, 9] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 2])
-AUX_GRAF[, 10] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE) - 1])
-AUX_GRAF[, 11] <- as.data.frame(RS22_23_24_SE_Confirmados[, which(colnames(RS22_23_24_SE_Confirmados) == SE)])
+AUX_GRAF <- as.data.frame(RS_23_24_SE_Confirmados$Município)
+
+AUX_GRAF[, 2] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 9])
+AUX_GRAF[, 3] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 8])
+AUX_GRAF[, 4] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 7])
+AUX_GRAF[, 5] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 6])
+AUX_GRAF[, 6] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 5])
+AUX_GRAF[, 7] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 4])
+AUX_GRAF[, 8] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 3])
+AUX_GRAF[, 9] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 2])
+AUX_GRAF[, 10] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE) - 1])
+AUX_GRAF[, 11] <- as.data.frame(RS_23_24_SE_Confirmados[, which(colnames(RS_23_24_SE_Confirmados) == SE)])
 
 colnames(AUX_GRAF)[1] <- "Municipios"
-colnames(AUX_GRAF)[2] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 9]
-colnames(AUX_GRAF)[3] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 8]
-colnames(AUX_GRAF)[4] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 7]
-colnames(AUX_GRAF)[5] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 6]
-colnames(AUX_GRAF)[6] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 5]
-colnames(AUX_GRAF)[7] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 4]
-colnames(AUX_GRAF)[8] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 3]
-colnames(AUX_GRAF)[9] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 2]
-colnames(AUX_GRAF)[10] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE) - 1]
-colnames(AUX_GRAF)[11] <- colnames(RS22_23_24_SE_Confirmados)[which(colnames(RS22_23_24_SE_Confirmados) == SE)]
+colnames(AUX_GRAF)[2] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 9]
+colnames(AUX_GRAF)[3] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 8]
+colnames(AUX_GRAF)[4] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 7]
+colnames(AUX_GRAF)[5] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 6]
+colnames(AUX_GRAF)[6] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 5]
+colnames(AUX_GRAF)[7] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 4]
+colnames(AUX_GRAF)[8] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 3]
+colnames(AUX_GRAF)[9] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 2]
+colnames(AUX_GRAF)[10] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE) - 1]
+colnames(AUX_GRAF)[11] <- colnames(RS_23_24_SE_Confirmados)[which(colnames(RS_23_24_SE_Confirmados) == SE)]
 
-AUX_GRAF[17,] <- colnames(AUX_GRAF)
+AUX_GRAF[nrow(AUX_GRAF), 1] <- "Municipios"
 
-AUX_GRAF <- AUX_GRAF[c(17, 1:16),]
+AUX_GRAF <- AUX_GRAF[-(nrow(AUX_GRAF)-1),]
+
+AUX_GRAF <- AUX_GRAF[c(nrow(AUX_GRAF), 1:(nrow(AUX_GRAF) -1)), ]
 
 AUX_GRAF <- t(AUX_GRAF)
 
@@ -4081,7 +4133,7 @@ AUX_HIST_CONF_LIST <- AUX_GRAF %>%
                       y = value)
     ) + 
       geom_col(color = "black", 
-               fill = "#8C7853") + 
+               fill = "#DB7093") + 
       geom_label(aes(label = value), 
                  alpha = 0.5, 
                  vjust = 0.1) +
@@ -4109,34 +4161,56 @@ RS_23_24_GRAF_Histograma_Confirmados_02 <- (AUX_HIST_CONF_LIST[[9]] + AUX_HIST_C
 
 ###Provaveis
 
-AUX_GRAF <- as.data.frame(RS22_23_24_SE_Provaveis$Município)
+RS_23_24_SE_Provaveis[nrow(RS_23_24_SE_Provaveis) +1, 2:ncol(RS_23_24_SE_Provaveis)] <- c("2023/31",  "2023/32", "2023/33",  
+                                                                                                "2023/34",  "2023/35",  "2023/36", 
+                                                                                                "2023/37",  "2023/38",  "2023/39", 
+                                                                                                "2023/40",  "2023/41",  "2023/42", 
+                                                                                                "2023/43",  "2023/44",  "2023/45",  
+                                                                                                "2023/46",  "2023/47",  "2023/48",  
+                                                                                                "2023/49",  "2023/50",  "2023/51",  
+                                                                                                "2023/52",  "2024/01", 
+                                                                                                "2024/02",  "2024/03",  "2024/04",  
+                                                                                                "2024/05",  "2024/06",  "2024/07",  
+                                                                                                "2024/08",  "2024/09",  "2024/10", 
+                                                                                                "2024/11",  "2024/12",  "2024/13",  
+                                                                                                "2024/14",  "2024/15",  "2024/16",  
+                                                                                                "2024/17",  "2024/18",  "2024/19", 
+                                                                                                "2024/20",  "2024/21",  "2024/22", 
+                                                                                                "2024/23",  "2024/24",  "2024/25",  
+                                                                                                "2024/26",  "2024/27",  "2024/28",  
+                                                                                                "2024/29",  "2024/30")
 
-AUX_GRAF[, 2] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 9])
-AUX_GRAF[, 3] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 8])
-AUX_GRAF[, 4] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 7])
-AUX_GRAF[, 5] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 6])
-AUX_GRAF[, 6] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 5])
-AUX_GRAF[, 7] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 4])
-AUX_GRAF[, 8] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 3])
-AUX_GRAF[, 9] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 2])
-AUX_GRAF[, 10] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE) - 1])
-AUX_GRAF[, 11] <- as.data.frame(RS22_23_24_SE_Provaveis[, which(colnames(RS22_23_24_SE_Provaveis) == SE)])
+AUX_GRAF <- as.data.frame(RS_23_24_SE_Provaveis$Município)
+
+AUX_GRAF[, 2] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 9])
+AUX_GRAF[, 3] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 8])
+AUX_GRAF[, 4] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 7])
+AUX_GRAF[, 5] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 6])
+AUX_GRAF[, 6] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 5])
+AUX_GRAF[, 7] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 4])
+AUX_GRAF[, 8] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 3])
+AUX_GRAF[, 9] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 2])
+AUX_GRAF[, 10] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE) - 1])
+AUX_GRAF[, 11] <- as.data.frame(RS_23_24_SE_Provaveis[, which(colnames(RS_23_24_SE_Provaveis) == SE)])
 
 colnames(AUX_GRAF)[1] <- "Municipios"
-colnames(AUX_GRAF)[2] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 9]
-colnames(AUX_GRAF)[3] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 8]
-colnames(AUX_GRAF)[4] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 7]
-colnames(AUX_GRAF)[5] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 6]
-colnames(AUX_GRAF)[6] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 5]
-colnames(AUX_GRAF)[7] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 4]
-colnames(AUX_GRAF)[8] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 3]
-colnames(AUX_GRAF)[9] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 2]
-colnames(AUX_GRAF)[10] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE) - 1]
-colnames(AUX_GRAF)[11] <- colnames(RS22_23_24_SE_Provaveis)[which(colnames(RS22_23_24_SE_Provaveis) == SE)]
+colnames(AUX_GRAF)[2] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 9]
+colnames(AUX_GRAF)[3] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 8]
+colnames(AUX_GRAF)[4] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 7]
+colnames(AUX_GRAF)[5] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 6]
+colnames(AUX_GRAF)[6] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 5]
+colnames(AUX_GRAF)[7] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 4]
+colnames(AUX_GRAF)[8] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 3]
+colnames(AUX_GRAF)[9] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 2]
+colnames(AUX_GRAF)[10] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE) - 1]
+colnames(AUX_GRAF)[11] <- colnames(RS_23_24_SE_Provaveis)[which(colnames(RS_23_24_SE_Provaveis) == SE)]
 
-AUX_GRAF[17,] <- colnames(AUX_GRAF)
 
-AUX_GRAF <- AUX_GRAF[c(17, 1:16),]
+AUX_GRAF[nrow(AUX_GRAF), 1] <- "Municipios"
+
+AUX_GRAF <- AUX_GRAF[-(nrow(AUX_GRAF)-1),]
+
+AUX_GRAF <- AUX_GRAF[c(nrow(AUX_GRAF), 1:(nrow(AUX_GRAF) -1)), ]
 
 AUX_GRAF <- t(AUX_GRAF)
 
@@ -4171,7 +4245,7 @@ AUX_HIST_PROV_LIST <- AUX_GRAF %>%
                       y = value)
     ) + 
       geom_col(color = "black", 
-               fill = "#CFB53B") + 
+               fill = "#F0E68C") + 
       geom_label(aes(label = value), 
                  alpha = 0.5, 
                  vjust = 0.1) +
@@ -4194,7 +4268,6 @@ RS_23_24_GRAF_Histograma_Provaveis_02 <- (AUX_HIST_PROV_LIST[[9]] + AUX_HIST_PRO
   (AUX_HIST_PROV_LIST[[11]] + AUX_HIST_PROV_LIST[[12]]) / 
   (AUX_HIST_PROV_LIST[[13]] + AUX_HIST_PROV_LIST[[14]]) / 
   (AUX_HIST_PROV_LIST[[15]] + AUX_HIST_PROV_LIST[[16]]) 
-
 
 ################################################################
 ################################################################
@@ -10007,8 +10080,8 @@ PR_GRAF_Zona <- ggplot (AUX_GRAF,
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
-       title = "ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS PARANÁ 
-(2023/24)") +
+       title = "ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS 
+PARANÁ (2023/24)") +
   geom_bar(
     aes( y = Notificados, fill = "Notificados"),
     stat = "identity",
