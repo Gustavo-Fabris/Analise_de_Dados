@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 11/12/2023"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 20/12/2023"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 06/12/2023"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 19/12/2023"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 11/12/2023"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 20/12/2023"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("50")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -142,11 +142,11 @@ library(tidyr)
 ####       código do IBGE (entre outros dados).                                   ####
 ####       São as bases para que os for loops funcionem.                          ####
 
-BASE_IBGE<-read.table(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
+BASE_IBGE<-read.table(file="Base_de_Dados/Auxiliares/Planilha_Base_IBGE.csv", 
                       header=TRUE, 
                       sep=",")
 
-BASE_IBGE_BRASIL <- read.csv (file = "Base_de_Dados/Planilha_Base_IBGE_BRASIL.csv",
+BASE_IBGE_BRASIL <- read.csv (file = "Base_de_Dados/Auxiliares/Planilha_Base_IBGE_BRASIL.csv",
                               header = TRUE,
                               sep = ",")
 
@@ -217,23 +217,23 @@ CHIKON2024 <- read.dbf("Base_de_Dados/DBF/CHIKON2024.dbf",
                                                  GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, 
                                                  GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
-RS_Serie_Historica_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_Serie_Historica_Base.csv"),
+RS_Serie_Historica_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_Serie_Historica_Base.csv"),
                                     header = TRUE,
                                     sep = ",")
 
-RS_CE_Notificados_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Base.csv"),
+RS_CE_Notificados_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Base.csv"),
                                    header = TRUE,
                                    sep = ",")
 
-RS_CE_Confirmados_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Base.csv"),
+RS_CE_Confirmados_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Base.csv"),
                                    header = TRUE,
                                    sep = ",")
 
-RS_CE_Notificados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Sede_Base.csv"),
+RS_CE_Notificados_SEDE_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Sede_Base.csv"),
                                         header = TRUE,
                                         sep = ",")
 
-RS_CE_Confirmados_SEDE_Base <- read.csv(file = paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Sede_BASE.csv"),
+RS_CE_Confirmados_SEDE_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Sede_BASE.csv"),
                                         header = TRUE,
                                         sep = ",")
 
@@ -2912,7 +2912,7 @@ rownames(RS_CE_Notificados) <- c(1: nrow(RS_CE_Notificados))
 rm(AUX, AUX2, RS_CE_Notificados_Base)
 
 write.csv (RS_CE_Notificados, 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados.csv"), 
            row.names = FALSE)
 
 ###    CANAL ENDÊMICO NOTIFICADOS     ####
@@ -3056,7 +3056,7 @@ rownames(RS_CE_Confirmados) <- c(1:nrow(RS_CE_Confirmados))
 rm(AUX, AUX2, RS_CE_Confirmados_Base)
 
 write.csv (RS_CE_Confirmados, 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados.csv"), 
+           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados.csv"), 
            row.names = FALSE)
 
 ###     CANAL ENDÊMICO CONFIRMADOS      ####
@@ -3814,7 +3814,7 @@ assign(paste0("RS", "_23_24_SE_Provaveis"), AUX[nrow(AUX), 2:54])
 assign(paste0("RS", RS, "_23_24_SE_Provaveis"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_23_24_SE_Provaveis"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_23_24_SE_Descartados.csv"), 
+           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_23_24_SE_Descartados.csv"), 
            row.names = FALSE)
 
 ###     CANAL ENDÊMICO Prováveis         ####
@@ -4907,7 +4907,7 @@ rownames(RS_CE_Notificados_SEDE) <- c(1:nrow(RS_CE_Notificados_SEDE))
 rm(AUX, AUX2, RS_CE_Notificados_SEDE_Base)
 
 write.csv (RS_CE_Notificados_SEDE, 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE.csv"), 
+           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE.csv"), 
            row.names = FALSE)
 
 #####################################################################################################################################################################################
@@ -5030,7 +5030,7 @@ rownames(RS_CE_Confirmados_SEDE) <- c(1:nrow(RS_CE_Confirmados_SEDE))
 rm(AUX, AUX2, RS_CE_Confirmados_SEDE_Base)
 
 write.csv (RS_CE_Confirmados_SEDE, 
-           paste0("Base_de_Dados/Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SEDE.csv"), 
+           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SEDE.csv"), 
            row.names = FALSE)
 
 #####################################################################################################################################################################################
@@ -10213,93 +10213,93 @@ sheet_write(RS22_23_24_Resumida, ss = "https://docs.google.com/spreadsheets/d/1b
 #}
 
 write.csv(PR_DENGUE_23_24_GERAL, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_DENGUE_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_DENGUE_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(PR_CHIK_23_24_GERAL, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_CHIKUNGUNYA_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_CHIKUNGUNYA_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(PR_ZIKA_23_24_GERAL, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_ZIKA_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/PR_23_24_ZIKA_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_REDE_OVITRAMPAS, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_REDE_OVITRAMPAS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_REDE_OVITRAMPAS.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_CICLOS_LOCALIDADES, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_CICLOS_LOCALIDADES.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_CICLOS_LOCALIDADES.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_CICLOS_MUNICIPIOS, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_CICLOS_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_CICLOS_MUNICIPIOS.csv",
           row.names = FALSE)
 
 RS22_23_24_RG_MUNICIPIOS <- RS22_23_24_RG_MUNICIPIOS[, -15]
 
 write.csv(RS22_23_24_RG_MUNICIPIOS, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_RG_MUNICIPIOS.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_RG_MUNICIPIOS.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_RG_LOCALIDADES, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_RG_LOCALIDADES.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_RG_LOCALIDADES.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_PE, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_PE.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_PE.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_ASSISTENCIA, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_ASSISTENCIA.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_ASSISTENCIA.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_GERAL, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_GERAL.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_GERAL.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_EXTRA, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_EXTRA.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_EXTRA.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SINAN, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SINAN_DECODIFICADO, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SINAIS_DE_ALARME, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAIS_DE_ALARME.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAIS_DE_ALARME.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SINAIS_Notificados, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAIS_Notificados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAIS_Notificados.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SINAIS_Confirmados, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAIS_Confirmados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAIS_Confirmados.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SE_Confirmados, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SE_Confirmados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SE_Confirmados.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_SE_Notificados, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SE_Notificados.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SE_Notificados.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_DENGUE_GRAVE, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SE_DENGUE_GRAVE.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SE_DENGUE_GRAVE.csv",
           row.names = FALSE)
 
 write.csv(RS22_23_24_DOENCAS_PRE_EXISTENTES, 
-          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_DOENCAS_PRE_EXISTENTES.csv",
+          "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_DOENCAS_PRE_EXISTENTES.csv",
           row.names = FALSE)
 
 write.csv (RS22_Serie_Historica, 
-           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica.csv", 
+           "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_Serie_Historica.csv", 
            row.names = FALSE)
 
 
@@ -10310,7 +10310,7 @@ RS22_23_24_SINAN_DECODIFICADO <- read_sheet("https://docs.google.com/spreadsheet
 
 ####      Gravando a planilha RS22_23_24_SINAN_DECODIFICADO no diretório para ser utilizada pelo QGIS    ###
 
-write.csv(RS22_23_24_SINAN_DECODIFICADO,  "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
+write.csv(RS22_23_24_SINAN_DECODIFICADO,  "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
           row.names = FALSE)
 
 ###    MAPAS      ###
@@ -10882,7 +10882,7 @@ RS22_23_24_GRAF_IIP_Ciclo4 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 4º Ciclo/2023",
        subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -10925,7 +10925,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo4 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Visitados 4º Ciclo/2023",
        subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -10983,7 +10983,7 @@ RS22_23_24_GRAF_IIP_Ciclo5 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 5º Ciclo/2023",
        subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11026,7 +11026,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo5 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Visitados 5º Ciclo/2023",
        subtitle = "22ªRS")+ 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11084,7 +11084,7 @@ RS22_23_24_GRAF_IIP_Ciclo6 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 6º Ciclo/2023",
        subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11127,7 +11127,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo6 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Visitados 6º Ciclo/2023",
        subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11185,7 +11185,7 @@ RS22_23_24_GRAF_IIP_Ciclo1 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 1º Ciclo/2024",
        subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11228,7 +11228,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo1 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Visitados 1º Ciclo/2024",
        subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11286,7 +11286,7 @@ RS22_23_24_GRAF_IIP_Ciclo2 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 2º Ciclo/2024",
        subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11329,7 +11329,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo2 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Visitados 2º Ciclo/2024",
        subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11387,7 +11387,7 @@ RS22_23_24_GRAF_IIP_Ciclo3 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Índice de Infestação Predial 3º Ciclo/2024",
        subtitle = "22ªRS")  + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
@@ -11430,7 +11430,7 @@ RS22_23_24_GRAF_Tratamento_Ciclo3 <- ggplot() +
                          which_north = "true") +
   labs(x = NULL,
        y = NULL,
-       caption = Fonte, 
+       caption = Fonte_2, 
        title = "Porcentual de Imóveis Visitados 3º Ciclo/2024",
        subtitle = "22ªRS") + 
   theme( panel.grid.major = element_line(color = "#C0C0C0"),

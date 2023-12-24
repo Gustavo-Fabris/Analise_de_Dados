@@ -25,11 +25,11 @@ library(tidygeocoder)
 ####       código do IBGE (entre outros dados).                                   ####
 ####       São as bases para que os for loops funcionem.                          ####
 
-BASE_IBGE<-read.table(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
+BASE_IBGE<-read.table(file="Base_de_Dados/Auxiliares/Planilha_Base_IBGE.csv", 
                       header=TRUE, 
                       sep=",")
 
-BASE_IBGE_BRASIL <- read.csv (file = "Base_de_Dados/Planilha_Base_IBGE_BRASIL.csv",
+BASE_IBGE_BRASIL <- read.csv (file = "Base_de_Dados/Auxiliares/Planilha_Base_IBGE_BRASIL.csv",
                               header = TRUE,
                               sep = ",")
 
@@ -44,7 +44,11 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
+#######   Lista de Notificações com Coordenadas   ######
 
+SINAN_Coordenadas <- read.csv(file = "Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
+                              header = TRUE,
+                              sep = ",")
 
 ####  Base DBF do SINAN. Deve-se baixá-las, renomeá-las e salvá-las no diretório correto  ######
 
@@ -372,13 +376,38 @@ colnames(AUX)<- c("RS", "SINAN", "Latitude", "Longitude",
                   "Sangramento_SNC", "Aumento_AST_ALT", "Miocardite", "Alteracao_Consciencia", "Outros_Orgaos", 
                   "Manifestacao_Hemorragica", "Epistaxe", "Gengivorragia", "Metrorragia", "Observacoes" )
 
-SINAN_DENGUE_RS <- SINAN_DENGUE_RS %>% select(NU_NOTIFIC, NM_LOGRADO, NU_NUMERO, NU_CEP)
+SINAN_DENGUE_RS_Reduzido <- AUX %>% select(SINAN, Logradouro, Numero, Municipio_Residencia, UF_Residencia, CEP)
 
+AUX02 <- data.frame(UF = SINAN_DENGUE_RS_Reduzido[, 5],
+                    Estado = NA)
+
+AUX02 <- AUX02 %>% mutate(UF = case_when(UF == 41 ~ "Paraná",
+                                         UF != 41 ~ "Não Procurar no API"))
+
+SINAN_DENGUE_RS_Reduzido[,5] <- AUX02[,1]
+
+
+AUX02 <- data.frame(UF = SINAN_DENGUE_RS_Reduzido[, 5],
+                    Estado = NA)
+
+AUX02 <- AUX02 %>% mutate(UF = case_when(UF == "Paraná" ~ "Brasil",
+                                         UF != "Paraná" ~ "Não Procurar no API"))
+
+SINAN_DENGUE_RS_Reduzido$Pais <- AUX02[,1]
+
+SINAN_DENGUE_RS_Reduzido <-SINAN_DENGUE_RS_Reduzido %>% filter(Logradouro != is.na(SINAN_DENGUE_RS_Reduzido$Logradouro),
+                           Numero != is.na(SINAN_DENGUE_RS_Reduzido$Numero))
+
+SINAN_Coord <- SINAN_Coordenadas %>% filter(Latitude != is.na(SINAN_Coordenadas$Latitude))
+
+SINAN_Coord <- anti_join(SINAN_Coordenadas, SINAN_Coord)
+
+RS22_23_24_SINAN_LOGRADOUROS <- left_join(SINAN_DENGUE_RS_Reduzido, SINAN_Coord, join_by = SINAN)
 assign(paste0("RS", RS, "_23_24_SINAN_LOGRADOUROS"), 
-       SINAN_DENGUE_RS) 
+       SINAN_DENGUE_RS_Reduzido) 
 
 write.csv(RS22_23_24_SINAN_LOGRADOUROS, 
-          "/home/gustavo/Área de Trabalho/RS22_23_24_SINAN_LOGRADOUROS.csv",
+          "Base_de_Dados/Auxiliares/RS22_23_24_SINAN_LOGRADOUROS.csv",
           row.names = FALSE)
 
 RS22_23_24_SINAN_LOGRADOUROS <- read.csv("/home/gustavo/Área de Trabalho/RS22_23_24_SINAN_LOGRADOUROS.csv", 
