@@ -46,9 +46,13 @@ nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
 #######   Lista de Notificações com Coordenadas   ######
 
-SINAN_Coordenadas <- read.csv(file = "Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
+SINAN_Coordenadas_001 <- read.csv(file = "Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
                               header = TRUE,
                               sep = ",")
+
+SINAN_Coordenadas_002 <- read.csv(file = "Base_de_Dados/Auxiliares/SINAN_Coordenadas_DENGUE.csv",
+                                  header = TRUE,
+                                  sep = ",")
 
 ####  Base DBF do SINAN. Deve-se baixá-las, renomeá-las e salvá-las no diretório correto  ######
 
@@ -108,286 +112,18 @@ AUX02 <- DENGON2024 %>%
 SINAN_DENGUE_RS <- rbind(AUX01, 
                          AUX02)
 
-#######################################################################################
-####       Trabalhando com a tabela RS22_SINAN do período atual. Realizando a    ######
-####      decodificação dos fatores em linguagem mais acessível aos municípios   ######
-#######################################################################################
+SINAN_DENGUE_RS_Reduzido <- SINAN_DENGUE_RS[, c(2, 23, 24, 25, 26, 21)]
 
-AUX <- SINAN_DENGUE_RS
-
-AUX$ID_AGRAVO <- factor(AUX$ID_AGRAVO,
-                        label = c("Dengue", "Chikungunya"), 
-                        levels = c("A90", "A92")
-)
-
-###Sintomas###
-AUX$FEBRE <- factor(AUX$FEBRE,
-                    label = c("SIM", "NÃO"), 
-                    levels = c(1, 2)
-)
-
-AUX$MIALGIA <- factor(AUX$MIALGIA,
-                      label = c("SIM", "NÃO"), 
-                      levels = c(1, 2)
-)
-
-AUX$CEFALEIA <- factor(AUX$CEFALEIA,
-                       label = c("SIM", "NÃO"), 
-                       levels = c(1, 2)
-)
-
-AUX$EXANTEMA <- factor(AUX$EXANTEMA,
-                       label = c("SIM", "NÃO"), 
-                       levels = c(1, 2)
-)
-
-AUX$VOMITO <- factor(AUX$VOMITO,
-                     label = c("SIM", "NÃO"), 
-                     levels = c(1, 2)
-)
-
-AUX$NAUSEA <- factor(AUX$NAUSEA,
-                     label = c("SIM", "NÃO"), 
-                     levels = c(1, 2)
-)
-
-AUX$DOR_COSTAS <- factor(AUX$DOR_COSTAS,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$DOR_RETRO <- factor(AUX$DOR_RETRO,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$CONJUNTVIT <- factor(AUX$CONJUNTVIT,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$ARTRALGIA <- factor(AUX$ARTRALGIA,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$ARTRITE <- factor(AUX$ARTRITE,
-                      label = c("SIM", "NÃO"), 
-                      levels = c(1, 2)
-)
-
-AUX$PETEQUIA_N <- factor(AUX$PETEQUIA_N,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$LEUCOPENIA <- factor(AUX$LEUCOPENIA,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$LACO <- factor(AUX$LACO,
-                   label = c("SIM", "NÃO"), 
-                   levels = c(1, 2)
-)
-
-###Doenças Pré-existentes
-
-AUX$DIABETES <- factor(AUX$DIABETES,
-                       label = c("SIM", "NÃO"), 
-                       levels = c(1, 2)
-)
-
-AUX$HEMATOLOG <- factor(AUX$HEMATOLOG,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$HEPATOPAT <- factor(AUX$HEPATOPAT,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$RENAL <- factor(AUX$RENAL,
-                    label = c("SIM", "NÃO"), 
-                    levels = c(1, 2)
-)
-
-AUX$HIPERTENSA <- factor(AUX$HIPERTENSA,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$ACIDO_PEPT <- factor(AUX$ACIDO_PEPT,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$AUTO_IMUNE <- factor(AUX$AUTO_IMUNE,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-####Outros####
-
-AUX$CS_GESTANT <- factor(AUX$CS_GESTANT,
-                         label = c("1_TRI", "2_TRI", "3_TRI", "IDADE GESTACIONAL IGN", "NÃO", "NÃO SE APLICA", "IGNORADO"), 
-                         levels = c(1, 2, 3, 4, 5, 6, 9)
-)
-
-AUX$CS_ESCOL_N <- factor(AUX$CS_ESCOL_N,
-                         label = c("ANALFABETO", "1 a 4 SÉRIE DO FUNDAMENTAL INCOMPLETA", "4 SÉRIE DO FUNDAMENTAL COMPLETA", "5 a 8 SÉRIE DO FUNDAMENTAL INCOMPLETA", "FUNDAMENTAL COMPLETO", "ENSINO MÉDIO INCOMPLETO", "ENSINO MÉDIO COMPLETO", "SUPERIOR INCONPLETO", "SUPERIOR COMPLETO", "IGNORADO", "NÃO SE APLICA"), 
-                         levels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-)
-
-AUX$RESUL_SORO <- factor(AUX$RESUL_SORO,
-                         label = c("REAGENTE", "NÃO REAGENTE", "INCONCLUSIVO", "NÃO REALIZADO"), 
-                         levels = c(1, 2, 3, 4)
-)
-
-
-AUX$RESUL_PCR_ <- factor(AUX$RESUL_PCR_,
-                         label = c("DETECTÁVEL", "NÃO DETECTÀVEL", "INCONCLUSIVO", "NÃO REALIZADO"), 
-                         levels = c(1, 2, 3, 4)
-)
-
-AUX$SOROTIPO <- factor(AUX$SOROTIPO,
-                       label = c("I", "II", "III", "IV"), 
-                       levels = c(1, 2, 3, 4)
-)
-
-AUX$CLASSI_FIN <- factor(AUX$CLASSI_FIN,
-                         label = c("DESCARTADO", "INCONCLUSIVO", "DENGUE", "D.S.A.", "IDENGUE_GRAVE", "CHIKUNGUNYA"), 
-                         levels = c(5, 8, 10, 11, 12, 13)
-)
-
-AUX$CRITERIO <- factor(AUX$CRITERIO,
-                       label = c("LABORATORIAL", "CLÍNICO-EPIDEMIOLÓGICO", "EM INVESTIGAÇÃO"), 
-                       levels = c(1, 2, 3)
-)
-
-AUX$TPAUTOCTO <- factor(AUX$TPAUTOCTO,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$HOSPITALIZ <- factor(AUX$HOSPITALIZ,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$EVOLUCAO <- factor(AUX$EVOLUCAO,
-                       label = c("CURA", "ÓBITO PELO AGRAVO", "ÓBITO POR OUTRAS CAUSAS","ÓBITO EM INVESTIGAÇÃO", "INDETERMINADO"), 
-                       levels = c(1, 2, 3, 4, 9)
-)
-
-AUX$CS_ZONA <- factor(AUX$CS_ZONA,
-                      label = c("URBANA", "RURAL", "PERIURBANA","INDETERMINADO"), 
-                      levels = c(1, 2, 3, 9)
-)
-
-AUX$ALRM_LETAR <- factor(AUX$ALRM_LETAR,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$ALRM_HEPAT <- factor(AUX$ALRM_HEPAT,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$ALRM_LIQ <- factor(AUX$ALRM_LIQ,
-                       label = c("SIM", "NÃO"), 
-                       levels = c(1, 2)
-)
-
-AUX$ALRM_HIPOT <- factor(AUX$ALRM_HIPOT,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$ALRM_PLAQ <- factor(AUX$ALRM_PLAQ,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$ALRM_VOM <- factor(AUX$ALRM_VOM,
-                       label = c("SIM", "NÃO"), 
-                       levels = c(1, 2)
-)
-
-AUX$ALRM_SANG <- factor(AUX$ALRM_SANG,
-                        label = c("SIM", "NÃO"), 
-                        levels = c(1, 2)
-)
-
-AUX$ALRM_HEMAT <- factor(AUX$ALRM_LETAR,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-
-AUX$ALRM_ABDOM <- factor(AUX$ALRM_ABDOM,
-                         label = c("SIM", "NÃO"), 
-                         levels = c(1, 2)
-)
-####AUX$Municipio 
-
-AUX01 <- data.frame(COD = AUX[,12], 
-                    Municipio = NA)
-
-for (i in AUX[,12]){
-  AUX01[which(AUX01$COD == i), 2] <- BASE_IBGE_BRASIL[which(BASE_IBGE_BRASIL$Código.Município.Completo == i),13]
-  
-}
-
-AUX[,12] <- AUX01[, 2]
-
-####Município de Residência
-
-AUX02 <- data.frame(COD = AUX[,20], 
-                    Municipio = NA)
-
-for (i in AUX[,20]){
-  AUX02[which(AUX02$COD == i), 2] <- BASE_IBGE_BRASIL[which(BASE_IBGE_BRASIL$Código.Município.Completo == i),13]
-  
-}
-
-AUX[,20] <- AUX02[, 2]
-
-colnames(AUX)<- c("RS", "SINAN", "Latitude", "Longitude", 
-                  "Agravo", "Data_Notificacao", "ANO", "SE_Notificacao", 
-                  "Data_Primeiros_Sintomas", "SE_Primeiros_Sintomas", "UF_Notificacao", 
-                  "Municipio", "Nome", "Data_Nascimento", "Idade", "Sexo", "Gestante", 
-                  "Escolaridade", "Nome_Mae", "Municipio_Residencia", "UF_Residencia", 
-                  "RS_Residencia", "Logradouro", "Numero", "Bairro", "CEP", "Zona", 
-                  "Data_Digitacao", "Data_Investigacao", "Febre", "Mialgia", "Cefaleia", 
-                  "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", "Artrite", 
-                  "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", 
-                  "Dor_retroorbital", "Diabetes", "Doenca_Hematologica", "Hepatopatia", 
-                  "Doenca_Renal", "Hipertensao", "Doenca_Acido_Peptica", "Doenca_Auto_Imune", 
-                  "Data_Sorologia", "Resultado_Sorologia", "Data_PCR", "Resultado_PCR", "Sorotipo", 
-                  "Classificacao_Final", "Critério_Encerramento", "Autoctone", "UF_Infeccao", 
-                  "Municipio_Infeccao", "Bairro_Infeccao", "Evolucao", "Hospitalizado", 
-                  "Data_Internamento", "Data_Obito", "Data_Encerramento", "Data_SNA", "Letargia", 
-                  "Hepatomegalia", "Acumulo_Liquidos", "Hipotensao_Lipotimia", "Queda_Abrupta_Plaquetas", 
-                  "Vomitos_Persistentes", "Hemorragias", "Aumento_Hematocrito", "Dor_Abdominal", 
-                  "Data_Dengue_Grave", "Pulso_Debil", "PA_Convergente", "TPC", "Acumulo_Liq_Insuficiencia_Resp", 
-                  "Taquicardia", "Extremidades_Frias", "Hipotensao", "Hematemese", "Melena", "Metrorragia_", 
-                  "Sangramento_SNC", "Aumento_AST_ALT", "Miocardite", "Alteracao_Consciencia", "Outros_Orgaos", 
-                  "Manifestacao_Hemorragica", "Epistaxe", "Gengivorragia", "Metrorragia", "Observacoes" )
-
-SINAN_DENGUE_RS_Reduzido <- AUX %>% select(SINAN, Logradouro, Numero, Municipio_Residencia, UF_Residencia, CEP)
-
-AUX02 <- data.frame(UF = SINAN_DENGUE_RS_Reduzido[, 5],
+AUX01 <- data.frame(UF = SINAN_DENGUE_RS_Reduzido[, 6],
                     Estado = NA)
 
-AUX02 <- AUX02 %>% mutate(UF = case_when(UF == 41 ~ "Paraná",
+AUX01 <- AUX01 %>% mutate(UF = case_when(UF == 41 ~ "Paraná",
                                          UF != 41 ~ "Não Procurar no API"))
 
-SINAN_DENGUE_RS_Reduzido[,5] <- AUX02[,1]
+SINAN_DENGUE_RS_Reduzido[, 6] <- as.data.frame(AUX01[,1])
 
 
-AUX02 <- data.frame(UF = SINAN_DENGUE_RS_Reduzido[, 5],
+AUX02 <- data.frame(UF = SINAN_DENGUE_RS_Reduzido[, 6],
                     Estado = NA)
 
 AUX02 <- AUX02 %>% mutate(UF = case_when(UF == "Paraná" ~ "Brasil",
@@ -395,14 +131,23 @@ AUX02 <- AUX02 %>% mutate(UF = case_when(UF == "Paraná" ~ "Brasil",
 
 SINAN_DENGUE_RS_Reduzido$Pais <- AUX02[,1]
 
-SINAN_DENGUE_RS_Reduzido <-SINAN_DENGUE_RS_Reduzido %>% filter(Logradouro != is.na(SINAN_DENGUE_RS_Reduzido$Logradouro),
-                           Numero != is.na(SINAN_DENGUE_RS_Reduzido$Numero))
+SINAN_DENGUE_RS_Reduzido <-SINAN_DENGUE_RS_Reduzido %>% filter(NM_LOGRADO != is.na(SINAN_DENGUE_RS_Reduzido$NM_LOGRADO),
+                           NU_NUMERO != is.na(SINAN_DENGUE_RS_Reduzido$NU_NUMERO))
 
-SINAN_Coord <- SINAN_Coordenadas %>% filter(Latitude != is.na(SINAN_Coordenadas$Latitude))
+SINAN_DENGUE_RS_Reduzido <- SINAN_DENGUE_RS_Reduzido %>% filter(NU_NUMERO != "SN")
 
-SINAN_Coord <- anti_join(SINAN_Coordenadas, SINAN_Coord)
+SINAN_Coord <- SINAN_Coordenadas_001 %>% filter(Latitude != is.na(SINAN_Coordenadas_001$Latitude))
 
-RS22_23_24_SINAN_LOGRADOUROS <- left_join(SINAN_DENGUE_RS_Reduzido, SINAN_Coord, join_by = SINAN)
+SINAN_Coord <- anti_join(SINAN_Coordenadas_001, SINAN_Coord,  by = c("SINAN" = "SINAN"))
+
+SINAN_Coord$SINAN <- as.factor(SINAN_Coord$SINAN)
+
+RS22_23_24_SINAN_LOGRADOUROS <- left_join(SINAN_DENGUE_RS_Reduzido, SINAN_Coord, by = c("NU_NOTIFIC" = "SINAN"))
+
+AUX01 <- RS22_23_24_SINAN_LOGRADOUROS %>% filter(Caso != is.na(RS22_23_24_SINAN_LOGRADOUROS$Caso))
+
+RS22_23_24_SINAN_LOGRADOUROS <- anti_join(RS22_23_24_SINAN_LOGRADOUROS, AUX01, by = c("NU_NOTIFIC" = "NU_NOTIFIC"))
+
 assign(paste0("RS", RS, "_23_24_SINAN_LOGRADOUROS"), 
        SINAN_DENGUE_RS_Reduzido) 
 

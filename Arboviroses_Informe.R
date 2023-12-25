@@ -66,7 +66,7 @@ Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 20/12/2023"     #
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("5")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("1")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -10384,6 +10384,11 @@ RS22_23_24_SINAN_DECODIFICADO <- read_sheet("https://docs.google.com/spreadsheet
 ####      Gravando a planilha RS22_23_24_SINAN_DECODIFICADO no diretório para ser utilizada pelo QGIS    ###
 
 write.csv(RS22_23_24_SINAN_DECODIFICADO,  "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_DECODIFICADO.csv",
+          row.names = FALSE)
+
+AUX <- RS22_23_24_SINAN_DECODIFICADO[-which(RS22_23_24_SINAN_DECODIFICADO$Classificacao_Final == "DESCARTADO"),] 
+
+write.csv(AUX, "/home/gustavo/Área de Trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_23_24_SINAN_PROVAVEIS_DECODIFICADO.csv",
           row.names = FALSE)
 
 ###    MAPAS      ###
