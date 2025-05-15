@@ -7,12 +7,11 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 
 library(foreign)
 library (dplyr)
-library(ggplot2)
 
 ####Planilha com os dados dos municípios e com os códigos do IBGE. Será utilizada nos for loops para buscar dados######## 
 ####dos municípios e vinculá-los com os dados da base DBF do SINAN#######################################################
 
-BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
+BASE_IBGE<-read.csv(file="Base_de_Dados/Auxiliares/Planilha_Base_IBGE.csv", 
                     header=TRUE, 
                     sep=",")
 
@@ -34,6 +33,13 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
+#####################################################################################################################
+#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
+
+PR_ANTRAB_Serie_Historica <- data.frame(Ano = 
+                                          c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"),
+                                        Notificados = NA)
+
 ####Criando um objeto com a base DBF do SINAN#################
 
 ANTRAB2012 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2012.DBF",
@@ -43,14 +49,6 @@ ANTRAB2012 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2012.DBF",
 ####Alterando o formato da coluna ID_MN_RESI de forma que ela seja passível de vincular no for loop#################
 
 ANTRAB2012$ID_MN_RESI <- as.numeric(as.character(ANTRAB2012$ID_MN_RESI))
-
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica <- data.frame(Ano = 
-                                          c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"),
-                                        Notificados = NA)
-
 
 ############################     2012   ########################################
 
@@ -58,26 +56,16 @@ PR_ANTRAB_Serie_Historica[1, 2] <- as.integer(ANTRAB2012 %>%
                                                 count()
 )
 
-####Criando um objeto com a base DBF do SINAN#################
-
-ANTRAB2012 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2012.DBF",
-                       as.is = FALSE)
-
-
-####Alterando o formato da coluna ID_MN_RESI de forma que ela seja passível de vincular no for loop#################
-
-ANTRAB2012$ID_MN_RESI <- as.numeric(as.character(ANTRAB2012$ID_MN_RESI))
-
 #####################################################################################################################
 #################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
 
-PR_ANTRAB_Serie_Historica <- data.frame(Ano = 
-                                          c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"),
-                                        Notificados = NA)
+#PR_ANTRAB_Serie_Historica <- data.frame(Ano = 
+#                                          c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"),
+ #                                       Notificados = NA)
 
-PR_ANTRAB_Serie_Historica[1, 2] <- as.integer(ANTRAB2012 %>% 
-                                                count()
-)
+#PR_ANTRAB_Serie_Historica[1, 2] <- as.integer(ANTRAB2012 %>% 
+#                                                count()
+#)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2012 <- ANTRAB2012 %>% 
@@ -86,7 +74,7 @@ SINAN_ANTRAB_2012 <- ANTRAB2012 %>%
 assign(paste0("RS", RS, "_ANTRAB_2012_SINAN"), SINAN_ANTRAB_2012)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_SINAN"), SINAN_ANTRAB_2012), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -434,7 +422,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -735,7 +723,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -800,7 +788,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -872,7 +860,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -928,7 +916,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -976,7 +964,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -1016,7 +1004,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -1096,7 +1084,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -1152,7 +1140,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -1192,7 +1180,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -1264,7 +1252,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -1336,7 +1324,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -1376,7 +1364,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_INTERRUPCAO_TRAT"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_INTERRUPCAO_TRAT.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
@@ -1424,7 +1412,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -1465,7 +1453,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -1506,7 +1494,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2012_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2012_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2012_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2012, ANTRAB2012)
@@ -1538,7 +1526,7 @@ SINAN_ANTRAB_2013 <- ANTRAB2013 %>%
 assign(paste0("RS", RS, "_ANTRAB_2013_SINAN"), SINAN_ANTRAB_2013)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_SINAN"), SINAN_ANTRAB_2013), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -1886,7 +1874,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -2187,7 +2175,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -2252,7 +2240,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -2324,7 +2312,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -2380,7 +2368,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -2428,7 +2416,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -2468,7 +2456,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -2548,7 +2536,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -2604,7 +2592,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -2644,7 +2632,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -2716,7 +2704,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -2788,7 +2776,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -2828,7 +2816,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_INTERRUPCAO_TRAT"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_INTERRUPCAO_TRAT.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
@@ -2876,7 +2864,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -2917,7 +2905,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -2958,7 +2946,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2013_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2013_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2013_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2013, ANTRAB2013)
@@ -2989,7 +2977,7 @@ SINAN_ANTRAB_2014 <- ANTRAB2014 %>%
 assign(paste0("RS", RS, "_ANTRAB_2014_SINAN"), SINAN_ANTRAB_2014)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_SINAN"), SINAN_ANTRAB_2014), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -3337,7 +3325,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -3638,7 +3626,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -3703,7 +3691,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -3775,7 +3763,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -3831,7 +3819,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -3879,7 +3867,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -3919,7 +3907,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -3999,7 +3987,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -4055,7 +4043,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -4095,7 +4083,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -4167,7 +4155,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -4239,7 +4227,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -4279,7 +4267,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_INTERRUPCAO_TRAT"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_INTERRUPCAO_TRAT.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
@@ -4327,7 +4315,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -4368,7 +4356,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -4409,7 +4397,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2014_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2014_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2014_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2014, ANTRAB2014)
@@ -4440,7 +4428,7 @@ SINAN_ANTRAB_2015 <- ANTRAB2015 %>%
 assign(paste0("RS", RS, "_ANTRAB_2015_SINAN"), SINAN_ANTRAB_2015)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_SINAN"), SINAN_ANTRAB_2015), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -4788,7 +4776,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -5089,7 +5077,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -5154,7 +5142,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -5226,7 +5214,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -5282,7 +5270,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -5330,7 +5318,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -5370,7 +5358,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -5450,7 +5438,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -5506,7 +5494,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -5546,7 +5534,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -5618,7 +5606,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -5690,7 +5678,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -5730,7 +5718,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_INTERRUPCAO_TRAT"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_INTERRUPCAO_TRAT.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
@@ -5778,7 +5766,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -5819,7 +5807,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -5860,7 +5848,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2015_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2015_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2015_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2015, ANTRAB2015)
@@ -5891,7 +5879,7 @@ SINAN_ANTRAB_2016 <- ANTRAB2016 %>%
 assign(paste0("RS", RS, "_ANTRAB_2016_SINAN"), SINAN_ANTRAB_2016)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_SINAN"), SINAN_ANTRAB_2016), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -6239,7 +6227,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -6540,7 +6528,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -6605,7 +6593,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -6677,7 +6665,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -6733,7 +6721,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -6781,7 +6769,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -6821,7 +6809,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -6901,7 +6889,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -6957,7 +6945,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -6997,7 +6985,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -7069,7 +7057,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -7141,7 +7129,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -7175,14 +7163,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2016_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2016_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2016_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2016_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2016_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2016_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2016_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2016_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2016_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2016_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -7229,7 +7219,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -7270,7 +7260,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -7311,7 +7301,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2016_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2016, ANTRAB2016)
@@ -7341,7 +7331,7 @@ SINAN_ANTRAB_2017 <- ANTRAB2017 %>%
 assign(paste0("RS", RS, "_ANTRAB_2017_SINAN"), SINAN_ANTRAB_2017)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_SINAN"), SINAN_ANTRAB_2017), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -7689,7 +7679,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -7990,7 +7980,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -8055,7 +8045,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -8127,7 +8117,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -8183,7 +8173,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -8231,7 +8221,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -8271,7 +8261,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -8351,7 +8341,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -8407,7 +8397,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -8447,7 +8437,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -8519,7 +8509,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -8591,7 +8581,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -8625,14 +8615,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2017_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2017_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2017_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2017_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2017_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2017_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2017_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2017_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2017_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2017_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -8679,7 +8671,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -8720,7 +8712,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -8761,7 +8753,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2017_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2017, ANTRAB2017)
@@ -8791,7 +8783,7 @@ SINAN_ANTRAB_2018 <- ANTRAB2018 %>%
 assign(paste0("RS", RS, "_ANTRAB_2018_SINAN"), SINAN_ANTRAB_2018)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_SINAN"), SINAN_ANTRAB_2018), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -9139,7 +9131,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -9440,7 +9432,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -9505,7 +9497,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -9577,7 +9569,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -9633,7 +9625,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -9681,7 +9673,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -9721,7 +9713,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -9801,7 +9793,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -9857,7 +9849,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -9897,7 +9889,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -9969,7 +9961,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -10041,7 +10033,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -10075,14 +10067,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2018_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2018_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2018_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2018_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2018_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2018_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2018_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2018_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2018_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2018_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -10129,7 +10123,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -10170,7 +10164,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -10211,7 +10205,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2018_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2018, ANTRAB2018)
@@ -10242,7 +10236,7 @@ SINAN_ANTRAB_2019 <- ANTRAB2019 %>%
 assign(paste0("RS", RS, "_ANTRAB_2019_SINAN"), SINAN_ANTRAB_2019)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_SINAN"), SINAN_ANTRAB_2019), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -10590,7 +10584,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -10891,7 +10885,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -10956,7 +10950,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -11028,7 +11022,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -11084,7 +11078,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -11132,7 +11126,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -11172,7 +11166,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -11252,7 +11246,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -11308,7 +11302,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -11348,7 +11342,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -11420,7 +11414,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -11492,7 +11486,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -11526,14 +11520,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2019_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2019_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2019_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2019_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2019_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2019_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2019_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2019_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2019_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2019_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -11580,7 +11576,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -11621,7 +11617,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -11662,7 +11658,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2019_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2019, ANTRAB2019)
@@ -11693,7 +11689,7 @@ SINAN_ANTRAB_2020 <- ANTRAB2020 %>%
 assign(paste0("RS", RS, "_ANTRAB_2020_SINAN"), SINAN_ANTRAB_2020)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_SINAN"), SINAN_ANTRAB_2020), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -12041,7 +12037,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -12342,7 +12338,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -12407,7 +12403,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -12479,7 +12475,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -12535,7 +12531,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -12583,7 +12579,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -12623,7 +12619,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -12703,7 +12699,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -12759,7 +12755,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -12799,7 +12795,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -12871,7 +12867,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -12943,7 +12939,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -12977,14 +12973,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2020_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2020_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2020_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2020_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2020_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2020_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2020_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2020_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2020_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2020_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -13031,7 +13029,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -13072,7 +13070,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -13113,7 +13111,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2020_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2020, ANTRAB2020)
@@ -13144,7 +13142,7 @@ SINAN_ANTRAB_2021 <- ANTRAB2021 %>%
 assign(paste0("RS", RS, "_ANTRAB_2021_SINAN"), SINAN_ANTRAB_2021)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_SINAN"), SINAN_ANTRAB_2021), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -13492,7 +13490,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -13793,7 +13791,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -13858,7 +13856,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -13930,7 +13928,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -13986,7 +13984,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -14034,7 +14032,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -14074,7 +14072,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -14154,7 +14152,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -14210,7 +14208,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -14250,7 +14248,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -14322,7 +14320,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -14394,7 +14392,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -14428,14 +14426,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2021_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2021_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2021_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2021_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2021_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2021_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2021_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2021_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2021_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2021_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -14482,7 +14482,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -14523,7 +14523,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -14564,7 +14564,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2021_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2021, ANTRAB2021)
@@ -14595,7 +14595,7 @@ SINAN_ANTRAB_2022 <- ANTRAB2022 %>%
 assign(paste0("RS", RS, "_ANTRAB_2022_SINAN"), SINAN_ANTRAB_2022)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_SINAN"), SINAN_ANTRAB_2022), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SINAN.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -14943,7 +14943,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_SE_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SE_Notificados.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -15244,7 +15244,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_GERAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -15309,7 +15309,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_EXPOSICAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_EXPOSICAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -15381,7 +15381,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_LOCALIZACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_LOCALIZACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -15437,7 +15437,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -15485,7 +15485,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_TIPO_FERIMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_TIPO_FERIMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -15525,7 +15525,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_ANTECEDENTE_ANTR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_ANTECEDENTE_ANTR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -15605,7 +15605,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_AGRESSOR"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_AGRESSOR.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -15661,7 +15661,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_COND_ANIMAL_ACID"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_COND_ANIMAL_ACID.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -15701,7 +15701,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_OBSERVAVEL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_OBSERVAVEL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -15773,7 +15773,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_TRATAMENTO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_TRATAMENTO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -15845,7 +15845,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_COND_FINAL_ANIMAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_COND_FINAL_ANIMAL.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
@@ -15879,14 +15879,16 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   )
 }
 
-AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
-AUX[nrow(AUX), 1] <- "Total"
+SINAN_ANTRAB_2022_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2022_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2022_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2022_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2022_INTERRUPCAO_TRAT), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2022_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2022_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2022_INTERRUPCAO_TRAT)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2022_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
+
+rm(SINAN_ANTRAB_2022_INTERRUPCAO_TRAT)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
 
@@ -15933,7 +15935,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_SOROTERAPIA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SOROTERAPIA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -15974,7 +15976,7 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_TIPO_IMUNOBIOLOGICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_TIPO_IMUNOBIOLOGICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -16015,15 +16017,2921 @@ AUX[nrow(AUX), 1] <- "Total"
 assign(paste0("RS", RS, "_ANTRAB_2022_SORO_INFILTRACAO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SORO_INFILTRACAO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
 rm(SINAN_ANTRAB_2022, ANTRAB2022)
 
+###################       2023      #########################################
+
+####Criando um objeto com a base DBF do SINAN#################
+
+ANTRAB2023 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2023.DBF",
+                       as.is = FALSE)
+
+
+####Alterando o formato da coluna ID_MN_RESI de forma que ela seja passível de vincular no for loop#################
+
+ANTRAB2023$ID_MN_RESI <- as.numeric(as.character(ANTRAB2023$ID_MN_RESI))
+
+#####################################################################################################################
+#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
+
+PR_ANTRAB_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
+                                                 count()
+)
+#####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
+
+SINAN_ANTRAB_2023 <- ANTRAB2023 %>% 
+  filter(ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG)
+
+assign(paste0("RS", RS, "_ANTRAB_2023_SINAN"), SINAN_ANTRAB_2023)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SINAN"), SINAN_ANTRAB_2023), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SINAN.csv"), 
+           row.names = FALSE)
+
+################################################################################################################
+############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202301)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202302) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202303) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                         filter(ID_MN_RESI == i,
+                                                SEM_PRI ==202304) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202305) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202306) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202307) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202308) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202309) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202310) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202311) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202312) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202313) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202314) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202315) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202316) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202317) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202318) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202319) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                            filter(ID_MN_RESI == i, 
+                                                   SEM_PRI ==202320) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202321) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202322) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202323) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202324) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202325) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202326) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202327) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202328) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202329) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202330) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202331) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202332) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202333) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202334) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202335) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202336) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202337) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202338) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202339) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202340) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202341) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202342) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202343) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202344) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202345) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202346) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202347) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202348) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202349) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202350) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202351) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_ANTRAB_2023 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202352) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202353) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SE_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SE_Notificados.csv"), 
+           row.names = FALSE)
+
+#####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Notificados <- NA
+
+AUX$Zona_Urbana <- NA
+
+AUX$Zona_Rural <- NA
+
+AUX$Zona_Periurbana <- NA
+
+AUX$Zona_Ignorados <- NA
+
+AUX$Feminino <- NA
+
+AUX$Masculino <- NA
+
+AUX$Menos_um_Ano <- NA
+
+AUX$Um_a_Cinco_Anos <- NA
+
+AUX$Cinco_a_Doze_Anos <- NA
+
+AUX$Doze_a_Dezoito_Anos <- NA
+
+AUX$Dezoito_a_Cinquenta_e_Nove <- NA
+
+AUX$Mais_de_Sessenta <- NA
+
+AUX$Analfabeto <- NA
+
+AUX$Fundamental_Incompleto <- NA
+
+AUX$Fundamental_Completo <- NA
+
+AUX$Ensino_Medio_Incompleto <- NA
+
+AUX$Ensino_Medio_Completo <- NA
+
+AUX$Superior_Incompleto <- NA
+
+AUX$Superior_completo <- NA
+
+AUX$Nao_se_Aplica <- NA
+
+AUX$Esc_Ignorado <- NA
+
+AUX$Gestante_SIM <- NA
+
+AUX$Gestante_NÃO <- NA
+
+AUX$Gestante_NA <- NA
+
+AUX$Gestante_IGNORADO <- NA
+
+AUX$Raça_Branca <- NA
+
+AUX$Raça_Preta <- NA
+
+AUX$Raça_Amarela <- NA
+
+AUX$Raça_Parda <- NA
+
+AUX$Raça_Indígena <- NA
+
+AUX$Raça_Ignorado <- NA
+
+#####For loop para criação de tabela por município dos dados de notificação do SINAN##############
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 1) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 3) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 9 
+                                                          |
+                                                            is.na(CS_ZONA)) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_SEXO == "F") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_SEXO == "M") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,  
+                                                           NU_IDADE_N <=3012) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,  
+                                                           NU_IDADE_N > 4000 
+                                                           & 
+                                                             NU_IDADE_N <=4005) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4005 
+                                                           & 
+                                                             NU_IDADE_N <=4012) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4012 
+                                                           & 
+                                                             NU_IDADE_N <=4018) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4018 
+                                                           & 
+                                                             NU_IDADE_N <=4059) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4059) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 18] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "00") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 19] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "01" 
+                                                           | 
+                                                             CS_ESCOL_N == "02" 
+                                                           | 
+                                                             CS_ESCOL_N == "03") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 20] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "04") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 21] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "05") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 22] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "06") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 23] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "07") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 24] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "08") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 25] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "10") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 26] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "09") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 27] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "1" 
+                                                           |
+                                                             CS_GESTANT== "2" 
+                                                           | 
+                                                             CS_GESTANT == "3" 
+                                                           | 
+                                                             CS_GESTANT == "4") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 28] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "5") %>% 
+                                                    count()
+  )
+  AUX[which(AUX$COD_IBGE == i), 29] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "6") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 30] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "9") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "01") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 32] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "2") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 33] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "3") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 34] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "4") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 35] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "5") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 36] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "9") %>% 
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:36] <- apply(AUX[, 4:36], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_GERAL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_GERAL.csv"), 
+           row.names = FALSE)
+
+
+####Criando uma tabela dos dados de exposição compo 32 da ficha do sinan############
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Contato_Indireto <- NA
+
+AUX$Arranhadura <- NA
+
+AUX$Lambedura <- NA
+
+AUX$Mordedura <- NA
+
+AUX$Outro <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_CONTAT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_ARRANH == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LAMBED == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MORDED == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_OUTRO_ == "1") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:9] <- apply(AUX[, 4:9], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_EXPOSICAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_EXPOSICAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_EXPOSICAO.csv"), 
+           row.names = FALSE)
+
+#####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Mucosa <- NA
+
+AUX$Cabeca_Pescoco <- NA
+
+AUX$Maos_Pes <- NA
+
+AUX$Tronco <- NA
+
+AUX$Membros_Superiores <- NA
+
+AUX$Membros_Inferiores <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MUCOSA == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_CABECA == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MAOS == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_TRONCO == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MEMBRO== "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANT_MEMB_1== "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_LOCALIZACAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_LOCALIZACAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_LOCALIZACAO.csv"), 
+           row.names = FALSE)
+
+#####Tabela Ferimento (Campo 34 do SINAN)
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Unico <- NA
+
+AUX$Multiplo <- NA
+
+AUX$Sem_Ferimento <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "9") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:8] <- apply(AUX[, 4:8], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_FERIMENTO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_FERIMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_FERIMENTO.csv"), 
+           row.names = FALSE)
+
+#####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Profundo <- NA
+
+AUX$Superficial <- NA
+
+AUX$Dilacerante <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_PROFUN == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_SUPERF == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_DILACE == "1") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:7] <- apply(AUX[, 4:7], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_FERIMENTO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_FERIMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_TIPO_FERIMENTO.csv"), 
+           row.names = FALSE)
+
+#####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Pre_Exp <- NA
+
+AUX$Pos_Exp <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          PRE_EXPOS == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          POS_EXPOS == "1") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_ANTECEDENTE_ANTR"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_ANTECEDENTE_ANTR"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_ANTECEDENTE_ANTR.csv"), 
+           row.names = FALSE)
+
+####TAbela Animal Agressor (campo 40 SINAN)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Canina <- NA
+
+AUX$Felina <- NA
+
+AUX$Quiroptera <- NA
+
+AUX$Primata <- NA
+
+AUX$Raposa <- NA
+
+AUX$Herbivoro_Domestico <- NA
+
+AUX$Outra <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "5") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANIMAL == "6") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANIMAL == "7") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:11] <- apply(AUX[, 4:11], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_AGRESSOR"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_AGRESSOR"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_AGRESSOR.csv"), 
+           row.names = FALSE)
+
+####Tabela Condição do animal no acidente (campo 41 do sinan)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Sadio <- NA
+
+AUX$Suspeito <- NA
+
+AUX$Raivoso <- NA
+
+AUX$Morto_Desaparecido <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "4") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:8] <- apply(AUX[, 4:8], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_COND_ANIMAL_ACID"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_COND_ANIMAL_ACID"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_COND_ANIMAL_ACID.csv"), 
+           row.names = FALSE)
+
+####Tabela Animal Observável (campo 42 SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Sim <- NA
+
+AUX$Nao <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          OBSERVACAO == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          OBSERVACAO == "2") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_OBSERVAVEL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_OBSERVAVEL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_OBSERVAVEL.csv"), 
+           row.names = FALSE)
+
+###Tabela Tratamento (campo 43 do SINAN)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Dispensa_Tratamento <- NA
+
+AUX$Observação_Animal <- NA
+
+AUX$Observação_Vacina <- NA
+
+AUX$Vacina <- NA
+
+AUX$Soro_Vacina <- NA
+
+AUX$Esquema_Reexposicao <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "5") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "6") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           TRAT_ATUAL == "7") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_TRATAMENTO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_TRATAMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_TRATAMENTO.csv"), 
+           row.names = FALSE)
+
+###Tabela Condição final do Animal (campo 48 do SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX<- AUX[,c(4, 1, 2, 3)]
+
+AUX$Negativo_Clinico <- NA
+
+AUX$Negativo_Lab <- NA
+
+AUX$Positivo_Clinico <- NA
+
+AUX$Positivo_Lab <- NA
+
+AUX$Morto_SemDiagnostico <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "5") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           FIM_ANIMAL == "9") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_COND_FINAL_ANIMAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_COND_FINAL_ANIMAL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_COND_FINAL_ANIMAL.csv"), 
+           row.names = FALSE)
+
+###Tabela Interrupção de tratamento (campo 49 do SINAN)####
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT <- SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[,c(4, 1, 2, 3)]
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$Sim <- NA
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$Nao <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                                                                                 filter(ID_MN_RESI == i,
+                                                                                                                        TRA_INTERR == "1") %>%   
+                                                                                                                 count()
+  )    
+  
+  SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                                                                                 filter(ID_MN_RESI == i,
+                                                                                                                        TRA_INTERR == "2") %>%   
+                                                                                                                 count()
+  )
+}
+
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2023_INTERRUPCAO_TRAT)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2023_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_INTERRUPCAO_TRAT.csv"), 
+           row.names = FALSE)
+
+rm(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT)
+
+####Tabela Soroterapia (campo 53 do SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Sim <- NA
+
+AUX$Nao <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INDI_N == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INDI_N == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INDI_N == "9") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:7] <- apply(AUX[, 4:7], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_SOROTERAPIA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SOROTERAPIA"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SOROTERAPIA.csv"), 
+           row.names = FALSE)
+
+###Tabela tipo de imunobiologico (campo 55 SINAN)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX<- AUX[,c(4, 1, 2, 3)]
+
+AUX$SAR <- NA
+
+AUX$IGHAR <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TIP_SORO == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TIP_SORO== "2") %>%   
+                                                   count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_IMUNOBIOLOGICO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_IMUNOBIOLOGICO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_TIPO_IMUNOBIOLOGICO.csv"), 
+           row.names = FALSE)
+
+###Tabela Infiltração (campo 56 do SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX  <- AUX [,c(4, 1, 2, 3)]
+
+AUX$TOTAL <- NA
+
+AUX$PARCIAL <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INFILT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INFI_1 == "1") %>%   
+                                                   count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO.csv"), 
+           row.names = FALSE)
+
+rm(SINAN_ANTRAB_2023, ANTRAB2023)
+
+###################       2024      #########################################
+
+####Criando um objeto com a base DBF do SINAN#################
+
+ANTRAB2024 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2024.DBF",
+                       as.is = FALSE)
+
+
+####Alterando o formato da coluna ID_MN_RESI de forma que ela seja passível de vincular no for loop#################
+
+ANTRAB2024$ID_MN_RESI <- as.numeric(as.character(ANTRAB2024$ID_MN_RESI))
+
+#####################################################################################################################
+#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
+
+PR_ANTRAB_Serie_Historica[13, 2] <- as.integer(ANTRAB2024 %>% 
+                                                 count()
+)
+#####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
+
+SINAN_ANTRAB_2024 <- ANTRAB2024 %>% 
+  filter(ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG)
+
+assign(paste0("RS", RS, "_ANTRAB_2024_SINAN"), SINAN_ANTRAB_2024)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_SINAN"), SINAN_ANTRAB_2024), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_SINAN.csv"), 
+           row.names = FALSE)
+
+################################################################################################################
+############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202401)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202402) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202403) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                         filter(ID_MN_RESI == i,
+                                                SEM_PRI ==202404) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                          filter(ID_MN_RESI == i,
+                                                 SEM_PRI ==202405) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202406) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202407) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                          filter(ID_MN_RESI == i, 
+                                                 SEM_PRI ==202408) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202409) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202410) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202411) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202412) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202413) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202414) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202415) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202416) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202417) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202418) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202419) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                            filter(ID_MN_RESI == i, 
+                                                   SEM_PRI ==202420) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202421) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202422) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202423) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202424) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202425) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202426) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202427) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202428) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202429) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202430) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202431) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202432) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202433) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202434) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202435) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202436) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202437) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202438) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202439) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202440) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202441) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202442) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202443) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202444) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202445) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202446) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202447) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202448) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202449) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202450) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202451) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_ANTRAB_2024 %>%
+                                           filter(ID_MN_RESI == i,
+                                                  SEM_PRI ==202452) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                           filter(ID_MN_RESI == i, 
+                                                  SEM_PRI ==202453) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_SE_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_SE_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_SE_Notificados.csv"), 
+           row.names = FALSE)
+
+#####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Notificados <- NA
+
+AUX$Zona_Urbana <- NA
+
+AUX$Zona_Rural <- NA
+
+AUX$Zona_Periurbana <- NA
+
+AUX$Zona_Ignorados <- NA
+
+AUX$Feminino <- NA
+
+AUX$Masculino <- NA
+
+AUX$Menos_um_Ano <- NA
+
+AUX$Um_a_Cinco_Anos <- NA
+
+AUX$Cinco_a_Doze_Anos <- NA
+
+AUX$Doze_a_Dezoito_Anos <- NA
+
+AUX$Dezoito_a_Cinquenta_e_Nove <- NA
+
+AUX$Mais_de_Sessenta <- NA
+
+AUX$Analfabeto <- NA
+
+AUX$Fundamental_Incompleto <- NA
+
+AUX$Fundamental_Completo <- NA
+
+AUX$Ensino_Medio_Incompleto <- NA
+
+AUX$Ensino_Medio_Completo <- NA
+
+AUX$Superior_Incompleto <- NA
+
+AUX$Superior_completo <- NA
+
+AUX$Nao_se_Aplica <- NA
+
+AUX$Esc_Ignorado <- NA
+
+AUX$Gestante_SIM <- NA
+
+AUX$Gestante_NÃO <- NA
+
+AUX$Gestante_NA <- NA
+
+AUX$Gestante_IGNORADO <- NA
+
+AUX$Raça_Branca <- NA
+
+AUX$Raça_Preta <- NA
+
+AUX$Raça_Amarela <- NA
+
+AUX$Raça_Parda <- NA
+
+AUX$Raça_Indígena <- NA
+
+AUX$Raça_Ignorado <- NA
+
+#####For loop para criação de tabela por município dos dados de notificação do SINAN##############
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 1) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 3) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CS_ZONA == 9 
+                                                          |
+                                                            is.na(CS_ZONA)) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_SEXO == "F") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_SEXO == "M") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,  
+                                                           NU_IDADE_N <=3012) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,  
+                                                           NU_IDADE_N > 4000 
+                                                           & 
+                                                             NU_IDADE_N <=4005) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4005 
+                                                           & 
+                                                             NU_IDADE_N <=4012) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4012 
+                                                           & 
+                                                             NU_IDADE_N <=4018) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4018 
+                                                           & 
+                                                             NU_IDADE_N <=4059) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           NU_IDADE_N > 4059) %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 18] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "00") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 19] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "01" 
+                                                           | 
+                                                             CS_ESCOL_N == "02" 
+                                                           | 
+                                                             CS_ESCOL_N == "03") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 20] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "04") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 21] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "05") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 22] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "06") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 23] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "07") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 24] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "08") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 25] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "10") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 26] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_ESCOL_N == "09") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 27] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "1" 
+                                                           |
+                                                             CS_GESTANT== "2" 
+                                                           | 
+                                                             CS_GESTANT == "3" 
+                                                           | 
+                                                             CS_GESTANT == "4") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 28] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "5") %>% 
+                                                    count()
+  )
+  AUX[which(AUX$COD_IBGE == i), 29] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "6") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 30] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_GESTANT == "9") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "01") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 32] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "2") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 33] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "3") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 34] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "4") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 35] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "5") %>% 
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 36] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           CS_RACA == "9") %>% 
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:36] <- apply(AUX[, 4:36], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_GERAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_GERAL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_GERAL.csv"), 
+           row.names = FALSE)
+
+
+####Criando uma tabela dos dados de exposição compo 32 da ficha do sinan############
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Contato_Indireto <- NA
+
+AUX$Arranhadura <- NA
+
+AUX$Lambedura <- NA
+
+AUX$Mordedura <- NA
+
+AUX$Outro <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_CONTAT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_ARRANH == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LAMBED == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MORDED == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_OUTRO_ == "1") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:9] <- apply(AUX[, 4:9], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_EXPOSICAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_EXPOSICAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_EXPOSICAO.csv"), 
+           row.names = FALSE)
+
+#####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Mucosa <- NA
+
+AUX$Cabeca_Pescoco <- NA
+
+AUX$Maos_Pes <- NA
+
+AUX$Tronco <- NA
+
+AUX$Membros_Superiores <- NA
+
+AUX$Membros_Inferiores <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MUCOSA == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_CABECA == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MAOS == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_TRONCO == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_MEMBRO== "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANT_MEMB_1== "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_LOCALIZACAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_LOCALIZACAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_LOCALIZACAO.csv"), 
+           row.names = FALSE)
+
+#####Tabela Ferimento (Campo 34 do SINAN)
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Unico <- NA
+
+AUX$Multiplo <- NA
+
+AUX$Sem_Ferimento <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FERIMENTO == "9") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:8] <- apply(AUX[, 4:8], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_FERIMENTO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_FERIMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_FERIMENTO.csv"), 
+           row.names = FALSE)
+
+#####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Profundo <- NA
+
+AUX$Superficial <- NA
+
+AUX$Dilacerante <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_PROFUN == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_SUPERF == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_DILACE == "1") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:7] <- apply(AUX[, 4:7], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_TIPO_FERIMENTO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_TIPO_FERIMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_TIPO_FERIMENTO.csv"), 
+           row.names = FALSE)
+
+#####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Pre_Exp <- NA
+
+AUX$Pos_Exp <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          PRE_EXPOS == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          POS_EXPOS == "1") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_ANTECEDENTE_ANTR"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_ANTECEDENTE_ANTR"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_ANTECEDENTE_ANTR.csv"), 
+           row.names = FALSE)
+
+####TAbela Animal Agressor (campo 40 SINAN)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Canina <- NA
+
+AUX$Felina <- NA
+
+AUX$Quiroptera <- NA
+
+AUX$Primata <- NA
+
+AUX$Raposa <- NA
+
+AUX$Herbivoro_Domestico <- NA
+
+AUX$Outra <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANIMAL == "5") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANIMAL == "6") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANIMAL == "7") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:11] <- apply(AUX[, 4:11], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_AGRESSOR"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_AGRESSOR"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_AGRESSOR.csv"), 
+           row.names = FALSE)
+
+####Tabela Condição do animal no acidente (campo 41 do sinan)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Sadio <- NA
+
+AUX$Suspeito <- NA
+
+AUX$Raivoso <- NA
+
+AUX$Morto_Desaparecido <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          CONDIC_ANI == "4") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:8] <- apply(AUX[, 4:8], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_COND_ANIMAL_ACID"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_COND_ANIMAL_ACID"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_COND_ANIMAL_ACID.csv"), 
+           row.names = FALSE)
+
+####Tabela Animal Observável (campo 42 SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[, c(4, 1, 2, 3)]
+
+AUX$Sim <- NA
+
+AUX$Nao <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          OBSERVACAO == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          OBSERVACAO == "2") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_OBSERVAVEL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_OBSERVAVEL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_OBSERVAVEL.csv"), 
+           row.names = FALSE)
+
+###Tabela Tratamento (campo 43 do SINAN)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Dispensa_Tratamento <- NA
+
+AUX$Observação_Animal <- NA
+
+AUX$Observação_Vacina <- NA
+
+AUX$Vacina <- NA
+
+AUX$Soro_Vacina <- NA
+
+AUX$Esquema_Reexposicao <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "5") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRAT_ATUAL == "6") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           TRAT_ATUAL == "7") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_TRATAMENTO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_TRATAMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_TRATAMENTO.csv"), 
+           row.names = FALSE)
+
+###Tabela Condição final do Animal (campo 48 do SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX<- AUX[,c(4, 1, 2, 3)]
+
+AUX$Negativo_Clinico <- NA
+
+AUX$Negativo_Lab <- NA
+
+AUX$Positivo_Clinico <- NA
+
+AUX$Positivo_Lab <- NA
+
+AUX$Morto_SemDiagnostico <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          FIM_ANIMAL == "5") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           FIM_ANIMAL == "9") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_COND_FINAL_ANIMAL"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_COND_FINAL_ANIMAL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_COND_FINAL_ANIMAL.csv"), 
+           row.names = FALSE)
+
+###Tabela Interrupção de tratamento (campo 49 do SINAN)####
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT <- SINAN_ANTRAB_2024_INTERRUPCAO_TRAT[,c(4, 1, 2, 3)]
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$Sim <- NA
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$Nao <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  SINAN_ANTRAB_2024_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                                                                                 filter(ID_MN_RESI == i,
+                                                                                                                        TRA_INTERR == "1") %>%   
+                                                                                                                 count()
+  )    
+  
+  SINAN_ANTRAB_2024_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2024_INTERRUPCAO_TRAT$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                                                                                 filter(ID_MN_RESI == i,
+                                                                                                                        TRA_INTERR == "2") %>%   
+                                                                                                                 count()
+  )
+}
+
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT[(nrow(SINAN_ANTRAB_2024_INTERRUPCAO_TRAT) +1), 4:6] <- apply(SINAN_ANTRAB_2024_INTERRUPCAO_TRAT[, 4:6], 2, sum)
+SINAN_ANTRAB_2024_INTERRUPCAO_TRAT[nrow(SINAN_ANTRAB_2024_INTERRUPCAO_TRAT), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2024_INTERRUPCAO_TRAT)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_INTERRUPCAO_TRAT"), SINAN_ANTRAB_2024_INTERRUPCAO_TRAT), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_INTERRUPCAO_TRAT.csv"), 
+           row.names = FALSE)
+
+rm(SINAN_ANTRAB_2024_INTERRUPCAO_TRAT)
+
+####Tabela Soroterapia (campo 53 do SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Sim <- NA
+
+AUX$Nao <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INDI_N == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INDI_N == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INDI_N == "9") %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:7] <- apply(AUX[, 4:7], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_SOROTERAPIA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_SOROTERAPIA"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_SOROTERAPIA.csv"), 
+           row.names = FALSE)
+
+###Tabela tipo de imunobiologico (campo 55 SINAN)####
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX<- AUX[,c(4, 1, 2, 3)]
+
+AUX$SAR <- NA
+
+AUX$IGHAR <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TIP_SORO == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TIP_SORO== "2") %>%   
+                                                   count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_TIPO_IMUNOBIOLOGICO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_TIPO_IMUNOBIOLOGICO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_TIPO_IMUNOBIOLOGICO.csv"), 
+           row.names = FALSE)
+
+###Tabela Infiltração (campo 56 do SINAN)###
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX  <- AUX [,c(4, 1, 2, 3)]
+
+AUX$TOTAL <- NA
+
+AUX$PARCIAL <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INFILT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INFI_1 == "1") %>%   
+                                                   count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2024_SORO_INFILTRACAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_SORO_INFILTRACAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_SORO_INFILTRACAO.csv"), 
+           row.names = FALSE)
+
+rm(SINAN_ANTRAB_2024, ANTRAB2024)
+
 ########   Salvando o objeto PR_ANTRAB_Serie_Historica    ######
 
 write.csv (PR_ANTRAB_Serie_Historica, 
-           "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_BASE_BASE_Serie_Historica.csv", 
+           "Tabulacoes_R/Raiva/PR_ANTRAB_BASE_Serie_Historica.csv", 
            row.names = FALSE)
 
 ################################################################################################################################
@@ -16035,7 +18943,7 @@ AUX <- data.frame(RS22 = "RS22", RS22_2012 = NA, RS22_2013 = NA,
                   RS22_2014 = NA, RS22_2015 = NA, RS22_2016 = NA, 
                   RS22_2017 = NA, RS22_2018 = NA, RS22_2019 = NA, 
                   RS22_2020 = NA, RS22_2021 = NA, RS22_2022 = NA, 
-                  RS22_2023 = NA)
+                  RS22_2023 = NA, RS22_2024 = NA, RS22_2025 = NA)
 
 AUX[1, 1] <- "Notificados"
 AUX[2, 1] <- "Zona_Urbana"
@@ -16337,6 +19245,56 @@ AUX[22, 12] <- RS22_ANTRAB_2022_GERAL[17, 26]
 AUX[23, 12] <- RS22_ANTRAB_2022_GERAL[17, 27]
 AUX[24, 12] <- RS22_ANTRAB_2022_GERAL[17, 28]
 
+AUX[1, 13] <- RS22_ANTRAB_2023_GERAL[17, 5]
+AUX[2, 13] <- RS22_ANTRAB_2023_GERAL[17, 6]
+AUX[3, 13] <- RS22_ANTRAB_2023_GERAL[17, 7]
+AUX[4, 13] <- RS22_ANTRAB_2023_GERAL[17, 8]
+AUX[5, 13] <- RS22_ANTRAB_2023_GERAL[17, 9]
+AUX[6, 13] <- RS22_ANTRAB_2023_GERAL[17, 10]
+AUX[7, 13] <- RS22_ANTRAB_2023_GERAL[17, 11]
+AUX[8, 13] <- RS22_ANTRAB_2023_GERAL[17, 12]
+AUX[9, 13] <- RS22_ANTRAB_2023_GERAL[17, 13]
+AUX[10, 13] <- RS22_ANTRAB_2023_GERAL[17, 14]
+AUX[11, 13] <- RS22_ANTRAB_2023_GERAL[17, 15]
+AUX[12, 13] <- RS22_ANTRAB_2023_GERAL[17, 16]
+AUX[13, 13] <- RS22_ANTRAB_2023_GERAL[17, 17]
+AUX[14, 13] <- RS22_ANTRAB_2023_GERAL[17, 18]
+AUX[15, 13] <- RS22_ANTRAB_2023_GERAL[17, 19]
+AUX[16, 13] <- RS22_ANTRAB_2023_GERAL[17, 20]
+AUX[17, 13] <- RS22_ANTRAB_2023_GERAL[17, 21]
+AUX[18, 13] <- RS22_ANTRAB_2023_GERAL[17, 22]
+AUX[19, 13] <- RS22_ANTRAB_2023_GERAL[17, 23]
+AUX[20, 13] <- RS22_ANTRAB_2023_GERAL[17, 24]
+AUX[21, 13] <- RS22_ANTRAB_2023_GERAL[17, 25]
+AUX[22, 13] <- RS22_ANTRAB_2023_GERAL[17, 26]
+AUX[23, 13] <- RS22_ANTRAB_2023_GERAL[17, 27]
+AUX[24, 13] <- RS22_ANTRAB_2023_GERAL[17, 28]
+
+AUX[1, 14] <- RS22_ANTRAB_2024_GERAL[17, 5]
+AUX[2, 14] <- RS22_ANTRAB_2024_GERAL[17, 6]
+AUX[3, 14] <- RS22_ANTRAB_2024_GERAL[17, 7]
+AUX[4, 14] <- RS22_ANTRAB_2024_GERAL[17, 8]
+AUX[5, 14] <- RS22_ANTRAB_2024_GERAL[17, 9]
+AUX[6, 14] <- RS22_ANTRAB_2024_GERAL[17, 10]
+AUX[7, 14] <- RS22_ANTRAB_2024_GERAL[17, 11]
+AUX[8, 14] <- RS22_ANTRAB_2024_GERAL[17, 12]
+AUX[9, 14] <- RS22_ANTRAB_2024_GERAL[17, 13]
+AUX[10, 14] <- RS22_ANTRAB_2024_GERAL[17, 14]
+AUX[11, 14] <- RS22_ANTRAB_2024_GERAL[17, 15]
+AUX[12, 14] <- RS22_ANTRAB_2024_GERAL[17, 16]
+AUX[13, 14] <- RS22_ANTRAB_2024_GERAL[17, 17]
+AUX[14, 14] <- RS22_ANTRAB_2024_GERAL[17, 18]
+AUX[15, 14] <- RS22_ANTRAB_2024_GERAL[17, 19]
+AUX[16, 14] <- RS22_ANTRAB_2024_GERAL[17, 20]
+AUX[17, 14] <- RS22_ANTRAB_2024_GERAL[17, 21]
+AUX[18, 14] <- RS22_ANTRAB_2024_GERAL[17, 22]
+AUX[19, 14] <- RS22_ANTRAB_2024_GERAL[17, 23]
+AUX[20, 14] <- RS22_ANTRAB_2024_GERAL[17, 24]
+AUX[21, 14] <- RS22_ANTRAB_2024_GERAL[17, 25]
+AUX[22, 14] <- RS22_ANTRAB_2024_GERAL[17, 26]
+AUX[23, 14] <- RS22_ANTRAB_2024_GERAL[17, 27]
+AUX[24, 14] <- RS22_ANTRAB_2024_GERAL[17, 28]
+
 AUX <- as.data.frame(t(AUX))
 
 colnames(AUX) <- AUX[1, ]
@@ -16346,11 +19304,49 @@ AUX <- AUX[-1, ]
 AUX[, 1] <- as.numeric(AUX[, 1])
 
 AUX[, 25] <- c("2012", "2013", "2014", "2015", "2016", "2017", 
-               "2018", "2019", "2020", "2021", "2022", "2023")
+               "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025")
 
 write.csv (assign(paste0("RS", "_ANTRAB_BASE_Serie_Historica"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", "_ANTRAB_BASE_Serie_Historica.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", "_ANTRAB_BASE_Serie_Historica.csv"), 
            row.names = FALSE)
+
+#####  Compilado 
+
+AUX <- RS22_ANTRAB_2012_GERAL[17,]
+AUX[1, 2] <- "2012"
+AUX[2,] <- RS22_ANTRAB_2013_GERAL[17,]
+AUX[2, 2] <- "2013"
+AUX[3,] <- RS22_ANTRAB_2014_GERAL[17,]
+AUX[3, 2] <- "2014"
+AUX[4,] <- RS22_ANTRAB_2015_GERAL[17,]
+AUX[4, 2] <- "2015"
+AUX[5,] <- RS22_ANTRAB_2016_GERAL[17,]
+AUX[5, 2] <- "2016"
+AUX[6,] <- RS22_ANTRAB_2017_GERAL[17,]
+AUX[6, 2] <- "2017"
+AUX[7,] <- RS22_ANTRAB_2018_GERAL[17,]
+AUX[7, 2] <- "2018"
+AUX[8,] <- RS22_ANTRAB_2019_GERAL[17,]
+AUX[8, 2] <- "2019"
+AUX[9,] <- RS22_ANTRAB_2020_GERAL[17,]
+AUX[9, 2] <- "2020"
+AUX[10,] <- RS22_ANTRAB_2021_GERAL[17,]
+AUX[10, 2] <- "2021"
+AUX[11,] <- RS22_ANTRAB_2022_GERAL[17,]
+AUX[11, 2] <- "2022"
+AUX[12,] <- RS22_ANTRAB_2023_GERAL[17,]
+AUX[12, 2] <- "2023"
+AUX[13,] <- RS22_ANTRAB_2024_GERAL[17,]
+AUX[13, 2] <- "2024"
+
+AUX[nrow(AUX) +1, 4:35 ] <- apply(AUX[,4:35], 2, sum)
+
+AUX01 <- as.data.frame(AUX[nrow(AUX), 5]/AUX[nrow(AUX), 4])
+
+
+colnames(AUX)[2] <- "Ano"
+
+AUX <- AUX[,-3]
 
 ####  Canal Endêmico  ###
 
@@ -16389,9 +19385,16 @@ RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_A
 RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2022"
 RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2022_SE_Notificados[nrow(RS22_ANTRAB_2022_SE_Notificados), 2:54]))
 
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2023"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2023_SE_Notificados[nrow(RS22_ANTRAB_2023_SE_Notificados), 2:54]))
+
+RS_CE_Base_ANTRAB[(nrow(RS_CE_Base_ANTRAB)+1), 1] <- "2024"
+RS_CE_Base_ANTRAB[nrow(RS_CE_Base_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2024_SE_Notificados[nrow(RS22_ANTRAB_2024_SE_Notificados), 2:54]))
+
 colnames (RS_CE_Base_ANTRAB)[2:54] <- c(1:53)
 
 write.csv (RS_CE_Base_ANTRAB, 
-           "Base_de_Dados/Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv", 
+           "Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv", 
            row.names = FALSE)
 
+rm(AUX, BASE_IBGE, i, ID_REG, nrow, RS)

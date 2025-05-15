@@ -13,7 +13,7 @@ library(ggplot2)
 ####Planilha com os dados dos municípios e com os códigos do IBGE. Será utilizada nos for loops para buscar dados######## 
 ####dos municípios e vinculá-los com os dados da base DBF do SINAN#######################################################
 
-BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
+BASE_IBGE<-read.csv(file="Base_de_Dados/Auxiliares/Planilha_Base_IBGE.csv", 
                     header=TRUE, 
                     sep=",")
 

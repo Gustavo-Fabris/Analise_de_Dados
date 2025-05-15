@@ -65,21 +65,21 @@ library(geobr)
 library(ggspatial)
 library(ggplot2)
 library(tidyr)
-###################       2023      #########################################
+###################       2025      #########################################
 
-BASE_IBGE<-read.csv(file="Base_de_Dados/Planilha_Base_IBGE.csv", 
+BASE_IBGE<-read.csv(file="Base_de_Dados/Auxiliares/Planilha_Base_IBGE.csv", 
                     header=TRUE, 
                     sep=",")
 
-PR_ANTRAB_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/PR_ANTRAB_BASE_Serie_Historica.csv",
+PR_ANTRAB_Serie_Historica <- read.csv(file = "Tabulacoes_R/Raiva/PR_ANTRAB_BASE_Serie_Historica.csv",
                                       header = TRUE,
                                       sep = ",")
 
-RS_ANTRAB_Serie_Historica <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_ANTRAB_BASE_Serie_Historica.csv",
+RS_ANTRAB_Serie_Historica <- read.csv(file = "Tabulacoes_R/Raiva/RS_ANTRAB_BASE_Serie_Historica.csv",
                                       header = TRUE,
                                       sep = ",")
 
-RS_CE_BASE_ANTRAB <- read.csv(file = "Base_de_Dados/Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv",
+RS_CE_BASE_ANTRAB <- read.csv(file = "Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv",
                               header = TRUE,
                               sep = ",")
 
@@ -97,28 +97,28 @@ nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
 ####Criando um objeto com a base DBF do SINAN#################
 
-ANTRAB2023 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2023.DBF",
+ANTRAB2025 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2025.DBF",
                        as.is = FALSE)
 
 ####Alterando o formato da coluna ID_MN_RESI de forma que ela seja passível de vincular no for loop#################
 
-ANTRAB2023$ID_MN_RESI <- as.numeric(as.character(ANTRAB2023$ID_MN_RESI))
+ANTRAB2025$ID_MN_RESI <- as.numeric(as.character(ANTRAB2025$ID_MN_RESI))
 
 #####################################################################################################################
 #################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
 
-PR_ANTRAB_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
+PR_ANTRAB_Serie_Historica[nrow(PR_ANTRAB_Serie_Historica), 2] <- as.integer(ANTRAB2025 %>% 
                                                  count()
 )
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
-SINAN_ANTRAB_2023 <- ANTRAB2023 %>% 
+SINAN_ANTRAB_2025 <- ANTRAB2025 %>% 
   filter(ID_REGIONA == ID_REG | ID_RG_RESI == ID_REG)
 
-assign(paste0("RS", RS, "_ANTRAB_2023_SINAN"), SINAN_ANTRAB_2023)
+assign(paste0("RS", RS, "_ANTRAB_2025_SINAN"), SINAN_ANTRAB_2025)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SINAN"), SINAN_ANTRAB_2023), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SINAN.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SINAN"), SINAN_ANTRAB_2025), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_SINAN.csv"), 
            row.names = FALSE)
 
 ################################################################################################################
@@ -138,321 +138,321 @@ colnames (AUX)[2:54] <- c(1:53)
 
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX == i), 2] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_ANTRAB_2025 %>%
                                           filter(ID_MN_RESI == i,
-                                                 SEM_PRI ==202301)%>%
+                                                 SEM_PRI ==202501)%>%
                                           count()
   )
   
-  AUX[which(AUX == i), 3] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                           filter(ID_MN_RESI == i, 
-                                                 SEM_PRI ==202302) %>% 
+                                                 SEM_PRI ==202502) %>% 
                                           count()
   )
   
-  AUX[which(AUX == i), 4] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                           filter(ID_MN_RESI == i,
-                                                 SEM_PRI ==202303) %>% 
+                                                 SEM_PRI ==202503) %>% 
                                           count()
   )
   
-  AUX[which(AUX == i),5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i),5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                          filter(ID_MN_RESI == i,
-                                                SEM_PRI ==202304) %>% 
+                                                SEM_PRI ==202504) %>% 
                                          count()
   )
   
-  AUX[which(AUX == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                           filter(ID_MN_RESI == i,
-                                                 SEM_PRI ==202305) %>% 
+                                                 SEM_PRI ==202505) %>% 
                                           count() 
   )
   
-  AUX[which(AUX == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>%
                                           filter(ID_MN_RESI == i, 
-                                                 SEM_PRI ==202306) %>%
+                                                 SEM_PRI ==202506) %>%
                                           count()
   )
   
-  AUX[which(AUX == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>%
                                           filter(ID_MN_RESI == i, 
-                                                 SEM_PRI ==202307) %>% 
+                                                 SEM_PRI ==202507) %>% 
                                           count() 
   )
   
-  AUX[which(AUX == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>%
                                           filter(ID_MN_RESI == i, 
-                                                 SEM_PRI ==202308) %>% 
+                                                 SEM_PRI ==202508) %>% 
                                           count() 
   )
   
-  AUX[which(AUX == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202309) %>%
+                                                  SEM_PRI ==202509) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 11] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202310) %>%
+                                                  SEM_PRI ==202510) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 12] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202311) %>%
+                                                  SEM_PRI ==202511) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 13] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202312) %>%
+                                                  SEM_PRI ==202512) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 14] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202313) %>% 
+                                                  SEM_PRI ==202513) %>% 
                                            count() 
   )
   
-  AUX[which(AUX == i), 15] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202314) %>%
+                                                  SEM_PRI ==202514) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 16] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202315) %>%
+                                                  SEM_PRI ==202515) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 17] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202316) %>%
+                                                  SEM_PRI ==202516) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 18] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202317) %>%  
+                                                  SEM_PRI ==202517) %>%  
                                            count() 
   )
   
-  AUX[which(AUX == i), 19] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202318) %>%      
+                                                  SEM_PRI ==202518) %>%      
                                            count() 
   )
   
-  AUX[which(AUX == i), 20] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202319) %>%
+                                                  SEM_PRI ==202519) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i),  21] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                             filter(ID_MN_RESI == i, 
-                                                   SEM_PRI ==202320) %>%
+                                                   SEM_PRI ==202520) %>%
                                             count() 
   )
   
-  AUX[which(AUX == i), 22] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202321) %>%
+                                                  SEM_PRI ==202521) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 23] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202322) %>%
+                                                  SEM_PRI ==202522) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 24] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202323) %>%
+                                                  SEM_PRI ==202523) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 25] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202324) %>%
+                                                  SEM_PRI ==202524) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 26] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202325) %>%
+                                                  SEM_PRI ==202525) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 27] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202326) %>%
+                                                  SEM_PRI ==202526) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 28] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202327) %>%
+                                                  SEM_PRI ==202527) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 29] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202328) %>%
+                                                  SEM_PRI ==202528) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 30] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202329) %>%
+                                                  SEM_PRI ==202529) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 31] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202330) %>% 
+                                                  SEM_PRI ==202530) %>% 
                                            count()
   )
   
-  AUX[which(AUX == i), 32] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202331) %>%
+                                                  SEM_PRI ==202531) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 33] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202332) %>%
+                                                  SEM_PRI ==202532) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 34] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202333) %>% 
+                                                  SEM_PRI ==202533) %>% 
                                            count() 
   )
   
-  AUX[which(AUX == i), 35] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202334) %>% 
+                                                  SEM_PRI ==202534) %>% 
                                            count() 
   )
   
-  AUX[which(AUX == i), 36] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202335) %>%
+                                                  SEM_PRI ==202535) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 37] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202336) %>%
+                                                  SEM_PRI ==202536) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 38] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202337) %>% 
+                                                  SEM_PRI ==202537) %>% 
                                            count() 
   )
   
-  AUX[which(AUX == i), 39] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202338) %>%
+                                                  SEM_PRI ==202538) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 40] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202339) %>%
+                                                  SEM_PRI ==202539) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 41] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202340) %>%
+                                                  SEM_PRI ==202540) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 42] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202341) %>%
+                                                  SEM_PRI ==202541) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 43] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202342) %>%
+                                                  SEM_PRI ==202542) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 44] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202343) %>%
+                                                  SEM_PRI ==202543) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 45] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202344) %>%
+                                                  SEM_PRI ==202544) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 46] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202345) %>%
+                                                  SEM_PRI ==202545) %>%
                                            count()
   )
   
-  AUX[which(AUX == i), 47] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202346) %>%
+                                                  SEM_PRI ==202546) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 48] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202347) %>%
+                                                  SEM_PRI ==202547) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 49] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202348) %>%
+                                                  SEM_PRI ==202548) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 50] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202349) %>% 
+                                                  SEM_PRI ==202549) %>% 
                                            count()
   )
   
-  AUX[which(AUX == i), 51] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202350) %>% 
+                                                  SEM_PRI ==202550) %>% 
                                            count() 
   )
   
-  AUX[which(AUX == i), 52] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202351) %>%
+                                                  SEM_PRI ==202551) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 53] <- as.integer(SINAN_ANTRAB_2023 %>%
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_ANTRAB_2025 %>%
                                            filter(ID_MN_RESI == i,
-                                                  SEM_PRI ==202352) %>%
+                                                  SEM_PRI ==202552) %>%
                                            count() 
   )
   
-  AUX[which(AUX == i), 54] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                            filter(ID_MN_RESI == i, 
-                                                  SEM_PRI ==202353) %>%
+                                                  SEM_PRI ==202553) %>%
                                            count() 
   )
 }
@@ -463,10 +463,10 @@ AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_SE_Notificados"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_SE_Notificados"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SE_Notificados"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SE_Notificados.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SE_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_SE_Notificados.csv"), 
            row.names = FALSE)
 
 #####FIltrando os dados por município e construindo uma tabela geral dos dados de atendimentos antirrábicos#####
@@ -549,30 +549,30 @@ AUX$Raça_Ignorado <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i) %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CS_ZONA == 1) %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CS_ZONA == 2) %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CS_ZONA == 3) %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CS_ZONA == 9 
                                                           |
@@ -580,25 +580,25 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_SEXO == "F") %>%   
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_SEXO == "M") %>%   
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,  
                                                            NU_IDADE_N <=3012) %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,  
                                                            NU_IDADE_N > 4000 
                                                            & 
@@ -606,7 +606,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            NU_IDADE_N > 4005 
                                                            & 
@@ -614,7 +614,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            NU_IDADE_N > 4012 
                                                            & 
@@ -622,7 +622,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            NU_IDADE_N > 4018 
                                                            & 
@@ -630,19 +630,19 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            NU_IDADE_N > 4059) %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 18] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 18] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "00") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 19] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 19] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "01" 
                                                            | 
@@ -652,49 +652,49 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 20] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 20] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "04") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 21] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 21] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "05") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 22] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 22] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "06") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 23] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 23] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "07") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 24] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 24] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "08") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 25] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 25] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "10") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 26] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 26] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_ESCOL_N == "09") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 27] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 27] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_GESTANT == "1" 
                                                            |
@@ -706,54 +706,54 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 28] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 28] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_GESTANT == "5") %>% 
                                                     count()
   )
-  AUX[which(AUX$COD_IBGE == i), 29] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 29] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_GESTANT == "6") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 30] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 30] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_GESTANT == "9") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_RACA == "01") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 32] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 32] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_RACA == "2") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 33] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 33] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_RACA == "3") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 34] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 34] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_RACA == "4") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 35] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 35] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_RACA == "5") %>% 
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 36] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 36] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            CS_RACA == "9") %>% 
                                                     count()
@@ -764,10 +764,10 @@ AUX[(nrow(AUX) +1), 4:36] <- apply(AUX[, 4:36], 2, sum)
 
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_GERAL"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_GERAL"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_GERAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_GERAL.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_GERAL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_GERAL.csv"), 
            row.names = FALSE)
 
 
@@ -795,31 +795,31 @@ AUX$Outro <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_CONTAT == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_ARRANH == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_LAMBED == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_MORDED == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_OUTRO_ == "1") %>%   
                                                    count()
@@ -829,10 +829,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:9] <- apply(AUX[, 4:9], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_EXPOSICAO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_EXPOSICAO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_EXPOSICAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_EXPOSICAO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_EXPOSICAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_EXPOSICAO.csv"), 
            row.names = FALSE)
 
 #####Criando uma tabela com dados de localização da lesão (campo 33 do SINAN)##########
@@ -861,37 +861,37 @@ AUX$Membros_Inferiores <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_MUCOSA == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_CABECA == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_MAOS == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_TRONCO == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_MEMBRO== "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            ANT_MEMB_1== "1") %>%   
                                                     count()
@@ -901,10 +901,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_LOCALIZACAO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_LOCALIZACAO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_LOCALIZACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_LOCALIZACAO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_LOCALIZACAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_LOCALIZACAO.csv"), 
            row.names = FALSE)
 
 #####Tabela Ferimento (Campo 34 do SINAN)
@@ -929,25 +929,25 @@ AUX$Ignorado <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FERIMENTO == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FERIMENTO == "2") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FERIMENTO == "3") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FERIMENTO == "9") %>%   
                                                    count()
@@ -957,10 +957,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:8] <- apply(AUX[, 4:8], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_FERIMENTO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_FERIMENTO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_FERIMENTO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_FERIMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Tipo de Ferimanto (Campo 35 do SINAN)########
@@ -983,19 +983,19 @@ AUX$Dilacerante <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_PROFUN == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_SUPERF == "1") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANT_DILACE == "1") %>%   
                                                    count()
@@ -1005,10 +1005,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:7] <- apply(AUX[, 4:7], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_FERIMENTO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_TIPO_FERIMENTO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_FERIMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_TIPO_FERIMENTO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_TIPO_FERIMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_TIPO_FERIMENTO.csv"), 
            row.names = FALSE)
 
 #####Tabela Antecedentes de Tratamento (Campo 37 sinan)####
@@ -1029,13 +1029,13 @@ AUX$Pos_Exp <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           PRE_EXPOS == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           POS_EXPOS == "1") %>%   
                                                    count()
@@ -1045,10 +1045,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_ANTECEDENTE_ANTR"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_ANTECEDENTE_ANTR"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_ANTECEDENTE_ANTR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_ANTECEDENTE_ANTR.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_ANTECEDENTE_ANTR"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_ANTECEDENTE_ANTR.csv"), 
            row.names = FALSE)
 
 ####TAbela Animal Agressor (campo 40 SINAN)####
@@ -1079,43 +1079,43 @@ AUX$Outra <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANIMAL == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANIMAL == "2") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANIMAL == "3") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANIMAL == "4") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           ANIMAL == "5") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            ANIMAL == "6") %>%   
                                                     count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            ANIMAL == "7") %>%   
                                                     count()
@@ -1125,10 +1125,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:11] <- apply(AUX[, 4:11], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_AGRESSOR"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_AGRESSOR"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_AGRESSOR"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_AGRESSOR.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_AGRESSOR"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_AGRESSOR.csv"), 
            row.names = FALSE)
 
 ####Tabela Condição do animal no acidente (campo 41 do sinan)####
@@ -1153,25 +1153,25 @@ AUX$Morto_Desaparecido <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CONDIC_ANI == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CONDIC_ANI == "2") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CONDIC_ANI == "3") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           CONDIC_ANI == "4") %>%   
                                                    count()
@@ -1181,10 +1181,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:8] <- apply(AUX[, 4:8], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_COND_ANIMAL_ACID"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_COND_ANIMAL_ACID"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_COND_ANIMAL_ACID"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_COND_ANIMAL_ACID.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_COND_ANIMAL_ACID"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_COND_ANIMAL_ACID.csv"), 
            row.names = FALSE)
 
 ####Tabela Animal Observável (campo 42 SINAN)###
@@ -1205,13 +1205,13 @@ AUX$Nao <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           OBSERVACAO == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           OBSERVACAO == "2") %>%   
                                                    count()
@@ -1221,10 +1221,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_OBSERVAVEL"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_OBSERVAVEL"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_OBSERVAVEL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_OBSERVAVEL.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_OBSERVAVEL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_OBSERVAVEL.csv"), 
            row.names = FALSE)
 
 ###Tabela Tratamento (campo 43 do SINAN)####
@@ -1253,37 +1253,37 @@ AUX$Esquema_Reexposicao <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRAT_ATUAL == "2") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRAT_ATUAL == "3") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRAT_ATUAL == "4") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRAT_ATUAL == "5") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRAT_ATUAL == "6") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            TRAT_ATUAL == "7") %>%   
                                                     count()
@@ -1293,10 +1293,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_TRATAMENTO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_TRATAMENTO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_TRATAMENTO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_TRATAMENTO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_TRATAMENTO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_TRATAMENTO.csv"), 
            row.names = FALSE)
 
 ###Tabela Condição final do Animal (campo 48 do SINAN)###
@@ -1325,37 +1325,37 @@ AUX$Ignorado <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FIM_ANIMAL == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FIM_ANIMAL == "2") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FIM_ANIMAL == "3") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FIM_ANIMAL == "4") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           FIM_ANIMAL == "5") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
                                                            FIM_ANIMAL == "9") %>%   
                                                     count()
@@ -1365,37 +1365,37 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:10] <- apply(AUX[, 4:10], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_COND_FINAL_ANIMAL"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_COND_FINAL_ANIMAL"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_COND_FINAL_ANIMAL"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_COND_FINAL_ANIMAL.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_COND_FINAL_ANIMAL"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_COND_FINAL_ANIMAL.csv"), 
            row.names = FALSE)
 
 ###Tabela Interrupção de tratamento (campo 49 do SINAN)####
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT <- SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[,c(4, 1, 2, 3)]
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT <- SINAN_ANTRAB_2025_INTERRUPCAO_TRAT[,c(4, 1, 2, 3)]
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$Sim <- NA
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$Sim <- NA
 
-SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$Nao <- NA
+SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$Nao <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  SINAN_ANTRAB_2025_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                                                                                  filter(ID_MN_RESI == i,
                                                                                                                         TRA_INTERR == "1") %>%   
                                                                                                                  count()
   )    
   
-  SINAN_ANTRAB_2023_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2023_INTERRUPCAO_TRAT$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  SINAN_ANTRAB_2025_INTERRUPCAO_TRAT[which(SINAN_ANTRAB_2025_INTERRUPCAO_TRAT$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                                                                                  filter(ID_MN_RESI == i,
                                                                                                                         TRA_INTERR == "2") %>%   
                                                                                                                  count()
@@ -1405,10 +1405,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_INTERRUPCAO_TRAT"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_INTERRUPCAO_TRAT"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_INTERRUPCAO_TRAT"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_INTERRUPCAO_TRAT.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_INTERRUPCAO_TRAT"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_INTERRUPCAO_TRAT.csv"), 
            row.names = FALSE)
 
 ####Tabela Soroterapia (campo 53 do SINAN)###
@@ -1431,19 +1431,19 @@ AUX$Ignorado <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRA_INDI_N == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRA_INDI_N == "2") %>%   
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRA_INDI_N == "9") %>%   
                                                    count()
@@ -1453,10 +1453,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:7] <- apply(AUX[, 4:7], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_SOROTERAPIA"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_SOROTERAPIA"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SOROTERAPIA"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SOROTERAPIA.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SOROTERAPIA"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_SOROTERAPIA.csv"), 
            row.names = FALSE)
 
 ###Tabela tipo de imunobiologico (campo 55 SINAN)####
@@ -1477,13 +1477,13 @@ AUX$IGHAR <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TIP_SORO == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TIP_SORO== "2") %>%   
                                                    count()
@@ -1494,10 +1494,10 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_IMUNOBIOLOGICO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_TIPO_IMUNOBIOLOGICO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_TIPO_IMUNOBIOLOGICO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_TIPO_IMUNOBIOLOGICO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_TIPO_IMUNOBIOLOGICO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_TIPO_IMUNOBIOLOGICO.csv"), 
            row.names = FALSE)
 
 ###Tabela Infiltração (campo 56 do SINAN)###
@@ -1518,13 +1518,13 @@ AUX$PARCIAL <- NA
 
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
-  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRA_INFILT == "1") %>%   
                                                    count()
   )    
   
-  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                    filter(ID_MN_RESI == i,
                                                           TRA_INFI_1 == "1") %>%   
                                                    count()
@@ -1535,40 +1535,40 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 AUX[(nrow(AUX) +1), 4:6] <- apply(AUX[, 4:6], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
-assign(paste0("RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO"), AUX)
+assign(paste0("RS", RS, "_ANTRAB_2025_SORO_INFILTRACAO"), AUX)
 
-write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO"), AUX), 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SORO_INFILTRACAO.csv"), 
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SORO_INFILTRACAO"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2025_SORO_INFILTRACAO.csv"), 
            row.names = FALSE)
 
-rm(SINAN_ANTRAB_2023, ANTRAB2023)
+rm(SINAN_ANTRAB_2025, ANTRAB2025)
 
 ######   Série Histórica   ########
 
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 1] <- RS22_ANTRAB_2023_GERAL[17, 5]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 2] <- RS22_ANTRAB_2023_GERAL[17, 6]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 3] <- RS22_ANTRAB_2023_GERAL[17, 7]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 4] <- RS22_ANTRAB_2023_GERAL[17, 8]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 5] <- RS22_ANTRAB_2023_GERAL[17, 9]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 6] <- RS22_ANTRAB_2023_GERAL[17, 10]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 7] <- RS22_ANTRAB_2023_GERAL[17, 11]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 8] <- RS22_ANTRAB_2023_GERAL[17, 12]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 9] <- RS22_ANTRAB_2023_GERAL[17, 13]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 10] <- RS22_ANTRAB_2023_GERAL[17, 14]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 11] <- RS22_ANTRAB_2023_GERAL[17, 15]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 12] <- RS22_ANTRAB_2023_GERAL[17, 16]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 13] <- RS22_ANTRAB_2023_GERAL[17, 17]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 14] <- RS22_ANTRAB_2023_GERAL[17, 18]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 15] <- RS22_ANTRAB_2023_GERAL[17, 19]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 16] <- RS22_ANTRAB_2023_GERAL[17, 20]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 17] <- RS22_ANTRAB_2023_GERAL[17, 21]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 18] <- RS22_ANTRAB_2023_GERAL[17, 22]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 19] <- RS22_ANTRAB_2023_GERAL[17, 23]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 20] <- RS22_ANTRAB_2023_GERAL[17, 24]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 21] <- RS22_ANTRAB_2023_GERAL[17, 25]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 22] <- RS22_ANTRAB_2023_GERAL[17, 26]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 23] <- RS22_ANTRAB_2023_GERAL[17, 27]
-RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 24] <- RS22_ANTRAB_2023_GERAL[17, 28]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 1] <- RS22_ANTRAB_2025_GERAL[17, 5]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 2] <- RS22_ANTRAB_2025_GERAL[17, 6]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 3] <- RS22_ANTRAB_2025_GERAL[17, 7]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 4] <- RS22_ANTRAB_2025_GERAL[17, 8]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 5] <- RS22_ANTRAB_2025_GERAL[17, 9]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 6] <- RS22_ANTRAB_2025_GERAL[17, 10]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 7] <- RS22_ANTRAB_2025_GERAL[17, 11]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 8] <- RS22_ANTRAB_2025_GERAL[17, 12]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 9] <- RS22_ANTRAB_2025_GERAL[17, 13]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 10] <- RS22_ANTRAB_2025_GERAL[17, 14]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 11] <- RS22_ANTRAB_2025_GERAL[17, 15]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 12] <- RS22_ANTRAB_2025_GERAL[17, 16]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 13] <- RS22_ANTRAB_2025_GERAL[17, 17]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 14] <- RS22_ANTRAB_2025_GERAL[17, 18]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 15] <- RS22_ANTRAB_2025_GERAL[17, 19]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 16] <- RS22_ANTRAB_2025_GERAL[17, 20]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 17] <- RS22_ANTRAB_2025_GERAL[17, 21]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 18] <- RS22_ANTRAB_2025_GERAL[17, 22]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 19] <- RS22_ANTRAB_2025_GERAL[17, 23]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 20] <- RS22_ANTRAB_2025_GERAL[17, 24]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 21] <- RS22_ANTRAB_2025_GERAL[17, 25]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 22] <- RS22_ANTRAB_2025_GERAL[17, 26]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 23] <- RS22_ANTRAB_2025_GERAL[17, 27]
+RS_ANTRAB_Serie_Historica[nrow(RS_ANTRAB_Serie_Historica), 24] <- RS22_ANTRAB_2025_GERAL[17, 28]
 
 RS_ANTRAB_Serie_Historica[, 25] <- as.factor(RS_ANTRAB_Serie_Historica[, 25])
 
@@ -1578,8 +1578,8 @@ RS_ANTRAB_Serie_Historica[, 25] <- as.factor(RS_ANTRAB_Serie_Historica[, 25])
 
 ######     Canal Endêmico    NOTIFICADOS#####
 
-RS_CE_BASE_ANTRAB[(nrow(RS_CE_BASE_ANTRAB) +1), 1] <- "2023"
-RS_CE_BASE_ANTRAB[nrow(RS_CE_BASE_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2023_SE_Notificados[nrow(RS22_ANTRAB_2023_SE_Notificados), 2:54]))
+RS_CE_BASE_ANTRAB[(nrow(RS_CE_BASE_ANTRAB) +1), 1] <- "2025"
+RS_CE_BASE_ANTRAB[nrow(RS_CE_BASE_ANTRAB), 2:54] <- as.integer(data.frame(RS22_ANTRAB_2025_SE_Notificados[nrow(RS22_ANTRAB_2025_SE_Notificados), 2:54]))
 
 #####################################################################################################################
 #####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
@@ -1634,7 +1634,7 @@ rownames(RS_CE_ANTRAB) <- c(1: nrow(RS_CE_ANTRAB))
 rm(AUX, AUX2, RS_CE_BASE_ANTRAB)
 
 write.csv (RS_CE_ANTRAB, 
-           paste0("Base_de_Dados/Tabulacoes_R/Raiva/RS", RS, "_CE_ANTRAB.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_CE_ANTRAB.csv"), 
            row.names = FALSE)
 
 ###    CANAL ENDÊMICO NOTIFICADOS     ####
@@ -1646,32 +1646,32 @@ AUX_GRAF <- RS_CE_ANTRAB[,]
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
-AUX_GRAF$Sem_EPI <-as.character(c("2023/01",  "2023/02", "2023/03", 
-                                  "2023/04",  "2023/05",  "2023/06",  
-                                  "2023/07",  "2023/08",  "2023/09",  
-                                  "2023/10",  "2023/11",  "2023/12",  
-                                  "2023/13",  "2023/14",  "2023/15",  
-                                  "2023/16",  "2023/17",  "2023/18",  
-                                  "2023/19",  "2023/20",  "2023/21",  
-                                  "2023/22",  "2023/23",  "2023/24",  
-                                  "2023/25",  "2023/26",  "2023/27",  
-                                  "2023/28",  "2023/29",  "2023/30",  
-                                  "2023/31",  "2023/32",  "2023/33", 
-                                  "2023/34",  "2023/35",  "2023/36",  
-                                  "2023/37",  "2023/38",  "2023/39",  
-                                  "2023/40",  "2023/41",  "2023/42",  
-                                  "2023/43",  "2023/44",  "2023/45",  
-                                  "2023/46",  "2023/47",  "2023/48",  
-                                  "2023/49",  "2023/50",  "2023/51",  
-                                  "2023/52",  "2023/53")
+AUX_GRAF$Sem_EPI <-as.character(c("2025/01",  "2025/02", "2025/03", 
+                                  "2025/04",  "2025/05",  "2025/06",  
+                                  "2025/07",  "2025/08",  "2025/09",  
+                                  "2025/10",  "2025/11",  "2025/12",  
+                                  "2025/13",  "2025/14",  "2025/15",  
+                                  "2025/16",  "2025/17",  "2025/18",  
+                                  "2025/19",  "2025/20",  "2025/21",  
+                                  "2025/22",  "2025/23",  "2025/24",  
+                                  "2025/25",  "2025/26",  "2025/27",  
+                                  "2025/28",  "2025/29",  "2025/30",  
+                                  "2025/31",  "2025/32",  "2025/33", 
+                                  "2025/34",  "2025/35",  "2025/36",  
+                                  "2025/37",  "2025/38",  "2025/39",  
+                                  "2025/40",  "2025/41",  "2025/42",  
+                                  "2025/43",  "2025/44",  "2025/45",  
+                                  "2025/46",  "2025/47",  "2025/48",  
+                                  "2025/49",  "2025/50",  "2025/51",  
+                                  "2025/52",  "2025/53")
 )
 
-RS_GRAF_2023_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
+RS_GRAF_2025_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold")) +
   labs(caption = "Fonte",
-       title = "Diagrama de Controle - 2023",
+       title = "Diagrama de Controle - 2025",
        subtitle = "Atendimentos Antirrábicos NOTIFICADOS") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
@@ -1685,7 +1685,7 @@ RS_GRAF_2023_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológica))  +
             alpha = 0.9) +
   geom_area(aes(y = Media), 
             fill = "#556B2F") +
-  geom_line(aes(y = `2023`), 
+  geom_line(aes(y = `2025`), 
             stat = "identity", 
             color = "black", 
             linewidth = 1.5) +
@@ -1700,7 +1700,7 @@ png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RAIVA/
     height = 20,
     units = "cm", pointsize = 8, res = 300)
 
-RS_GRAF_2023_CE_Notificados
+RS_GRAF_2025_CE_Notificados
 
 dev.off()
 
@@ -1723,7 +1723,7 @@ PR_GRAF_Serie_Historica <- ggplot(PR_ANTRAB_Serie_Historica, aes(x = Ano,
        x = "Anos",
        y = "Número de Casos",
        title = "Série Histórica - PARANÁ",
-       subtitle = "Casos Notificados (2012 - 2023)") +
+       subtitle = "Casos Notificados (2012 - 2025)") +
   theme( panel.grid.major = element_line(color = "#C0C0C0"),
          panel.grid.minor = element_blank(),
          panel.background = element_rect(fill = "#F5F5F5"),
@@ -1738,6 +1738,15 @@ PR_GRAF_Serie_Historica <- ggplot(PR_ANTRAB_Serie_Historica, aes(x = Ano,
              alpha = 0.5,
              vjust = 0.3) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RAIVA/Seria_Historica_PARANA.png", 
+    width = 33,
+    height = 20,
+    units = "cm", pointsize = 8, res = 300)
+
+PR_GRAF_Serie_Historica
+
+dev.off()
 
 ####   Serie Histórica regional   ######
 
@@ -1760,7 +1769,7 @@ RS_GRAF_Serie_Historica <- ggplot(RS_ANTRAB_Serie_Historica, aes(x = V25,
        x = "Anos",
        y = "Número de Casos",
        title = "Série Histórica - 22ªRS",
-       subtitle = "Casos Notificados (2012 - 2023)") +
+       subtitle = "Casos Notificados (2012 - 2025)") +
   geom_bar(stat = "identity",
            color = "black",
            fill = "green") +
@@ -1770,9 +1779,18 @@ RS_GRAF_Serie_Historica <- ggplot(RS_ANTRAB_Serie_Historica, aes(x = V25,
              nudge_y = 5) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
+png(filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RAIVA/Seria_Historica_PARANA.png", 
+    width = 33,
+    height = 20,
+    units = "cm", pointsize = 8, res = 300)
+
+RS_GRAF_Serie_Historica
+
+dev.off()
+
 #####    Faixa Etária  ####
 
-AUX <- RS22_ANTRAB_2023_GERAL[17, 12:17]
+AUX <- RS22_ANTRAB_2025_GERAL[17, 12:17]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -1819,7 +1837,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Escolariadade  ####
 
-AUX <- RS22_ANTRAB_2023_GERAL[17, 18:26]
+AUX <- RS22_ANTRAB_2025_GERAL[17, 18:26]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -1869,7 +1887,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Zona de ocorrência  ####
 
-AUX <- RS22_ANTRAB_2023_GERAL[17, 6:9]
+AUX <- RS22_ANTRAB_2025_GERAL[17, 6:9]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -1915,7 +1933,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Sexo    ####
 
-AUX <- RS22_ANTRAB_2023_GERAL[17, 10:11]
+AUX <- RS22_ANTRAB_2025_GERAL[17, 10:11]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -1961,7 +1979,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Espécie Agressora    ####
 
-AUX <- RS22_ANTRAB_2023_AGRESSOR[17, 5:11]
+AUX <- RS22_ANTRAB_2025_AGRESSOR[17, 5:11]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2008,7 +2026,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    cONDIÇÃO DO ANIMAL    ####
 
-AUX <- RS22_ANTRAB_2023_COND_ANIMAL_ACID[17, 5:8]
+AUX <- RS22_ANTRAB_2025_COND_ANIMAL_ACID[17, 5:8]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2054,7 +2072,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    cONDIÇÃO DO ANIMAL    ####
 
-AUX <- RS22_ANTRAB_2023_COND_ANIMAL_ACID[17, 5:8]
+AUX <- RS22_ANTRAB_2025_COND_ANIMAL_ACID[17, 5:8]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2100,7 +2118,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Tratamento Indicado    ####
 
-AUX <- RS22_ANTRAB_2023_TRATAMENTO[17, 5:10]
+AUX <- RS22_ANTRAB_2025_TRATAMENTO[17, 5:10]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2150,7 +2168,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Tipo de Exposição    ####
 
-AUX <- RS22_ANTRAB_2023_EXPOSICAO[17, 5:9]
+AUX <- RS22_ANTRAB_2025_EXPOSICAO[17, 5:9]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2197,7 +2215,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Animal Observável    ####
 
-AUX <- RS22_ANTRAB_2023_OBSERVAVEL[17, 5:6]
+AUX <- RS22_ANTRAB_2025_OBSERVAVEL[17, 5:6]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2244,7 +2262,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Soroterapia    ####
 
-AUX <- RS22_ANTRAB_2023_SOROTERAPIA[17, 5:7]
+AUX <- RS22_ANTRAB_2025_SOROTERAPIA[17, 5:7]
 
 AUX[2,] <- as.factor(colnames(AUX))
 
@@ -2290,7 +2308,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####   Notificados por município   ####
 
-AUX <- RS22_ANTRAB_2023_GERAL[1 : (nrow(RS22_ANTRAB_2023_GERAL) -1), c(2, 5)]
+AUX <- RS22_ANTRAB_2025_GERAL[1 : (nrow(RS22_ANTRAB_2025_GERAL) -1), c(2, 5)]
 
 ggplot(AUX, aes(x = Município, y = Notificados)) +
   theme(axis.text.x = element_text(angle = 70, 

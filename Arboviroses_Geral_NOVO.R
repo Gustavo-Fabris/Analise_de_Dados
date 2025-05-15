@@ -8878,8 +8878,10 @@ rm(SINAN_DENGUE_2014_RS)
 
 DENGON2015 <- read.dbf(file = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Base_de_Dados/DBF/DENGON2015.dbf", 
                        as.is = FALSE) %>% select(ID_REGIONA, NU_NOTIFIC, ID_AGRAVO, ID_REGIONA, DT_NOTIFIC, NU_ANO, SEM_NOT, 
-                                                 DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, DT_NASC, NU_IDADE_N, 
-                                                 CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, ID_MN_RESI, SG_UF, ID_RG_RESI, 
+                                                 DT_SIN_PRI, SEM_PRI,  SG_UF_NOT, ID_MUNICIP, NM_PACIENT, 
+                                                 DT_NASC, NU_IDADE_N, 
+                                                 CS_SEXO, CS_GESTANT, CS_ESCOL_N, NM_MAE_PAC, 
+                                                 ID_MN_RESI, SG_UF, ID_RG_RESI, 
                                                  NM_LOGRADO, NU_NUMERO, NM_BAIRRO, NU_CEP, CS_ZONA, DT_DIGITA, DT_INVEST, FEBRE, 
                                                  MIALGIA, CEFALEIA, EXANTEMA, VOMITO, NAUSEA, DOR_COSTAS, CONJUNTVIT, ARTRITE, 
                                                  ARTRALGIA, PETEQUIA_N, LEUCOPENIA, LACO, DOR_RETRO, DIABETES, HEMATOLOG, HEPATOPAT, 
@@ -23459,7 +23461,7 @@ assign(paste0("RS", RS, "_2023_SINAN"),
        SINAN_DENGUE_2023_RS) 
 
 write.csv (assign(paste0("RS", RS, "_2023_SINAN"), SINAN_DENGUE_2023_RS), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_SINAN.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_SINAN.csv", 
            row.names = FALSE)
 
 ###Removendo tabela DENGON2023 já utilizada###
@@ -24598,7 +24600,7 @@ assign(paste0("RS", RS, "_2023_GERAL"), AUX)
 assign(paste0("RS", "_2023_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2023_GERAL"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_GERAL.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_GERAL.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -24762,7 +24764,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2023_EXTRA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2023_EXTRA"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_EXTRA.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_EXTRA.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -24899,7 +24901,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2023_SINAIS"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2023_SINAIS"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_SINAIS.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_SINAIS.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -24978,7 +24980,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2023_DOENCAS_PRE_EXISTENTES"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2023_DOENCAS_PRE_EXISTENTES"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_DOENCAS_PRE_EXISTENTES.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_DOENCAS_PRE_EXISTENTES.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -25074,7 +25076,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2023_SINAIS_DE_ALARME"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2023_SINAIS_DE_ALARME"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_SINAIS_DE_ALARME.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_SINAIS_DE_ALARME.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -25209,7 +25211,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2023_DENGUE_GRAVE"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2023_DENGUE_GRAVE"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_DENGUE_GRAVE.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2023_DENGUE_GRAVE.csv", 
            row.names = FALSE)
 
 rm(SINAN_DENGUE_2023_RS)
@@ -25276,7 +25278,7 @@ assign(paste0("RS", RS, "_2024_SINAN"),
        SINAN_DENGUE_2024_RS) 
 
 write.csv (assign(paste0("RS", RS, "_2024_SINAN"), SINAN_DENGUE_2024_RS), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_SINAN.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_SINAN.csv", 
            row.names = FALSE)
 
 ###Removendo tabela DENGON2024 já utilizada###
@@ -26415,7 +26417,7 @@ assign(paste0("RS", RS, "_2024_GERAL"), AUX)
 assign(paste0("RS", "_2024_GERAL"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2024_GERAL"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_GERAL.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_GERAL.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -26579,7 +26581,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2024_EXTRA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2024_EXTRA"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_EXTRA.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_EXTRA.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -26716,7 +26718,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2024_SINAIS"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2024_SINAIS"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_SINAIS.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_SINAIS.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -26795,7 +26797,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2024_DOENCAS_PRE_EXISTENTES"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2024_DOENCAS_PRE_EXISTENTES"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_DOENCAS_PRE_EXISTENTES.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_DOENCAS_PRE_EXISTENTES.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -26891,7 +26893,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2024_SINAIS_DE_ALARME"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2024_SINAIS_DE_ALARME"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_SINAIS_DE_ALARME.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_SINAIS_DE_ALARME.csv", 
            row.names = FALSE)
 
 #################################################################################################################
@@ -27026,7 +27028,7 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
 assign(paste0("RS", RS, "_2024_DENGUE_GRAVE"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_2024_DENGUE_GRAVE"), AUX), 
-           "Tabulacoes_R/Arboviroses/RS23_24_24_DENGUE_GRAVE.csv", 
+           "Tabulacoes_R/Arboviroses/RS22_2024_DENGUE_GRAVE.csv", 
            row.names = FALSE)
 
 rm(SINAN_DENGUE_2024_RS)
