@@ -56,9 +56,9 @@ setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 13/05/2025"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 03/06/2025"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 12/05/2025"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 26/05/2025"            ##### Fonte dos gráficos relacionados ao LACEN
 
 Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 28/03/2025"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
@@ -66,7 +66,7 @@ Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 28/03/2025"     #
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("20")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("24")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -123,7 +123,6 @@ Periodos_Epidêmicos_SEDE <- c("2009",
                            #    "2024",
                               "2025"
 )
-
 ####  libraries a serem utilizadas  ###
 
 library(patchwork)
@@ -3981,7 +3980,7 @@ AUX_HIST_NOT_LIST <- AUX_GRAF %>%
     ggplot(dados, aes(x = SE, 
                       y = value)
     ) + 
-      geom_col(color = "black", 
+      geom_histogram(color = "black", 
                fill = "#8FBC8F") + 
       geom_label(aes(label = value), 
                  alpha = 0.5, 
@@ -14237,8 +14236,8 @@ RS22_2025_GRAF_Tratamento_Ciclo2 <- ggplot() +
          panel.background = element_rect(fill = "#F5F5F5"),
          plot.title = element_text(face = "bold", 
                                    size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
+                                   colour = "#556B2F", 
+         legend.position = "bottom")
   )
 
 #########################################################################################################################

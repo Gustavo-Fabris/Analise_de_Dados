@@ -34,16 +34,16 @@ RS <- 22   #####  Deve-se colocar AQUI a Regional
 ############################################################################################
 
 Anos_Analise <- c(##  "2015", 
-  "2016",
-  "2017",
-  "2018",
-  "2019",
-  "2020",
-  "2021",
-  "2022",
-  "2023",
-  "2024",
-  "2025"
+                  "2016",
+                  "2017",
+                  "2018",
+                  "2019",
+                  "2020",
+                  "2021",
+                  "2022",
+                  "2023",
+                  "2024",
+                  "2025"
 )
 
 ######   Criando objeto ID_REG. Será utilizado para selecionar
@@ -64,8 +64,8 @@ Fonte2 <- "Fonte: SINAP. Acesso em 24/06/2025"
 nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
 SINAP <- read.csv(file = paste0("Base_de_Dados/PECONHENTOS/SINAP_ENCAMINHADOS.csv"),
-                  header = TRUE,
-                  sep = ",")
+                                header = TRUE,
+                                sep = ",")
 
 CE_BASE_Notificados <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_Notificados.csv"),
                                 header = TRUE,
@@ -84,46 +84,42 @@ CE_BASE_ESCORPIOES_Notificados <- read.csv(file = paste0("Tabulacoes_R/Peconhent
                                            sep = ",")
 
 CE_BASE_ABELHAS_Notificados <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_ABELHAS_Notificados.csv"),
-                                        header = TRUE,
-                                        sep = ",")
+                                           header = TRUE,
+                                           sep = ",")
 
 RS_Serie_Historica_Geral <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Geral.csv"),
+                               header = TRUE,
+                               sep = ",")
+
+RS_Serie_Histórica_Tempo_de_Atendimento <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_TEMPO_ATEND.csv"),
                                      header = TRUE,
                                      sep = ",")
 
-RS_Serie_Histórica_Tempo_de_Atendimento <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_TEMPO_ATEND.csv"),
+RS_Serie_Histórica_Local_da_Picada <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA.csv"),
                                                     header = TRUE,
                                                     sep = ",")
 
-RS_Serie_Histórica_Local_da_Picada <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA.csv"),
+RS_Serie_Historica_Tipo_Acid <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid.csv"),
                                                header = TRUE,
                                                sep = ",")
 
-RS_Serie_Historica_Tipo_Acid <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid.csv"),
+RS_Serie_Historica_Tipo_Acid_Serpente <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid_Serpente.csv"),
                                          header = TRUE,
                                          sep = ",")
 
-RS_Serie_Historica_Tipo_Acid_Serpente <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid_Serpente.csv"),
+RS_Serie_Historica_Tipo_Acid_Aranha <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_TIPO_ACID_ARANHA.csv"),
                                                   header = TRUE,
-                                                  sep = ",")  
+                                                  sep = ",")
 
-RS_Serie_Historica_Tipo_Acid_Aranha <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid_Aranha.csv"),
+RS_Serie_Historica_Tipo_Acid_Lagarta <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_TIPO_ACID_LAGARTA.csv"),
                                                 header = TRUE,
                                                 sep = ",")
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid_Lagarta.csv"),
-                                                 header = TRUE,
-                                                 sep = ",")
-
-RS_SINAN_Piramide <- read.csv(file = "Tabulacoes_R/Peconhentos/RS_SINAN_Piramide.csv",
-                              header = TRUE,
-                              sep = ",")
 
 SHAPEFILE_REGIONAL <- st_read("/home/gustavo/Área de Trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde.shp")
 
 SHAPEFILE_REGIONAL_Dissolvido <- st_read("/home/gustavo/Área de Trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde_Dissolvido.shp")
 
-##################################################################
+  ##################################################################
 ###############    2025   ########################################
 ##################################################################
 
@@ -5388,8 +5384,7 @@ assign(paste0("RS", RS, "_GRAF_CE_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
            panel.background = element_rect(fill = "#B22222"),
            plot.title = element_text(face = "bold",
                                      size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0)
+                                     colour = "#1C1C1C")
          ) +
          geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
          geom_area(aes( y = Mediana), fill = "#556B2F") +
@@ -5489,8 +5484,7 @@ assign(paste0("RS", RS, "_GRAF_CE_SERPENTES_Notificados"), ggplot(AUX_GRAF, aes(
            panel.background = element_rect(fill = "#B22222"),
            plot.title = element_text(face = "bold",
                                      size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0)
+                                     colour = "#1C1C1C")
          ) +
          geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
          geom_area(aes( y = Mediana), fill = "#556B2F") +
@@ -5590,8 +5584,7 @@ assign(paste0("RS", RS, "_GRAF_CE_ARANHAS_Notificados"), ggplot(AUX_GRAF, aes(Or
            panel.background = element_rect(fill = "#B22222"),
            plot.title = element_text(face = "bold",
                                      size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0)
+                                     colour = "#1C1C1C")
          ) +
          geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
          geom_area(aes( y = Mediana), fill = "#556B2F") +
@@ -5691,8 +5684,7 @@ assign(paste0("RS", RS, "_GRAF_CE_ESCORPIOES_Notificados"), ggplot(AUX_GRAF, aes
            panel.background = element_rect(fill = "#B22222"),
            plot.title = element_text(face = "bold",
                                      size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0)
+                                     colour = "#1C1C1C")
          ) +
          geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
          geom_area(aes( y = Mediana), fill = "#556B2F") +
@@ -5792,8 +5784,7 @@ assign(paste0("RS", RS, "_GRAF_CE_ABELHAS_Notificados"), ggplot(AUX_GRAF, aes(Or
            panel.background = element_rect(fill = "#B22222"),
            plot.title = element_text(face = "bold",
                                      size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0)
+                                     colour = "#1C1C1C")
          ) +
          geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
          geom_area(aes( y = Mediana), fill = "#556B2F") +
@@ -5840,26 +5831,23 @@ RS_Serie_Historica_Geral <- RS_Serie_Historica_Geral[, c(1, 5:36)]
 colnames(RS_Serie_Historica_Geral)[1] <- "Ano"
 
 assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados"), ggplot(RS_Serie_Historica_Geral, aes(x = Ano,
-                                                                                                   y = Notificados, group = 1)) +
-         geom_line(linewidth = 1.5,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 5,
-                    shape = 21) +
+                                                                                             y = Notificados)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#556B2F",
+                  linewidth = 0.8) +
          labs(caption = Fonte, 
               y = "Número de Casos",
               x = NULL,
-              title = "SÉRIE HISTÓRICA DE CASOS NOTIFICADOS - (2015 a 2025",
-              subtitle = "Casos notificados no território da 22ª Regional de Saúde") +
+              title = "SÉRIE HISTÓRICA DE CASOS NOTIFICADOS - 2015 a 2025",
+              subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
          geom_label(aes(label = Notificados), 
-                    size = 4, 
+                    size = 3, 
                     alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
          Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0))
-       
+         theme(axis.text.x = element_text(angle = 0))
 )
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_Serie_Historica_Notificados.png", 
@@ -5878,13 +5866,11 @@ RS_Serie_Historica_Tipo_Acid <- RS_Serie_Historica_Tipo_Acid[, c(1, 5:11)]
 colnames(RS_Serie_Historica_Tipo_Acid)[1] <- "Ano"
 
 assign(paste0("RS", RS, "_GRAF_Serie_Historica_Serpentes"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                     y = Serpente, 
-                                                                                                     group = 1)) +
-         geom_line(linewidth = 1.5,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 5,
-                    shape = 21) + 
+                                                                            y = Serpente)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#5F9EA0",
+                  linewidth = 0.8) +
          labs(caption = Fonte, 
               y = "Número de Casos",
               x = NULL,
@@ -5892,13 +5878,12 @@ assign(paste0("RS", RS, "_GRAF_Serie_Historica_Serpentes"), ggplot(RS_Serie_Hist
 (SERPENTES) - 2015 a 2025",
               subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
          geom_label(aes(label = Serpente), 
-                    size = 4, 
+                    size = 3, 
                     alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
          Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0))
+         theme(axis.text.x = element_text(angle = 0))
 )
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_SERPENTES.png", 
@@ -5911,13 +5896,11 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GR
 ###############  Aranhas
 
 assign(paste0("RS", RS, "_GRAF_Serie_Historica_Aranhas"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                   y = Aranha,
-                                                                                                   group = 1)) +
-         geom_line(linewidth = 1.5,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 5,
-                    shape = 21) +
+                                                                                                     y = Aranha)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#BDB76B",
+                  linewidth = 0.8) +
          labs(caption = Fonte, 
               y = "Número de Casos",
               x = NULL,
@@ -5925,13 +5908,12 @@ assign(paste0("RS", RS, "_GRAF_Serie_Historica_Aranhas"), ggplot(RS_Serie_Histor
 (ARANHAS) - 2015 a 2025",
               subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
          geom_label(aes(label = Aranha), 
-                    size = 5, 
+                    size = 3, 
                     alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
          Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0))
+         theme(axis.text.x = element_text(angle = 0))
 )
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_ARANHAS.png", 
@@ -5944,13 +5926,11 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GR
 ###########   Escorpiões
 
 assign(paste0("RS", RS, "_GRAF_Serie_Historica_Escorpioes"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                      y = Escorpiao,
-                                                                                                      group = 1)) +
-         geom_line(linewidth = 1.5,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 5,
-                    shape = 21) +
+                                                                                                        y = Escorpiao)) +
+         geom_bar(stat = "identity",
+                  color = "black",
+                  fill = "#BC8F8F",
+                  linewidth = 0.8) +
          labs(caption = Fonte, 
               y = "Número de Casos",
               x = NULL,
@@ -5958,13 +5938,12 @@ assign(paste0("RS", RS, "_GRAF_Serie_Historica_Escorpioes"), ggplot(RS_Serie_His
 (ESCORPIÕES) - 2015 a 2025",
               subtitle = "Casos notificados no Território da 22ª Regional de Saúde") +
          geom_label(aes(label = Escorpiao), 
-                    size = 4, 
+                    size = 3, 
                     alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
+                    vjust = 0.1)  +
+         scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
          Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0))
+         theme(axis.text.x = element_text(angle = 0))
 )
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_Escorpioes.png", 
@@ -5974,56 +5953,8 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GR
        units = "cm",           
        dpi = 300) 
 
-############# Tipo de acidente SERPENTE
-
-RS22_TAB_Tipo_Serpente_Historico <- RS_Serie_Historica_Tipo_Acid_Serpente[-1, -c(2, 3, 4)] %>%
-  gt() %>%
-  tab_header(title = md("**Tipo de Acidente Ofídico Notificados (2016 - 2025)**"),
-             subtitle = "") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Tipo de Acidente (campo 40 SINAN)",
-              columns = c(2:7)) %>%
-  cols_align(align = "center", columns = c(2:7)) %>%
-  cols_label(RS = "Ano",
-             Botropico = "Botrópico",
-             Elapidico = "Elapídico",
-             Laquetico = "Laquético",
-             Nao_Peconhenta = "Não Peçonhenta") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
-
-gtsave(data = RS22_TAB_Tipo_Serpente_Historico,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_TAB_Tipo_Serpente_Historico.png")
-
-############# Tipo de acidente ARANHA
-
-RS22_TAB_Tipo_Aranha_Historico <- RS_Serie_Historica_Tipo_Acid_Aranha[-1, -c(2, 3, 4)] %>%
-  gt() %>%
-  tab_header(title = md("**Tipo de Acidente com Aranhas Notificados (2016 - 2025)**"),
-             subtitle = "") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Tipo de Acidente (campo 40 SINAN)",
-              columns = c(2:6)) %>%
-  cols_align(align = "center", columns = c(2:6)) %>%
-  cols_label(RS = "Ano",
-             Outra_Aranha = "Outras") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
-
-gtsave(data = RS22_TAB_Tipo_Serpente_Historico,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_TAB_Tipo_Aranha_Historico.png")
-
-
 #################################################################################################################
-###############  Caracterização Lugar   #################################
+###############  Caracterização Pessoa   #################################
 #### Zona de ocorrência
 
 AUX <- RS_Serie_Historica_Geral[- nrow(RS_Serie_Historica_Geral), c(1, 3:6)]
@@ -6046,7 +5977,7 @@ RS22_TAB_Zona_Ocorrencia <- AUX %>%
             locations = cells_column_labels(everything())) %>%
   tab_footnote(footnote = Fonte) %>%
   tab_options(table.font.size = "small")
-
+  
 gtsave(data = RS22_TAB_Zona_Ocorrencia,
        filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Tabela_ZONA.png")
 
@@ -6062,9 +5993,9 @@ colnames(AUX) <- c("Casos", "Zona")
 
 RS22_GRAF_ZONA_Ocorrencia <- ggplot(AUX, aes(x = Zona, y = Casos)) +
   geom_bar(stat = "identity",
-           color = "black",
-           fill = "#E6E6FA",
-           linewidth = 0.8) +
+color = "black",
+fill = "#E6E6FA",
+linewidth = 0.8) +
   labs(caption = Fonte, 
        y = "Número de Casos",
        x = "Zona de Ocorrência",
@@ -6076,8 +6007,7 @@ RS22_GRAF_ZONA_Ocorrencia <- ggplot(AUX, aes(x = Zona, y = Casos)) +
              vjust = 0.1)  +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
   Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.caption = element_text(hjust = 0))
+  theme(axis.text.x = element_text(angle = 0))
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_GRAF_ZONA_Ocorrencia.png", 
        plot = RS22_GRAF_ZONA_Ocorrencia,     
@@ -6110,7 +6040,6 @@ Tabela_SEXO_MUNI <- RS22_PECONHENTOS_2025_GERAL[-nrow(RS22_PECONHENTOS_2025_GERA
 gtsave(data = Tabela_SEXO_MUNI,
        filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Tabela_SEXO_MUNI.png")
 
-######Caracterização Pessoa
 #### Sexo
 
 AUX <- RS_Serie_Historica_Geral[- nrow(RS_Serie_Historica_Geral), c(1, 7:8)]
@@ -6159,8 +6088,7 @@ RS22_GRAF_Sexo <- ggplot(AUX, aes(x = Sexo,
              vjust = 0.1)  +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
   Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.caption = element_text(hjust = 0))
+  theme(axis.text.x = element_text(angle = 0))
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_GRAF_Sexo.png", 
        plot = RS22_GRAF_Sexo,     
@@ -6169,429 +6097,17 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS
        units = "cm",           
        dpi = 300)
 
-################ Pirâmide Etária  
-
-AUX <- c("0 - 05", "0 - 05", "06 - 10", "06 - 10", "11 - 15", "11 - 15", "16 - 20", 
-         "16 - 20", "21 - 25", "21 - 25", "26 - 30", "26 - 30", "31 - 35", "31 - 35", 
-         "36 - 40", "36 - 40", "41 - 45", "41 - 45", "46 - 50", "46 - 50", "51 - 55", "51 - 55",
-         "56 - 60", "56 - 60", "61 - 65", "61 - 65", "66 - 70", "66 - 70", "71 - 75", "71 - 75",
-         "76 - 80", "76 - 80", "> 80", "> 80")
-
-AUX <- as.data.frame(AUX)
-
-AUX[, 2] <- c("M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", 
-              "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F")
-
-
-
-AUX[1, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N <= 4005 & CS_SEXO == "M") %>%
-  count()
-
-AUX[2, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N <= 4005 & CS_SEXO == "F") %>%
-  count()
-
-AUX[3, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4005 & NU_IDADE_N <= 4010 & CS_SEXO == "M") %>%
-  count()
-
-AUX[4, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4005 & NU_IDADE_N <= 4010 & CS_SEXO == "F") %>%
-  count()
-
-AUX[5, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4010 & NU_IDADE_N <= 4015 & CS_SEXO == "M") %>%
-  count()
-
-AUX[6, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4010 & NU_IDADE_N <= 4015 & CS_SEXO == "F") %>%
-  count()
-
-AUX[7, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4015 & NU_IDADE_N <= 4020 & CS_SEXO == "M") %>%
-  count()
-
-AUX[8, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4015 & NU_IDADE_N <= 4020 & CS_SEXO == "F") %>%
-  count()
-
-AUX[9, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4020 & NU_IDADE_N <= 4025 & CS_SEXO == "M") %>%
-  count()
-
-AUX[10, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4020 & NU_IDADE_N <= 4025 & CS_SEXO == "F") %>%
-  count()
-
-AUX[11, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4025 & NU_IDADE_N <= 4030 & CS_SEXO == "M") %>%
-  count()
-
-AUX[12, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4025 & NU_IDADE_N <= 4030 & CS_SEXO == "F") %>%
-  count()
-
-AUX[13, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4030 & NU_IDADE_N <= 4035 & CS_SEXO == "M") %>%
-  count()
-
-AUX[14, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4030 & NU_IDADE_N <= 4035 & CS_SEXO == "F") %>%
-  count()
-
-AUX[15, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4035 & NU_IDADE_N <= 4040 & CS_SEXO == "M") %>%
-  count()
-
-AUX[16, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4035 & NU_IDADE_N <= 4040 & CS_SEXO == "F") %>%
-  count()
-
-AUX[17, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4040 & NU_IDADE_N <= 4045 & CS_SEXO == "M") %>%
-  count()
-
-AUX[18, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4040 & NU_IDADE_N <= 4045 & CS_SEXO == "F") %>%
-  count()
-
-AUX[19, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4045 & NU_IDADE_N <= 4050 & CS_SEXO == "M") %>%
-  count()
-
-AUX[20, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4045 & NU_IDADE_N <= 4050 & CS_SEXO == "F") %>%
-  count()
-
-AUX[21, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4050 & NU_IDADE_N <= 4055 & CS_SEXO == "M") %>%
-  count()
-
-AUX[22, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4050 & NU_IDADE_N <= 4055 & CS_SEXO == "F") %>%
-  count()
-
-AUX[23, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4055 & NU_IDADE_N <= 4060 & CS_SEXO == "M") %>%
-  count()
-
-AUX[24, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4055 & NU_IDADE_N <= 4060 & CS_SEXO == "F") %>%
-  count()
-
-AUX[25, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4060 & NU_IDADE_N <= 4065 & CS_SEXO == "M") %>%
-  count()
-
-AUX[26, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4060 & NU_IDADE_N <= 4065 & CS_SEXO == "F") %>%
-  count()
-
-AUX[27, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4065 & NU_IDADE_N <= 4070 & CS_SEXO == "M") %>%
-  count()
-
-AUX[28, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4065 & NU_IDADE_N <= 4070 & CS_SEXO == "F") %>%
-  count()
-
-AUX[29, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4070 & NU_IDADE_N <= 4075 & CS_SEXO == "M") %>%
-  count()
-
-AUX[30, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4070 & NU_IDADE_N <= 4075 & CS_SEXO == "F") %>%
-  count()
-
-AUX[31, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4075 & NU_IDADE_N <= 4080 & CS_SEXO == "M") %>%
-  count()
-
-AUX[32, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4075 & NU_IDADE_N <= 4080 & CS_SEXO == "F") %>%
-  count()
-
-AUX[33, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4080 & CS_SEXO == "M") %>%
-  count()
-
-AUX[34, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
-  filter(NU_IDADE_N > 4080 & CS_SEXO == "F") %>%
-  count()
-
-colnames(AUX) <- c("Grupo_Idade", "Sexo", "Populacao")
-
-AUX <- AUX %>%
-  mutate(Pop = case_when(Sexo == "M" ~ Populacao * -1,
-                         Sexo == "F" ~ Populacao ))
-
-AUX <- AUX %>% 
-  mutate(Sexo_Legenda = case_when(Sexo == "M" ~ "Masculino",
-                                  Sexo == "F" ~ "Feminino"))
-
-AUX <- AUX %>%
-  mutate(grupo_Idade_FACT = factor(Grupo_Idade, levels = c(
-    "0 - 05",
-    "06 - 10",
-    "11 - 15",
-    "16 - 20",
-    "21 - 25",
-    "26 - 30",
-    "31 - 35",
-    "36 - 40",
-    "41 - 45",
-    "46 - 50",
-    "51 - 55",
-    "56 - 60",
-    "61 - 65",
-    "66 - 70",
-    "71 - 75",
-    "76 - 80",
-    "> 80"
-  )))
-
-RS_PECONHENTOS_GRAF_Piramide <- ggplot(AUX, 
-                                       aes(x = Pop,
-                                           y = grupo_Idade_FACT, 
-                                           fill = Sexo_Legenda)) +
-  geom_col(color = "black",
-           linewidth = 0.8) +
-  labs(title = "Pirâmide Etária dos Casos Notificados na 22ª Regional de Saúde",
-       y = "Faixa Etária",
-       x = "População",
-       fill = "Sexo",
-       caption = Fonte1) +
-  scale_x_continuous(labels = abs) +
-  Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.caption = element_text(hjust = 0)) 
-
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Piramide.png", 
-       plot = RS_PECONHENTOS_GRAF_Piramide,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-####################  Pirâmide Etária Série Histórica  ########################
-
-AUX <- c("0 - 05", "0 - 05", "06 - 10", "06 - 10", "11 - 15", "11 - 15", "16 - 20", 
-         "16 - 20", "21 - 25", "21 - 25", "26 - 30", "26 - 30", "31 - 35", "31 - 35", 
-         "36 - 40", "36 - 40", "41 - 45", "41 - 45", "46 - 50", "46 - 50", "51 - 55", "51 - 55",
-         "56 - 60", "56 - 60", "61 - 65", "61 - 65", "66 - 70", "66 - 70", "71 - 75", "71 - 75",
-         "76 - 80", "76 - 80", "> 80", "> 80")
-
-AUX <- as.data.frame(AUX)
-
-AUX[, 2] <- c("M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", 
-              "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F")
-
-
-
-AUX[1, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N <= 4005 & CS_SEXO == "M") %>%
-  count()
-
-AUX[2, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N <= 4005 & CS_SEXO == "F") %>%
-  count()
-
-AUX[3, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4005 & NU_IDADE_N <= 4010 & CS_SEXO == "M") %>%
-  count()
-
-AUX[4, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4005 & NU_IDADE_N <= 4010 & CS_SEXO == "F") %>%
-  count()
-
-AUX[5, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4010 & NU_IDADE_N <= 4015 & CS_SEXO == "M") %>%
-  count()
-
-AUX[6, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4010 & NU_IDADE_N <= 4015 & CS_SEXO == "F") %>%
-  count()
-
-AUX[7, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4015 & NU_IDADE_N <= 4020 & CS_SEXO == "M") %>%
-  count()
-
-AUX[8, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4015 & NU_IDADE_N <= 4020 & CS_SEXO == "F") %>%
-  count()
-
-AUX[9, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4020 & NU_IDADE_N <= 4025 & CS_SEXO == "M") %>%
-  count()
-
-AUX[10, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4020 & NU_IDADE_N <= 4025 & CS_SEXO == "F") %>%
-  count()
-
-AUX[11, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4025 & NU_IDADE_N <= 4030 & CS_SEXO == "M") %>%
-  count()
-
-AUX[12, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4025 & NU_IDADE_N <= 4030 & CS_SEXO == "F") %>%
-  count()
-
-AUX[13, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4030 & NU_IDADE_N <= 4035 & CS_SEXO == "M") %>%
-  count()
-
-AUX[14, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4030 & NU_IDADE_N <= 4035 & CS_SEXO == "F") %>%
-  count()
-
-AUX[15, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4035 & NU_IDADE_N <= 4040 & CS_SEXO == "M") %>%
-  count()
-
-AUX[16, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4035 & NU_IDADE_N <= 4040 & CS_SEXO == "F") %>%
-  count()
-
-AUX[17, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4040 & NU_IDADE_N <= 4045 & CS_SEXO == "M") %>%
-  count()
-
-AUX[18, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4040 & NU_IDADE_N <= 4045 & CS_SEXO == "F") %>%
-  count()
-
-AUX[19, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4045 & NU_IDADE_N <= 4050 & CS_SEXO == "M") %>%
-  count()
-
-AUX[20, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4045 & NU_IDADE_N <= 4050 & CS_SEXO == "F") %>%
-  count()
-
-AUX[21, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4050 & NU_IDADE_N <= 4055 & CS_SEXO == "M") %>%
-  count()
-
-AUX[22, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4050 & NU_IDADE_N <= 4055 & CS_SEXO == "F") %>%
-  count()
-
-AUX[23, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4055 & NU_IDADE_N <= 4060 & CS_SEXO == "M") %>%
-  count()
-
-AUX[24, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4055 & NU_IDADE_N <= 4060 & CS_SEXO == "F") %>%
-  count()
-
-AUX[25, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4060 & NU_IDADE_N <= 4065 & CS_SEXO == "M") %>%
-  count()
-
-AUX[26, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4060 & NU_IDADE_N <= 4065 & CS_SEXO == "F") %>%
-  count()
-
-AUX[27, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4065 & NU_IDADE_N <= 4070 & CS_SEXO == "M") %>%
-  count()
-
-AUX[28, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4065 & NU_IDADE_N <= 4070 & CS_SEXO == "F") %>%
-  count()
-
-AUX[29, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4070 & NU_IDADE_N <= 4075 & CS_SEXO == "M") %>%
-  count()
-
-AUX[30, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4070 & NU_IDADE_N <= 4075 & CS_SEXO == "F") %>%
-  count()
-
-AUX[31, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4075 & NU_IDADE_N <= 4080 & CS_SEXO == "M") %>%
-  count()
-
-AUX[32, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4075 & NU_IDADE_N <= 4080 & CS_SEXO == "F") %>%
-  count()
-
-AUX[33, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4080 & CS_SEXO == "M") %>%
-  count()
-
-AUX[34, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4080 & CS_SEXO == "F") %>%
-  count()
-
-colnames(AUX) <- c("Grupo_Idade", "Sexo", "Populacao")
-
-AUX <- AUX %>%
-  mutate(Pop = case_when(Sexo == "M" ~ Populacao * -1,
-                         Sexo == "F" ~ Populacao ))
-
-AUX <- AUX %>% 
-  mutate(Sexo_Legenda = case_when(Sexo == "M" ~ "Masculino",
-                                  Sexo == "F" ~ "Feminino"))
-
-AUX <- AUX %>%
-  mutate(grupo_Idade_FACT = factor(Grupo_Idade, levels = c(
-    "0 - 05",
-    "06 - 10",
-    "11 - 15",
-    "16 - 20",
-    "21 - 25",
-    "26 - 30",
-    "31 - 35",
-    "36 - 40",
-    "41 - 45",
-    "46 - 50",
-    "51 - 55",
-    "56 - 60",
-    "61 - 65",
-    "66 - 70",
-    "71 - 75",
-    "76 - 80",
-    "> 80"
-  )))
-
-RS_PECONHENTOS_GRAF_Piramide_Historico <- ggplot(AUX, 
-                                                 aes(x = Pop,
-                                                     y = grupo_Idade_FACT, 
-                                                     fill = Sexo_Legenda)) +
-  geom_col(color = "black",
-           linewidth = 0.8) +
-  labs(title = "Pirâmide Etária dos Casos Notificados na 22ª Regional de Saúde",
-       y = "Faixa Etária",
-       x = "População",
-       fill = "Sexo",
-       caption = Fonte1) +
-  scale_x_continuous(labels = abs) +
-  Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.caption = element_text(hjust = 0)) 
-
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Piramide__Historico.png", 
-       plot = RS_PECONHENTOS_GRAF_Piramide_Historico,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
 ################    Mapas   ################################
 
 #####################  Municipios que aplicam soro antiescorpiônico  ###################
 
 SHAPEFILE_SINAP <- SHAPEFILE_REGIONAL %>% mutate(NUCLEO = case_when(NM_MUNICIP == "IVAIPORÃ" 
-                                                                    | NM_MUNICIP == "NOVA TEBAS" 
-                                                                    | NM_MUNICIP == "LUNARDELLI"
-                                                                    | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
-                                                                    | NM_MUNICIP == "MANOEL RIBAS" 
-                                                                    ~ "Rede Descentralizada")
-)
+                                                                       | NM_MUNICIP == "NOVA TEBAS" 
+                                                                       | NM_MUNICIP == "LUNARDELLI"
+                                                                       | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
+                                                                       | NM_MUNICIP == "MANOEL RIBAS" 
+                                                                       ~ "Rede Descentralizada")
+                                                    )
 
 RS22_PECONHENTOS_MAPA_SORO_ESCORPIOES <- ggplot(SHAPEFILE_SINAP) +
   geom_sf(size = 1,
@@ -6599,7 +6115,7 @@ RS22_PECONHENTOS_MAPA_SORO_ESCORPIOES <- ggplot(SHAPEFILE_SINAP) +
           color = "black") +
   scale_fill_manual(name = "", 
                     values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
+                               na.value = "#ADD8E6") + 
   coord_sf(expand = FALSE) +
   geom_sf_label(data = SHAPEFILE_SINAP %>% filter(NUCLEO == "Rede Descentralizada"), 
                 aes(label = NM_MUNICIP),
@@ -6633,14 +6149,14 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Ma
 ##########  Ivaiporã
 
 SHAPEFILE_IVAIPORA <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "IVAIPORÃ" 
-                                                 | NM_MUNICIP == "ARIRANHA DO IVAÍ" 
-                                                 | NM_MUNICIP == "ARAPUÃ"
-                                                 | NM_MUNICIP == "CRUZMALTINA"
-                                                 | NM_MUNICIP == "LIDIANÓPOLIS"
-                                                 | NM_MUNICIP == "JARDIM ALEGRE"
-                                                 | NM_MUNICIP == "ROSÁRIO DO IVAÍ"
-                                                 | NM_MUNICIP == "RIO BRANCO DO IVAÍ" 
-)
+                                                    | NM_MUNICIP == "ARIRANHA DO IVAÍ" 
+                                                    | NM_MUNICIP == "ARAPUÃ"
+                                                    | NM_MUNICIP == "CRUZMALTINA"
+                                                    | NM_MUNICIP == "LIDIANÓPOLIS"
+                                                    | NM_MUNICIP == "JARDIM ALEGRE"
+                                                    | NM_MUNICIP == "ROSÁRIO DO IVAÍ"
+                                                    | NM_MUNICIP == "RIO BRANCO DO IVAÍ" 
+                                                    )
 
 RS22_PECONHENTOS_MAPA_REDE_IVAIPORA <- ggplot(SHAPEFILE_IVAIPORA) +
   geom_sf(aes(fill = NUCLEO), 
@@ -6679,7 +6195,7 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Ma
 ########################  São João do Ivaí   ##########################
 
 SHAPEFILE_SJI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "SÃO JOÃO DO IVAÍ" |
-                                              NM_MUNICIP == "GODOY MOREIRA")
+                                                 NM_MUNICIP == "GODOY MOREIRA")
 
 RS22_PECONHENTOS_MAPA_SJI <- ggplot(SHAPEFILE_SJI) +
   geom_sf(aes(fill = NUCLEO), 
@@ -6717,9 +6233,9 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Ma
 ##############################   MANOEL RIBAS   ##############################
 
 SHAPEFILE_MRI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "MANOEL RIBAS" |
-                                              NM_MUNICIP == "CÂNDIDO DE ABREU" |
-                                              NM_MUNICIP == "SANTA MARIA DO OESTE" |
-                                              NM_MUNICIP == "MATO RICO")
+                                                 NM_MUNICIP == "CÂNDIDO DE ABREU" |
+                                               NM_MUNICIP == "SANTA MARIA DO OESTE" |
+                                                 NM_MUNICIP == "MATO RICO")
 
 RS22_PECONHENTOS_MAPA_MRI <- ggplot(SHAPEFILE_MRI) +
   geom_sf(aes(fill = NUCLEO), 
@@ -6870,7 +6386,7 @@ for(i in SINAP[, 6]){
   
   AUX[which(AUX$COD_IBGE == i), 4] <- as.integer(SINAP %>% 
                                                    filter(Codigo_IBGE == i  
-                                                   ) %>% 
+                                                          ) %>% 
                                                    count() 
   )
   
@@ -6910,10 +6426,10 @@ for(i in SINAP[, 6]){
   )
   
   AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAP %>% 
-                                                    filter(Codigo_IBGE == i,
-                                                           Animal == "Outros"
-                                                    ) %>% 
-                                                    count() 
+                                                   filter(Codigo_IBGE == i,
+                                                          Animal == "Outros"
+                                                   ) %>% 
+                                                   count() 
   )}
 
 SINAP_GERAL <- AUX[-c(1, 3)]
@@ -6934,7 +6450,7 @@ SINAP_GERAL <- SINAP_GERAL %>%
   tab_spanner(label = "Amostras Encaminhadas",
               columns = c(2:8),
               id = "AMostras Geral") %>%
-  cols_align(align = "center", columns = c(2:8)) %>%
+    cols_align(align = "center", columns = c(2:8)) %>%
   cols_label(Municipio = "Município",
              Causador_acidente = "Causador de Acidente",
              Escorpiao = "Escorpião") %>%
@@ -6943,14 +6459,14 @@ SINAP_GERAL <- SINAP_GERAL %>%
   tab_footnote(footnote = "Nota: S/E = Sem Encaminhamentos") %>%
   tab_footnote(footnote = Fonte2) %>%
   tab_options(table.font.size = "small")
-
+  
 gtsave(data = SINAP_GERAL,
        filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/SINAP_GERAL.png")
-##############################################################################
+  ##############################################################################
 
 AUX <- AUX %>% mutate(Cortes = cut(x = Amostras,
-                                   breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, +Inf),
-                                   labels = c("1 - 10", "11 - 20", "21 - 30", "31 - 40", "41 - 50", "51 - 60", "61 - 70", "71 - 80", "> 80")))
+                                    breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, +Inf),
+                                    labels = c("1 - 10", "11 - 20", "21 - 30", "31 - 40", "41 - 50", "51 - 60", "61 - 70", "71 - 80", "> 80")))
 
 SHAPEFILE_SINAP <- left_join(SHAPEFILE_SINAP, AUX, by = c("NM_MUNICIP" = "Municipio"))
 
@@ -6963,15 +6479,15 @@ RS_MAP_SINAP_AMOSTRAS <- ggplot(SHAPEFILE_SINAP) +
           size = 0.5,
           color = "black") +
   scale_fill_manual(name = "Nº de Amostras Encaminhadas", values = c("1 - 10" = "#40E0D0",
-                                                                     "11 - 20" = "#7FFFD4",
-                                                                     "21 - 30" = "#66CDAA",
-                                                                     "31 - 40" = "#8FBC8F",
-                                                                     "41 - 50" = "#20B2AA",
-                                                                     "51 - 60" = "#9ACD32",
-                                                                     "61 - 70" = "#228B22",
-                                                                     "71 - 80" = "#6B8E23",
-                                                                     "> 80" = "#556B2F",
-                                                                     "Sem Encaminhamentos" = "red")) +
+                               "11 - 20" = "#7FFFD4",
+                               "21 - 30" = "#66CDAA",
+                               "31 - 40" = "#8FBC8F",
+                               "41 - 50" = "#20B2AA",
+                               "51 - 60" = "#9ACD32",
+                               "61 - 70" = "#228B22",
+                               "71 - 80" = "#6B8E23",
+                               "> 80" = "#556B2F",
+                               "Sem Encaminhamentos" = "red")) +
   labs(title = "Amostras de Animais Peçonhentos Encaminhadas para o LABTAX",
        subtitle = " Número Total de Amostras Encaminhadas (2020 - 2025)",
        caption = Fonte2) +
@@ -7009,7 +6525,7 @@ Tabela_SINAP <- Tabela_SINAP[, c(1, 3, 4, 11, 7, 8, 9, 10)]
 Tabela_SINAP <- Tabela_SINAP %>%
   gt() %>%
   tab_header( title = md("**Tabela 01. Amostras de Animais Peçonhentos Encaminhadas ao DVVZI/LABTAX (2025)**")) %>%
-  tab_options(heading.align = "left",
+   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
   cols_align(align = "center") %>%
@@ -7023,10 +6539,10 @@ Tabela_SINAP <- Tabela_SINAP %>%
 
 gtsave(data = Tabela_SINAP,
        filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Tabela_SINAP.png")
-
+  
 
 ################    Dados do Período atual    ##############
-
+ 
 AUX <- c("0 - 05", "0 - 05", "06 - 10", "06 - 10", "11 - 15", "11 - 15", "16 - 20", 
          "16 - 20", "21 - 25", "21 - 25", "26 - 30", "26 - 30", "31 - 35", "31 - 35", 
          "36 - 40", "36 - 40", "41 - 45", "41 - 45", "46 - 50", "46 - 50", "51 - 55", "51 - 55",
@@ -7043,7 +6559,7 @@ AUX[, 2] <- c("M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "
 AUX[1, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
   filter(NU_IDADE_N <= 4005 & CS_SEXO == "M") %>%
   count()
-
+  
 AUX[2, 3] <- SINAN_PECONHENTOS_2025[, 17:18] %>%
   filter(NU_IDADE_N <= 4005 & CS_SEXO == "F") %>%
   count()
@@ -7184,7 +6700,7 @@ AUX <- AUX %>%
 
 AUX <- AUX %>% 
   mutate(Sexo_Legenda = case_when(Sexo == "M" ~ "Masculino",
-                                  Sexo == "F" ~ "Feminino"))
+                           Sexo == "F" ~ "Feminino"))
 
 AUX <- AUX %>%
   mutate(grupo_Idade_FACT = factor(Grupo_Idade, levels = c(
@@ -7207,12 +6723,12 @@ AUX <- AUX %>%
     "> 80"
   )))
 
-RS_PECONHENTOS_GRAF_Piramide <- ggplot(AUX, 
+AUX_Graf <- ggplot(AUX, 
                    aes(x = Pop,
                        y = grupo_Idade_FACT, 
-                       fill = Sexo_Legenda)) +
-  geom_col(color = "black",
-           linewidth = 0.8) +
+                            fill = Sexo_Legenda)) +
+                   geom_col(color = "black",
+                   linewidth = 0.8) +
   labs(title = "Pirâmide Etária dos Casos Notificados na 22ª Regional de Saúde",
        y = "Faixa Etária",
        x = "População",
@@ -7222,219 +6738,13 @@ RS_PECONHENTOS_GRAF_Piramide <- ggplot(AUX,
   Theme() +
   theme(axis.text.x = element_text(angle = 0),
         plot.caption = element_text(hjust = 0)) 
+ 
 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Piramide.png", 
-       plot = RS_PECONHENTOS_GRAF_Piramide,     
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes_NOVA_TEBAS.png", 
+       plot = RS22_PECONHENTOS_MAPA_NOVA_TEBAS,     
        width = 24,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-####################  Pirâmide Etária Série Histórica  ########################
-
-AUX <- c("0 - 05", "0 - 05", "06 - 10", "06 - 10", "11 - 15", "11 - 15", "16 - 20", 
-         "16 - 20", "21 - 25", "21 - 25", "26 - 30", "26 - 30", "31 - 35", "31 - 35", 
-         "36 - 40", "36 - 40", "41 - 45", "41 - 45", "46 - 50", "46 - 50", "51 - 55", "51 - 55",
-         "56 - 60", "56 - 60", "61 - 65", "61 - 65", "66 - 70", "66 - 70", "71 - 75", "71 - 75",
-         "76 - 80", "76 - 80", "> 80", "> 80")
-
-AUX <- as.data.frame(AUX)
-
-AUX[, 2] <- c("M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", 
-              "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F")
-
-
-
-AUX[1, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N <= 4005 & CS_SEXO == "M") %>%
-  count()
-
-AUX[2, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N <= 4005 & CS_SEXO == "F") %>%
-  count()
-
-AUX[3, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4005 & NU_IDADE_N <= 4010 & CS_SEXO == "M") %>%
-  count()
-
-AUX[4, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4005 & NU_IDADE_N <= 4010 & CS_SEXO == "F") %>%
-  count()
-
-AUX[5, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4010 & NU_IDADE_N <= 4015 & CS_SEXO == "M") %>%
-  count()
-
-AUX[6, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4010 & NU_IDADE_N <= 4015 & CS_SEXO == "F") %>%
-  count()
-
-AUX[7, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4015 & NU_IDADE_N <= 4020 & CS_SEXO == "M") %>%
-  count()
-
-AUX[8, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4015 & NU_IDADE_N <= 4020 & CS_SEXO == "F") %>%
-  count()
-
-AUX[9, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4020 & NU_IDADE_N <= 4025 & CS_SEXO == "M") %>%
-  count()
-
-AUX[10, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4020 & NU_IDADE_N <= 4025 & CS_SEXO == "F") %>%
-  count()
-
-AUX[11, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4025 & NU_IDADE_N <= 4030 & CS_SEXO == "M") %>%
-  count()
-
-AUX[12, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4025 & NU_IDADE_N <= 4030 & CS_SEXO == "F") %>%
-  count()
-
-AUX[13, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4030 & NU_IDADE_N <= 4035 & CS_SEXO == "M") %>%
-  count()
-
-AUX[14, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4030 & NU_IDADE_N <= 4035 & CS_SEXO == "F") %>%
-  count()
-
-AUX[15, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4035 & NU_IDADE_N <= 4040 & CS_SEXO == "M") %>%
-  count()
-
-AUX[16, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4035 & NU_IDADE_N <= 4040 & CS_SEXO == "F") %>%
-  count()
-
-AUX[17, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4040 & NU_IDADE_N <= 4045 & CS_SEXO == "M") %>%
-  count()
-
-AUX[18, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4040 & NU_IDADE_N <= 4045 & CS_SEXO == "F") %>%
-  count()
-
-AUX[19, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4045 & NU_IDADE_N <= 4050 & CS_SEXO == "M") %>%
-  count()
-
-AUX[20, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4045 & NU_IDADE_N <= 4050 & CS_SEXO == "F") %>%
-  count()
-
-AUX[21, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4050 & NU_IDADE_N <= 4055 & CS_SEXO == "M") %>%
-  count()
-
-AUX[22, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4050 & NU_IDADE_N <= 4055 & CS_SEXO == "F") %>%
-  count()
-
-AUX[23, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4055 & NU_IDADE_N <= 4060 & CS_SEXO == "M") %>%
-  count()
-
-AUX[24, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4055 & NU_IDADE_N <= 4060 & CS_SEXO == "F") %>%
-  count()
-
-AUX[25, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4060 & NU_IDADE_N <= 4065 & CS_SEXO == "M") %>%
-  count()
-
-AUX[26, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4060 & NU_IDADE_N <= 4065 & CS_SEXO == "F") %>%
-  count()
-
-AUX[27, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4065 & NU_IDADE_N <= 4070 & CS_SEXO == "M") %>%
-  count()
-
-AUX[28, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4065 & NU_IDADE_N <= 4070 & CS_SEXO == "F") %>%
-  count()
-
-AUX[29, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4070 & NU_IDADE_N <= 4075 & CS_SEXO == "M") %>%
-  count()
-
-AUX[30, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4070 & NU_IDADE_N <= 4075 & CS_SEXO == "F") %>%
-  count()
-
-AUX[31, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4075 & NU_IDADE_N <= 4080 & CS_SEXO == "M") %>%
-  count()
-
-AUX[32, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4075 & NU_IDADE_N <= 4080 & CS_SEXO == "F") %>%
-  count()
-
-AUX[33, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4080 & CS_SEXO == "M") %>%
-  count()
-
-AUX[34, 3] <- RS_SINAN_Piramide %>%
-  filter(NU_IDADE_N > 4080 & CS_SEXO == "F") %>%
-  count()
-
-colnames(AUX) <- c("Grupo_Idade", "Sexo", "Populacao")
-
-AUX <- AUX %>%
-  mutate(Pop = case_when(Sexo == "M" ~ Populacao * -1,
-                         Sexo == "F" ~ Populacao ))
-
-AUX <- AUX %>% 
-  mutate(Sexo_Legenda = case_when(Sexo == "M" ~ "Masculino",
-                                  Sexo == "F" ~ "Feminino"))
-
-AUX <- AUX %>%
-  mutate(grupo_Idade_FACT = factor(Grupo_Idade, levels = c(
-    "0 - 05",
-    "06 - 10",
-    "11 - 15",
-    "16 - 20",
-    "21 - 25",
-    "26 - 30",
-    "31 - 35",
-    "36 - 40",
-    "41 - 45",
-    "46 - 50",
-    "51 - 55",
-    "56 - 60",
-    "61 - 65",
-    "66 - 70",
-    "71 - 75",
-    "76 - 80",
-    "> 80"
-  )))
-
-RS_PECONHENTOS_GRAF_Piramide_Historico <- ggplot(AUX, 
-                   aes(x = Pop,
-                       y = grupo_Idade_FACT, 
-                       fill = Sexo_Legenda)) +
-  geom_col(color = "black",
-           linewidth = 0.8) +
-  labs(title = "Pirâmide Etária dos Casos Notificados na 22ª Regional de Saúde",
-       y = "Faixa Etária",
-       x = "População",
-       fill = "Sexo",
-       caption = Fonte1) +
-  scale_x_continuous(labels = abs) +
-  Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.caption = element_text(hjust = 0)) 
-
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Piramide__Historico.png", 
-       plot = RS_PECONHENTOS_GRAF_Piramide,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-
+ 
