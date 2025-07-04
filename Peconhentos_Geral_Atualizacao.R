@@ -2014,6 +2014,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE LAGARTAS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201501,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201502,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201503,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201504,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201505,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201506,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201507,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201508,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201509,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201510,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201511,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201512,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201513,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201514,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201515,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201516,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201517,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201518,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201519,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201520,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201521,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201522,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201523,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201524,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201525,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201526,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201527,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201528,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201529,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201530,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201531,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201532,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201533,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201534,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201535,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201536,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201537,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201538,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201539,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201540,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201541,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201542,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201543,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201544,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201545,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201546,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201547,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201548,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201549,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201550,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201551,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201552,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201553,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2015_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201501,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201502,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201503,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201504,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201505,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201506,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201507,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201508,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201509,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201510,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201511,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201512,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201513,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201514,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201515,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201516,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201517,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201518,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201519,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201520,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201521,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201522,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201523,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201524,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201525,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201526,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201527,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201528,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201529,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201530,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201531,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201532,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201533,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201534,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201535,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201536,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201537,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201538,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201539,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201540,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201541,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201542,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201543,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201544,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201545,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201546,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201547,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201548,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201549,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201550,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201551,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2015 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201552,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201553,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2015_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -7200,6 +8006,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201601,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201602,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201603,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201604,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201605,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201606,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201607,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201608,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201609,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201610,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201611,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201612,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201613,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201614,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201615,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201616,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201617,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201618,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201619,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201620,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201621,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201622,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201623,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201624,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201625,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201626,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201627,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201628,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201629,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201630,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201631,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201632,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201633,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201634,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201635,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201636,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201637,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201638,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201639,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201640,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201641,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201642,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201643,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201644,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201645,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201646,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201647,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201648,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201649,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201650,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201651,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201652,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201653,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2016_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201601,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201602,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201603,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201604,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201605,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201606,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201607,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201608,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201609,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201610,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201611,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201612,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201613,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201614,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201615,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201616,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201617,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201618,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201619,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201620,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201621,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201622,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201623,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201624,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201625,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201626,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201627,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201628,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201629,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201630,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201631,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201632,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201633,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201634,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201635,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201636,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201637,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201638,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201639,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201640,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201641,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201642,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201643,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201644,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201645,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201646,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201647,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201648,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201649,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201650,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201651,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2016 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201652,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201653,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2016_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -9491,10 +11103,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2016_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2016"
@@ -12381,6 +13989,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201701,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201702,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201703,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201704,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201705,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201706,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201707,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201708,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201709,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201710,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201711,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201712,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201713,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201714,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201715,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201716,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201717,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201718,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201719,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201720,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201721,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201722,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201723,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201724,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201725,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201726,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201727,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201728,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201729,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201730,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201731,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201732,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201733,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201734,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201735,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201736,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201737,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201738,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201739,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201740,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201741,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201742,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201743,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201744,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201745,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201746,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201747,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201748,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201749,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201750,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201751,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201752,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201753,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2017_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201701,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201702,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201703,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201704,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201705,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201706,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201707,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201708,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201709,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201710,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201711,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201712,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201713,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201714,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201715,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201716,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201717,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201718,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201719,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201720,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201721,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201722,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201723,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201724,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201725,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201726,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201727,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201728,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201729,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201730,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201731,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201732,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201733,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201734,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201735,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201736,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201737,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201738,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201739,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201740,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201741,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201742,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201743,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201744,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201745,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201746,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201747,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201748,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201749,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201750,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201751,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2017 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201752,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201753,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2017_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -14672,10 +17086,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2017_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2017"
@@ -17562,6 +19972,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201801,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201802,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201803,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201804,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201805,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201806,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201807,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201808,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201809,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201810,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201811,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201812,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201813,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201814,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201815,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201816,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201817,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201818,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201819,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201820,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201821,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201822,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201823,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201824,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201825,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201826,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201827,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201828,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201829,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201830,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201831,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201832,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201833,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201834,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201835,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201836,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201837,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201838,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201839,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201840,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201841,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201842,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201843,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201844,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201845,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201846,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201847,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201848,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201849,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201850,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201851,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201852,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201853,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2018_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201801,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201802,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201803,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201804,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201805,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201806,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201807,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201808,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201809,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201810,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201811,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201812,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201813,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201814,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201815,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201816,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201817,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201818,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201819,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201820,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201821,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201822,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201823,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201824,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201825,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201826,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201827,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201828,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201829,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201830,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201831,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201832,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201833,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201834,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201835,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201836,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201837,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201838,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201839,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201840,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201841,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201842,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201843,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201844,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201845,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201846,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201847,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201848,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201849,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201850,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201851,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2018 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201852,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201853,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2018_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -19853,10 +23069,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2018_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2018"
@@ -22742,6 +25954,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201901,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201902,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201903,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201904,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201905,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201906,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201907,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201908,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201909,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201910,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201911,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201912,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201913,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201914,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201915,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201916,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201917,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201918,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201919,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201920,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201921,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201922,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201923,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201924,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201925,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201926,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201927,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201928,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201929,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201930,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201931,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201932,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201933,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201934,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201935,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201936,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201937,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201938,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201939,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201940,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201941,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201942,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201943,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201944,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201945,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201946,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201947,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201948,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201949,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201950,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201951,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201952,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201953,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2019_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201901,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201902,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201903,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==201904,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==201905,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201906,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201907,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==201908,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201909,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201910,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201911,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201912,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201913,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201914,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201915,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201916,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201917,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201918,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201919,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==201920,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201921,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201922,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201923,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201924,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201925,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201926,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201927,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201928,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201929,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201930,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201931,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201932,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201933,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201934,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201935,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201936,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201937,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201938,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201939,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201940,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201941,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201942,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201943,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201944,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201945,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201946,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201947,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201948,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201949,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201950,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201951,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2019 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==201952,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==201953,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2019_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -25033,10 +29051,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2019_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2019"
@@ -27923,6 +31937,813 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202001,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202002,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202003,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202004,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202005,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202006,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202007,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202008,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202009,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202010,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202011,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202012,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202013,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202014,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202015,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202016,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202017,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202018,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202019,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202020,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202021,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202022,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202023,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202024,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202025,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202026,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202027,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202028,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202029,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202030,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202031,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202032,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202033,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202034,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202035,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202036,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202037,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202038,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202039,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202040,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202041,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202042,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202043,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202044,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202045,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202046,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202047,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202048,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202049,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202050,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202051,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202052,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202053,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2020_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202001,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202002,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202003,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202004,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202005,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202006,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202007,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202008,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202009,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202010,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202011,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202012,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202013,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202014,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202015,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202016,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202017,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202018,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202019,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202020,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202021,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202022,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202023,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202024,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202025,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202026,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202027,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202028,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202029,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202030,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202031,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202032,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202033,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202034,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202035,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202036,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202037,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202038,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202039,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202040,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202041,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202042,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202043,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202044,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202045,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202046,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202047,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202048,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202049,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202050,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202051,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2020 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202052,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202053,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2020_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -30214,10 +35035,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2020_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2020"
@@ -33103,6 +37920,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202101,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202102,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202103,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202104,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202105,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202106,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202107,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202108,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202109,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202110,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202111,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202112,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202113,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202114,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202115,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202116,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202117,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202118,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202119,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202120,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202121,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202122,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202123,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202124,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202125,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202126,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202127,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202128,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202129,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202130,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202131,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202132,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202133,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202134,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202135,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202136,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202137,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202138,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202139,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202140,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202141,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202142,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202143,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202144,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202145,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202146,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202147,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202148,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202149,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202150,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202151,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202152,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202153,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2021_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202101,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202102,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202103,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202104,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202105,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202106,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202107,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202108,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202109,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202110,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202111,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202112,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202113,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202114,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202115,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202116,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202117,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202118,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202119,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202120,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202121,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202122,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202123,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202124,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202125,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202126,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202127,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202128,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202129,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202130,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202131,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202132,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202133,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202134,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202135,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202136,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202137,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202138,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202139,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202140,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202141,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202142,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202143,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202144,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202145,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202146,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202147,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202148,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202149,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202150,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202151,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2021 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202152,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202153,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2021_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -35394,10 +41017,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2021_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2021"
@@ -38283,6 +43902,812 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202201,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202202,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202203,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202204,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202205,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202206,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202207,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202208,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202209,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202210,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202211,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202212,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202213,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202214,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202215,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202216,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202217,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202218,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202219,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202220,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202221,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202222,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202223,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202224,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202225,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202226,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202227,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202228,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202229,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202230,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202231,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202232,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202233,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202234,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202235,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202236,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202237,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202238,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202239,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202240,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202241,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202242,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202243,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202244,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202245,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202246,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202247,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202248,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202249,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202250,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202251,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202252,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202253,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2022_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202201,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202202,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202203,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202204,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202205,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202206,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202207,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202208,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202209,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202210,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202211,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202212,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202213,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202214,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202215,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202216,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202217,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202218,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202219,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202220,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202221,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202222,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202223,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202224,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202225,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202226,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202227,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202228,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202229,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202230,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202231,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202232,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202233,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202234,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202235,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202236,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202237,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202238,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202239,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202240,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202241,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202242,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202243,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202244,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202245,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202246,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202247,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202248,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202249,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202250,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202251,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2022 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202252,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202253,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2022_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -40574,10 +46999,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2022_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2022"
@@ -43463,6 +49884,813 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_SE_ABELHAS_Notificados"), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_SE_ABELHAS_Notificados.csv"), 
            row.names = FALSE)
 
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202301,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202302,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202303,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202304,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202305,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202306,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202307,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202308,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202309,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202310,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202311,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202312,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202313,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202314,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202315,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202316,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202317,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202318,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202319,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202320,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202321,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202322,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202323,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202324,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202325,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202326,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202327,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202328,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202329,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202330,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202331,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202332,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202333,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202334,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202335,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202336,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202337,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202338,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202339,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202340,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202341,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202342,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202343,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202344,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202345,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202346,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202347,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202348,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202349,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202350,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202351,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202352,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202353,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2023_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202301,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202302,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202303,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202304,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202305,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202306,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202307,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202308,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202309,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202310,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202311,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202312,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202313,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202314,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202315,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202316,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202317,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202318,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202319,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202320,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202321,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202322,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202323,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202324,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202325,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202326,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202327,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202328,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202329,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202330,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202331,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202332,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202333,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202334,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202335,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202336,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202337,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202338,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202339,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202340,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202341,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202342,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202343,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202344,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202345,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202346,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202347,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202348,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202349,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202350,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202351,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2023 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202352,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202353,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2023_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_SE_OUTROS_Notificados.csv"), 
+           row.names = FALSE)
+
+
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
 
 AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
@@ -45754,10 +52982,6 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2023_TIPO_ACID_LAGARTA"), AUX)
-
-RS_Serie_Historica_Tipo_Acid_Lagarta <- AUX[nrow(AUX), ]
-
-
 
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta) +1, ] <- AUX[nrow(AUX),]
 RS_Serie_Historica_Tipo_Acid_Lagarta[nrow(RS_Serie_Historica_Tipo_Acid_Lagarta), 1] <- "2023"
@@ -48641,6 +55865,812 @@ assign(paste0("RS", RS, "_PECONHENTOS_2024_SE_ABELHAS_Notificados"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_SE_ABELHAS_Notificados"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_SE_ABELHAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE Lagartas NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202401,
+                                                 TP_ACIDENT == 4)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202402,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202403,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202404,
+                                                TP_ACIDENT == 4) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202405,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202406,
+                                                 TP_ACIDENT == 4) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202407,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202408,
+                                                 TP_ACIDENT == 4) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202409,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202410,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202411,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202412,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202413,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202414,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202415,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202416,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202417,
+                                                  TP_ACIDENT == 4) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202418,
+                                                  TP_ACIDENT == 4) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202419,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202420,
+                                                   TP_ACIDENT == 4) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202421,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202422,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202423,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202424,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202425,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202426,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202427,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202428,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202429,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202430,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202431,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202432,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202433,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202434,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202435,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202436,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202437,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202438,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202439,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202440,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202441,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202442,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202443,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202444,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202445,
+                                                  TP_ACIDENT == 4) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202446,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202447,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202448,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202449,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202450,
+                                                  TP_ACIDENT == 4) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202451,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202452,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202453,
+                                                  TP_ACIDENT == 4) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2024_SE_LAGARTAS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_SE_LAGARTAS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_SE_LAGARTAS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_SE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+############################################################################################################################
+############      Filtrando os dados por SE OUTROS NOTIFICADOS para elaborar o Canal Endêmico   #########################
+
+AUX <- matrix(data = NA, 
+              nrow = nrow, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Município" 
+
+AUX[,1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202401,
+                                                 TP_ACIDENT == 6)%>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202402,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202403,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count()
+  )
+  
+  AUX[which(AUX == i),5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                         filter(ID_MN_RESI ==i &
+                                                  SEM_PRI ==202404,
+                                                TP_ACIDENT == 6) %>% 
+                                         count()
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                          filter(ID_MN_RESI ==i &
+                                                   SEM_PRI ==202405,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202406,
+                                                 TP_ACIDENT == 6) %>%
+                                          count()
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202407,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                          filter(ID_MN_RESI ==i,
+                                                 SEM_PRI ==202408,
+                                                 TP_ACIDENT == 6) %>% 
+                                          count() 
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202409,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202410,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202411,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202412,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202413,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202414,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202415,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202416,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202417,
+                                                  TP_ACIDENT == 6) %>%  
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202418,
+                                                  TP_ACIDENT == 6) %>%      
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202419,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i),  21] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                            filter(ID_MN_RESI ==i,
+                                                   SEM_PRI ==202420,
+                                                   TP_ACIDENT == 6) %>%
+                                            count() 
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202421,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202422,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202423,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202424,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202425,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202426,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202427,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202428,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202429,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202430,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202431,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202432,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202433,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202434,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202435,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202436,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202437,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202438,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202439,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202440,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202441,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202442,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202443,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202444,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202445,
+                                                  TP_ACIDENT == 6) %>%
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202446,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202447,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202448,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202449,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count()
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202450,
+                                                  TP_ACIDENT == 6) %>% 
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202451,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SINAN_PECONHENTOS_2024 %>%
+                                           filter(ID_MN_RESI ==i &
+                                                    SEM_PRI ==202452,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                           filter(ID_MN_RESI ==i,
+                                                  SEM_PRI ==202453,
+                                                  TP_ACIDENT == 6) %>%
+                                           count() 
+  )
+}
+
+AUX[, 1] <- BASE_IBGE[which(BASE_IBGE$RS == RS), 3]
+
+AUX[(nrow(AUX)+ 1), 2:54] <- apply(AUX[, 2:54], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_PECONHENTOS_2024_SE_OUTROS_Notificados <- AUX
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_SE_OUTROS_Notificados"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_SE_OUTROS_Notificados"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_SE_OUTROS_Notificados.csv"), 
            row.names = FALSE)
 
 #####        FIltrando os dados por município e construindo uma tabela geral     s#####
@@ -51978,6 +60008,62 @@ CE_BASE_ABELHAS_Notificados[10, 1] <- "2024"
 
 write.csv (CE_BASE_ABELHAS_Notificados, 
            paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_ABELHAS_Notificados.csv"), 
+           row.names = FALSE)
+
+## LAGARTAS
+CE_BASE_LAGARTAS_Notificados <- RS_PECONHENTOS_2015_SE_LAGARTAS_Notificados
+CE_BASE_LAGARTAS_Notificados <- RS_PECONHENTOS_2015_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2015_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2016_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2016_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2017_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2017_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2018_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2018_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2019_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2019_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2020_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2020_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2021_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2021_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2022_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2022_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2023_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2023_SE_LAGARTAS_Notificados),]
+CE_BASE_LAGARTAS_Notificados[nrow(CE_BASE_LAGARTAS_Notificados)+1,] <-  RS_PECONHENTOS_2024_SE_LAGARTAS_Notificados[nrow(RS_PECONHENTOS_2024_SE_LAGARTAS_Notificados),]
+
+CE_BASE_LAGARTAS_Notificados[1, 1] <- "2015"
+CE_BASE_LAGARTAS_Notificados[2, 1] <- "2016"
+CE_BASE_LAGARTAS_Notificados[3, 1] <- "2017"
+CE_BASE_LAGARTAS_Notificados[4, 1] <- "2018"
+CE_BASE_LAGARTAS_Notificados[5, 1] <- "2019"
+CE_BASE_LAGARTAS_Notificados[6, 1] <- "2020"
+CE_BASE_LAGARTAS_Notificados[7, 1] <- "2021"
+CE_BASE_LAGARTAS_Notificados[8, 1] <- "2022"
+CE_BASE_LAGARTAS_Notificados[9, 1] <- "2023"
+CE_BASE_LAGARTAS_Notificados[10, 1] <- "2024"
+
+write.csv (CE_BASE_LAGARTAS_Notificados, 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_LAGARTAS_Notificados.csv"), 
+           row.names = FALSE)
+
+## OUTROS
+CE_BASE_OUTROS_Notificados <- RS_PECONHENTOS_2015_SE_OUTROS_Notificados
+CE_BASE_OUTROS_Notificados <- RS_PECONHENTOS_2015_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2015_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2016_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2016_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2017_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2017_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2018_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2018_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2019_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2019_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2020_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2020_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2021_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2021_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2022_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2022_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2023_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2023_SE_OUTROS_Notificados),]
+CE_BASE_OUTROS_Notificados[nrow(CE_BASE_OUTROS_Notificados)+1,] <-  RS_PECONHENTOS_2024_SE_OUTROS_Notificados[nrow(RS_PECONHENTOS_2024_SE_OUTROS_Notificados),]
+
+CE_BASE_OUTROS_Notificados[1, 1] <- "2015"
+CE_BASE_OUTROS_Notificados[2, 1] <- "2016"
+CE_BASE_OUTROS_Notificados[3, 1] <- "2017"
+CE_BASE_OUTROS_Notificados[4, 1] <- "2018"
+CE_BASE_OUTROS_Notificados[5, 1] <- "2019"
+CE_BASE_OUTROS_Notificados[6, 1] <- "2020"
+CE_BASE_OUTROS_Notificados[7, 1] <- "2021"
+CE_BASE_OUTROS_Notificados[8, 1] <- "2022"
+CE_BASE_OUTROS_Notificados[9, 1] <- "2023"
+CE_BASE_OUTROS_Notificados[10, 1] <- "2024"
+
+write.csv (CE_BASE_OUTROS_Notificados, 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_OUTROS_Notificados.csv"), 
            row.names = FALSE)
 
 ########################################################################################################################################
