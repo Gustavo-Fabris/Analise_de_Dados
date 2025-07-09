@@ -3304,13 +3304,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -3327,6 +3327,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2015"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2015"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2015"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2015"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -6004,7 +6516,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -6021,6 +6533,90 @@ assign(paste0("RS", RS, "_PECONHENTOS_2015_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2015 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 6,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[1, 1] <- "2015"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2015_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2015_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2015_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2015)
@@ -9294,13 +9890,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -9316,6 +9912,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2016"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2016"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2016"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2016"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -11986,7 +13094,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -12003,6 +13111,90 @@ assign(paste0("RS", RS, "_PECONHENTOS_2016_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2016 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2016"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2016_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2016_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2016_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2016)
@@ -15277,13 +16469,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -15299,6 +16491,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2017"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2017"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2017"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2017"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -17969,7 +19673,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -17986,6 +19690,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2017_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2017 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2017"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2017_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2017_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2017_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2017)
@@ -21260,13 +23049,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -21282,6 +23071,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2018"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2018"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2018"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2018"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -23952,7 +26253,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -23969,6 +26270,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2018_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2018 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2018"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2018_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2018_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2018_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2018)
@@ -27242,13 +29628,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -27264,6 +29650,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2019"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2019"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2019"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2019"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -29934,7 +32832,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -29951,6 +32849,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2019_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2019 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2019"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2019_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2019_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2019_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2019)
@@ -33226,13 +36209,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -33248,6 +36231,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2020"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2020"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2020"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2020"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -35918,7 +39413,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -35935,6 +39430,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2020_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2020 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2020"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2020_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2020_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2020_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2020)
@@ -39208,13 +42788,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -39230,6 +42810,517 @@ assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2021"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2021"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2021"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2021"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -41900,7 +45991,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -41917,6 +46008,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2021_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2021 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2021"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2021_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2021_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2021_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2021)
@@ -45190,13 +49366,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -45213,6 +49389,519 @@ assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA"), AUX)
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA.csv"), 
            row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2022"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2022"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2022"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2022"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_LOCAL_PICADA_LAGARTA.csv"), 
+           row.names = FALSE)
+
 
 ###############    Tipo de acidente     #####################
 
@@ -47882,7 +52571,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -47899,6 +52588,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2022_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2022 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2022"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2022_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2022_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2022_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2022)
@@ -51173,13 +55947,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -51196,6 +55970,519 @@ assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA"), AUX)
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA.csv"), 
            row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2023"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2023"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2023"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2023"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_LOCAL_PICADA_LAGARTA.csv"), 
+           row.names = FALSE)
+
 
 ###############    Tipo de acidente     #####################
 
@@ -53865,7 +59152,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -53882,6 +59169,91 @@ assign(paste0("RS", RS, "_PECONHENTOS_2023_MAN_SIST_ESP_ABELHA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_MAN_SIST_ESP_ABELHA.csv"), 
+           row.names = FALSE)
+
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2023 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2023"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2023_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2023_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2023_OBITOS.csv"), 
            row.names = FALSE)
 
 rm(SINAN_PECONHENTOS_2023)
@@ -57155,13 +62527,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -57177,6 +62549,518 @@ assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2024"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2024"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2024"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2024"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA_LAGARTA.csv"), 
            row.names = FALSE)
 
 ###############    Tipo de acidente     #####################
@@ -59866,6 +65750,91 @@ write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_MAN_SIST_ESP_ABELHA"), AUX
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_MAN_SIST_ESP_ABELHA.csv"), 
            row.names = FALSE)
 
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2024 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2024"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2024_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2024_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_OBITOS.csv"), 
+           row.names = FALSE)
+
 rm(SINAN_PECONHENTOS_2024)
 
 
@@ -60073,6 +66042,10 @@ write.csv (RS_Serie_Historica_Geral,
            "Tabulacoes_R/Peconhentos/RS_Serie_Historica_Geral.csv", 
            row.names = FALSE)
 
+write.csv (RS_Serie_Historica_Obitos, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Historica_Obitos.csv", 
+           row.names = FALSE)
+
 write.csv (RS_Serie_Historica_Tipo_Acid, 
            "Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid.csv", 
            row.names = FALSE)
@@ -60093,5 +66066,28 @@ write.csv (SINAN_Piramide,
            "Tabulacoes_R/Peconhentos/RS_SINAN_Piramide.csv", 
            row.names = FALSE)
 
+write.csv (RS_Serie_Histórica_Local_da_Picada, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada.csv", 
+           row.names = FALSE)
+
+write.csv (RS_Serie_Histórica_Local_da_Picada_Aranha, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Aranha.csv", 
+           row.names = FALSE)
+
+write.csv (RS_Serie_Histórica_Local_da_Picada_Escorpiao, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Escorpiao.csv", 
+           row.names = FALSE)
+
+write.csv (RS_Serie_Histórica_Local_da_Picada_Serpente, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Serpente.csv", 
+           row.names = FALSE)
+
+write.csv (RS_Serie_Histórica_Local_da_Picada_Lagarta, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Lagarta.csv", 
+           row.names = FALSE)
+
+write.csv (RS_Serie_Histórica_Tempo_de_Atendimento, 
+           "Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Tempo_de_Atendimento.csv", 
+           row.names = FALSE)
 
 

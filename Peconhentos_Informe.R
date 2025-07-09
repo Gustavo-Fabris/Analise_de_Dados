@@ -55,9 +55,9 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 #########   Criando objeto Fonte para ser utilizado pelos gráficos   ######
 
-Fonte <- "Fonte: SINAN. Base DBF acessada em 23/11/2023"
-Fonte1 <- "Fonte: Controle Interno 22ª Regional de Saúde"
-Fonte2 <- "Fonte: SINAP. Acesso em 24/06/2025"
+Fonte <- "Fonte: SINAN. Base DBF acessada em 23/11/2023. Dados Sujeitos a alteração."
+Fonte1 <- "Fonte: Controle Interno 22ª Regional de Saúde."
+Fonte2 <- "Fonte: SINAP. Acesso em 24/06/2025. Dados sujeitos a alteração."
 
 ####   Estabelecendo o número de municípios em cada RS
 
@@ -88,24 +88,44 @@ CE_BASE_ABELHAS_Notificados <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/
                                         sep = ",")
 
 CE_BASE_LAGARTAS_Notificados <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_LAGARTAS_Notificados.csv"),
-                                        header = TRUE,
-                                        sep = ",")
+                                         header = TRUE,
+                                         sep = ",")
 
 CE_BASE_OUTROS_Notificados <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_CE_BASE_OUTROS_Notificados.csv"),
-                                        header = TRUE,
-                                        sep = ",")
+                                       header = TRUE,
+                                       sep = ",")
 
 RS_Serie_Historica_Geral <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Geral.csv"),
                                      header = TRUE,
                                      sep = ",")
 
-RS_Serie_Histórica_Tempo_de_Atendimento <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_TEMPO_ATEND.csv"),
+RS_Serie_Histórica_Tempo_de_Atendimento <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Tempo_de_Atendimento.csv"),
                                                     header = TRUE,
                                                     sep = ",")
 
-RS_Serie_Histórica_Local_da_Picada <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2024_LOCAL_PICADA.csv"),
+RS_Serie_Histórica_Local_da_Picada <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada.csv"),
                                                header = TRUE,
                                                sep = ",")
+
+RS_Serie_Histórica_Local_da_Picada_Aranha <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Aranha.csv"),
+                                                      header = TRUE,
+                                                      sep = ",")
+
+RS_Serie_Histórica_Local_da_Picada_Serpente <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Serpente.csv"),
+                                                        header = TRUE,
+                                                        sep = ",")
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Escorpiao.csv"),
+                                                         header = TRUE,
+                                                         sep = ",")
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Histórica_Local_da_Picada_Lagarta.csv"),
+                                                       header = TRUE,
+                                                       sep = ",")
+
+RS_Serie_Historica_Obitos <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Obitos.csv"),
+                                         header = TRUE,
+                                         sep = ",")
 
 RS_Serie_Historica_Tipo_Acid <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS_Serie_Historica_Tipo_Acid.csv"),
                                          header = TRUE,
@@ -128,16 +148,16 @@ RS_SINAN_Piramide <- read.csv(file = "Tabulacoes_R/Peconhentos/RS_SINAN_Piramide
                               sep = ",")
 
 RS_PECONHENTOS_2024_Incidencia <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_PECONHENTOS_2024_TIPO_ACID.csv"),
-                                      header = TRUE,
-                                      sep = ",")
+                                           header = TRUE,
+                                           sep = ",")
 
 RS_PECONHENTOS_2023_Incidencia  <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_PECONHENTOS_2023_TIPO_ACID.csv"),
-                                      header = TRUE,
-                                      sep = ",")
+                                            header = TRUE,
+                                            sep = ",")
 
 RS_PECONHENTOS_2022_Incidencia  <- read.csv(file = paste0("Tabulacoes_R/Peconhentos/RS", RS,"_PECONHENTOS_2022_TIPO_ACID.csv"),
-                                      header = TRUE,
-                                      sep = ",")
+                                            header = TRUE,
+                                            sep = ",")
 
 SHAPEFILE_REGIONAL <- st_read("/home/gustavo/Área de Trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde.shp")
 
@@ -3015,25 +3035,25 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                    filter(ID_MN_RESI ==i,
-                                                          CS_ZONA == 1) %>%   
+                                                          ANT_ZONA == 1) %>%   
                                                    count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                    filter(ID_MN_RESI ==i,
-                                                          CS_ZONA == 2) %>%   
+                                                          ANT_ZONA == 2) %>%   
                                                    count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                    filter(ID_MN_RESI ==i,
-                                                          CS_ZONA == 3) %>%   
+                                                          ANT_ZONA == 3) %>%   
                                                    count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                    filter(ID_MN_RESI ==i,
-                                                          CS_ZONA == 9 
+                                                          ANT_ZONA == 9 
                                                           |
                                                             is.na(CS_ZONA)) %>%   
                                                    count()
@@ -3409,13 +3429,13 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 10) %>%   
+                                                             ANT_LOCA_1 == "10") %>%   
                                                     count()
   )
   
   AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                     filter(ID_MN_RESI ==i &
-                                                             ANT_LOCA_1 == 99) %>%   
+                                                             ANT_LOCA_1 == "99") %>%   
                                                     count()
   )
 }
@@ -3425,6 +3445,7 @@ AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
 AUX[nrow(AUX), 1] <- "Total"
 
 RS_Serie_Histórica_Local_da_Picada[nrow(RS_Serie_Histórica_Local_da_Picada) +1, ] <- AUX[nrow(AUX),]
+
 RS_Serie_Histórica_Local_da_Picada[nrow(RS_Serie_Histórica_Local_da_Picada), 1] <- "2025"
 
 assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA"), AUX)
@@ -3432,6 +3453,519 @@ assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA"), AUX)
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA.csv"), 
            row.names = FALSE)
+
+###############    Local da Picada  Aranha   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "2") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "2") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), 1] <- "2025"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_ARANHA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_ARANHA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_ARANHA.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  ASerpente   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "1") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "1") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), 1] <- "2025"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_SERPENTE"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_SERPENTE"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_SERPENTE.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Escorpião   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "3") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "3") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), 1] <- "2025"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_ESCORPIAO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_ESCORPIAO"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_ESCORPIAO.csv"), 
+           row.names = FALSE)
+
+###############    Local da Picada  Lagarta   #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Cabeça <- NA
+
+AUX$Braço <- NA
+
+AUX$Antebraço <- NA
+
+AUX$Mao <- NA
+
+AUX$Dedo_Mao <- NA
+
+AUX$Tronco <- NA
+
+AUX$Coxa <- NA
+
+AUX$Perna <- NA
+
+AUX$Pe <- NA
+
+AUX$Dedo_pe <- NA
+
+AUX$Ignorado <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANT_LOCA_1 == "01",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "02",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "03",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "04",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            ANT_LOCA_1 == "05",
+                                                          TP_ACIDENT == "4") %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "06",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "07",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "08",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "09",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "10",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             ANT_LOCA_1 == "99",
+                                                           TP_ACIDENT == "4") %>%   
+                                                    count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta) +1, ] <- AUX[nrow(AUX),]
+
+RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), 1] <- "2025"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_LAGARTA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_LAGARTA"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_LOCAL_PICADA_LAGARTA.csv"), 
+           row.names = FALSE)
+
 
 ###############    Tipo de acidente     #####################
 
@@ -6103,7 +6637,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
                                                    count()
   )
   
-  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
                                                    filter(ID_MN_RESI ==i &
                                                             TP_ACIDENT == 5,
                                                           CLI_OUTR_2 == 1) %>%   
@@ -6121,9 +6655,328 @@ assign(paste0("RS", RS, "_PECONHENTOS_2025_MAN_SIST_ESP_ABELHA"), AUX)
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_MAN_SIST_ESP_ABELHA"), AUX), 
            paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_MAN_SIST_ESP_ABELHA.csv"), 
            row.names = FALSE)
+
+###############    Óbitos    #####################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Serpentes <- NA
+
+AUX$Aranha <- NA
+
+AUX$Escorpiao <- NA
+
+AUX$Lagarta <- NA
+
+AUX$Abelha <- NA
+
+AUX$Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          TP_ACIDENT == 1,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )    
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 2,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 3,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 4,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            TP_ACIDENT == 5,
+                                                          EVOLUCAO == 2) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                    filter(ID_MN_RESI ==i &
+                                                             TP_ACIDENT == 6,
+                                                           EVOLUCAO == 2) %>%   
+                                                    count()
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos)+1,] <- AUX[nrow(AUX),]
+
+RS_Serie_Historica_Obitos[nrow(RS_Serie_Historica_Obitos), 1] <- "2025"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_OBITOS"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_OBITOS"), AUX), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_OBITOS.csv"), 
+           row.names = FALSE)
 ########################################################################################################################################
 #####################################   FIM FIM FIM FIM FIM FIM FIM #####################################################################
 #########################################################################################################################################
+
+###################################   Análise SINAN    ############################################3
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Abertas <- NA
+
+AUX$Sem_Evo <- NA
+
+AUX$Trabalho <- NA
+
+Abertas <- PECONHENTO2025 %>%
+  filter(is.na(DT_ENCERRA))
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(Abertas %>% 
+                                                   filter(ID_MN_RESI == i) %>%   
+                                                   count() 
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            EVOLUCAO != 1,
+                                                          EVOLUCAO != 2,
+                                                          EVOLUCAO != 3
+                                                   ) %>%   
+                                                   count()
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            DOENCA_TRA != 1,
+                                                          DOENCA_TRA != 2) %>%   
+                                                   count()
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_SINAN_PROB_ENCERRAMENTO"), AUX)
+
+###################################   Análise Inconsistência SINAN    ############################################3
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Botropico_Leve <- NA
+
+AUX$Botropico_Moderado <- NA
+
+AUX$Botropico_Grave <- NA
+
+AUX$Crotalico_Leve <- NA
+
+AUX$Crotalico_Moderado <- NA
+
+AUX$Crotalico_Grave <- NA
+
+AUX$Escorpiônico_Moderado <- NA
+
+AUX$Escorpiônico_Grave <- NA
+
+AUX$Loxoscelico_Moderado <- NA
+
+AUX$Loxoscelico_Grave <- NA
+
+AUX$Foneutrismo_Moderado <- NA
+
+AUX$Foneutrismo_Grave <- NA
+
+AUX$Lonomia_Moderado <- NA
+
+AUX$Lonomia_Grave <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(PECONHENTO2025 %>% 
+                                                   filter(ID_MN_RESI == i,
+                                                          ANI_SERPEN == 1,
+                                                          TRA_CLASSI == 1,
+                                                          NU_AMPOLAS <= "2" | 
+                                                            NU_AMPOLAS >= "4"
+                                                   ) %>%   
+                                                   count() 
+  )
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                          ANI_SERPEN == 1 &
+                                                          TRA_CLASSI == 2 &
+                                                          NU_AMPOLAS <= "4" |
+                                                            NU_AMPOLAS >= "8" 
+                                                   ) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(SINAN_PECONHENTOS_2025 %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            ANI_SERPEN == 1 &
+                                                            TRA_CLASSI == 3 &
+                                                            NU_AMPOLAS != "12"
+                                                   ) %>%   
+                                                   count()
+  ) 
+  
+    AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(PECONHENTO2025 %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                          ANI_SERPEN == 2 &
+                                                          TRA_CLASSI == 1 &
+                                                          NU_AMPOL_1 != "5" 
+                                                   ) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 9] <- as.integer(PECONHENTO2025 %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                          ANI_SERPEN == 2 &
+                                                          TRA_CLASSI == 2 &
+                                                          NU_AMPOL_1 != "10" 
+                                                   ) %>%   
+                                                   count() 
+  )
+  
+  
+  
+  AUX[which(AUX$COD_IBGE == i), 10] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i &
+                                                           ANI_SERPEN == 2 &
+                                                           TRA_CLASSI == 3 &
+                                                           NU_AMPOL_1 != "20" 
+                                                    ) %>%   
+                                                    count() 
+  ) 
+
+  AUX[which(AUX$COD_IBGE == i), 11] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           TP_ACIDENT == 3,
+                                                           TRA_CLASSI == 2,
+                                                           NU_AMPOL_9 < "2" |
+                                                             NU_AMPOL_9 > "3"
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+    AUX[which(AUX$COD_IBGE == i), 12] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           TP_ACIDENT == 3,
+                                                           TRA_CLASSI == 3,
+                                                           NU_AMPOL_9 <= "4" |
+                                                             NU_AMPOL_9 >= "6"
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 13] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANI_ARANHA == 2,
+                                                           TRA_CLASSI == 2,
+                                                           CON_SOROTE == 2,
+                                                           
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 14] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANI_ARANHA == 2,
+                                                           TRA_CLASSI == 3,
+                                                           CON_SOROTE == 2
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+    AUX[which(AUX$COD_IBGE == i), 15] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANI_ARANHA == 1,
+                                                           TRA_CLASSI == 2,
+                                                           CON_SOROTE == 2
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 16] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANI_ARANHA == 1,
+                                                           TRA_CLASSI == 2,
+                                                           CON_SOROTE == 2
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 17] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANI_LAGART == 1,
+                                                           TRA_CLASSI == 2,
+                                                           CON_SOROTE == 2
+                                                    ) %>%   
+                                                    count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 18] <- as.integer(PECONHENTO2025 %>% 
+                                                    filter(ID_MN_RESI == i,
+                                                           ANI_LAGART == 1,
+                                                           TRA_CLASSI == 3,
+                                                           CON_SOROTE == 2
+                                                    ) %>%   
+                                                    count() 
+  )
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_PECONHENTOS_2025_SINAN_SORO_INCONSISTENCIA"), AUX)
 
 ############################    Gráficos e Mapas    ##################################################################################
 
@@ -6198,37 +7051,37 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes com Animais Peçonhentos",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Geral <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM ANIMAIS PEÇONHENTOS",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity",
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 #####################################   SERPENTES      #############################################################################
 
@@ -6299,37 +7152,37 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_SERPENTES_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes com SERPENTES",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_SERPENTES_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_SERPENTES_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Serpentes <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM SERPENTES",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 #####################################   ARANHAS      #############################################################################
 
@@ -6400,37 +7253,39 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_ARANHAS_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes com ARANHAS",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_ARANHAS_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_ARANHAS_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Aranhas <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM ARANHAS",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)
+  )
+  )
 
 #####################################   ESCORPIÕES     #############################################################################
 
@@ -6501,37 +7356,39 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_ESCORPIOES_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes com ESCORPIÕES",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_ESCORPIOES_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_ESCORPIOES_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Escorpiao <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM ESCORPIÕES",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)
+  )
+  )
 
 #####################################   ABELHAS     #############################################################################
 
@@ -6602,37 +7459,40 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_ABELHAS_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes com ABELHAS",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_ABELHAS_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_ABELHAS_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Abelha <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM ABELHAS",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, 
+                                size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C", 
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)
+  )
+  )
 
 #####################################   LAGARTAS     #############################################################################
 
@@ -6703,37 +7563,39 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_LAGARTAS_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes com LAGARTAS",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_LAGARTAS_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_LAGARTAS_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Lagarta <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM LAGARTAS",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior), 
+            fill = "#F0E68C", 
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)
+  )
+  )
 
 #####################################   OUTROS     #############################################################################
 
@@ -6804,37 +7666,40 @@ AUX_GRAF$Sem_EPI <-as.character(c("01",  "02", "03",  "04",  "05",  "06",  "07",
                                   "43",  "44",  "45",  "46",  "47",  "48",  "49",  
                                   "50",  "51",  "52",  "53"))
 
-assign(paste0("RS", RS, "_GRAF_CE_OUTROS_Notificados"), ggplot(AUX_GRAF, aes(Ordem))  +
-         theme(axis.text.x = element_text(angle = 90, 
-                                          vjust = .5,
-                                          face = "bold",
-                                          size = 12)) +
-         labs(caption = Fonte,
-              title = "Canal Endêmico Acidentes (OUTROS)",
-              subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
-         theme(
-           panel.grid.major = element_line(color = "#C0C0C0"),
-           panel.grid.minor = element_blank(),
-           panel.background = element_rect(fill = "#B22222"),
-           plot.title = element_text(face = "bold",
-                                     size = 24,
-                                     colour = "#1C1C1C"),
-           plot.caption = element_text(hjust = 0, size = 12)
-         ) +
-         geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-         geom_area(aes( y = Mediana), fill = "#556B2F") +
-         geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
-         xlab("Semana Epidemiológica") +
-         ylab("Número de Casos") +
-         scale_x_continuous(breaks = c(1:53), label = AUX_GRAF$Sem_EPI) +
-         scale_y_continuous(expand = expansion(mult = c(0, 0.05))))
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Canal_Endemico_OUTROS_PECONHENTOS.png", 
-       plot = RS22_GRAF_CE_OUTROS_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_CE_Outros <- ggplot(AUX_GRAF, aes(Ordem))  +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = .5,
+                                   face = "bold",
+                                   size = 12)) +
+  labs(caption = Fonte,
+       title = "CANAL ENDÊMICO - ACIDENTES COM OUTROS ANIMAIS PEÇONHENTOS",
+       subtitle = paste0("Casos Notificados - ", RS, "ª Regional de Saúde")) +
+  theme(
+    panel.grid.major = element_line(color = "#C0C0C0"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#B22222"),
+    plot.title = element_text(face = "bold",
+                              size = 24,
+                              colour = "#1C1C1C"),
+    plot.caption = element_text(hjust = 0, 
+                                size = 12)
+  ) +
+  geom_area(aes(y = Lim_Superior),
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes( y = Mediana), 
+            fill = "#556B2F") +
+  geom_line(aes( y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
+  xlab("Semana Epidemiológica") +
+  ylab("Número de Casos") +
+  scale_x_continuous(breaks = c(1:53), 
+                     label = AUX_GRAF$Sem_EPI) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)
+  )
+  )
 
 ############ Criando uma função Theme para ser utilizado por todos os gráficos      ##################################################
 
@@ -6852,263 +7717,224 @@ Theme <- function(){
         legend.position = "bottom")
 }
 
-########################################################################################################################################
 ######################################################################################################################################
-################    Séries Históricas      ######################################
+#################################################    Séries Históricas     ###########################################################
 
-##########  Notificados
+###################################  Notificados  ##########################################################################
 
-RS_Serie_Historica_Geral[, 1] <- as.factor(RS_Serie_Historica_Geral[, 1]) 
+AUX <- RS_Serie_Historica_Geral[-1, c(1, 5:36)]
 
-RS_Serie_Historica_Geral <- RS_Serie_Historica_Geral[, c(1, 5:36)]
+AUX[, 1] <- as.factor(AUX[, 1])
 
-colnames(RS_Serie_Historica_Geral)[1] <- "Ano"
+colnames(AUX)[1] <- "Ano"
 
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Notificados"), ggplot(RS_Serie_Historica_Geral, aes(x = Ano,
-                                                                                                   y = Notificados, group = 1)
-                                                                     ) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) +
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS - (2015 a 2025)",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Notificados), 
-                    size = 6, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
-                                               )
-                            ) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, size = 12)
-               )
-)
+RS_PECONHENTOS_GRAF_SERIE_HIST_Geral <- ggplot(AUX, aes(x = Ano,
+                                                        y = Notificados, 
+                                                        group = 1)
+) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA CASOS NOTIFICADOS (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Notificados), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
+  )
+  ) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_Serie_Historica_Notificados.png", 
-       plot = RS22_GRAF_Serie_Historica_Notificados,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+########################################    Serpentes    #######################################################
 
-###########    Serpentes
+AUX <- RS_Serie_Historica_Tipo_Acid[-1, c(1, 5:11)]
 
-RS_Serie_Historica_Tipo_Acid[, 1] <- as.factor(RS_Serie_Historica_Tipo_Acid[, 1]) 
+AUX[, 1] <- as.factor(AUX[, 1])
 
-RS_Serie_Historica_Tipo_Acid <- RS_Serie_Historica_Tipo_Acid[, c(1, 5:11)]
+colnames(AUX)[1] <- "Ano"
 
-colnames(RS_Serie_Historica_Tipo_Acid)[1] <- "Ano"
+RS_PECONHENTOS_GRAF_SERIE_HIST_Serpente <- ggplot(AUX, aes(x = Ano,
+                                                           y = Serpente, 
+                                                           group = 1)) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) + 
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA - NOTIFICAÇÕES DE ACIDENTES COM SERPENTES (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Serpente), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
 
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Serpentes"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                     y = Serpente, 
-                                                                                                     group = 1)) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) + 
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS (SERPENTES) - 2015 a 2025",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Serpente), 
-                    size = 6, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, size = 12))
-)
+########################################  Aranhas   ####################################################################
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_SERPENTES.png", 
-       plot = RS22_GRAF_Serie_Historica_Serpentes,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+RS_PECONHENTOS_GRAF_SERIE_HIST_Aranha <- ggplot(AUX, aes(x = Ano,
+                                                         y = Aranha,
+                                                         group = 1)) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA - NOTIFICAÇÕES DE ACIDENTES COM ARANHAS (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Aranha), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
 
+################################################   Escorpiões    ######################################################
 
+RS_PECONHENTOS_GRAF_SERIE_HIST_Escorpiao <-  ggplot(AUX, aes(x = Ano,
+                                                             y = Escorpiao,
+                                                             group = 1)) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA - NOTIFICAÇÕES DE ACIDENTES COM ESCORPIÕES (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Escorpiao), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
+  )
+  ) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
 
-###############  Aranhas
+#######################################   Abelhas   ############################################################################
 
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Aranhas"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                   y = Aranha,
-                                                                                                   group = 1)) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) +
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS (ARANHAS) - 2015 a 2025",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Aranha), 
-                    size = 6, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, size = 12))
-)
+RS_PECONHENTOS_GRAF_SERIE_HIST_Abelha <-  ggplot(AUX, aes(x = Ano,
+                                                          y = Abelha,
+                                                          group = 1)
+) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA - NOTIFICAÇÕES DE ACIDENTES COM ABELHAS (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Abelha), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
+  )
+  ) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_ARANHAS.png", 
-       plot = RS22_GRAF_Serie_Historica_Aranhas,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
+##################################   Lagarta  ####################################################################
 
-###########   Escorpiões
+RS_PECONHENTOS_GRAF_SERIE_HIST_Lagarta <-  ggplot(AUX, aes(x = Ano,
+                                                           y = Lagarta,
+                                                           group = 1)) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA - NOTIFICAÇÕES DE ACIDENTES COM LAGARTAS (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Lagarta), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
+  )
+  ) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
 
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Escorpioes"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                      y = Escorpiao,
-                                                                                                      group = 1)) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) +
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS (ESCORPIÕES) - 2015 a 2025",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Escorpiao), 
-                    size = 6, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, size = 12))
-)
+####################################   Outros    #################################################################
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_Escorpioes.png", 
-       plot = RS22_GRAF_Serie_Historica_Escorpioes,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
-
-###########   Abelhas
-
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Abelha"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                      y = Abelha,
-                                                                                                      group = 1)
-                                                                ) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) +
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS (ABELHAS) - 2015 a 2025",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Abelha), 
-                    size = 6, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
-                                               )
-                            ) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, 
-                                           size = 12)
-               )
-)
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_Abelha.png", 
-       plot = RS22_GRAF_Serie_Historica_Abelha,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
-
-###########   Lagarta
-
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Lagarta"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                  y = Lagarta,
-                                                                                                  group = 1)) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) +
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS (LAGARTAS) - 2015 a 2025",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Lagarta), 
-                    size = 6, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, 
-                                           size = 12))
-)
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_Lagarta.png", 
-       plot = RS22_GRAF_Serie_Historica_Lagarta,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
-
-###########   Outros
-
-assign(paste0("RS", RS, "_GRAF_Serie_Historica_Outros"), ggplot(RS_Serie_Historica_Tipo_Acid, aes(x = Ano,
-                                                                                                  y = Outros,
-                                                                                                  group = 1)
-                                                                ) +
-         geom_line(linewidth = 1.8,
-                   colour = "black") +
-         geom_point(fill = "grey",
-                    size = 7,
-                    shape = 21) +
-         labs(caption = Fonte, 
-              y = "Número de Casos",
-              x = NULL,
-              title = "CASOS NOTIFICADOS (OUTROS) - 2015 a 2025",
-              subtitle = "Notificações referentes ao município de residência") +
-         geom_label(aes(label = Outros), 
-                    size = 4, 
-                    alpha = 0.5,
-                    vjust = -0.5)  +
-         scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
-                                               )
-                            ) +
-         Theme() +
-         theme(axis.text.x = element_text(angle = 0),
-               plot.caption = element_text(hjust = 0, 
-                                           size = 12)
-               )
-)
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_SERIE_HISTORICA_Outros.png", 
-       plot = RS22_GRAF_Serie_Historica_Outros,     
-       width = 50,             
-       height = 15,           
-       units = "cm",           
-       dpi = 300) 
-
-###### Gráfico de Incidência
+RS_PECONHENTOS_GRAF_SERIE_HIST_Outros <- ggplot(AUX, aes(x = Ano,
+                                                         y = Outros,
+                                                         group = 1)
+) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = NULL,
+       title = "SÉRIE HISTÓRICA - NOTIFICAÇÕES DE ACIDENTES COM OUTROS ANIMAIS PEÇONHENTOS (2016 a 2025)",
+       subtitle = "Notificações referentes ao município de residência") +
+  geom_label(aes(label = Outros), 
+             size = 4, 
+             alpha = 0.5,
+             vjust = -0.5)  +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)
+  )
+  ) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0, 
+                                    size = 13),
+        plot.subtitle = element_text(size = 20)
+  )
+###################################################################################################################################
+########################################### Gráfico de Incidência  ################################################################
 
 AUX <- RS_PECONHENTOS_2022_Incidencia[-nrow(RS_PECONHENTOS_2022_Incidencia), c(1, 3)]
 
@@ -7118,7 +7944,7 @@ AUX <- RS_PECONHENTOS_2022_Incidencia %>%
 AUX_GRAF <- AUX[, c(2, 4, 12)]
 
 AUX_GRAF$Incidencia2022 <- format(round(AUX_GRAF$Incidencia2022, 2)
-                                  )
+)
 
 AUX <- RS_PECONHENTOS_2023_Incidencia[-nrow(RS_PECONHENTOS_2023_Incidencia), c(1, 3)]
 
@@ -7130,7 +7956,7 @@ AUX_GRAF[, 4] <- AUX[, c(12)]
 colnames(AUX_GRAF)[4] <- "Incidencia2023"
 
 AUX_GRAF$Incidencia2023 <- format(round(AUX_GRAF$Incidencia2023, 2)
-                                  )
+)
 
 AUX <- RS_PECONHENTOS_2024_Incidencia[-nrow(RS_PECONHENTOS_2024_Incidencia), c(1, 3)]
 
@@ -7142,7 +7968,7 @@ AUX_GRAF[, 5] <- AUX[, c(12)]
 colnames(AUX_GRAF)[5] <- "Incidencia2024"
 
 AUX_GRAF$Incidencia2024 <- format(round(AUX_GRAF$Incidencia2024, 2)
-                                  )
+)
 
 AUX <- RS_PECONHENTOS_2025_Incidencia[-nrow(RS_PECONHENTOS_2025_Incidencia), c(1, 3)]
 
@@ -7154,14 +7980,14 @@ AUX_GRAF[, 6] <- AUX[, c(12)]
 colnames(AUX_GRAF)[6] <- "Incidencia2025"
 
 AUX_GRAF$Incidencia2025 <- format(round(AUX_GRAF$Incidencia2025, 2)
-                                  )
+)
 
 AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
 
 
-RS_PECONHENTOS_GRAF_Incidencia_1 <- ggplot(AUX_GRAF[c(1:8),], 
-                                           aes(x = Município)
-                                           ) +
+RS_PECONHENTOS_GRAF_Incidencia_01 <- ggplot(AUX_GRAF[c(1:8),], 
+                                            aes(x = Município)
+) +
   labs(caption = Fonte, 
        y = "Incidência",
        x = NULL,
@@ -7174,13 +8000,14 @@ RS_PECONHENTOS_GRAF_Incidencia_1 <- ggplot(AUX_GRAF[c(1:8),],
            linewidth = 0.8,
            width = .2,
            position = position_nudge(x = -.30)
-           ) +
+  ) +
   geom_label(aes(y = Incidencia2022,
                  label = Incidencia2022), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
-             nudge_x = -.30)  +
+             nudge_x = -.30,
+  )   +
   geom_bar(aes(y = Incidencia2023,
                fill = "Incidencia2023"),
            stat = "identity",
@@ -7188,10 +8015,10 @@ RS_PECONHENTOS_GRAF_Incidencia_1 <- ggplot(AUX_GRAF[c(1:8),],
            linewidth = 0.8,
            width = .2,
            position = position_nudge(x = -.10)
-           ) +
+  ) +
   geom_label(aes(y = Incidencia2023,
                  label = Incidencia2023), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = -.10)  +
@@ -7202,10 +8029,10 @@ RS_PECONHENTOS_GRAF_Incidencia_1 <- ggplot(AUX_GRAF[c(1:8),],
            linewidth = 0.8,
            width = .2,
            position = position_nudge(x = .10)
-           ) +
+  ) +
   geom_label(aes(y = Incidencia2024,
                  label = Incidencia2024), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = .10)  +
@@ -7216,10 +8043,10 @@ RS_PECONHENTOS_GRAF_Incidencia_1 <- ggplot(AUX_GRAF[c(1:8),],
            linewidth = 0.8,
            width = .2,
            position = position_nudge(x = .30)
-           ) +
+  ) +
   geom_label(aes(y = Incidencia2025,
                  label = Incidencia2025), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = .30) +
@@ -7228,26 +8055,20 @@ RS_PECONHENTOS_GRAF_Incidencia_1 <- ggplot(AUX_GRAF[c(1:8),],
                                "Incidencia2023" = "#5F9EA0",
                                "Incidencia2024" = "#008B8B",
                                "Incidencia2025" = "#8FBC8F")
-                    ) +
+  ) +
   scale_y_discrete(expand = expansion(mult = c(0, 0.05)
-                                      )
-                   ) +
+  )
+  ) +
   Theme() +
   theme(plot.caption = element_text(hjust = 0, 
-                                    size = 12),
-        axis.text.x = element_text(angle = 75)
-        )
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_Incidencia_01.png", 
-       plot = RS_PECONHENTOS_GRAF_Incidencia_1,     
-       width = 50,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300)
+                                    size = 13),
+        axis.text.x = element_text(angle = 75),
+        plot.subtitle = element_text(size = 20)
+  )
 
 ####################################################################################################
 
-RS_PECONHENTOS_GRAF_Incidencia_2 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Município)) +
+RS_PECONHENTOS_GRAF_Incidencia_02 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Município)) +
   labs(caption = Fonte, 
        y = "Incidência",
        x = NULL,
@@ -7262,7 +8083,7 @@ RS_PECONHENTOS_GRAF_Incidencia_2 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Municípi
            position = position_nudge(x = -.30)) +
   geom_label(aes(y = Incidencia2022,
                  label = Incidencia2022), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = -.30)  +
@@ -7275,7 +8096,7 @@ RS_PECONHENTOS_GRAF_Incidencia_2 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Municípi
            position = position_nudge(x = -.10)) +
   geom_label(aes(y = Incidencia2023,
                  label = Incidencia2023), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = -.10)  +
@@ -7288,7 +8109,7 @@ RS_PECONHENTOS_GRAF_Incidencia_2 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Municípi
            position = position_nudge(x = .10)) +
   geom_label(aes(y = Incidencia2024,
                  label = Incidencia2024), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = .10)  +
@@ -7301,7 +8122,7 @@ RS_PECONHENTOS_GRAF_Incidencia_2 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Municípi
            position = position_nudge(x = .30)) +
   geom_label(aes(y = Incidencia2025,
                  label = Incidencia2025), 
-             size = 3, 
+             size = 2.5, 
              alpha = 0.5,
              vjust = 0.1,
              nudge_x = .30) +
@@ -7312,115 +8133,50 @@ RS_PECONHENTOS_GRAF_Incidencia_2 <- ggplot(AUX_GRAF[c(9:16),], aes(x = Municípi
                                "Incidencia2025" = "#8FBC8F")) +
   scale_y_discrete(expand = expansion(mult = c(0, 0.05))) +
   Theme() +
-  theme(plot.caption = element_text(hjust = 0, size = 12),
-        axis.text.x = element_text(angle = 75))
+  theme(plot.caption = element_text(hjust = 0,
+                                    size = 13),
+        axis.text.x = element_text(angle = 75),
+        plot.subtitle = element_text(size = 20)
+  )
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/GRAF_Incidencia_02.png", 
-       plot = RS_PECONHENTOS_GRAF_Incidencia_2,     
-       width = 50,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300)
+#######################################   Zona Ocorrência  ##################################################################
+##################################### Gráfico total  ########################################################################
 
-############# Tipo de acidente SERPENTE
+AUX <- RS_Serie_Historica_Geral[-c(1, nrow(RS_Serie_Historica_Geral)), c(1, 6:9)]
 
-RS22_TAB_Tipo_Serpente_Historico <- RS_Serie_Historica_Tipo_Acid_Serpente[-1, -c(2, 3, 4)] %>%
-  gt() %>%
-  tab_header(title = md("**Tipo de Acidente Ofídico Notificados (2016 - 2025)**"),
-             subtitle = "(Campo 46 SINAN)") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Tipo de Acidente",
-              columns = c(2:7)) %>%
-  cols_align(align = "center", columns = c(2:7)) %>%
-  cols_label(RS = "Ano",
-             Botropico = "Botrópico",
-             Elapidico = "Elapídico",
-             Laquetico = "Laquético",
-             Nao_Peconhenta = "Não Peçonhenta") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
+AUX <- apply(AUX[, -1], 2, sum)
 
-gtsave(data = RS22_TAB_Tipo_Serpente_Historico,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_TAB_Tipo_Serpente_Historico.png")
+AUX <- as.data.frame(AUX)
 
-############# Tipo de acidente ARANHA
+AUX[, 2] <- c("Urbana", "Rural", "Periurbana", "Ignorados")
 
-RS22_TAB_Tipo_Aranha_Historico <- RS_Serie_Historica_Tipo_Acid_Aranha[-1, -c(2, 3, 4)] %>%
-  gt() %>%
-  tab_header(title = md("**Tipo de Acidente com Aranhas Notificados (2016 - 2025)**"),
-             subtitle = "(campo 47 SINAN)") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Tipo de Acidente",
-              columns = c(2:6)) %>%
-  cols_align(align = "center", columns = c(2:6)) %>%
-  cols_label(RS = "Ano",
-             Outra_Aranha = "Outras") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
+colnames(AUX) <- c("Casos", "Zona")
 
-gtsave(data = RS22_TAB_Tipo_Aranha_Historico,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_TAB_Tipo_Aranha_Historico.png")
+RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Historico <- ggplot(AUX, aes(x = Zona,
+                                                               y = Casos)) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#E6E6FA",
+           linewidth = 0.8) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = "Zona de Ocorrência",
+       title = "Zona de Ocorrência dos Acidentes Notificados (2015 - 2024)",
+       subtitle = "Casos notificados no território da 22ª Regional de Saúde") +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0),
+        plot.subtitle = element_text(size = 18)
+  )
 
-############# Tipo de acidente LAGARTA
+######################## Zona de Ocorrência Gráfico 2025  #############################################################
 
-RS22_TAB_Tipo_Lagarta_Historico <- RS_Serie_Historica_Tipo_Acid_Lagarta[-1, -c(2, 3, 4)] %>%
-  gt() %>%
-  tab_header(title = md("**Tipo de Acidente com Lagartas Notificados (2016 - 2025)**"),
-             subtitle = "(campo 48 SINAN)") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Tipo de Acidente",
-              columns = c(2:4)) %>%
-  cols_align(align = "center", columns = c(2:4)) %>%
-  cols_label(RS = "Ano",
-             Outra_Lagarta = "Outras") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
-
-gtsave(data = RS22_TAB_Tipo_Lagarta_Historico,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_TAB_Tipo_Lagarta_Historico.png")
-
-#################################################################################################################
-###############  Caracterização Lugar   #################################
-#### Zona de ocorrência
-
-AUX <- RS_Serie_Historica_Geral[- nrow(RS_Serie_Historica_Geral), c(1, 3:6)]
-
-RS22_TAB_Zona_Ocorrencia <- AUX %>%
-  gt() %>%
-  tab_header(title = md("**Notificações por Zona de Ocorrência (2015 - 2024)**")) %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Zona de Ocorrência",
-              columns = c(2:5)) %>%
-  cols_align(align = "center", columns = c(2:5)) %>%
-  cols_label(Zona_Urbana = "Urbana",
-             Zona_Rural = "Rural",
-             Zona_Periurbana = "Periurbana",
-             Zona_Ignorados = "Ignorado") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
-
-gtsave(data = RS22_TAB_Zona_Ocorrencia,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Tabela_ZONA.png")
-
-#### Gráfico 
-
-AUX <- RS_Serie_Historica_Geral[nrow(RS_Serie_Historica_Geral), 3:6]
+AUX <- RS_Serie_Historica_Geral[nrow(RS_Serie_Historica_Geral), 6:9]
 
 AUX <- as.data.frame(t(AUX))
 
@@ -7428,7 +8184,9 @@ AUX[,2] <- c("Urbana", "Rural", "Periurbana", "Ignorado")
 
 colnames(AUX) <- c("Casos", "Zona")
 
-RS22_GRAF_ZONA_Ocorrencia <- ggplot(AUX, aes(x = Zona, y = Casos)) +
+RS_PECONHENTOS_GRAF_ZONA_REGIONAL <- ggplot(AUX, aes(x = Zona, 
+                                                     y = Casos)
+) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#E6E6FA",
@@ -7439,7 +8197,44 @@ RS22_GRAF_ZONA_Ocorrencia <- ggplot(AUX, aes(x = Zona, y = Casos)) +
        title = "Zona de Ocorrência dos Acidentes Notificados - 2025",
        subtitle = "Casos notificados no território da 22ª Regional de Saúde") +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0),
+        plot.caption = element_text(hjust = 0),
+        plot.subtitle = element_text(size = 18)
+  )
+
+#######################     Gráfico Sexo histórico    ########################################################
+
+AUX <- RS_Serie_Historica_Geral[-c(1, nrow(RS_Serie_Historica_Geral)), c(1, 10:11)]
+
+AUX <- apply(AUX[, -1], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX[,2] <- c("Feminino", "Masculino")
+
+colnames(AUX) <- c("Casos", "Sexo")
+
+RS_PECONHENTOS_GRAF_SEXO_HIST <- ggplot(AUX, 
+                                        aes(x = Sexo, 
+                                            y = Casos)
+) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#DDA0DD",
+           linewidth = 0.8,
+           width = 0.4) +
+  labs(caption = Fonte, 
+       y = "Número de Casos",
+       x = "Sexo",
+       title = "Sexo dos Acidentes Notificados (2016 - 2024)",
+       subtitle = "Casos notificados no território da 22ª Regional de Saúde") +
+  geom_label(aes(label = Casos), 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1)  +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
@@ -7447,62 +8242,9 @@ RS22_GRAF_ZONA_Ocorrencia <- ggplot(AUX, aes(x = Zona, y = Casos)) +
   theme(axis.text.x = element_text(angle = 0),
         plot.caption = element_text(hjust = 0))
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_GRAF_ZONA_Ocorrencia.png", 
-       plot = RS22_GRAF_ZONA_Ocorrencia,     
-       width = 30,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
+################################### SEXO 2025 ###########################################################################
 
-##### Tabela Municípios Zona de Ocorrência
-
-Tabela_SEXO_MUNI <- RS22_PECONHENTOS_2025_GERAL[-nrow(RS22_PECONHENTOS_2025_GERAL), c(2, 6:9)] %>%
-  gt() %>%
-  tab_header(title = md("**Tabela 01 - Notificações por Zona de Ocorrência**"),
-             subtitle = "Notificações entre 2015 - 2024") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Zona de Ocorrência",
-              columns = c(2:5)) %>%
-  cols_align(align = "center", columns = c(2:5)) %>%
-  cols_label(Zona_Urbana = "Urbana",
-             Zona_Rural = "Rural",
-             Zona_Periurbana = "Periurbana",
-             Zona_Ignorados = "Ignorado") %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
-
-gtsave(data = Tabela_SEXO_MUNI,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Tabela_SEXO_MUNI.png")
-
-######Caracterização Pessoa
-#### Sexo
-
-AUX <- RS_Serie_Historica_Geral[- nrow(RS_Serie_Historica_Geral), c(1, 7:8)]
-
-RS22_TAB_Sexo <- AUX %>%
-  gt() %>%
-  tab_header(title = md("**Tabela 02 - Notificações por Sexo**"),
-             subtitle = "Notificações entre 2015 - 2024") %>%
-  tab_options(heading.align = "left",
-              column_labels.border.top.color = "black",
-              column_labels.border.top.width = px(3)) %>%
-  tab_spanner(label = "Sexo",
-              columns = c(2:3)) %>%
-  cols_align(align = "center", columns = c(2:3)) %>%
-  tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(everything())) %>%
-  tab_footnote(footnote = Fonte) %>%
-  tab_options(table.font.size = "small")
-
-gtsave(data = RS22_TAB_Sexo,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_TAB_Sexo.png")
-
-
-AUX <- RS_Serie_Historica_Geral[nrow(RS_Serie_Historica_Geral), 7:8]
+AUX <- RS_Serie_Historica_Geral[nrow(RS_Serie_Historica_Geral), 10:11]
 
 AUX <- as.data.frame(t(AUX))
 
@@ -7510,12 +8252,14 @@ AUX[,2] <- c("Feminino", "Masculino")
 
 colnames(AUX) <- c("Casos", "Sexo")
 
-RS22_GRAF_Sexo <- ggplot(AUX, aes(x = Sexo, 
-                                  y = Casos)) +
+RS_PECONHENTOS_GRAF_SEXO <- ggplot(AUX, aes(x = Sexo, 
+                                            y = Casos)
+) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#DDA0DD",
-           linewidth = 0.8) +
+           linewidth = 0.8,
+           width = 0.4) +
   labs(caption = Fonte, 
        y = "Número de Casos",
        x = "Sexo",
@@ -7530,19 +8274,12 @@ RS22_GRAF_Sexo <- ggplot(AUX, aes(x = Sexo,
   theme(axis.text.x = element_text(angle = 0),
         plot.caption = element_text(hjust = 0))
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS22_GRAF_Sexo.png", 
-       plot = RS22_GRAF_Sexo,     
-       width = 30,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300)
-
-################ Pirâmide Etária  
+####################################    Pirâmide Etária   ###########################################################
 
 AUX <- c("< 01", "< 01", "01 - 04", "01 - 04", "05 - 09", "05 - 09", "10 - 14", "10 - 14", "15 - 19", "15 - 19", "20 - 24", "20 - 24", 
-"25 - 29", "25 - 29", "30 - 34", "30 - 34", "35 - 39", "35 - 39", "40 - 44", "40 - 44", "45 - 49", "45 - 49", "50 - 54", "50 - 54",
-"55 - 59", "55 - 59", "60 - 64", "60 - 64", "65 - 69", "65 - 69", "70 - 74",  "70 - 74", "75 - 79", "75 - 79", "80 - 84", 
-"80 - 84", "> 84", "> 84")
+         "25 - 29", "25 - 29", "30 - 34", "30 - 34", "35 - 39", "35 - 39", "40 - 44", "40 - 44", "45 - 49", "45 - 49", "50 - 54", "50 - 54",
+         "55 - 59", "55 - 59", "60 - 64", "60 - 64", "65 - 69", "65 - 69", "70 - 74",  "70 - 74", "75 - 79", "75 - 79", "80 - 84", 
+         "80 - 84", "> 84", "> 84")
 
 AUX <- as.data.frame(AUX)
 
@@ -7714,51 +8451,44 @@ AUX <- AUX %>%
 AUX <- AUX %>%
   mutate(grupo_Idade_FACT = factor(Grupo_Idade, 
                                    levels = c(
-    "< 01",
-    "01 - 04",
-    "05 - 09",
-    "10 - 14",
-    "15 - 19",
-    "20 - 24",
-    "25 - 29",
-    "30 - 34",
-    "35 - 39",
-    "40 - 44",
-    "45 - 49",
-    "50 - 54",
-    "55 - 59",
-    "60 - 64",
-    "65 - 69",
-    "70 - 74",
-    "75 - 79",
-    "80 - 84",
-    "> 84")
-    )
-    )
+                                     "< 01",
+                                     "01 - 04",
+                                     "05 - 09",
+                                     "10 - 14",
+                                     "15 - 19",
+                                     "20 - 24",
+                                     "25 - 29",
+                                     "30 - 34",
+                                     "35 - 39",
+                                     "40 - 44",
+                                     "45 - 49",
+                                     "50 - 54",
+                                     "55 - 59",
+                                     "60 - 64",
+                                     "65 - 69",
+                                     "70 - 74",
+                                     "75 - 79",
+                                     "80 - 84",
+                                     "> 84")
+  )
+  )
 
-RS_PECONHENTOS_GRAF_Piramide <- ggplot(AUX, 
+RS_PECONHENTOS_GRAF_PIRAMIDE <- ggplot(AUX, 
                                        aes(x = Pop,
                                            y = grupo_Idade_FACT, 
                                            fill = Sexo_Legenda)) +
   geom_col(color = "black",
            linewidth = 0.8) +
-  labs(title = "Pirâmide Etária dos Casos Notificados na 22ª Regional de Saúde",
+  labs(title = "Pirâmide Etária Notificações 
+22ª Regional de Saúde (2025)",
        y = "Faixa Etária",
        x = "População",
        fill = "Sexo",
-       caption = Fonte1) +
+       caption = Fonte) +
   scale_x_continuous(labels = abs) +
   Theme() +
   theme(axis.text.x = element_text(angle = 0),
         plot.caption = element_text(hjust = 0)) 
-
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Piramide.png", 
-       plot = RS_PECONHENTOS_GRAF_Piramide,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
 
 ####################  Pirâmide Etária Série Histórica  ########################
 AUX <- c("< 01", "< 01", "01 - 04", "01 - 04", "05 - 09", "05 - 09", "10 - 14", "10 - 14", "15 - 19", "15 - 19", "20 - 24", "20 - 24", 
@@ -7958,35 +8688,26 @@ AUX <- AUX %>%
   )
   )
 
-RS_PECONHENTOS_GRAF_Piramide_Historico <- ggplot(AUX, 
-                                                 aes(x = Pop,
-                                                     y = grupo_Idade_FACT, 
-                                                     fill = Sexo_Legenda)) +
+RS_PECONHENTOS_GRAF_PIRAMIDE_HIST <- ggplot(AUX, 
+                                            aes(x = Pop,
+                                                y = grupo_Idade_FACT, 
+                                                fill = Sexo_Legenda)) +
   geom_col(color = "black",
            linewidth = 0.8) +
-  labs(title = "Pirâmide Etária Notificações - (2016 - 2024)",
+  labs(title = "Pirâmide Etária Notificações 
+22ª Regional de Saúde (2016 - 2024)",
        y = "Faixa Etária",
        x = "População",
        fill = "Sexo",
-       caption = Fonte1) +
+       caption = Fonte) +
   scale_x_continuous(labels = abs) +
   Theme() +
   theme(axis.text.x = element_text(angle = 0),
         plot.caption = element_text(hjust = 0)) 
 
+##########################################  Escolaridade  Histórico   ###############################################
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Piramide_Historico.png", 
-       plot = RS_PECONHENTOS_GRAF_Piramide_Historico,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-###########  Escolaridade
-
-###Série
-
-AUX <- RS_Serie_Historica_Geral[-c(1, nrow(RS_Serie_Historica_Geral)), c(1, 15:23)]
+AUX <- RS_Serie_Historica_Geral[-c(1, nrow(RS_Serie_Historica_Geral)), c(1, 18:26)]
 
 AUX[nrow(AUX) +1, -1] <- apply(AUX[, -1], 2, sum)
 
@@ -7995,28 +8716,27 @@ AUX <- t(AUX[nrow(AUX),])
 AUX <- as.data.frame(AUX[-1,])
 
 AUX[, 2] <- as.factor(c("Analfabeto", "Fundamental Incompleto", 
-              "Fundamental Completo", "Ensino Médio Incompleto", 
-              "Ensino Médio Completo", "Superior Incompleto", "Superior Completo",
-              "Não se Aplica", "Ignorado"))
+                        "Fundamental Completo", "Ensino Médio Incompleto", 
+                        "Ensino Médio Completo", "Superior Incompleto", "Superior Completo",
+                        "Não se Aplica", "Ignorado"))
 
 AUX[, 3] <- as.factor(c(1:9))
-                      
+
 colnames(AUX) <- c("Casos", "Escolaridade", "Ordem")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-RS_PECONHENTOS_GRAF_Serie_Escolaridade <- ggplot(AUX) +
+RS_PECONHENTOS_GRAF_SERIE_HIST_Escolaridade <- ggplot(AUX) +
   geom_bar(aes(x =  Ordem, 
                y = Casos),
            stat = "identity",
            color = "black",
            fill = "#FFE4C4",
            linewidth = 0.8) +
-  labs(title = "Escolaridade dos Casos Notificados",
-       subtitle = "Total de Notificações (2016 - 2024)",
+  labs(title = "Escolaridade dos Casos Notificados (2016 - 2024)",
        y = "Casos",
        x = NULL,
-       caption = Fonte1) + 
+       caption = Fonte) + 
   geom_label(aes(label = Casos, 
                  x =  Ordem, 
                  y = Casos),
@@ -8024,22 +8744,15 @@ RS_PECONHENTOS_GRAF_Serie_Escolaridade <- ggplot(AUX) +
              vjust = 0.1)  +
   scale_x_discrete(labels = AUX$Escolaridade) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-                                        )
-                     ) +
+  )
+  ) +
   Theme() +
   theme(plot.caption = element_text(hjust = 0)) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Escolaridade_Historico.png", 
-       plot = RS_PECONHENTOS_GRAF_Serie_Escolaridade,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-    
-### Ano corrente
+#############################    Escolaridade Ano corrente  ####################################################
 
-AUX <- RS_Serie_Historica_Geral[nrow(RS_Serie_Historica_Geral), c(1, 15:23)]
-  
+AUX <- RS_Serie_Historica_Geral[nrow(RS_Serie_Historica_Geral), c(1, 18:26)]
+
 AUX <- t(AUX)
 
 AUX <- as.data.frame(AUX[-1,])
@@ -8050,7 +8763,7 @@ AUX[, 2] <- as.factor(c("Analfabeto", "Fundamental Incompleto",
                         "Não se Aplica", "Ignorado"))
 
 AUX[, 3] <- as.factor(c(1:9)
-                      )
+)
 
 colnames(AUX) <- c("Casos", "Escolaridade", "Ordem")
 
@@ -8067,7 +8780,7 @@ RS_PECONHENTOS_GRAF_Escolaridade <- ggplot(AUX) +
        subtitle = "2025",
        y = "Casos",
        x = NULL,
-       caption = Fonte1) + 
+       caption = Fonte) + 
   geom_label(aes(label = Casos, 
                  x =  Ordem, 
                  y = Casos),
@@ -8075,271 +8788,880 @@ RS_PECONHENTOS_GRAF_Escolaridade <- ggplot(AUX) +
              vjust = 0.1)  +
   scale_x_discrete(labels = AUX$Escolaridade) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-                                        )
-                     ) +
+  )
+  ) +
   Theme() +
   theme(plot.caption = element_text(hjust = 0)) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Escolaridade.png", 
-       plot = RS_PECONHENTOS_GRAF_Escolaridade,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
+################      Tipo de Acidente   ################################################################################
 
-################    Mapas   ################################
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[nrow(RS22_PECONHENTOS_2025_TIPO_ACID), -c(1, 2, 3, 4)]
 
-#####################  Municipios que aplicam soro antiescorpiônico  ###################
+AUX <- as.data.frame(t(AUX))
 
-SHAPEFILE_SINAP <- SHAPEFILE_REGIONAL %>% mutate(NUCLEO = case_when(NM_MUNICIP == "IVAIPORÃ" 
-                                                                    | NM_MUNICIP == "NOVA TEBAS" 
-                                                                    | NM_MUNICIP == "LUNARDELLI"
-                                                                    | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
-                                                                    | NM_MUNICIP == "MANOEL RIBAS" 
-                                                                    ~ "Rede Descentralizada")
-)
+AUX[, 2] <- c("Serpente", "Aranha", "Escorpião", "Lagarta", "Abelha", "Outros", "Ignorado")
 
-RS22_PECONHENTOS_MAPA_SORO_ESCORPIOES <- ggplot(SHAPEFILE_SINAP) +
-  geom_sf(size = 1,
-          aes(fill = NUCLEO),
-          color = "black") +
-  scale_fill_manual(name = "", 
-                    values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_SINAP %>% filter(NUCLEO == "Rede Descentralizada"), 
-                aes(label = NM_MUNICIP),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
-22ª Regional de Saúde",
-       subtitle = "Municípios que Possuem Soro Antiescorpiônico em sua Rede de Frio",
-       y = NULL,
+colnames(AUX) <- c("Casos", "Animal")
+
+RS_PECONHENTOS_GRAF_TIPO_ACID <- ggplot(AUX, 
+                                        aes(x = Animal)
+) +
+  geom_bar(aes(y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Animais Peçonhentos na 22ª RS - 2025",
+       y = "Casos",
        x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
-    plot.subtitle = element_text(hjust = 0.5),
-    plot.caption = element_text(hjust = 0)
+       caption = Fonte) + 
+  geom_label(aes(label = Casos, 
+                 x =  Animal, 
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
   )
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes.png", 
-       plot = RS22_PECONHENTOS_MAPA_SORO_ESCORPIOES,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-################  DISCRIMINANDO A REDE   ######################################
-
-##########  Ivaiporã
-
-SHAPEFILE_IVAIPORA <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "IVAIPORÃ" 
-                                                 | NM_MUNICIP == "ARIRANHA DO IVAÍ" 
-                                                 | NM_MUNICIP == "ARAPUÃ"
-                                                 | NM_MUNICIP == "CRUZMALTINA"
-                                                 | NM_MUNICIP == "LIDIANÓPOLIS"
-                                                 | NM_MUNICIP == "JARDIM ALEGRE"
-                                                 | NM_MUNICIP == "ROSÁRIO DO IVAÍ"
-                                                 | NM_MUNICIP == "RIO BRANCO DO IVAÍ" 
-)
-
-RS22_PECONHENTOS_MAPA_REDE_IVAIPORA <- ggplot(SHAPEFILE_IVAIPORA) +
-  geom_sf(aes(fill = NUCLEO), 
-          color = "black", 
-          size = 0.5) +
-  scale_fill_manual(name = "", 
-                    values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_IVAIPORA, 
-                aes(label = NM_MUNICIP),
-                size = 3,
-                alpha = 0.5,
-                position = "identity") +
-  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
-22ª Regional de Saúde",
-       subtitle = "Municípios atendidos pelo Núcleo de Administração de Soro Antiescorpiônico de Ivaiporã",
-       y = NULL,
-       x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
-    plot.caption = element_text(hjust = 0)
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes_IVAIPORA.png", 
-       plot = RS22_PECONHENTOS_MAPA_REDE_IVAIPORA,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-########################  São João do Ivaí   ##########################
-
-SHAPEFILE_SJI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "SÃO JOÃO DO IVAÍ" |
-                                              NM_MUNICIP == "GODOY MOREIRA")
-
-RS22_PECONHENTOS_MAPA_SJI <- ggplot(SHAPEFILE_SJI) +
-  geom_sf(aes(fill = NUCLEO), 
-          color = "black", 
-          size = 0.5) +
-  scale_fill_manual(name = "", 
-                    values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_SJI, 
-                aes(label = NM_MUNICIP),
-                size = 3,
-                alpha = 0.5,
-                position = "identity") +
-  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
-22ª Regional de Saúde",
-       subtitle = "Municípios atendidos pelo Núcleo de Administração de Soro Antiescorpiônico de São João do Ivaí",
-       y = NULL,
-       x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)  
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes_SJI.png", 
-       plot = RS22_PECONHENTOS_MAPA_SJI,     
-       width = 26,             
-       height = 26,           
-       units = "cm",           
-       dpi = 300) 
-
-##############################   MANOEL RIBAS   ##############################
-
-SHAPEFILE_MRI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "MANOEL RIBAS" |
-                                              NM_MUNICIP == "CÂNDIDO DE ABREU" |
-                                              NM_MUNICIP == "SANTA MARIA DO OESTE" |
-                                              NM_MUNICIP == "MATO RICO")
-
-RS22_PECONHENTOS_MAPA_MRI <- ggplot(SHAPEFILE_MRI) +
-  geom_sf(aes(fill = NUCLEO), 
-          color = "black", 
-          size = 0.5) +
-  scale_fill_manual(name = "", 
-                    values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_MRI, 
-                aes(label = NM_MUNICIP),
-                size = 3,
-                alpha = 0.5,
-                position = "identity") +
-  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
-22ª Regional de Saúde",
-       subtitle = "Municípios atendidos pelo Núcleo de Administração de Soro Antiescorpiônico de Manoel Ribas",
-       y = NULL,
-       x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)  
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes_MRI.png", 
-       plot = RS22_PECONHENTOS_MAPA_MRI,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-##########################  NOVA TEBAS   ###############################
-
-##############################   NOVA TEBAS   ##############################
-
-SHAPEFILE_NOVA_TEBAS <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "NOVA TEBAS")
-
-RS22_PECONHENTOS_MAPA_NOVA_TEBAS <- ggplot(SHAPEFILE_NOVA_TEBAS) +
-  geom_sf(aes(fill = NUCLEO), 
-          color = "black", 
-          size = 0.5) +
-  scale_fill_manual(name = "", 
-                    values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_NOVA_TEBAS, 
-                aes(label = NM_MUNICIP),
-                size = 3,
-                alpha = 0.5,
-                position = "identity") +
-  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
-22ª Regional de Saúde",
-       subtitle = "Núcleo de Administração de Soro Antiescorpiônico de Nova Tebas",
-       y = NULL,
-       x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)  
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes_NOVA_TEBAS.png", 
-       plot = RS22_PECONHENTOS_MAPA_NOVA_TEBAS,     
-       width = 24,             
-       height = 25,           
-       units = "cm",           
-       dpi = 300) 
-
-###########################  LUNARDELLI   ################################
-
-##########################################################
-
-SHAPEFILE_LUNARDELLI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "LUNARDELLI")
-
-RS22_PECONHENTOS_MAPA_LUNARDELLI <- ggplot(SHAPEFILE_LUNARDELLI) +
-  geom_sf(aes(fill = NUCLEO), 
-          color = "black", 
-          size = 0.5) +
-  scale_fill_manual(name = "", 
-                    values = c("Rede Descentralizada" = "#2F4F4F"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_LUNARDELLI, 
-                aes(label = NM_MUNICIP),
-                size = 3,
-                alpha = 0.5,
-                position = "identity") +
-  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
-22ª Regional de Saúde",
-       subtitle = "Núcleo de Administração de Soro Antiescorpiônico de Lunardelli",
-       y = NULL,
-       x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14)  
   ) +
-  annotation_north_arrow(style = north_arrow_fancy_orienteering())
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_Rede_escorpioes_LUNARDELLI.png", 
-       plot = RS22_PECONHENTOS_MAPA_LUNARDELLI,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
+################      Tipo de Acidente   ################################################################################
 
-#####################    SINAP   ################################
+AUX <- RS_Serie_Historica_Tipo_Acid[-c(1, nrow(RS_Serie_Historica_Tipo_Acid)), -c(2, 3, 4)]
+
+AUX <- as.data.frame(apply(AUX[, -1], 2, sum))
+
+AUX[, 2] <- c("Serpente", "Aranha", "Escorpião", "Lagarta", "Abelha", "Outros", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Animal")
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_HIST <- ggplot(AUX, 
+                                        aes(x = Animal)
+) +
+  geom_bar(aes(y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Animais Peçonhentos na 22ª RS (2016 -2024)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos, 
+                 x =  Animal, 
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################      Serpentes por município   ################################################################################
+
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente <- ggplot(AUX, 
+                                                            aes(x = Município)
+) +
+  geom_bar(aes(y = Serpente),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Serpentes/Município - 2025",
+       subtitle = "Município de residência",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Serpente, 
+                 x =  Município, 
+                 y = Serpente),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+###########################    Aranha por município    ###########################################3
+
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha <- ggplot(AUX, 
+                                                          aes(x = Município)
+) +
+  geom_bar(aes(y = Aranha),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Aranhas/Município - 2025",
+       subtitle = "Município de residência",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Aranha, 
+                 x =  Município, 
+                 y = Aranha),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+##############Abelhas por município
+
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha <- ggplot(AUX, 
+                                                          aes(x = Município)
+) +
+  geom_bar(aes(y = Abelha),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Abelhas/Município - 2025",
+       subtitle = "Município de residência",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Abelha, 
+                 x =  Município, 
+                 y = Abelha),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+#########################################################  Escorpião por município
+
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao <- ggplot(AUX, 
+                                                             aes(x = Município)
+) +
+  geom_bar(aes(y = Escorpiao),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Escorpiões/Município - 2025",
+       subtitle = "Município de residência",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Escorpiao, 
+                 x =  Município, 
+                 y = Escorpiao),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+###############################################  Lagarta por município
+
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta <- ggplot(AUX, 
+                                                           aes(x = Município)
+) +
+  geom_bar(aes(y = Lagarta),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Lagartas/Município - 2025",
+       subtitle = "Município de residência",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Lagarta, 
+                 x =  Município, 
+                 y = Lagarta),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+############################################################  Outros por município
+
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+
+RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros <- ggplot(AUX, 
+                                                          aes(x = Município)
+) +
+  geom_bar(aes(y = Outros),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Acidentes com Outros Animais/Município - 2025",
+       subtitle = "Município de residência",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Outros, 
+                 x =  Município, 
+                 y = Outros),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+##################################################  Local da picada  2025
+
+AUX <- RS22_PECONHENTOS_2025_LOCAL_PICADA[nrow(RS22_PECONHENTOS_2025_LOCAL_PICADA), - c(1:4)]
+
+AUX <- t(AUX)
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - 22ª Regional de Saúde (2025)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+######################################################  Local da picada Serpente
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Serpente[nrow(RS_Serie_Histórica_Local_da_Picada_Serpente), -c(1, 2, 3, 4)]
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Serpente_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Serpentes (2025)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada Aranha
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Aranha[nrow(RS_Serie_Histórica_Local_da_Picada_Aranha), -c(1, 2, 3, 4)]
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Aranha_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Aranhas (2025)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada Escorpiões
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Escorpiao[nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao), -c(1, 2, 3, 4)]
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Escorpiao_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Escorpiões (2025)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada Lagartas
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Lagarta[nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta), -c(1, 2, 3, 4)]
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Lagarta_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Lagartas (2025)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada histórico
+
+AUX <- RS_Serie_Histórica_Local_da_Picada[-c(1, nrow(RS_Serie_Histórica_Local_da_Picada)), -c(2, 3, 4)]
+
+AUX <- apply(AUX[, 2:12], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - 22ª Regional de Saúde (2016 - 2024)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada Serpente histórico
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Serpente[-c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Serpente)), -c(2, 3, 4)]
+
+AUX <- apply(AUX[, 2:12], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Serpente_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Serpentes (2016 - 2024)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada Aranha histórico
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Aranha[-c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Aranha)), -c(2, 3, 4)]
+
+AUX <- apply(AUX[, 2:12], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Aranha_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Aranhas (2016 - 2024)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada Escorpião histórico
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Escorpiao[-c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao)), -c(2, 3, 4)]
+
+AUX <- apply(AUX[, 2:12], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Escorpiao_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Escorpiões (2016 - 2024)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+################  Local da picada lagartas histórico
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Lagarta[-c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta)), -c(2, 3, 4)]
+
+AUX <- apply(AUX[, 2:12], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+colnames(AUX) <- c("Casos", "Locais")
+
+RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Lagarta_regional <- ggplot(AUX) +
+  geom_bar(aes(x = Locais,
+               y = Casos),
+           stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  labs(title = "Local da Picada - Acidentes com Lagartas (2016 - 2024)",
+       y = "Casos",
+       x = NULL,
+       caption = Fonte) + 
+  geom_label(aes(label = Casos,
+                 x = Locais,
+                 y = Casos),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(angle = 75)
+  ) 
+
+#######################################################################################################################################
+############################################### TABELAS   #############################################################################
+
+##################################  Local da Picada (Ano Corrente)
+
+AUX <- RS22_PECONHENTOS_2025_LOCAL_PICADA_ARANHA[nrow(RS22_PECONHENTOS_2025_LOCAL_PICADA_ARANHA), -c(2, 3, 4)]
+
+AUX[2, ] <- RS22_PECONHENTOS_2025_LOCAL_PICADA_ESCORPIAO[nrow(RS22_PECONHENTOS_2025_LOCAL_PICADA_ESCORPIAO), -c(2, 3, 4)]
+
+AUX[3, ] <- RS22_PECONHENTOS_2025_LOCAL_PICADA_SERPENTE[nrow(RS22_PECONHENTOS_2025_LOCAL_PICADA_SERPENTE), -c(2, 3, 4)]
+
+AUX[4, ] <- RS22_PECONHENTOS_2025_LOCAL_PICADA_LAGARTA[nrow(RS22_PECONHENTOS_2025_LOCAL_PICADA_LAGARTA), -c(2, 3, 4)]
+
+AUX <- as.data.frame(t(AUX[,-1]))
+
+colnames(AUX) <- c("Aranha", "Escorpião", "Serpente", "Lagarta")
+
+AUX[, 5] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+AUX <- AUX[, c(5, 1:4)]
+
+RS_PECONHENTOS_TAB_LOCAL_PICADA <- AUX %>% 
+  gt() %>%
+  tab_header(title = md("**Local da Picada (2025)**")) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Localização",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", columns = c(2:5)
+  ) %>%
+  cols_label(V5 = "") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##################################  Local da Picada (2016 - 2024)
+
+AUX <- RS_Serie_Histórica_Local_da_Picada_Aranha[- c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Aranha)), -c(2, 3, 4)]
+
+AUX <- apply(AUX[, -1], 2, sum)
+
+AUX <- as.data.frame(AUX)
+
+AUX2 <- RS_Serie_Histórica_Local_da_Picada_Escorpiao[- c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Escorpiao)), -c(2, 3, 4)]
+
+AUX[, 2] <- apply(AUX2[, -1], 2, sum)
+
+AUX2 <- RS_Serie_Histórica_Local_da_Picada_Serpente[- c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Serpente)), -c(2, 3, 4)]
+
+AUX[, 3] <- apply(AUX2[, -1], 2, sum)
+
+AUX2 <- RS_Serie_Histórica_Local_da_Picada_Lagarta[- c(1, nrow(RS_Serie_Histórica_Local_da_Picada_Lagarta)), -c(2, 3, 4)]
+
+AUX[, 4] <- apply(AUX2[, -1], 2, sum)
+
+colnames(AUX) <- c("Aranha", "Escorpião", "Serpente", "Lagarta")
+
+AUX[, 5] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", 
+              "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
+
+AUX <- AUX[, c(5, 1:4)]
+
+RS_PECONHENTOS_TAB_LOCAL_PICADA_HIST <- AUX %>% 
+  gt() %>%
+  tab_header(title = md("**Local da Picada (2016 - 2024)**")) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Localização",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", columns = c(2:5)
+  ) %>%
+  cols_label(V5 = "") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+########################   Tipo de Acidente Histórico   ########################
+
+AUX <- RS_Serie_Historica_Tipo_Acid[-c(1, nrow(RS_Serie_Historica_Tipo_Acid)), - c(2, 3, 4)]
+
+RS_PECONHENTOS_TAB_TIPO_ACID_HIST <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Tipo de Acidente Notificado (2016 - 2024)**"),
+             subtitle = "(Campo 45 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Tipo de Acidente",
+              columns = c(2:8)) %>%
+  cols_align(align = "center", columns = c(2:8)
+  ) %>%
+  cols_label(RS = "Ano",
+             Escorpiao = "Escorpião",
+             ignorado = "Ignorado") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+
+############################### Tipo de acidente SERPENTE (2016 - 2025)    ############################################################
+
+RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Serpente <- RS_Serie_Historica_Tipo_Acid_Serpente[-1, -c(2, 3, 4)] %>%
+  gt() %>%
+  tab_header(title = md("**Tipo de Acidente Ofídico Notificados (2016 - 2025)**"),
+             subtitle = "(Campo 46 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Tipo de Acidente",
+              columns = c(2:7)) %>%
+  cols_align(align = "center", columns = c(2:7)
+  ) %>%
+  cols_label(RS = "Ano",
+             Botropico = "Botrópico",
+             Elapidico = "Elapídico",
+             Laquetico = "Laquético",
+             Nao_Peconhenta = "Não Peçonhenta") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+################################ Tipo de acidente ARANHA (2016 - 2025)   ################################################
+
+RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Aranha <- RS_Serie_Historica_Tipo_Acid_Aranha[-1, -c(2, 3, 4)] %>%
+  gt() %>%
+  tab_header(title = md("**Tipo de Acidente com Aranhas Notificados (2016 - 2025)**"),
+             subtitle = "(campo 47 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)
+  ) %>%
+  tab_spanner(label = "Tipo de Acidente",
+              columns = c(2:6)) %>%
+  cols_align(align = "center", columns = c(2:6)
+  ) %>%
+  cols_label(RS = "Ano",
+             Outra_Aranha = "Outras") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+###############################   Tipo de acidente LAGARTA (2016 - 2025)   ##########################################
+
+RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Lagarta <- RS_Serie_Historica_Tipo_Acid_Lagarta[-1, -c(2, 3, 4)] %>%
+  gt() %>%
+  tab_header(title = md("**Tipo de Acidente com Lagartas Notificados (2016 - 2025)**"),
+             subtitle = "(campo 48 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)
+  ) %>%
+  tab_spanner(label = "Tipo de Acidente",
+              columns = c(2:4)
+  ) %>%
+  cols_align(align = "center", 
+             columns = c(2:4)
+  ) %>%
+  cols_label(RS = "Ano",
+             Outra_Lagarta = "Outras") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+########################################  Caracterização Lugar   ############################3##############################
+########################################### Zona de ocorrência   ###########################################################
+
+AUX <- RS_Serie_Historica_Geral[- c(1, nrow(RS_Serie_Historica_Geral)), c(1, 6:9)]
+
+colnames(AUX)[1] <- "Ano"
+
+RS_PECONHENTOS_TAB_ZONA_OCORRENCIA_HIST <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Notificações por Zona de Ocorrência (2016 - 2024)**")
+  ) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)
+  ) %>%
+  tab_spanner(label = "Zona de Ocorrência",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", 
+             columns = c(2:5)
+  ) %>%
+  cols_label(Zona_Urbana = "Urbana",
+             Zona_Rural = "Rural",
+             Zona_Periurbana = "Periurbana",
+             Zona_Ignorados = "Ignorado") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+######################################### Tabela Municípios Zona de Ocorrência  #######################################
+
+RS_PECONHENTOS_TAB_ZONA_OCORRENCIA_Municipios <- RS22_PECONHENTOS_2025_GERAL[-nrow(RS22_PECONHENTOS_2025_GERAL), c(2, 6:9)] %>%
+  gt() %>%
+  tab_header(title = md("**Notificações por Zona de Ocorrência (2025)**")) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Zona de Ocorrência",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", columns = c(2:5)) %>%
+  cols_label(Zona_Urbana = "Urbana",
+             Zona_Rural = "Rural",
+             Zona_Periurbana = "Periurbana",
+             Zona_Ignorados = "Ignorado") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything())) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############################    Caracterização Pessoa   ###############################################################
+####################################### Sexo   ##########################################################################
+
+AUX <- RS_Serie_Historica_Geral[-c(1, nrow(RS_Serie_Historica_Geral)), c(1, 10:11)]
+
+RS_PECONHENTOS_TAB_SEXO_HIST <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Notificações por Sexo**"),
+             subtitle = "Notificações entre 2016 - 2024") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Sexo",
+              columns = c(2:3)) %>%
+  cols_align(align = "center", columns = c(2:3)) %>%
+  cols_label("RS" = "Ano") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything())) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+###################################   SINAP    ################################################################################
 
 SINAP <- read.csv(file = paste0("Base_de_Dados/PECONHENTOS/SINAP_ENCAMINHADOS.csv"),
                   header = TRUE,
@@ -8426,53 +9748,9 @@ SINAP_GERAL <- AUX[-c(1, 3)]
 
 SINAP_GERAL <-replace(SINAP_GERAL, is.na(SINAP_GERAL), "S/E")
 
+##################################   SINAP GERAL   #############################################################################
 
-#######  Municípios que possuem encontro de escorpião amarelo
-
-SHAPEFILE_Escorpiao_Amarelo <- SHAPEFILE_REGIONAL %>% mutate(ESC_AMAR = case_when(NM_MUNICIP == "IVAIPORÃ" 
-                                                                    | NM_MUNICIP == "JARDIM ALEGRE" 
-                                                                    | NM_MUNICIP == "LUNARDELLI"
-                                                                    | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
-                                                                    | NM_MUNICIP == "MANOEL RIBAS" 
-                                                                    ~ "Registro")
-)
-
-RS22_PECONHENTOS_MAPA_ESCORPIOES <- ggplot(SHAPEFILE_Escorpiao_Amarelo) +
-  geom_sf(size = 1,
-          aes(fill = ESC_AMAR),
-          color = "black") +
-  scale_fill_manual(name = "", 
-                    values = c("Registro" = "#9ACD32"),
-                    na.value = "#ADD8E6") + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = SHAPEFILE_Escorpiao_Amarelo %>% filter(ESC_AMAR == "Registro"), 
-                aes(label = NM_MUNICIP),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  labs(title = "Municípios da 22ª Regional de Saúde com Registro de Escorpiões Amarelos",
-       y = NULL,
-       x = NULL,
-       caption = Fonte1) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
-    plot.subtitle = element_text(hjust = 0.5),
-    plot.caption = element_text(hjust = 0)
-  )
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_escorpioes_amarelos.png", 
-       plot = RS22_PECONHENTOS_MAPA_ESCORPIOES,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-################################################################################
-
-SINAP_GERAL <- SINAP_GERAL %>%
+RS_PECONHENTOS_TAB_SINAP_GERAL <- SINAP_GERAL %>%
   gt() %>%
   tab_header(title = md("**Tabela 01 - Total de Amostras Encaminhadas por Município**"),
              subtitle = "Amostras encaminhadas entre os anos de 2020 e 2025") %>%
@@ -8495,71 +9773,22 @@ SINAP_GERAL <- SINAP_GERAL %>%
   tab_footnote(footnote = Fonte2) %>%
   tab_options(table.font.size = "small")
 
-gtsave(data = SINAP_GERAL,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/SINAP_GERAL.png")
-##############################################################################
+#######################################################
 
-AUX <- AUX %>% mutate(Cortes = cut(x = Amostras,
-                                   breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, +Inf),
-                                   labels = c("1 - 10", "11 - 20", "21 - 30", "31 - 40", "41 - 50", "51 - 60", "61 - 70", "71 - 80", "> 80")))
+AUX <- SINAP[, c(1, 5, 7, 8, 12, 16, 17, 18, 26, 27) ]
 
-SHAPEFILE_SINAP <- left_join(SHAPEFILE_SINAP, AUX, by = c("NM_MUNICIP" = "Municipio"))
+AUX <- AUX %>%
+  filter(str_detect(AUX$Coleta, "2025")) 
 
-SHAPEFILE_SINAP$Cortes <- as.character(SHAPEFILE_SINAP$Cortes)
-
-SHAPEFILE_SINAP$Cortes <-replace(SHAPEFILE_SINAP$Cortes, is.na(SHAPEFILE_SINAP$Cortes), "Sem Encaminhamentos")
-
-RS_MAP_SINAP_AMOSTRAS <- ggplot(SHAPEFILE_SINAP) +
-  geom_sf(aes(fill = Cortes),
-          size = 0.5,
-          color = "black") +
-  scale_fill_manual(name = "Nº de Amostras Encaminhadas", values = c("1 - 10" = "#40E0D0",
-                                                                     "11 - 20" = "#7FFFD4",
-                                                                     "21 - 30" = "#66CDAA",
-                                                                     "31 - 40" = "#8FBC8F",
-                                                                     "41 - 50" = "#20B2AA",
-                                                                     "51 - 60" = "#9ACD32",
-                                                                     "61 - 70" = "#228B22",
-                                                                     "71 - 80" = "#6B8E23",
-                                                                     "> 80" = "#556B2F",
-                                                                     "Sem Encaminhamentos" = "red")) +
-  labs(title = "Amostras de Animais Peçonhentos Encaminhadas para o LABTAX",
-       subtitle = " Número Total de Amostras Encaminhadas (2020 - 2025)",
-       caption = Fonte2) +
-  theme(
-    legend.position = "bottom",  
-    legend.title = element_text(face = "bold"),  
-    legend.text = element_text(size = 10),  
-    plot.title = element_text(hjust = 0, 
-                              face = "bold", 
-                              size = 14),
-    plot.subtitle = element_text(hjust = 0),
-    plot.caption = element_text(hjust =0)
-  ) +
-  annotation_north_arrow(style = north_arrow_fancy_orienteering())
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Mapa_SINAP_ENCAMINHADOS.png", 
-       plot = RS_MAP_SINAP_AMOSTRAS,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-#########################################################################
-
-Tabela_SINAP <- SINAP[, c(1, 5, 7, 8, 12, 16, 17, 18, 26, 27) ]
-
-Tabela_SINAP <- Tabela_SINAP %>%
-  filter(str_detect(Tabela_SINAP$Coleta, "2025")) 
-
-Tabela_SINAP <- Tabela_SINAP %>%
+AUX <- AUX %>%
   mutate(Acidente = case_when(Causador_acidente == "S" ~ "Sim",
                               Causador_acidente == "N" ~ "Não"))
 
-Tabela_SINAP <- Tabela_SINAP[, c(1, 3, 4, 11, 7, 8, 9, 10)]
+AUX <- AUX[, c(1, 3, 4, 11, 7, 8, 9, 10)]
 
-Tabela_SINAP <- Tabela_SINAP %>%
+RS_PECONHENTOS_TAB_SINAP_Laudos <- AUX %>%
   gt() %>%
-  tab_header( title = md("**Tabela 01. Amostras de Animais Peçonhentos Encaminhadas ao DVVZI/LABTAX (2025)**")) %>%
+  tab_header( title = md("**Amostras de Animais Peçonhentos Encaminhadas ao DVVZI/LABTAX (2025)**")) %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -8572,64 +9801,46 @@ Tabela_SINAP <- Tabela_SINAP %>%
   tab_footnote(footnote = Fonte2) %>%
   tab_options(table.font.size = "small")
 
-gtsave(data = Tabela_SINAP,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/Tabela_SINAP.png")
 
+#########################################  Tipo de acidente (2025)   #####################
 
-################    Dados do Período atual    ##############
+AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID_SERPENTE),-c(1, 3, 4)]
 
-##############Serpentes por município
+RS_PECONHENTOS_TAB_TIPO_ACID_Municipio <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Tipo de Acidente por Município (2025)**")
+  ) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Tipo de Acidente",
+              columns = c(2:8),
+              id = "Animal") %>%
+  cols_align(align = "center", columns = c(2:8)) %>%
+  cols_label(Município = "Município",
+             Escorpiao = "Escorpião",
+             ignorado = "Ignorado") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )) %>%
+  tab_footnote(footnote = Fonte2) %>%
+  tab_options(table.font.size = "small")
 
-AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
-
-RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente <- ggplot(AUX, 
-                                                   aes(x = Município)
-                                                   ) +
-  geom_bar(aes(y = Serpente),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Acidentes com Serpentes/Município - 2025",
-       subtitle = "Município de residência",
-       y = "Casos",
-       x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Serpente, 
-                 x =  Município, 
-                 y = Serpente),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-  )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
-        ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente.png", 
-       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-##  Tipo de Serpente / Município
+#########################################  Tipo de acidente com serpente  Municípios   #####################
 
 AUX <- RS22_PECONHENTOS_2025_TIPO_ACID_SERPENTE[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID_SERPENTE),-c(1, 3, 4)]
 
 RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Serpente <- AUX %>%
   gt() %>%
   tab_header(title = md("**Tipo de Acidente Ofídico por Município (2025)**")
-             ) %>%
+  ) %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
   tab_spanner(label = "Tipo de Acidente",
               columns = c(2:7),
               id = "Animal") %>%
-    cols_align(align = "center", columns = c(2:7)) %>%
+  cols_align(align = "center", columns = c(2:7)) %>%
   cols_label(Município = "Município",
              Botropico = "Botrópico",
              Crotalico = "Crotálico",
@@ -8638,51 +9849,11 @@ RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Serpente <- AUX %>%
              Nao_Peconhenta = "Não Peçonhenta") %>%
   tab_style(style = cell_text(weight = "bold"),
             locations = cells_column_labels(everything()
-                                            )) %>%
+            )) %>%
   tab_footnote(footnote = Fonte2) %>%
   tab_options(table.font.size = "small")
 
-gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Serpente,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Serpente.png")
-
-##############Aranhas por município
-
-AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
-
-RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha <- ggplot(AUX, 
-                                                   aes(x = Município)
-) +
-  geom_bar(aes(y = Aranha),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Acidentes com Aranhas/Município - 2025",
-       subtitle = "Município de residência",
-       y = "Casos",
-       x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Aranha, 
-                 x =  Município, 
-                 y = Aranha),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-  )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha.png", 
-       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300) 
-
-##  Tipo de Aranha / Município
+#################################################  Tipo de Aranha / Município
 
 AUX <- RS22_PECONHENTOS_2025_TIPO_ACID_ARANHA[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID_ARANHA),-c(1, 3, 4)]
 
@@ -8705,123 +9876,7 @@ RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Aranha <- AUX %>%
   tab_footnote(footnote = Fonte2) %>%
   tab_options(table.font.size = "small")
 
-gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Aranha,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Aranha.png")
-
-##############Abelhas por município
-
-AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
-
-RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha <- ggplot(AUX, 
-                                                          aes(x = Município)
-) +
-  geom_bar(aes(y = Abelha),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Acidentes com Abelhas/Município - 2025",
-       subtitle = "Município de residência",
-       y = "Casos",
-       x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Abelha, 
-                 x =  Município, 
-                 y = Abelha),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-  )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha.png", 
-       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300)
-
-
-##############  Escorpião por município
-
-AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
-
-RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao <- ggplot(AUX, 
-                                                          aes(x = Município)
-) +
-  geom_bar(aes(y = Escorpiao),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Acidentes com Escorpiões/Município - 2025",
-       subtitle = "Município de residência",
-       y = "Casos",
-       x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Escorpiao, 
-                 x =  Município, 
-                 y = Escorpiao),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-  )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao.png", 
-       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300)
-
-
-##############  Lagarta por município
-
-AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
-
-RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta <- ggplot(AUX, 
-                                                             aes(x = Município)
-) +
-  geom_bar(aes(y = Lagarta),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Acidentes com Lagartas/Município - 2025",
-       subtitle = "Município de residência",
-       y = "Casos",
-       x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Lagarta, 
-                 x =  Município, 
-                 y = Lagarta),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-  )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
-  ) 
-
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta.png", 
-       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta,     
-       width = 24,             
-       height = 20,           
-       units = "cm",           
-       dpi = 300)
-
-##  Tipo de lagarta / Município
+########################################################  Tipo de lagarta / Município
 
 AUX <- RS22_PECONHENTOS_2025_TIPO_ACID_LAGARTA[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID_LAGARTA),-c(1, 3, 4)]
 
@@ -8844,38 +9899,678 @@ RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_lagarta <- AUX %>%
   tab_footnote(footnote = Fonte2) %>%
   tab_options(table.font.size = "small")
 
-gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_lagarta,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Lagarta.png")
+####################   SINAN ENCERRAMENTO
 
-##############  Outros por município
+AUX <- RS22_PECONHENTOS_2025_SINAN_PROB_ENCERRAMENTO[- nrow(RS22_PECONHENTOS_2025_SINAN_PROB_ENCERRAMENTO), -c(1, 3, 4)]
 
-AUX <- RS22_PECONHENTOS_2025_TIPO_ACID[-nrow(RS22_PECONHENTOS_2025_TIPO_ACID),]
+RS_PECONHENTOS_TAB_TIPO_SINAN_ENCERRAMENTO <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Fichas de Notificação com Encerramento Inadequado (2025)**")
+  ) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Campos Inadequados",
+              columns = c(2:4),
+              id = "Animal") %>%
+  cols_align(align = "center", columns = c(2:4)) %>%
+  cols_label(Município = "Município",
+             Sem_Evo = "Evolução 
+             do Caso",
+             Trabalho = "Acidente Relacionado 
+             ao Trabalho") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )) %>%
+  tab_footnote(footnote = Fonte2) %>%
+  tab_options(table.font.size = "small")
 
-RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros <- ggplot(AUX, 
-                                                           aes(x = Município)
-) +
-  geom_bar(aes(y = Outros),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Acidentes com Outros Animais/Município - 2025",
-       subtitle = "Município de residência",
-       y = "Casos",
+####################   SINAN Inconsistencia (Serpentes)
+
+AUX <- RS22_PECONHENTOS_2025_SINAN_SORO_INCONSISTENCIA[- nrow(RS22_PECONHENTOS_2025_SINAN_SORO_INCONSISTENCIA), c(2, 5:10)]
+
+RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Serpentes <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Fichas com Utilização de Soro Inconsistente com Classificação do Caso (2025)**"),
+             subtitle = "Acidentes com serpentes"
+  ) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Acidente Botrópico",
+              columns = c(2:4),
+              id = "Animal1") %>%
+  tab_spanner(label = "Acidente Crotálico",
+              columns = c(5:7),
+              id = "Animal2") %>%
+  cols_align(align = "center", columns = c(2:7)) %>%
+  cols_label(Município = "Município",
+             Botropico_Leve = "Leve",
+             Botropico_Moderado = "Moderado",
+             Botropico_Grave = "Grave",
+             Crotalico_Leve = "Leve",
+             Crotalico_Moderado = "Moderado",
+             Crotalico_Grave = "Grave") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )) %>%
+  tab_footnote(footnote = Fonte2) %>%
+  tab_options(table.font.size = "small")
+
+####################   SINAN Inconsistencia (Serpentes)
+
+AUX <- RS22_PECONHENTOS_2025_SINAN_SORO_INCONSISTENCIA[- nrow(RS22_PECONHENTOS_2025_SINAN_SORO_INCONSISTENCIA), c(2, 11:18)]
+
+RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Outros <- AUX %>%
+  gt() %>%
+  tab_header(title = md("**Fichas com Utilização de Soro Inconsistente com Classificação do Caso (2025)**"),
+             subtitle = "Acidentes com escorpiões, aranhas e lagartas."
+  ) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Acidente Escorpiônico",
+              columns = c(2:3),
+              id = "Animal1") %>%
+  tab_spanner(label = "Acidente Loxoscélico",
+              columns = c(4:5),
+              id = "Animal2") %>%
+  tab_spanner(label = "Foneutrismo",
+              columns = c(6:7),
+              id = "Animal3") %>%
+  tab_spanner(label = "Lonômia",
+              columns = c(8:9),
+              id = "Animal4") %>%
+  cols_align(align = "center", columns = c(2:9)) %>%
+  cols_label(Município = "Município",
+             Escorpiônico_Moderado = "Moderado",
+             Escorpiônico_Grave = "Grave",
+             Loxoscelico_Moderado = "Moderado",
+             Loxoscelico_Grave = "Grave",
+             Foneutrismo_Moderado = "Moderado",
+             Foneutrismo_Grave = "Grave",
+             Lonomia_Moderado = "Moderado",
+             Lonomia_Grave = "Grave") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )) %>%
+  tab_footnote(footnote = Fonte2) %>%
+  tab_options(table.font.size = "small")
+
+
+#####################################################################################################################################
+##############################################    Mapas   ###########################################################################
+
+###################################  Municipios que aplicam soro antiescorpiônico  ##################################################
+
+SHAPEFILE_SINAP <- SHAPEFILE_REGIONAL %>% mutate(NUCLEO = case_when(NM_MUNICIP == "IVAIPORÃ" 
+                                                                    | NM_MUNICIP == "NOVA TEBAS" 
+                                                                    | NM_MUNICIP == "LUNARDELLI"
+                                                                    | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
+                                                                    | NM_MUNICIP == "MANOEL RIBAS" 
+                                                                    ~ "Rede Descentralizada")
+)
+
+RS_PECONHENTOS_MAPA_REDE_SORO_ESC <- ggplot(SHAPEFILE_SINAP) +
+  geom_sf(size = 2,
+          aes(fill = NUCLEO),
+          color = "black") +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_SINAP %>% filter(NUCLEO == "Rede Descentralizada"), 
+                aes(label = NM_MUNICIP),
+                label.padding = unit(0.5, "mm"),
+                size = 4,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Municípios que Possuem Soro Antiescorpiônico em sua Rede de Frio",
+       y = NULL,
        x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Outros, 
-                 x =  Município, 
-                 y = Outros),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10),  
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14),
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(hjust = 0,
+                                size = 14) 
   )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
+
+################  DISCRIMINANDO A REDE   ######################################
+
+##########  Ivaiporã
+
+SHAPEFILE_IVAIPORA <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "IVAIPORÃ" 
+                                                 | NM_MUNICIP == "ARIRANHA DO IVAÍ" 
+                                                 | NM_MUNICIP == "ARAPUÃ"
+                                                 | NM_MUNICIP == "CRUZMALTINA"
+                                                 | NM_MUNICIP == "LIDIANÓPOLIS"
+                                                 | NM_MUNICIP == "JARDIM ALEGRE"
+                                                 | NM_MUNICIP == "ROSÁRIO DO IVAÍ"
+                                                 | NM_MUNICIP == "RIO BRANCO DO IVAÍ" 
+)
+
+RS_PECONHENTOS_MAPA_REDE_Ivaipora <- ggplot(SHAPEFILE_IVAIPORA) +
+  geom_sf(aes(fill = NUCLEO), 
+          color = "black", 
+          size = 2) +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_IVAIPORA, 
+                aes(label = NM_MUNICIP),
+                size = 5,
+                alpha = 0.5,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Municípios atendidos pelo Núcleo de Administração de Soro Antiescorpiônico de Ivaiporã",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10),  
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14),
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(hjust = 0,
+                                size = 14)
   ) 
+
+########################  São João do Ivaí   ##########################
+
+SHAPEFILE_SJI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "SÃO JOÃO DO IVAÍ" |
+                                              NM_MUNICIP == "GODOY MOREIRA")
+
+RS_PECONHENTOS_MAPA_REDE_SJI <- ggplot(SHAPEFILE_SJI) +
+  geom_sf(aes(fill = NUCLEO), 
+          color = "black", 
+          size = 2) +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_SJI, 
+                aes(label = NM_MUNICIP),
+                size = 5,
+                alpha = 0.5,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Municípios atendidos pelo Núcleo de Administração de Soro Antiescorpiônico de São João do Ivaí",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(hjust = 0,
+                                size = 14),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14)  
+  ) 
+
+##############################   MANOEL RIBAS   ##############################
+
+SHAPEFILE_MRI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "MANOEL RIBAS" |
+                                              NM_MUNICIP == "CÂNDIDO DE ABREU" |
+                                              NM_MUNICIP == "SANTA MARIA DO OESTE" |
+                                              NM_MUNICIP == "MATO RICO")
+
+RS_PECONHENTOS_MAPA_REDE_MRI <- ggplot(SHAPEFILE_MRI) +
+  geom_sf(aes(fill = NUCLEO), 
+          color = "black", 
+          size = 0.5) +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_MRI, 
+                aes(label = NM_MUNICIP),
+                size = 5,
+                alpha = 0.5,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Municípios atendidos pelo Núcleo de Administração de Soro Antiescorpiônico de Manoel Ribas",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 14,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14)  
+  ) 
+
+##########################  NOVA TEBAS   ###############################
+
+##############################   NOVA TEBAS   ##############################
+
+SHAPEFILE_NOVA_TEBAS <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "NOVA TEBAS")
+
+RS_PECONHENTOS_MAPA_REDE_Nova_Tebas <- ggplot(SHAPEFILE_NOVA_TEBAS) +
+  geom_sf(aes(fill = NUCLEO), 
+          color = "black", 
+          size = 0.5) +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_NOVA_TEBAS, 
+                aes(label = NM_MUNICIP),
+                size = 5,
+                alpha = 0.5,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Núcleo de Administração de Soro Antiescorpiônico de Nova Tebas",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 14,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14)  
+  ) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Nova_Tebas_Pag.png", 
+       plot = RS_PECONHENTOS_MAPA_REDE_Nova_Tebas,     
+       width = 24,             
+       height = 25,           
+       units = "cm",           
+       dpi = 300) 
+
+###########################  LUNARDELLI   ################################
+
+##########################################################
+
+SHAPEFILE_LUNARDELLI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "LUNARDELLI")
+
+RS_PECONHENTOS_MAPA_REDE_Lunardelli <- ggplot(SHAPEFILE_LUNARDELLI) +
+  geom_sf(aes(fill = NUCLEO), 
+          color = "black", 
+          size = 0.5) +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_LUNARDELLI, 
+                aes(label = NM_MUNICIP),
+                size = 5,
+                alpha = 0.5,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Núcleo de Administração de Soro Antiescorpiônico de Lunardelli",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 14,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14)  
+  ) 
+
+#######  Municípios que possuem encontro de escorpião amarelo
+
+SHAPEFILE_Escorpiao_Amarelo <- SHAPEFILE_REGIONAL %>% mutate(ESC_AMAR = case_when(NM_MUNICIP == "IVAIPORÃ" 
+                                                                                  | NM_MUNICIP == "JARDIM ALEGRE" 
+                                                                                  | NM_MUNICIP == "LUNARDELLI"
+                                                                                  | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
+                                                                                  | NM_MUNICIP == "MANOEL RIBAS" 
+                                                                                  ~ "Registro")
+)
+
+RS_PECONHENTOS_MAPA_ESCORPIOES <- ggplot(SHAPEFILE_Escorpiao_Amarelo) +
+  geom_sf(size = 1,
+          aes(fill = ESC_AMAR),
+          color = "black") +
+  scale_fill_manual(name = "", 
+                    values = c("Registro" = "#9ACD32"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_Escorpiao_Amarelo %>% filter(ESC_AMAR == "Registro"), 
+                aes(label = NM_MUNICIP),
+                label.padding = unit(0.5, "mm"),
+                size = 4,
+                position = "identity") +
+  labs(title = "Municípios da 22ª Regional de Saúde com Registro de Escorpiões Amarelos",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 14,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14)  
+  ) 
+
+#################################################    Amostras SINAP   2020 - 2025   #######################################
+
+SINAP_GERAL[, 2] <- as.numeric(SINAP_GERAL[, 2])
+
+AUX <- SINAP_GERAL %>% mutate(Cortes = cut(x = Amostras,
+                                           breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, +Inf),
+                                           labels = c("1 - 10", "11 - 20", "21 - 30", "31 - 40", "41 - 50", "51 - 60", "61 - 70", "71 - 80", "> 80")))
+
+SHAPEFILE_SINAP <- left_join(SHAPEFILE_SINAP, AUX, by = c("NM_MUNICIP" = "Municipio"))
+
+SHAPEFILE_SINAP$Cortes <- as.character(SHAPEFILE_SINAP$Cortes)
+
+SHAPEFILE_SINAP$Cortes <-replace(SHAPEFILE_SINAP$Cortes, is.na(SHAPEFILE_SINAP$Cortes), "Sem Encaminhamentos")
+
+RS_PECONHENTOS_MAPA_SINAP_Amostras <- ggplot(SHAPEFILE_SINAP) +
+  geom_sf(aes(fill = Cortes),
+          size = 0.5,
+          color = "black") +
+  scale_fill_manual(name = "Nº de Amostras Encaminhadas", values = c("1 - 10" = "#40E0D0",
+                                                                     "11 - 20" = "#7FFFD4",
+                                                                     "21 - 30" = "#66CDAA",
+                                                                     "31 - 40" = "#8FBC8F",
+                                                                     "41 - 50" = "#20B2AA",
+                                                                     "51 - 60" = "#9ACD32",
+                                                                     "61 - 70" = "#228B22",
+                                                                     "71 - 80" = "#6B8E23",
+                                                                     "> 80" = "#556B2F",
+                                                                     "Sem Encaminhamentos" = "red")) +
+  labs(title = "Amostras de Animais Peçonhentos Encaminhadas para o LABTAX",
+       subtitle = " Número Total de Amostras Encaminhadas (2020 - 2025)",
+       caption = Fonte2) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold"),  
+    legend.text = element_text(size = 10), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 14,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 14)  
+  ) 
+
+######################################################################################################################################
+###############################################  Salvando Gráficos, Tabelas e Mapas  #################################################
+
+########################  Gráficos   ###############################################
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Geral_Pag_08_A.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Geral,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Serpente_Pag_09_C.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Serpentes,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Aranha_Pag_09_A.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Aranhas,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Escorpiao_Pag_00.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Escorpiao,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Abelha_Pag_00.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Abelha ,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Lagarta_Pag_00.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Lagarta,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Outros_Pag_.png", 
+       plot = RS_PECONHENTOS_GRAF_CE_Outros,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Geral_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Geral,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Serpente_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Serpente,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Aranhas_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Aranha,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Escorpiao_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Escorpiao,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Abelha_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Abelha,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Lagarta_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Lagarta,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Outros_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Outros,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Incidencia_1_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_Incidencia_01,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Incidencia_02_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_Incidencia_02,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Historico_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Historico,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_ZONA_REGIONAL,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS_PECONHENTOS_GRAF_SEXO_HIST_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SEXO_HIST,     
+       width = 30,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SEXO_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SEXO,     
+       width = 30,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_PIRAMIDE_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_PIRAMIDE,     
+       width = 26,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_PIRAMIDE_HIST_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_PIRAMIDE_HIST,     
+       width = 26,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Escolaridade_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Escolaridade,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Escolaridade_Pag.png", 
+       plot = RS_PECONHENTOS_GRAF_Escolaridade,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID,     
+       width = 28,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_HIST.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_HIST,     
+       width = 32,             
+       height = 16,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta.png", 
+       plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta,     
+       width = 24,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
 
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros.png", 
        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros,     
@@ -8884,45 +10579,179 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS
        units = "cm",           
        dpi = 300)
 
-################  Local da picada
-
-AUX <- RS22_PECONHENTOS_2025_LOCAL_PICADA[nrow(RS22_PECONHENTOS_2025_LOCAL_PICADA), - c(1:4)]
-
-AUX <- t(AUX)
-
-AUX <- as.data.frame(AUX)
-
-AUX[, 2] <- c("Cabeça", "Braço", "Antebraço", "Mão", "Dedo (Mão)", "Tronco", "Coxa", "Perna", "Pé", "Dedo (Pé)", "Ignorado")
-
-colnames(AUX) <- c("Casos", "Locais")
-
-RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional <- ggplot(AUX) +
-  geom_bar(aes(x = Locais,
-               y = Casos),
-           stat = "identity",
-           color = "black",
-           fill = "green",
-           linewidth = 0.8) +
-  labs(title = "Local da Picada -22ª Regional de Saúde (2025)",
-       y = "Casos",
-       x = NULL,
-       caption = Fonte1) + 
-  geom_label(aes(label = Casos,
-                 x = Locais,
-                 y = Casos),
-             alpha = 0.5,
-             vjust = 0.1)  +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)
-  )
-  ) +
-  Theme() +
-  theme(plot.caption = element_text(hjust = 0),
-        axis.text.x = element_text(angle = 75)
-  ) 
-
 ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional.png", 
        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional,     
-       width = 24,             
+       width = 29,             
        height = 20,           
        units = "cm",           
        dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Serpente_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Serpente_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Aranha_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Aranha_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Escorpiao_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Escorpiao_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Lagarta_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Lagarta_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Serpente_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Serpente_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Aranha_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Aranha_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Escorpiao_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Escorpiao_regional,     
+       width = 29,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Lagarta_regional.png", 
+       plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Lagarta_regional,     
+       width = 32,             
+       height = 16,           
+       units = "cm",           
+       dpi = 300)
+
+#######################################    Tabelas  ##################################################################
+
+gtsave(data = RS_PECONHENTOS_TAB_LOCAL_PICADA,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_LOCAL_PICADA.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_LOCAL_PICADA_HIST,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_LOCAL_PICADA_HIST.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Serpente,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Serpente.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Aranha,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Aranha.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Lagarta,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TAB_TIPO_ACID_HIST_Lagarta.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_ZONA_OCORRENCIA_HIST,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_ZONA_HIST_Pag.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_ZONA_OCORRENCIA_Municipios,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_ZONA_Municipios.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_SEXO_HIST,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SEXO_HIST.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_SINAP_GERAL,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_GERAL_Pag.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_SINAP_Laudos,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_Laudos_Pag.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Pag.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Serpente,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Serpente_Pag.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Aranha,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Aranha.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_lagarta,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipio_Lagarta.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_SINAN_ENCERRAMENTO,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_ENCERRAMENTO.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Serpentes,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Serpentes.png")
+
+gtsave(data = RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Outros,
+       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Outros.png")
+
+#######################################    Mapas     #################################################################################
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_SORO_ESC.png", 
+       plot = RS_PECONHENTOS_MAPA_REDE_SORO_ESC,     
+       width = 25,             
+       height = 22,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Ivaipora_Pag.png", 
+       plot = RS_PECONHENTOS_MAPA_REDE_Ivaipora,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_SJI.Pag.png", 
+       plot = RS_PECONHENTOS_MAPA_REDE_SJI,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_MRI_Pag.png", 
+       plot = RS_PECONHENTOS_MAPA_REDE_MRI,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Lunardelli_Pag.png", 
+       plot = RS_PECONHENTOS_MAPA_REDE_Lunardelli,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_ESCORPIOES.png", 
+       plot = RS_PECONHENTOS_MAPA_ESCORPIOES,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_SINAP_Amostras_Pag.png", 
+       plot = RS_PECONHENTOS_MAPA_SINAP_Amostras,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
