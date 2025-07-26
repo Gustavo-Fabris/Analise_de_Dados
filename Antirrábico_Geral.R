@@ -33,13 +33,6 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 nrow <- NROW(BASE_IBGE[which(BASE_IBGE$RS == RS), 1])
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica <- data.frame(Ano = 
-                                          c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"),
-                                        Notificados = NA)
-
 ####Criando um objeto com a base DBF do SINAN#################
 
 ANTRAB2012 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2012.DBF",
@@ -52,20 +45,9 @@ ANTRAB2012$ID_MN_RESI <- as.numeric(as.character(ANTRAB2012$ID_MN_RESI))
 
 ############################     2012   ########################################
 
-PR_ANTRAB_Serie_Historica[1, 2] <- as.integer(ANTRAB2012 %>% 
-                                                count()
-)
-
 #####################################################################################################################
 #################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
 
-#PR_ANTRAB_Serie_Historica <- data.frame(Ano = 
-#                                          c("2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"),
- #                                       Notificados = NA)
-
-#PR_ANTRAB_Serie_Historica[1, 2] <- as.integer(ANTRAB2012 %>% 
-#                                                count()
-#)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2012 <- ANTRAB2012 %>% 
@@ -1159,6 +1141,8 @@ AUX$Sim <- NA
 
 AUX$Nao <- NA
 
+AUX$Test <- NA
+
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2012 %>% 
@@ -1511,13 +1495,6 @@ ANTRAB2013 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2013.DBF",
 
 ANTRAB2013$ID_MN_RESI <- as.numeric(as.character(ANTRAB2013$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-
-PR_ANTRAB_Serie_Historica[2, 2] <- as.integer(ANTRAB2013 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2013 <- ANTRAB2013 %>% 
@@ -2963,12 +2940,6 @@ ANTRAB2014 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2014.DBF",
 
 ANTRAB2014$ID_MN_RESI <- as.numeric(as.character(ANTRAB2014$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[3, 2] <- as.integer(ANTRAB2014 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2014 <- ANTRAB2014 %>% 
@@ -4414,12 +4385,6 @@ ANTRAB2015 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2015.DBF",
 
 ANTRAB2015$ID_MN_RESI <- as.numeric(as.character(ANTRAB2015$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[4, 2] <- as.integer(ANTRAB2015 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2015 <- ANTRAB2015 %>% 
@@ -5865,12 +5830,6 @@ ANTRAB2016 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2016.DBF",
 
 ANTRAB2016$ID_MN_RESI <- as.numeric(as.character(ANTRAB2016$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[5, 2] <- as.integer(ANTRAB2016 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2016 <- ANTRAB2016 %>% 
@@ -5881,6 +5840,8 @@ assign(paste0("RS", RS, "_ANTRAB_2016_SINAN"), SINAN_ANTRAB_2016)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2016_SINAN"), SINAN_ANTRAB_2016), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2016_SINAN.csv"), 
            row.names = FALSE)
+
+SINAN_Piramide <- SINAN_ANTRAB_2016[, c(4, 17:18)]
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -7317,12 +7278,6 @@ ANTRAB2017 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2017.DBF",
 
 ANTRAB2017$ID_MN_RESI <- as.numeric(as.character(ANTRAB2017$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[6, 2] <- as.integer(ANTRAB2017 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2017 <- ANTRAB2017 %>% 
@@ -7333,6 +7288,10 @@ assign(paste0("RS", RS, "_ANTRAB_2017_SINAN"), SINAN_ANTRAB_2017)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2017_SINAN"), SINAN_ANTRAB_2017), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2017_SINAN.csv"), 
            row.names = FALSE)
+
+AUX <- SINAN_ANTRAB_2017[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX) 
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -8769,12 +8728,6 @@ ANTRAB2018 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2018.DBF",
 
 ANTRAB2018$ID_MN_RESI <- as.numeric(as.character(ANTRAB2018$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[7, 2] <- as.integer(ANTRAB2018 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2018 <- ANTRAB2018 %>% 
@@ -8785,6 +8738,10 @@ assign(paste0("RS", RS, "_ANTRAB_2018_SINAN"), SINAN_ANTRAB_2018)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2018_SINAN"), SINAN_ANTRAB_2018), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2018_SINAN.csv"), 
            row.names = FALSE)
+
+AUX <- SINAN_ANTRAB_2018[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -10222,12 +10179,6 @@ ANTRAB2019 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2019.DBF",
 
 ANTRAB2019$ID_MN_RESI <- as.numeric(as.character(ANTRAB2019$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[8, 2] <- as.integer(ANTRAB2019 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2019 <- ANTRAB2019 %>% 
@@ -10238,6 +10189,10 @@ assign(paste0("RS", RS, "_ANTRAB_2019_SINAN"), SINAN_ANTRAB_2019)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2019_SINAN"), SINAN_ANTRAB_2019), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2019_SINAN.csv"), 
            row.names = FALSE)
+
+AUX <- SINAN_ANTRAB_2019[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -11675,12 +11630,6 @@ ANTRAB2020 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2020.DBF",
 
 ANTRAB2020$ID_MN_RESI <- as.numeric(as.character(ANTRAB2020$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[9, 2] <- as.integer(ANTRAB2020 %>% 
-                                                count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2020 <- ANTRAB2020 %>% 
@@ -11691,6 +11640,10 @@ assign(paste0("RS", RS, "_ANTRAB_2020_SINAN"), SINAN_ANTRAB_2020)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2020_SINAN"), SINAN_ANTRAB_2020), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2020_SINAN.csv"), 
            row.names = FALSE)
+
+AUX <- SINAN_ANTRAB_2020[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -13128,12 +13081,6 @@ ANTRAB2021 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2021.DBF",
 
 ANTRAB2021$ID_MN_RESI <- as.numeric(as.character(ANTRAB2021$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[10, 2] <- as.integer(ANTRAB2021 %>% 
-                                                 count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2021 <- ANTRAB2021 %>% 
@@ -13145,6 +13092,9 @@ write.csv (assign(paste0("RS", RS, "_ANTRAB_2021_SINAN"), SINAN_ANTRAB_2021),
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2021_SINAN.csv"), 
            row.names = FALSE)
 
+AUX <- SINAN_ANTRAB_2021[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
 
@@ -14581,12 +14531,6 @@ ANTRAB2022 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2022.DBF",
 
 ANTRAB2022$ID_MN_RESI <- as.numeric(as.character(ANTRAB2022$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[11, 2] <- as.integer(ANTRAB2022 %>% 
-                                                 count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2022 <- ANTRAB2022 %>% 
@@ -14598,6 +14542,9 @@ write.csv (assign(paste0("RS", RS, "_ANTRAB_2022_SINAN"), SINAN_ANTRAB_2022),
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2022_SINAN.csv"), 
            row.names = FALSE)
 
+AUX <- SINAN_ANTRAB_2022[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
 
@@ -16034,12 +15981,6 @@ ANTRAB2023 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2023.DBF",
 
 ANTRAB2023$ID_MN_RESI <- as.numeric(as.character(ANTRAB2023$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[12, 2] <- as.integer(ANTRAB2023 %>% 
-                                                 count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2023 <- ANTRAB2023 %>% 
@@ -16050,6 +15991,10 @@ assign(paste0("RS", RS, "_ANTRAB_2023_SINAN"), SINAN_ANTRAB_2023)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2023_SINAN"), SINAN_ANTRAB_2023), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2023_SINAN.csv"), 
            row.names = FALSE)
+
+AUX <- SINAN_ANTRAB_2023[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -17487,12 +17432,6 @@ ANTRAB2024 <- read.dbf(file = "Base_de_Dados/DBF/ANTRANET2024.DBF",
 
 ANTRAB2024$ID_MN_RESI <- as.numeric(as.character(ANTRAB2024$ID_MN_RESI))
 
-#####################################################################################################################
-#################  Realizando contagem dos casos do Paraná para realizar a série histórica do Estado  ###############
-
-PR_ANTRAB_Serie_Historica[13, 2] <- as.integer(ANTRAB2024 %>% 
-                                                 count()
-)
 #####Filtrando os dados da Base DBF do SINAN com os dados de notificação somente da 22RS###########
 
 SINAN_ANTRAB_2024 <- ANTRAB2024 %>% 
@@ -17503,6 +17442,10 @@ assign(paste0("RS", RS, "_ANTRAB_2024_SINAN"), SINAN_ANTRAB_2024)
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_SINAN"), SINAN_ANTRAB_2024), 
            paste0("Tabulacoes_R/Raiva/RS", RS, "_ANTRAB_2024_SINAN.csv"), 
            row.names = FALSE)
+
+AUX <- SINAN_ANTRAB_2024[, c(4, 17:18)]
+
+SINAN_Piramide <- rbind(SINAN_Piramide, AUX)
 
 ################################################################################################################
 ############      Filtrando os dados por SE para elaborar o Canal Endêmico   ###################################
@@ -18928,389 +18871,15 @@ write.csv (assign(paste0("RS", RS, "_ANTRAB_2024_SORO_INFILTRACAO"), AUX),
 
 rm(SINAN_ANTRAB_2024, ANTRAB2024)
 
-########   Salvando o objeto PR_ANTRAB_Serie_Historica    ######
-
-write.csv (PR_ANTRAB_Serie_Historica, 
-           "Tabulacoes_R/Raiva/PR_ANTRAB_BASE_Serie_Historica.csv", 
-           row.names = FALSE)
-
 ################################################################################################################################
 ################################################################################################################################
 
-###Tabela Série Histórica Regional###
+######   SINAN PIRÂMIDE
 
-AUX <- data.frame(RS22 = "RS22", RS22_2012 = NA, RS22_2013 = NA, 
-                  RS22_2014 = NA, RS22_2015 = NA, RS22_2016 = NA, 
-                  RS22_2017 = NA, RS22_2018 = NA, RS22_2019 = NA, 
-                  RS22_2020 = NA, RS22_2021 = NA, RS22_2022 = NA, 
-                  RS22_2023 = NA, RS22_2024 = NA, RS22_2025 = NA)
-
-AUX[1, 1] <- "Notificados"
-AUX[2, 1] <- "Zona_Urbana"
-AUX[3, 1] <- "Zona_Rural"
-AUX[4, 1] <- "Zona_Periurbana"
-AUX[5, 1] <- "Zona_Ignorados"
-AUX[6, 1] <- "Feminino"
-AUX[7, 1] <- "Masculino"
-AUX[8, 1] <- "Menos_1_ano"
-AUX[9, 1] <- "Um_a_cinco"
-AUX[10, 1] <- "Cinco_a_doze"
-AUX[11, 1] <- "Doze_dezoito"
-AUX[12, 1] <- "Dezoito_cinquentaenove"
-AUX[13, 1] <- "Mais_de_Sessenta"
-AUX[14, 1] <- "Analfabeto"
-AUX[15, 1] <- "Fundamental_Incompleto"
-AUX[16, 1] <- "Fundamental_Completo"
-AUX[17, 1] <- "Ensino_medio_Incompleto"
-AUX[18, 1] <- "Ensino_Medio_Completo"
-AUX[19, 1] <- "Superior_Incompleto"
-AUX[20, 1] <- "Superior_Completo"
-AUX[21, 1] <- "ESC_NA"
-AUX[22, 1] <- "Esc_Ignorado"
-AUX[23, 1] <- "Gestante"
-AUX[24, 1] <- "Não_Gestante"
-
-AUX[1, 2] <- RS22_ANTRAB_2012_GERAL[17, 5]
-AUX[2, 2] <- RS22_ANTRAB_2012_GERAL[17, 6]
-AUX[3, 2] <- RS22_ANTRAB_2012_GERAL[17, 7]
-AUX[4, 2] <- RS22_ANTRAB_2012_GERAL[17, 8]
-AUX[5, 2] <- RS22_ANTRAB_2012_GERAL[17, 9]
-AUX[6, 2] <- RS22_ANTRAB_2012_GERAL[17, 10]
-AUX[7, 2] <- RS22_ANTRAB_2012_GERAL[17, 11]
-AUX[8, 2] <- RS22_ANTRAB_2012_GERAL[17, 12]
-AUX[9, 2] <- RS22_ANTRAB_2012_GERAL[17, 13]
-AUX[10, 2] <- RS22_ANTRAB_2012_GERAL[17, 14]
-AUX[11, 2] <- RS22_ANTRAB_2012_GERAL[17, 15]
-AUX[12, 2] <- RS22_ANTRAB_2012_GERAL[17, 16]
-AUX[13, 2] <- RS22_ANTRAB_2012_GERAL[17, 17]
-AUX[14, 2] <- RS22_ANTRAB_2012_GERAL[17, 18]
-AUX[15, 2] <- RS22_ANTRAB_2012_GERAL[17, 19]
-AUX[16, 2] <- RS22_ANTRAB_2012_GERAL[17, 20]
-AUX[17, 2] <- RS22_ANTRAB_2012_GERAL[17, 21]
-AUX[18, 2] <- RS22_ANTRAB_2012_GERAL[17, 22]
-AUX[19, 2] <- RS22_ANTRAB_2012_GERAL[17, 23]
-AUX[20, 2] <- RS22_ANTRAB_2012_GERAL[17, 24]
-AUX[21, 2] <- RS22_ANTRAB_2012_GERAL[17, 25]
-AUX[22, 2] <- RS22_ANTRAB_2012_GERAL[17, 26]
-AUX[23, 2] <- RS22_ANTRAB_2012_GERAL[17, 27]
-AUX[24, 2] <- RS22_ANTRAB_2012_GERAL[17, 28]
-
-AUX[1, 3] <- RS22_ANTRAB_2013_GERAL[17, 5]
-AUX[2, 3] <- RS22_ANTRAB_2013_GERAL[17, 6]
-AUX[3, 3] <- RS22_ANTRAB_2013_GERAL[17, 7]
-AUX[4, 3] <- RS22_ANTRAB_2013_GERAL[17, 8]
-AUX[5, 3] <- RS22_ANTRAB_2013_GERAL[17, 9]
-AUX[6, 3] <- RS22_ANTRAB_2013_GERAL[17, 10]
-AUX[7, 3] <- RS22_ANTRAB_2013_GERAL[17, 11]
-AUX[8, 3] <- RS22_ANTRAB_2013_GERAL[17, 12]
-AUX[9, 3] <- RS22_ANTRAB_2013_GERAL[17, 13]
-AUX[10, 3] <- RS22_ANTRAB_2013_GERAL[17, 14]
-AUX[11, 3] <- RS22_ANTRAB_2013_GERAL[17, 15]
-AUX[12, 3] <- RS22_ANTRAB_2013_GERAL[17, 16]
-AUX[13, 3] <- RS22_ANTRAB_2013_GERAL[17, 17]
-AUX[14, 3] <- RS22_ANTRAB_2013_GERAL[17, 18]
-AUX[15, 3] <- RS22_ANTRAB_2013_GERAL[17, 19]
-AUX[16, 3] <- RS22_ANTRAB_2013_GERAL[17, 20]
-AUX[17, 3] <- RS22_ANTRAB_2013_GERAL[17, 21]
-AUX[18, 3] <- RS22_ANTRAB_2013_GERAL[17, 22]
-AUX[19, 3] <- RS22_ANTRAB_2013_GERAL[17, 23]
-AUX[20, 3] <- RS22_ANTRAB_2013_GERAL[17, 24]
-AUX[21, 3] <- RS22_ANTRAB_2013_GERAL[17, 25]
-AUX[22, 3] <- RS22_ANTRAB_2013_GERAL[17, 26]
-AUX[23, 3] <- RS22_ANTRAB_2013_GERAL[17, 27]
-AUX[24, 3] <- RS22_ANTRAB_2013_GERAL[17, 28]
-
-AUX[1, 4] <- RS22_ANTRAB_2014_GERAL[17, 5]
-AUX[2, 4] <- RS22_ANTRAB_2014_GERAL[17, 6]
-AUX[3, 4] <- RS22_ANTRAB_2014_GERAL[17, 7]
-AUX[4, 4] <- RS22_ANTRAB_2014_GERAL[17, 8]
-AUX[5, 4] <- RS22_ANTRAB_2014_GERAL[17, 9]
-AUX[6, 4] <- RS22_ANTRAB_2014_GERAL[17, 10]
-AUX[7, 4] <- RS22_ANTRAB_2014_GERAL[17, 11]
-AUX[8, 4] <- RS22_ANTRAB_2014_GERAL[17, 12]
-AUX[9, 4] <- RS22_ANTRAB_2014_GERAL[17, 13]
-AUX[10, 4] <- RS22_ANTRAB_2014_GERAL[17, 14]
-AUX[11, 4] <- RS22_ANTRAB_2014_GERAL[17, 15]
-AUX[12, 4] <- RS22_ANTRAB_2014_GERAL[17, 16]
-AUX[13, 4] <- RS22_ANTRAB_2014_GERAL[17, 17]
-AUX[14, 4] <- RS22_ANTRAB_2014_GERAL[17, 18]
-AUX[15, 4] <- RS22_ANTRAB_2014_GERAL[17, 19]
-AUX[16, 4] <- RS22_ANTRAB_2014_GERAL[17, 20]
-AUX[17, 4] <- RS22_ANTRAB_2014_GERAL[17, 21]
-AUX[18, 4] <- RS22_ANTRAB_2014_GERAL[17, 22]
-AUX[19, 4] <- RS22_ANTRAB_2014_GERAL[17, 23]
-AUX[20, 4] <- RS22_ANTRAB_2014_GERAL[17, 24]
-AUX[21, 4] <- RS22_ANTRAB_2014_GERAL[17, 25]
-AUX[22, 4] <- RS22_ANTRAB_2014_GERAL[17, 26]
-AUX[23, 4] <- RS22_ANTRAB_2014_GERAL[17, 27]
-AUX[24, 4] <- RS22_ANTRAB_2014_GERAL[17, 28]
-
-AUX[1, 5] <- RS22_ANTRAB_2015_GERAL[17, 5]
-AUX[2, 5] <- RS22_ANTRAB_2015_GERAL[17, 6]
-AUX[3, 5] <- RS22_ANTRAB_2015_GERAL[17, 7]
-AUX[4, 5] <- RS22_ANTRAB_2015_GERAL[17, 8]
-AUX[5, 5] <- RS22_ANTRAB_2015_GERAL[17, 9]
-AUX[6, 5] <- RS22_ANTRAB_2015_GERAL[17, 10]
-AUX[7, 5] <- RS22_ANTRAB_2015_GERAL[17, 11]
-AUX[8, 5] <- RS22_ANTRAB_2015_GERAL[17, 12]
-AUX[9, 5] <- RS22_ANTRAB_2015_GERAL[17, 13]
-AUX[10, 5] <- RS22_ANTRAB_2015_GERAL[17, 14]
-AUX[11, 5] <- RS22_ANTRAB_2015_GERAL[17, 15]
-AUX[12, 5] <- RS22_ANTRAB_2015_GERAL[17, 16]
-AUX[13, 5] <- RS22_ANTRAB_2015_GERAL[17, 17]
-AUX[14, 5] <- RS22_ANTRAB_2015_GERAL[17, 18]
-AUX[15, 5] <- RS22_ANTRAB_2015_GERAL[17, 19]
-AUX[16, 5] <- RS22_ANTRAB_2015_GERAL[17, 20]
-AUX[17, 5] <- RS22_ANTRAB_2015_GERAL[17, 21]
-AUX[18, 5] <- RS22_ANTRAB_2015_GERAL[17, 22]
-AUX[19, 5] <- RS22_ANTRAB_2015_GERAL[17, 23]
-AUX[20, 5] <- RS22_ANTRAB_2015_GERAL[17, 24]
-AUX[21, 5] <- RS22_ANTRAB_2015_GERAL[17, 25]
-AUX[22, 5] <- RS22_ANTRAB_2015_GERAL[17, 26]
-AUX[23, 5] <- RS22_ANTRAB_2015_GERAL[17, 27]
-AUX[24, 5] <- RS22_ANTRAB_2015_GERAL[17, 28]
-
-AUX[1, 6] <- RS22_ANTRAB_2016_GERAL[17, 5]
-AUX[2, 6] <- RS22_ANTRAB_2016_GERAL[17, 6]
-AUX[3, 6] <- RS22_ANTRAB_2016_GERAL[17, 7]
-AUX[4, 6] <- RS22_ANTRAB_2016_GERAL[17, 8]
-AUX[5, 6] <- RS22_ANTRAB_2016_GERAL[17, 9]
-AUX[6, 6] <- RS22_ANTRAB_2016_GERAL[17, 10]
-AUX[7, 6] <- RS22_ANTRAB_2016_GERAL[17, 11]
-AUX[8, 6] <- RS22_ANTRAB_2016_GERAL[17, 12]
-AUX[9, 6] <- RS22_ANTRAB_2016_GERAL[17, 13]
-AUX[10, 6] <- RS22_ANTRAB_2016_GERAL[17, 14]
-AUX[11, 6] <- RS22_ANTRAB_2016_GERAL[17, 15]
-AUX[12, 6] <- RS22_ANTRAB_2016_GERAL[17, 16]
-AUX[13, 6] <- RS22_ANTRAB_2016_GERAL[17, 17]
-AUX[14, 6] <- RS22_ANTRAB_2016_GERAL[17, 18]
-AUX[15, 6] <- RS22_ANTRAB_2016_GERAL[17, 19]
-AUX[16, 6] <- RS22_ANTRAB_2016_GERAL[17, 20]
-AUX[17, 6] <- RS22_ANTRAB_2016_GERAL[17, 21]
-AUX[18, 6] <- RS22_ANTRAB_2016_GERAL[17, 22]
-AUX[19, 6] <- RS22_ANTRAB_2016_GERAL[17, 23]
-AUX[20, 6] <- RS22_ANTRAB_2016_GERAL[17, 24]
-AUX[21, 6] <- RS22_ANTRAB_2016_GERAL[17, 25]
-AUX[22, 6] <- RS22_ANTRAB_2016_GERAL[17, 26]
-AUX[23, 6] <- RS22_ANTRAB_2016_GERAL[17, 27]
-AUX[24, 6] <- RS22_ANTRAB_2016_GERAL[17, 28]
-
-AUX[1, 7] <- RS22_ANTRAB_2017_GERAL[17, 5]
-AUX[2, 7] <- RS22_ANTRAB_2017_GERAL[17, 6]
-AUX[3, 7] <- RS22_ANTRAB_2017_GERAL[17, 7]
-AUX[4, 7] <- RS22_ANTRAB_2017_GERAL[17, 8]
-AUX[5, 7] <- RS22_ANTRAB_2017_GERAL[17, 9]
-AUX[6, 7] <- RS22_ANTRAB_2017_GERAL[17, 10]
-AUX[7, 7] <- RS22_ANTRAB_2017_GERAL[17, 11]
-AUX[8, 7] <- RS22_ANTRAB_2017_GERAL[17, 12]
-AUX[9, 7] <- RS22_ANTRAB_2017_GERAL[17, 13]
-AUX[10, 7] <- RS22_ANTRAB_2017_GERAL[17, 14]
-AUX[11, 7] <- RS22_ANTRAB_2017_GERAL[17, 15]
-AUX[12, 7] <- RS22_ANTRAB_2017_GERAL[17, 16]
-AUX[13, 7] <- RS22_ANTRAB_2017_GERAL[17, 17]
-AUX[14, 7] <- RS22_ANTRAB_2017_GERAL[17, 18]
-AUX[15, 7] <- RS22_ANTRAB_2017_GERAL[17, 19]
-AUX[16, 7] <- RS22_ANTRAB_2017_GERAL[17, 20]
-AUX[17, 7] <- RS22_ANTRAB_2017_GERAL[17, 21]
-AUX[18, 7] <- RS22_ANTRAB_2017_GERAL[17, 22]
-AUX[19, 7] <- RS22_ANTRAB_2017_GERAL[17, 23]
-AUX[20, 7] <- RS22_ANTRAB_2017_GERAL[17, 24]
-AUX[21, 7] <- RS22_ANTRAB_2017_GERAL[17, 25]
-AUX[22, 7] <- RS22_ANTRAB_2017_GERAL[17, 26]
-AUX[23, 7] <- RS22_ANTRAB_2017_GERAL[17, 27]
-AUX[24, 7] <- RS22_ANTRAB_2017_GERAL[17, 28]
-
-AUX[1, 8] <- RS22_ANTRAB_2018_GERAL[17, 5]
-AUX[2, 8] <- RS22_ANTRAB_2018_GERAL[17, 6]
-AUX[3, 8] <- RS22_ANTRAB_2018_GERAL[17, 7]
-AUX[4, 8] <- RS22_ANTRAB_2018_GERAL[17, 8]
-AUX[5, 8] <- RS22_ANTRAB_2018_GERAL[17, 9]
-AUX[6, 8] <- RS22_ANTRAB_2018_GERAL[17, 10]
-AUX[7, 8] <- RS22_ANTRAB_2018_GERAL[17, 11]
-AUX[8, 8] <- RS22_ANTRAB_2018_GERAL[17, 12]
-AUX[9, 8] <- RS22_ANTRAB_2018_GERAL[17, 13]
-AUX[10, 8] <- RS22_ANTRAB_2018_GERAL[17, 14]
-AUX[11, 8] <- RS22_ANTRAB_2018_GERAL[17, 15]
-AUX[12, 8] <- RS22_ANTRAB_2018_GERAL[17, 16]
-AUX[13, 8] <- RS22_ANTRAB_2018_GERAL[17, 17]
-AUX[14, 8] <- RS22_ANTRAB_2018_GERAL[17, 18]
-AUX[15, 8] <- RS22_ANTRAB_2018_GERAL[17, 19]
-AUX[16, 8] <- RS22_ANTRAB_2018_GERAL[17, 20]
-AUX[17, 8] <- RS22_ANTRAB_2018_GERAL[17, 21]
-AUX[18, 8] <- RS22_ANTRAB_2018_GERAL[17, 22]
-AUX[19, 8] <- RS22_ANTRAB_2018_GERAL[17, 23]
-AUX[20, 8] <- RS22_ANTRAB_2018_GERAL[17, 24]
-AUX[21, 8] <- RS22_ANTRAB_2018_GERAL[17, 25]
-AUX[22, 8] <- RS22_ANTRAB_2018_GERAL[17, 26]
-AUX[23, 8] <- RS22_ANTRAB_2018_GERAL[17, 27]
-AUX[24, 8] <- RS22_ANTRAB_2018_GERAL[17, 28]
-
-AUX[1, 9] <- RS22_ANTRAB_2019_GERAL[17, 5]
-AUX[2, 9] <- RS22_ANTRAB_2019_GERAL[17, 6]
-AUX[3, 9] <- RS22_ANTRAB_2019_GERAL[17, 7]
-AUX[4, 9] <- RS22_ANTRAB_2019_GERAL[17, 8]
-AUX[5, 9] <- RS22_ANTRAB_2019_GERAL[17, 9]
-AUX[6, 9] <- RS22_ANTRAB_2019_GERAL[17, 10]
-AUX[7, 9] <- RS22_ANTRAB_2019_GERAL[17, 11]
-AUX[8, 9] <- RS22_ANTRAB_2019_GERAL[17, 12]
-AUX[9, 9] <- RS22_ANTRAB_2019_GERAL[17, 13]
-AUX[10, 9] <- RS22_ANTRAB_2019_GERAL[17, 14]
-AUX[11, 9] <- RS22_ANTRAB_2019_GERAL[17, 15]
-AUX[12, 9] <- RS22_ANTRAB_2019_GERAL[17, 16]
-AUX[13, 9] <- RS22_ANTRAB_2019_GERAL[17, 17]
-AUX[14, 9] <- RS22_ANTRAB_2019_GERAL[17, 18]
-AUX[15, 9] <- RS22_ANTRAB_2019_GERAL[17, 19]
-AUX[16, 9] <- RS22_ANTRAB_2019_GERAL[17, 20]
-AUX[17, 9] <- RS22_ANTRAB_2019_GERAL[17, 21]
-AUX[18, 9] <- RS22_ANTRAB_2019_GERAL[17, 22]
-AUX[19, 9] <- RS22_ANTRAB_2019_GERAL[17, 23]
-AUX[20, 9] <- RS22_ANTRAB_2019_GERAL[17, 24]
-AUX[21, 9] <- RS22_ANTRAB_2019_GERAL[17, 25]
-AUX[22, 9] <- RS22_ANTRAB_2019_GERAL[17, 26]
-AUX[23, 9] <- RS22_ANTRAB_2019_GERAL[17, 27]
-AUX[24, 9] <- RS22_ANTRAB_2019_GERAL[17, 28]
-
-AUX[1, 10] <- RS22_ANTRAB_2020_GERAL[17, 5]
-AUX[2, 10] <- RS22_ANTRAB_2020_GERAL[17, 6]
-AUX[3, 10] <- RS22_ANTRAB_2020_GERAL[17, 7]
-AUX[4, 10] <- RS22_ANTRAB_2020_GERAL[17, 8]
-AUX[5, 10] <- RS22_ANTRAB_2020_GERAL[17, 9]
-AUX[6, 10] <- RS22_ANTRAB_2020_GERAL[17, 10]
-AUX[7, 10] <- RS22_ANTRAB_2020_GERAL[17, 11]
-AUX[8, 10] <- RS22_ANTRAB_2020_GERAL[17, 12]
-AUX[9, 10] <- RS22_ANTRAB_2020_GERAL[17, 13]
-AUX[10, 10] <- RS22_ANTRAB_2020_GERAL[17, 14]
-AUX[11, 10] <- RS22_ANTRAB_2020_GERAL[17, 15]
-AUX[12, 10] <- RS22_ANTRAB_2020_GERAL[17, 16]
-AUX[13, 10] <- RS22_ANTRAB_2020_GERAL[17, 17]
-AUX[14, 10] <- RS22_ANTRAB_2020_GERAL[17, 18]
-AUX[15, 10] <- RS22_ANTRAB_2020_GERAL[17, 19]
-AUX[16, 10] <- RS22_ANTRAB_2020_GERAL[17, 20]
-AUX[17, 10] <- RS22_ANTRAB_2020_GERAL[17, 21]
-AUX[18, 10] <- RS22_ANTRAB_2020_GERAL[17, 22]
-AUX[19, 10] <- RS22_ANTRAB_2020_GERAL[17, 23]
-AUX[20, 10] <- RS22_ANTRAB_2020_GERAL[17, 24]
-AUX[21, 10] <- RS22_ANTRAB_2020_GERAL[17, 25]
-AUX[22, 10] <- RS22_ANTRAB_2020_GERAL[17, 26]
-AUX[23, 10] <- RS22_ANTRAB_2020_GERAL[17, 27]
-AUX[24, 10] <- RS22_ANTRAB_2020_GERAL[17, 28]
-
-AUX[1, 11] <- RS22_ANTRAB_2021_GERAL[17, 5]
-AUX[2, 11] <- RS22_ANTRAB_2021_GERAL[17, 6]
-AUX[3, 11] <- RS22_ANTRAB_2021_GERAL[17, 7]
-AUX[4, 11] <- RS22_ANTRAB_2021_GERAL[17, 8]
-AUX[5, 11] <- RS22_ANTRAB_2021_GERAL[17, 9]
-AUX[6, 11] <- RS22_ANTRAB_2021_GERAL[17, 10]
-AUX[7, 11] <- RS22_ANTRAB_2021_GERAL[17, 11]
-AUX[8, 11] <- RS22_ANTRAB_2021_GERAL[17, 12]
-AUX[9, 11] <- RS22_ANTRAB_2021_GERAL[17, 13]
-AUX[10, 11] <- RS22_ANTRAB_2021_GERAL[17, 14]
-AUX[11, 11] <- RS22_ANTRAB_2021_GERAL[17, 15]
-AUX[12, 11] <- RS22_ANTRAB_2021_GERAL[17, 16]
-AUX[13, 11] <- RS22_ANTRAB_2021_GERAL[17, 17]
-AUX[14, 11] <- RS22_ANTRAB_2021_GERAL[17, 18]
-AUX[15, 11] <- RS22_ANTRAB_2021_GERAL[17, 19]
-AUX[16, 11] <- RS22_ANTRAB_2021_GERAL[17, 20]
-AUX[17, 11] <- RS22_ANTRAB_2021_GERAL[17, 21]
-AUX[18, 11] <- RS22_ANTRAB_2021_GERAL[17, 22]
-AUX[19, 11] <- RS22_ANTRAB_2021_GERAL[17, 23]
-AUX[20, 11] <- RS22_ANTRAB_2021_GERAL[17, 24]
-AUX[21, 11] <- RS22_ANTRAB_2021_GERAL[17, 25]
-AUX[22, 11] <- RS22_ANTRAB_2021_GERAL[17, 26]
-AUX[23, 11] <- RS22_ANTRAB_2021_GERAL[17, 27]
-AUX[24, 11] <- RS22_ANTRAB_2021_GERAL[17, 28]
-
-AUX[1, 12] <- RS22_ANTRAB_2022_GERAL[17, 5]
-AUX[2, 12] <- RS22_ANTRAB_2022_GERAL[17, 6]
-AUX[3, 12] <- RS22_ANTRAB_2022_GERAL[17, 7]
-AUX[4, 12] <- RS22_ANTRAB_2022_GERAL[17, 8]
-AUX[5, 12] <- RS22_ANTRAB_2022_GERAL[17, 9]
-AUX[6, 12] <- RS22_ANTRAB_2022_GERAL[17, 10]
-AUX[7, 12] <- RS22_ANTRAB_2022_GERAL[17, 11]
-AUX[8, 12] <- RS22_ANTRAB_2022_GERAL[17, 12]
-AUX[9, 12] <- RS22_ANTRAB_2022_GERAL[17, 13]
-AUX[10, 12] <- RS22_ANTRAB_2022_GERAL[17, 14]
-AUX[11, 12] <- RS22_ANTRAB_2022_GERAL[17, 15]
-AUX[12, 12] <- RS22_ANTRAB_2022_GERAL[17, 16]
-AUX[13, 12] <- RS22_ANTRAB_2022_GERAL[17, 17]
-AUX[14, 12] <- RS22_ANTRAB_2022_GERAL[17, 18]
-AUX[15, 12] <- RS22_ANTRAB_2022_GERAL[17, 19]
-AUX[16, 12] <- RS22_ANTRAB_2022_GERAL[17, 20]
-AUX[17, 12] <- RS22_ANTRAB_2022_GERAL[17, 21]
-AUX[18, 12] <- RS22_ANTRAB_2022_GERAL[17, 22]
-AUX[19, 12] <- RS22_ANTRAB_2022_GERAL[17, 23]
-AUX[20, 12] <- RS22_ANTRAB_2022_GERAL[17, 24]
-AUX[21, 12] <- RS22_ANTRAB_2022_GERAL[17, 25]
-AUX[22, 12] <- RS22_ANTRAB_2022_GERAL[17, 26]
-AUX[23, 12] <- RS22_ANTRAB_2022_GERAL[17, 27]
-AUX[24, 12] <- RS22_ANTRAB_2022_GERAL[17, 28]
-
-AUX[1, 13] <- RS22_ANTRAB_2023_GERAL[17, 5]
-AUX[2, 13] <- RS22_ANTRAB_2023_GERAL[17, 6]
-AUX[3, 13] <- RS22_ANTRAB_2023_GERAL[17, 7]
-AUX[4, 13] <- RS22_ANTRAB_2023_GERAL[17, 8]
-AUX[5, 13] <- RS22_ANTRAB_2023_GERAL[17, 9]
-AUX[6, 13] <- RS22_ANTRAB_2023_GERAL[17, 10]
-AUX[7, 13] <- RS22_ANTRAB_2023_GERAL[17, 11]
-AUX[8, 13] <- RS22_ANTRAB_2023_GERAL[17, 12]
-AUX[9, 13] <- RS22_ANTRAB_2023_GERAL[17, 13]
-AUX[10, 13] <- RS22_ANTRAB_2023_GERAL[17, 14]
-AUX[11, 13] <- RS22_ANTRAB_2023_GERAL[17, 15]
-AUX[12, 13] <- RS22_ANTRAB_2023_GERAL[17, 16]
-AUX[13, 13] <- RS22_ANTRAB_2023_GERAL[17, 17]
-AUX[14, 13] <- RS22_ANTRAB_2023_GERAL[17, 18]
-AUX[15, 13] <- RS22_ANTRAB_2023_GERAL[17, 19]
-AUX[16, 13] <- RS22_ANTRAB_2023_GERAL[17, 20]
-AUX[17, 13] <- RS22_ANTRAB_2023_GERAL[17, 21]
-AUX[18, 13] <- RS22_ANTRAB_2023_GERAL[17, 22]
-AUX[19, 13] <- RS22_ANTRAB_2023_GERAL[17, 23]
-AUX[20, 13] <- RS22_ANTRAB_2023_GERAL[17, 24]
-AUX[21, 13] <- RS22_ANTRAB_2023_GERAL[17, 25]
-AUX[22, 13] <- RS22_ANTRAB_2023_GERAL[17, 26]
-AUX[23, 13] <- RS22_ANTRAB_2023_GERAL[17, 27]
-AUX[24, 13] <- RS22_ANTRAB_2023_GERAL[17, 28]
-
-AUX[1, 14] <- RS22_ANTRAB_2024_GERAL[17, 5]
-AUX[2, 14] <- RS22_ANTRAB_2024_GERAL[17, 6]
-AUX[3, 14] <- RS22_ANTRAB_2024_GERAL[17, 7]
-AUX[4, 14] <- RS22_ANTRAB_2024_GERAL[17, 8]
-AUX[5, 14] <- RS22_ANTRAB_2024_GERAL[17, 9]
-AUX[6, 14] <- RS22_ANTRAB_2024_GERAL[17, 10]
-AUX[7, 14] <- RS22_ANTRAB_2024_GERAL[17, 11]
-AUX[8, 14] <- RS22_ANTRAB_2024_GERAL[17, 12]
-AUX[9, 14] <- RS22_ANTRAB_2024_GERAL[17, 13]
-AUX[10, 14] <- RS22_ANTRAB_2024_GERAL[17, 14]
-AUX[11, 14] <- RS22_ANTRAB_2024_GERAL[17, 15]
-AUX[12, 14] <- RS22_ANTRAB_2024_GERAL[17, 16]
-AUX[13, 14] <- RS22_ANTRAB_2024_GERAL[17, 17]
-AUX[14, 14] <- RS22_ANTRAB_2024_GERAL[17, 18]
-AUX[15, 14] <- RS22_ANTRAB_2024_GERAL[17, 19]
-AUX[16, 14] <- RS22_ANTRAB_2024_GERAL[17, 20]
-AUX[17, 14] <- RS22_ANTRAB_2024_GERAL[17, 21]
-AUX[18, 14] <- RS22_ANTRAB_2024_GERAL[17, 22]
-AUX[19, 14] <- RS22_ANTRAB_2024_GERAL[17, 23]
-AUX[20, 14] <- RS22_ANTRAB_2024_GERAL[17, 24]
-AUX[21, 14] <- RS22_ANTRAB_2024_GERAL[17, 25]
-AUX[22, 14] <- RS22_ANTRAB_2024_GERAL[17, 26]
-AUX[23, 14] <- RS22_ANTRAB_2024_GERAL[17, 27]
-AUX[24, 14] <- RS22_ANTRAB_2024_GERAL[17, 28]
-
-AUX <- as.data.frame(t(AUX))
-
-colnames(AUX) <- AUX[1, ]
-
-AUX <- AUX[-1, ] 
-
-AUX[, 1] <- as.numeric(AUX[, 1])
-
-AUX[, 25] <- c("2012", "2013", "2014", "2015", "2016", "2017", 
-               "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025")
-
-write.csv (assign(paste0("RS", "_ANTRAB_BASE_Serie_Historica"), AUX), 
-           paste0("Tabulacoes_R/Raiva/RS", "_ANTRAB_BASE_Serie_Historica.csv"), 
+write.csv (SINAN_Piramide, 
+           "Tabulacoes_R/Raiva/RS_SINAN_Piramide.csv", 
            row.names = FALSE)
-
-#####  Compilado 
+#####  Série Histórica GERAL 
 
 AUX <- RS22_ANTRAB_2012_GERAL[17,]
 AUX[1, 2] <- "2012"
@@ -19341,12 +18910,15 @@ AUX[13, 2] <- "2024"
 
 AUX[nrow(AUX) +1, 4:35 ] <- apply(AUX[,4:35], 2, sum)
 
-AUX01 <- as.data.frame(AUX[nrow(AUX), 5]/AUX[nrow(AUX), 4])
+AUX <- AUX[, -c(1, 3)]
 
+colnames(AUX)[1] <- "Ano"
 
-colnames(AUX)[2] <- "Ano"
+AUX[which(is.na(AUX$Ano)), 1] <- "Total"
 
-AUX <- AUX[,-3]
+write.csv (assign(paste0("RS", "_ANTRAB_BASE_Serie_Historica"), AUX), 
+           paste0("Tabulacoes_R/Raiva/RS", "_ANTRAB_BASE_Serie_Historica.csv"), 
+           row.names = FALSE)
 
 ####  Canal Endêmico  ###
 
@@ -19397,4 +18969,486 @@ write.csv (RS_CE_Base_ANTRAB,
            "Tabulacoes_R/Raiva/RS_CE_Base_ANTRAB.csv", 
            row.names = FALSE)
 
-rm(AUX, BASE_IBGE, i, ID_REG, nrow, RS)
+##################   Histórico Sexo   #######################
+
+RS_Historico_Sexo <- RS22_ANTRAB_2016_GERAL[, c(1, 2, 3, 4, 10, 11)] %>%
+  rbind(RS22_ANTRAB_2017_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2018_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2019_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2020_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2021_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2022_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2023_GERAL[, c(1, 2, 3, 4, 10, 11)]) %>% 
+  rbind(RS22_ANTRAB_2024_GERAL[, c(1, 2, 3, 4, 10, 11)]) 
+
+RS_Historico_Sexo$Município[which(is.na(RS_Historico_Sexo$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Sexo[, 5], 
+                             RS_Historico_Sexo$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Sexo[, 6], 
+                    RS_Historico_Sexo$Município,
+                    sum)
+
+colnames(AUX) <- c("Feminino", "Masculino")
+
+RS_Historico_Sexo <- AUX
+
+RS_Historico_Sexo[, 3] <- rownames(RS_Historico_Sexo)
+
+colnames(RS_Historico_Sexo)[3] <- "Municipios"
+
+write.csv (RS_Historico_Sexo, 
+           "Tabulacoes_R/Raiva/RS_Historico_Sexo.csv", 
+           row.names = FALSE)
+
+##################   Histórico Raça   #######################
+
+RS_Historico_Raca <- RS22_ANTRAB_2016_GERAL[, c(1, 2, 3, 4, 31:36)] %>%
+  rbind(RS22_ANTRAB_2017_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2018_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2019_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2020_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2021_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2022_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2023_GERAL[, c(1, 2, 3, 4, 31:36)]) %>% 
+  rbind(RS22_ANTRAB_2024_GERAL[, c(1, 2, 3, 4, 31:36)]) 
+
+RS_Historico_Raca$Município[which(is.na(RS_Historico_Raca$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Raca[, 5], 
+                             RS_Historico_Raca$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Raca[, 6], 
+                    RS_Historico_Raca$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Raca[, 7], 
+                    RS_Historico_Raca$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Raca[, 8], 
+                    RS_Historico_Raca$Município,
+                    sum)
+
+AUX[, 5] <-  tapply(RS_Historico_Raca[, 9], 
+                    RS_Historico_Raca$Município,
+                    sum)
+
+AUX[, 6] <-  tapply(RS_Historico_Raca[, 10], 
+                    RS_Historico_Raca$Município,
+                    sum)
+
+colnames(AUX) <- c("Branca", "Preta", 
+                   "Amarela", "Parda", 
+                   "Indígena", "Ignorado")
+
+RS_Historico_Raca <- AUX
+
+RS_Historico_Raca[, 7] <- rownames(RS_Historico_Raca)
+
+colnames(RS_Historico_Raca)[7] <- "Municipios"
+
+write.csv (RS_Historico_Raca, 
+           "Tabulacoes_R/Raiva/RS_Historico_Raca.csv", 
+           row.names = FALSE)
+
+##################   Histórico Escolaridade   #######################
+
+RS_Historico_Escolaridade <- RS22_ANTRAB_2016_GERAL[, c(1, 2, 3, 4, 18:26)] %>%
+  rbind(RS22_ANTRAB_2017_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2018_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2019_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2020_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2021_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2022_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2023_GERAL[, c(1, 2, 3, 4, 18:26)]) %>% 
+  rbind(RS22_ANTRAB_2024_GERAL[, c(1, 2, 3, 4, 18:26)]) 
+
+RS_Historico_Escolaridade$Município[which(is.na(RS_Historico_Escolaridade$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Escolaridade[, 5], 
+                             RS_Historico_Escolaridade$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Escolaridade[, 6], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Escolaridade[, 7], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Escolaridade[, 8], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 5] <-  tapply(RS_Historico_Escolaridade[, 9], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 6] <-  tapply(RS_Historico_Escolaridade[, 10], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 7] <-  tapply(RS_Historico_Escolaridade[, 11], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 8] <-  tapply(RS_Historico_Escolaridade[, 12], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+AUX[, 9] <-  tapply(RS_Historico_Escolaridade[, 13], 
+                    RS_Historico_Escolaridade$Município,
+                    sum)
+
+colnames(AUX) <- c("Analf.", "Fund. Incomp.", 
+                   "Fundamental", "Médio Incomp.", 
+                   "Médio", "Sup. Incomp.", "Superior",
+                   "Não se Aplica", "Ignorado")
+
+RS_Historico_Escolaridade <- AUX
+
+RS_Historico_Escolaridade[, 10] <- rownames(RS_Historico_Escolaridade)
+
+colnames(RS_Historico_Escolaridade)[10] <- "Municipios"
+
+write.csv (RS_Historico_Escolaridade, 
+           "Tabulacoes_R/Raiva/RS_Historico_Escolaridade.csv", 
+           row.names = FALSE)
+
+##################   Histórico Zona de Ocorrência   #######################
+
+RS_Historico_Zona <- RS22_ANTRAB_2016_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)] %>%
+  rbind(RS22_ANTRAB_2017_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2018_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2019_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2020_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2021_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2022_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2023_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) %>% 
+  rbind(RS22_ANTRAB_2024_GERAL[, c(1, 2, 3, 4, 6, 7, 8, 9)]) 
+
+RS_Historico_Zona$Município[which(is.na(RS_Historico_Zona$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Zona[, 5], 
+                             RS_Historico_Zona$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Zona[, 6], 
+                    RS_Historico_Zona$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Zona[, 7], 
+                    RS_Historico_Zona$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Zona[, 8], 
+                    RS_Historico_Zona$Município,
+                    sum)
+
+colnames(AUX) <- c("Urbana", "Rural", "Periurbana", "Ignorado")
+
+RS_Historico_Zona <- AUX
+
+RS_Historico_Zona[, 5] <- rownames(RS_Historico_Zona)
+
+colnames(RS_Historico_Zona)[5] <- "Municipios"
+
+write.csv (RS_Historico_Zona, 
+           "Tabulacoes_R/Raiva/RS_Historico_Zona.csv", 
+           row.names = FALSE)
+
+
+##################   Histórico Agressor   #######################
+
+RS_Historico_Agressor <- RS22_ANTRAB_2016_AGRESSOR %>%
+  rbind(RS22_ANTRAB_2017_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2018_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2019_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2020_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2021_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2022_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2023_AGRESSOR) %>% 
+  rbind(RS22_ANTRAB_2024_AGRESSOR) 
+
+RS_Historico_Agressor$Município[which(is.na(RS_Historico_Agressor$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Agressor[, 5], 
+                             RS_Historico_Agressor$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Agressor[, 6], 
+                    RS_Historico_Agressor$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Agressor[, 7], 
+                    RS_Historico_Agressor$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Agressor[, 8], 
+                    RS_Historico_Agressor$Município,
+                    sum)
+
+AUX[, 5] <-  tapply(RS_Historico_Agressor[, 9], 
+                    RS_Historico_Agressor$Município,
+                    sum)
+
+AUX[, 6] <-  tapply(RS_Historico_Agressor[, 10], 
+                    RS_Historico_Agressor$Município,
+                    sum)
+
+AUX[, 7] <-  tapply(RS_Historico_Agressor[, 11], 
+                    RS_Historico_Agressor$Município,
+                    sum)
+
+colnames(AUX) <- c("Canino", "Felino", "Quiróptero", "Primata", 
+                   "Raposa", "Herbívoro Doméstico", "Outra" )
+
+RS_Historico_Agressor <- AUX
+
+RS_Historico_Agressor[, 8] <- rownames(RS_Historico_Agressor)
+
+colnames(RS_Historico_Agressor)[8] <- "Municipios"
+
+write.csv (RS_Historico_Agressor, 
+           "Tabulacoes_R/Raiva/RS_Historico_Agressor.csv", 
+           row.names = FALSE)
+
+##################   Histórico Ferimento   #######################
+
+RS_Historico_Ferimento <- RS22_ANTRAB_2016_FERIMENTO %>%
+  rbind(RS22_ANTRAB_2017_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2018_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2019_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2020_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2021_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2022_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2023_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2024_FERIMENTO) 
+
+RS_Historico_Ferimento$Município[which(is.na(RS_Historico_Ferimento$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Ferimento[, 5], 
+                             RS_Historico_Ferimento$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Ferimento[, 6], 
+                    RS_Historico_Ferimento$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Ferimento[, 7], 
+                    RS_Historico_Ferimento$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Ferimento[, 8], 
+                    RS_Historico_Ferimento$Município,
+                    sum)
+
+colnames(AUX) <- c("Único", "Múltiplo", "Sem Ferimento", "Ignorado")
+
+RS_Historico_Ferimento <- AUX
+
+RS_Historico_Ferimento[, 5] <- rownames(RS_Historico_Ferimento)
+
+colnames(RS_Historico_Ferimento)[5] <- "Municipios"
+
+write.csv (RS_Historico_Ferimento, 
+           "Tabulacoes_R/Raiva/RS_Historico_Ferimento.csv", 
+           row.names = FALSE)
+
+##################   Histórico Exposição   #######################
+
+RS_Historico_Exposicao <- RS22_ANTRAB_2016_EXPOSICAO %>%
+  rbind(RS22_ANTRAB_2017_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2018_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2019_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2020_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2021_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2022_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2023_EXPOSICAO) %>% 
+  rbind(RS22_ANTRAB_2024_EXPOSICAO) 
+
+RS_Historico_Exposicao$Município[which(is.na(RS_Historico_Exposicao$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Exposicao[, 5], 
+                             RS_Historico_Exposicao$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Exposicao[, 6], 
+                    RS_Historico_Exposicao$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Exposicao[, 7], 
+                    RS_Historico_Exposicao$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Exposicao[, 8], 
+                    RS_Historico_Exposicao$Município,
+                    sum)
+
+AUX[, 5] <-  tapply(RS_Historico_Exposicao[, 9], 
+                    RS_Historico_Exposicao$Município,
+                    sum)
+
+colnames(AUX) <- c("Contato
+Indireto", "Arranhadura", "Lambedura", "Mordedura", "Outro")
+
+RS_Historico_Exposicao <- AUX
+
+RS_Historico_Exposicao[, 6] <- rownames(RS_Historico_Exposicao)
+
+colnames(RS_Historico_Exposicao)[6] <- "Municipios"
+
+write.csv (RS_Historico_Exposicao, 
+           "Tabulacoes_R/Raiva/RS_Historico_Exposicao.csv", 
+           row.names = FALSE)
+
+##################   Histórico Localização   #######################
+
+RS_Historico_Localizacao <- RS22_ANTRAB_2016_LOCALIZACAO %>%
+  rbind(RS22_ANTRAB_2017_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2018_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2019_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2020_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2021_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2022_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2023_LOCALIZACAO) %>% 
+  rbind(RS22_ANTRAB_2024_LOCALIZACAO) 
+
+RS_Historico_Localizacao$Município[which(is.na(RS_Historico_Localizacao$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Localizacao[, 5], 
+                             RS_Historico_Localizacao$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Localizacao[, 6], 
+                    RS_Historico_Localizacao$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Localizacao[, 7], 
+                    RS_Historico_Localizacao$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Localizacao[, 8], 
+                    RS_Historico_Localizacao$Município,
+                    sum)
+
+AUX[, 5] <-  tapply(RS_Historico_Localizacao[, 9], 
+                    RS_Historico_Localizacao$Município,
+                    sum)
+
+AUX[, 6] <-  tapply(RS_Historico_Localizacao[, 10], 
+                    RS_Historico_Localizacao$Município,
+                    sum)
+
+colnames(AUX) <- c("Mucosa", "Cabeça/pescoço", "Mãos/pés", "Tronco", "Membros
+Superiores", "Membros
+Inferiores")
+
+RS_Historico_Localizacao <- AUX
+
+RS_Historico_Localizacao[, 7] <- rownames(RS_Historico_Localizacao)
+
+colnames(RS_Historico_Localizacao)[7] <- "Municipios"
+
+write.csv (RS_Historico_Localizacao, 
+           "Tabulacoes_R/Raiva/RS_Historico_Localizacao.csv", 
+           row.names = FALSE)
+
+##################   Histórico Tipo Ferimento   #######################
+
+RS_Historico_Tipo_Ferimento <- RS22_ANTRAB_2016_TIPO_FERIMENTO %>%
+  rbind(RS22_ANTRAB_2017_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2018_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2019_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2020_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2021_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2022_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2023_TIPO_FERIMENTO) %>% 
+  rbind(RS22_ANTRAB_2024_TIPO_FERIMENTO) 
+
+RS_Historico_Tipo_Ferimento$Município[which(is.na(RS_Historico_Tipo_Ferimento$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Tipo_Ferimento[, 5], 
+                             RS_Historico_Tipo_Ferimento$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Tipo_Ferimento[, 6], 
+                    RS_Historico_Tipo_Ferimento$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Tipo_Ferimento[, 7], 
+                    RS_Historico_Tipo_Ferimento$Município,
+                    sum)
+
+colnames(AUX) <- c("Profundo", "Superficial", "Dilacerante")
+
+RS_Historico_Tipo_Ferimento <- AUX
+
+RS_Historico_Tipo_Ferimento[, 4] <- rownames(RS_Historico_Tipo_Ferimento)
+
+colnames(RS_Historico_Tipo_Ferimento)[4] <- "Municipios"
+
+write.csv (RS_Historico_Tipo_Ferimento, 
+           "Tabulacoes_R/Raiva/RS_Historico_Tipo_Ferimento.csv", 
+           row.names = FALSE)
+
+##################   Histórico Tratamento   #######################
+
+RS_Historico_Tratamento <- RS22_ANTRAB_2016_TRATAMENTO %>%
+  rbind(RS22_ANTRAB_2017_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2018_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2019_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2020_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2021_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2022_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2023_TRATAMENTO) %>% 
+  rbind(RS22_ANTRAB_2024_TRATAMENTO) 
+
+RS_Historico_Tratamento$Município[which(is.na(RS_Historico_Tratamento$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Tratamento[, 5], 
+                             RS_Historico_Tratamento$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Tratamento[, 6], 
+                    RS_Historico_Tratamento$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Tratamento[, 7], 
+                    RS_Historico_Tratamento$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Tratamento[, 8], 
+                    RS_Historico_Tratamento$Município,
+                    sum)
+
+AUX[, 5] <-  tapply(RS_Historico_Tratamento[, 9], 
+                    RS_Historico_Tratamento$Município,
+                    sum)
+
+AUX[, 6] <-  tapply(RS_Historico_Tratamento[, 10], 
+                    RS_Historico_Tratamento$Município,
+                    sum)
+
+colnames(AUX) <- c("Dispensa
+Tratamento", "Observação do
+Animal", "Observação e
+Vacina", "Vacina", "Sorovacinação", "Esquema de
+Reexposição")
+
+RS_Historico_Tratamento <- AUX
+
+RS_Historico_Tratamento[, 7] <- rownames(RS_Historico_Tratamento)
+
+colnames(RS_Historico_Tratamento)[7] <- "Municipios"
+
+write.csv (RS_Historico_Tratamento, 
+           "Tabulacoes_R/Raiva/RS_Historico_Tratamento.csv", 
+           row.names = FALSE)
+
+#rm(AUX, BASE_IBGE, i, ID_REG, nrow, RS)

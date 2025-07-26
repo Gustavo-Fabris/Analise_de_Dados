@@ -3980,7 +3980,7 @@ AUX_HIST_NOT_LIST <- AUX_GRAF %>%
     ggplot(dados, aes(x = SE, 
                       y = value)
     ) + 
-      geom_histogram(color = "black", 
+      geom_bar(color = "black", 
                fill = "#8FBC8F") + 
       geom_label(aes(label = value), 
                  alpha = 0.5, 
@@ -7115,7 +7115,6 @@ RS22_2025_LACEN_PESQ_ARBO$Municipio_Residencia <- str_replace(RS22_2025_LACEN_PE
 RS22_2025_LACEN_PESQ_ARBO$Municipio_Residencia <- str_replace(RS22_2025_LACEN_PESQ_ARBO$Municipio_Residencia, "ROSARIO DO IVAI", "ROSÁRIO DO IVAÍ")
 
 RS22_2025_LACEN_PESQ_ARBO$Municipio_Residencia <- str_replace(RS22_2025_LACEN_PESQ_ARBO$Municipio_Residencia, "SAO JOAO DO IVAI", "SÃO JOÃO DO IVAÍ")
-
 
 ####################   Transformando colunas em fatores para o for loop funcionar   ##################################
 

@@ -6994,6 +6994,7 @@ assign(paste0("RS", RS, "_PECONHENTOS_2025_SINAN_SORO_INCONSISTENCIA"), AUX)
 #########################################   SIES   ####################################################
 
 #######################################   Antibotrópico   ############################################
+
 SIES_SORO_ANTIBOTROPICO[, 8] <- c(1: nrow(SIES_SORO_ANTIBOTROPICO))
 
 SIES_SORO_ANTIBOTROPICO <- SIES_SORO_ANTIBOTROPICO[, c(8, 1:7)]
@@ -11425,7 +11426,8 @@ SHAPEFILE_SINAP <- SHAPEFILE_REGIONAL %>% mutate(NUCLEO = case_when(NM_MUNICIP =
                                                                     | NM_MUNICIP == "NOVA TEBAS" 
                                                                     | NM_MUNICIP == "LUNARDELLI"
                                                                     | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
-                                                                    | NM_MUNICIP == "MANOEL RIBAS" 
+                                                                    | NM_MUNICIP == "MANOEL RIBAS"
+                                                                    | NM_MUNICIP == "MATO RICO"
                                                                     ~ "Rede Descentralizada")
 )
 
@@ -11557,8 +11559,7 @@ RS_PECONHENTOS_MAPA_REDE_SJI <- ggplot(SHAPEFILE_SJI) +
 
 SHAPEFILE_MRI <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "MANOEL RIBAS" |
                                               NM_MUNICIP == "CÂNDIDO DE ABREU" |
-                                              NM_MUNICIP == "SANTA MARIA DO OESTE" |
-                                              NM_MUNICIP == "MATO RICO")
+                                              NM_MUNICIP == "SANTA MARIA DO OESTE")
 
 RS_PECONHENTOS_MAPA_REDE_MRI <- ggplot(SHAPEFILE_MRI) +
   geom_sf(aes(fill = NUCLEO), 
@@ -11636,6 +11637,44 @@ RS_PECONHENTOS_MAPA_REDE_Nova_Tebas <- ggplot(SHAPEFILE_NOVA_TEBAS) +
                               size = 20)   
   ) 
 
+##############################   Mato rico   ##############################
+
+SHAPEFILE_MATO_RICO <- SHAPEFILE_SINAP %>% filter(NM_MUNICIP == "MATO RICO")
+
+RS_PECONHENTOS_MAPA_REDE_Mato_Rico <- ggplot(SHAPEFILE_MATO_RICO) +
+  geom_sf(aes(fill = NUCLEO), 
+          color = "black", 
+          size = 0.5) +
+  scale_fill_manual(name = "", 
+                    values = c("Rede Descentralizada" = "#2F4F4F"),
+                    na.value = "#ADD8E6") + 
+  coord_sf(expand = FALSE) +
+  geom_sf_label(data = SHAPEFILE_MATO_RICO, 
+                aes(label = NM_MUNICIP),
+                size = 5,
+                alpha = 0.5,
+                position = "identity") +
+  labs(title = "Rede Descentralizada para Atendimento de Acidentes Escorpiônicos
+22ª Regional de Saúde",
+       subtitle = "Núcleo de Administração de Soro Antiescorpiônico de Mato Rico",
+       y = NULL,
+       x = NULL,
+       caption = Fonte1) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold",
+                                size = 14),  
+    legend.text = element_text(size = 14), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 12,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 20)   
+  ) 
 ###########################  LUNARDELLI   ################################
 
 ##########################################################
