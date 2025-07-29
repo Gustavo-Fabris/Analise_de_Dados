@@ -1,7 +1,7 @@
 rm(list =ls())
 ####Indicando Diretório de Trabalho.#####
 
-setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
+setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 
 ###Libraries###
 
@@ -663,7 +663,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2012 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -2110,7 +2110,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2013 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -3555,7 +3555,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2014 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -5000,7 +5000,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2015 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -6447,7 +6447,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2016 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -7897,7 +7897,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2017 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -9347,7 +9347,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2018 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -10798,7 +10798,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2019 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -12249,7 +12249,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2020 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -13699,7 +13699,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2021 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -15149,7 +15149,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2022 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -16600,7 +16600,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2023 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -18051,7 +18051,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2024 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -19450,5 +19450,6 @@ colnames(RS_Historico_Tratamento)[7] <- "Municipios"
 write.csv (RS_Historico_Tratamento, 
            "Tabulacoes_R/Raiva/RS_Historico_Tratamento.csv", 
            row.names = FALSE)
+
 
 #rm(AUX, BASE_IBGE, i, ID_REG, nrow, RS)

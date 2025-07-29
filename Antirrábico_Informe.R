@@ -39,7 +39,7 @@ Fonte <- "Base DBF. Acessada em 22/07//2025. Dados sujeitos a alteração"
 
 #####      Definindo diretório de trabalho, caso tenha que trabalhar em Windows, acertar o diretório       ####
 
-setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
+setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 
 ###############################################################################################################
 ###############################################################################################################
@@ -69,7 +69,6 @@ library(tidyr)
 library(gt)
 library(kableExtra)
 library(sf)
-library(ggspatial)
 
 ###################       2025      #########################################
 
@@ -771,7 +770,7 @@ for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 31] <- as.integer(SINAN_ANTRAB_2025 %>% 
                                                     filter(ID_MN_RESI == i,
-                                                           CS_RACA == "01") %>% 
+                                                           CS_RACA == "1") %>% 
                                                     count()
   )
   
@@ -1672,8 +1671,57 @@ for (i in AUX$Município){
   )
 }
 
-AUX1 <- RS_GAL_Animal %>% filter(Municipio == "JARDIM ALEGRE")
+AUX[, 8] <- (AUX$V7/AUX$Populacao) *100000
 
+for (i in AUX$Município){
+  AUX[which(AUX$Município== i), 9] <- as.integer(AUX1 %>%
+                                                   filter(Municipio == i,
+                                                          Grupo == "Quir�pteros") %>%
+                                                   count()
+  )
+}
+
+for (i in AUX$Município){
+  AUX[which(AUX$Município== i), 10] <- as.integer(AUX1 %>%
+                                                   filter(Municipio == i,
+                                                          Grupo == "Can�deos") %>%
+                                                   count()
+  )
+}
+
+for (i in AUX$Município){
+  AUX[which(AUX$Município== i), 11] <- as.integer(AUX1 %>%
+                                                    filter(Municipio == i,
+                                                           Grupo == "Fel�deos") %>%
+                                                    count()
+  )
+}
+
+for (i in AUX$Município){
+  AUX[which(AUX$Município== i), 12] <- as.integer(AUX1 %>%
+                                                    filter(Municipio == i,
+                                                           Grupo == "Primatas n�o humanos") %>%
+                                                    count()
+  )
+}
+
+for (i in AUX$Município){
+  AUX[which(AUX$Município== i), 13] <- as.integer(AUX1 %>%
+                                                    filter(Municipio == i,
+                                                           Grupo == "Antas" |
+                                                             Grupo == "Marsupiais") %>%
+                                                    count()
+  )
+}
+
+colnames(AUX)[c(5:13)] <- c("Total
+Amostras", "Índice 
+Total Amostras",
+                            "2025", "Índice 2025", "Quirópteros", "Canídeos", "Felídeos", 
+                            "Primatas
+nâo Humanos", "Outros")
+
+RS_ANTRAB_HISTORICO_GAL <- AUX
 
 #################################################################################################################
 ##############################FIM FIM FIM FIM FIM FIM FIM ####################################################
@@ -1717,8 +1765,7 @@ RS_ANTRAB_GRAF_Serie_Historica <- ggplot(AUX,
   labs(caption = Fonte, 
        x = "Ano",
        y = "Notificados",
-       title = "Série Histórica - 22ªRS",
-       subtitle = "Notificações (2016 - 2025)") +
+       title = "Série Histórica - Atendimentos Antirrábicos (2016 a 2025)") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 16,
@@ -1730,7 +1777,8 @@ RS_ANTRAB_GRAF_Serie_Historica <- ggplot(AUX,
                                    vjust = 0.5,
                                    hjust = 0.5,
                                    face = "bold"),
-          )
+          ) +
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5))) 
   
 ###############  Série Histórica (INCIDÊNCIA) Municípios   #############
 
@@ -1811,6 +1859,11 @@ RS_ANTRAB_GRAF_Serie_Historica_Incidencia_I <- ggplot(AUX[c(1:32),],
              size = 2.3, 
              alpha = 0.5,
              vjust = 0.1) +
+  labs(caption = Fonte, 
+       y = "Incidência",
+       x = NULL,
+       title = "Incidência por Município na 22ª RS",
+       subtitle = "Casos por 100.000 habitantes") +
   scale_fill_manual(name = "",
                     values = c("2022" = "#6495ED", 
                                "2023" = "#5F9EA0",
@@ -1821,7 +1874,8 @@ RS_ANTRAB_GRAF_Serie_Historica_Incidencia_I <- ggplot(AUX[c(1:32),],
         legend.title = element_text(face = "bold",
                                     size = 14), 
         axis.text.x = element_text(angle = 30,
-                                   vjust = 0.5),
+                                   vjust = 0.5, 
+                                   face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
                                      size = 12),
@@ -1837,13 +1891,20 @@ RS_ANTRAB_GRAF_Serie_Historica_Incidencia_II <- ggplot(AUX[c(33:64),],
                                                            y = Incidencia)) +
   geom_bar(aes(fill = Ano),
            stat = "identity",
-           position = "dodge") +
+           position = "dodge",
+           color = "black",
+           linewidth = 0.8) +
   geom_label(aes(y = Incidencia,
                  label = Incidencia),
              position = position_dodge2(width = 0.9),
              size = 2.3, 
              alpha = 0.5,
              vjust = 0.1) +
+  labs(caption = Fonte, 
+       y = "Incidência",
+       x = NULL,
+       title = "Incidência por Município na 22ª RS",
+       subtitle = "Casos por 100.000 habitantes") +
   scale_fill_manual(name = "",
                     values = c("2022" = "#6495ED", 
                                "2023" = "#5F9EA0",
@@ -1853,8 +1914,9 @@ RS_ANTRAB_GRAF_Serie_Historica_Incidencia_II <- ggplot(AUX[c(33:64),],
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
-        axis.text.x = element_text(angle = 45,
-                                   vjust = 0.5),
+        axis.text.x = element_text(angle = 30,
+                                   vjust = 0.5, 
+                                  face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
                                      size = 12),
@@ -1969,7 +2031,7 @@ RS_ANTRAB_GRAF_2025_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológic
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
-    panel.background = element_rect(fill = "#DC143C"),
+    panel.background = element_rect(fill = "#FF3333"),
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
@@ -2001,7 +2063,8 @@ RS_ANTRAB_GRAF_2025_Notificacoes_Municipios <- ggplot(AUX,
                                                           y = Casos)) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#D8BFD8",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 3, 
              alpha = 0.5,
@@ -2014,7 +2077,7 @@ RS_ANTRAB_GRAF_2025_Notificacoes_Municipios <- ggplot(AUX,
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
-        axis.text.x = element_text(angle = 65,
+        axis.text.x = element_text(angle = 60,
                                    vjust = 0.5,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
@@ -2065,27 +2128,36 @@ AUX$Casos <- format(round(AUX$Casos, 2))
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
+RS_ANTRAB_GRAF_2025_Escolaridade <- ggplot(AUX, 
+                                           aes(x = Ordem, 
+                                               y = Casos)) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#EEE8AA",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
-  labs(caption = "Fonte", 
+  labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "ESCOLARIDADE CASOS NOTIFICADOS - 22ªRS",
-       subtitle = paste0("n = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
-  theme(axis.text.x = element_text(angle = 0, 
+       y = "Percentual de Ocorrência",
+       title = "Escolaridade dos Casos Notificados em % (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold")) +
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
   scale_x_discrete(breaks = c(1:9),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
@@ -2093,7 +2165,7 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
 
 #####    Escolariadade (2016 - 2024) ####
 
-RS_Historico_Escolaridade [, 11] <- apply(RS_Historico_Escolaridade[, -ncol(RS_Historico_Escolaridade)], 1, sum)
+RS_Historico_Escolaridade[, 11] <- apply(RS_Historico_Escolaridade[, -ncol(RS_Historico_Escolaridade)], 1, sum)
 
 AUX <- tibble(Analfabeto = (RS_Historico_Escolaridade[nrow(RS_Historico_Escolaridade), 1]/RS_Historico_Escolaridade[nrow(RS_Historico_Escolaridade), 11]) * 100)
 
@@ -2131,12 +2203,13 @@ AUX$Casos <- format(round(AUX$Casos, 2))
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, 
+RS_ANTRAB_GRAF_HIST_Escolaridade <- ggplot(AUX, 
        aes(x = Ordem, 
            y = Casos)) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "green",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 3, 
              alpha = 0.5,
@@ -2145,16 +2218,152 @@ ggplot(AUX,
        x = NULL,
        y = "Percentual de Ocorrência",
        title = "Escolaridade (%) dos Casos Notificados (2016 - 2024)",
-       subtitle = paste0("n = ", RS_Historico_Escolaridade[nrow(RS_Historico_Escolaridade), 11])) +
-  theme(axis.text.x = element_text(angle = 0, 
+       subtitle = paste0("N = ", RS_Historico_Escolaridade[nrow(RS_Historico_Escolaridade), 11])) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold")) +
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20))  +
   scale_x_discrete(breaks = c(1:9),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+#####    Raça  ####
+
+AUX <- tibble(Branca = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 31]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX[, 2] <- tibble(Preta = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 32]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX[, 3] <- tibble(Amarela = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 33]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX[, 4] <- tibble(Parda = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 34]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX[, 5] <- tibble(Indigena = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 35]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX[, 6] <- tibble(Ignorado = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 36]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- tibble(as.factor(rownames(AUX)))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Branca", "Preta", "Amarela", "Parda", 
+              "Indígena", "Ignorado")
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+RS_ANTRAB_GRAF_2025_Raca <- ggplot(AUX, 
+                                   aes(x = Ordem, 
+                                       y = Casos)) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#EEE8AA",
+           linewidth = 0.8) +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de Ocorrência",
+       title = "Raça em % dos Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  scale_x_discrete(breaks = c(1:6),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+#####    Escolariadade (2016 - 2024) ####
+
+RS_Historico_Raca[, 8] <- apply(RS_Historico_Raca[, -ncol(RS_Historico_Raca)], 1, sum)
+
+AUX <- tibble(Branca = (RS_Historico_Raca[nrow(RS_Historico_Raca), 1]/RS_Historico_Raca[nrow(RS_Historico_Raca), 8]) * 100)
+
+AUX[, 2] <- tibble(Preta = (RS_Historico_Raca[nrow(RS_Historico_Raca), 2]/RS_Historico_Raca[nrow(RS_Historico_Raca), 8]) * 100)
+
+AUX[, 3] <- tibble(Amarela = (RS_Historico_Raca[nrow(RS_Historico_Raca), 3]/RS_Historico_Raca[nrow(RS_Historico_Raca), 8]) * 100)
+
+AUX[, 4] <- tibble(Parda = (RS_Historico_Raca[nrow(RS_Historico_Raca), 4]/RS_Historico_Raca[nrow(RS_Historico_Raca), 8]) * 100)
+
+AUX[, 5] <- tibble(Indigena = (RS_Historico_Raca[nrow(RS_Historico_Raca), 5]/RS_Historico_Raca[nrow(RS_Historico_Raca), 8]) * 100)
+
+AUX[, 6] <- tibble(Ignorado = (RS_Historico_Raca[nrow(RS_Historico_Raca), 6]/RS_Historico_Raca[nrow(RS_Historico_Raca), 8]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- tibble(as.factor(rownames(AUX)))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Branca", "Preta", "Amarela", "Parda", 
+              "Indígena", "Ignorado")
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+RS_ANTRAB_GRAF_HIST_Raca <- ggplot(AUX, 
+                                           aes(x = Ordem, 
+                                               y = Casos)) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "green",
+           linewidth = 0.8) +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de Ocorrência",
+       title = "Escolaridade (%) dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Raca[nrow(RS_Historico_Raca), 11])) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20))  +
+  scale_x_discrete(breaks = c(1:6),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   Theme()
@@ -2185,67 +2394,216 @@ AUX$Casos <- format(round(AUX$Casos, 2))
 
 AUX$Casos <- as.numeric(AUX$Casos)
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-   labs(caption = "Fonte", 
+RS_ANTRAB_GRAF_2025_Zona <- ggplot(AUX, 
+                                   aes(x = Ordem, 
+                                       y = Casos)) +
+   labs(caption = Fonte, 
        x = NULL,
        y = "Percentual de ocorrência",
-       title = "ZONA DE OCORRÊNCIA CASOS NOTIFICADOS - 22ªRS") +
+       title = "Zona de Ocorrência em % dos Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#66CDAA",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  scale_x_discrete(breaks = c(1:4),
+                   labels = AUX$Label) +
+  Theme()
+
+###################################  Zona de ocorrência histórico    ##############
+
+RS_Historico_Zona[, 6] <- apply(RS_Historico_Zona[, -ncol(RS_Historico_Zona)], 1, sum)
+
+AUX <- tibble(Urbana = (RS_Historico_Zona[nrow(RS_Historico_Zona), 1]/RS_Historico_Zona[nrow(RS_Historico_Zona), 6]) * 100)
+
+AUX[, 2] <- tibble(Rural = (RS_Historico_Zona[nrow(RS_Historico_Zona), 2]/RS_Historico_Zona[nrow(RS_Historico_Zona), 6]) * 100)
+
+AUX[, 3] <- tibble(Periurbana = (RS_Historico_Zona[nrow(RS_Historico_Zona), 3]/RS_Historico_Zona[nrow(RS_Historico_Zona), 6]) * 100)
+
+AUX[, 4] <- tibble(Ignorado = (RS_Historico_Zona[nrow(RS_Historico_Zona), 4]/RS_Historico_Zona[nrow(RS_Historico_Zona), 6]) * 100)
+
+AUX <- as.data.frame(AUX)
+
+AUX[2,] <- as.factor(colnames(AUX))
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[,3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Zona <- ggplot(AUX, 
+                                   aes(x = Ordem, 
+                                       y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Zona de Ocorrência em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Zona[nrow(RS_Historico_Zona), 6])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#66CDAA",
+           linewidth = 0.8) +
+  geom_label(aes(label = Casos), 
+             size = 3, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
   scale_x_discrete(breaks = c(1:4),
                    labels = AUX$Label) +
   Theme()
 
 # #####    Sexo    ####
-# 
-# AUX <- RS22_ANTRAB_2025_GERAL[17, 10:11]
-# 
-# AUX[2,] <- as.factor(colnames(AUX))
-# 
-# AUX <- as.data.frame(t(AUX))
-# 
-# AUX[,3] <- as.factor(c(1: nrow(AUX)))
-# 
-# colnames(AUX) <- c("Casos", "Label", "Ordem")
-# 
-# AUX[, 2] <- c("Feminino", "Masculino")
-# 
-# AUX[, 1] <- as.numeric(AUX[, 1])
-# 
-# ggplot(AUX, aes(x = Ordem, y = Casos)) +
-#   theme(axis.text.x = element_text(angle = 0, 
-#                                    vjust = 0.5,
-#                                    face = "bold",
-#                                    size = 12),
-#         axis.text.y = element_text(angle = 90,
-#                                    vjust = 0.5,
-#                                    hjust = 0.5,
-#                                    face = "bold"),
-#         panel.grid.major = element_line(color = "#C0C0C0"),
-#         panel.grid.minor = element_blank(),
-#         panel.background = element_rect(fill = "#F5F5F5"),
-#         plot.title = element_text(face = "bold",
-#                                   size = 19,
-#                                   colour = "#556B2F")) +
-#   labs(caption = "Fonte", 
-#        x = NULL,
-#        y = "Número de Casos",
-#        title = "ZONA DE OCORRÊNCIA CASOS NOTIFICADOS - 22ªRS") +
-#   geom_bar(stat = "identity",
-#            color = "black",
-#            fill = "green") +
-#   geom_label(aes(label = Casos), 
-#              size = 3, 
-#              alpha = 0.5,
-#              vjust = 0.1) +
-#   scale_x_discrete(breaks = c(1:2),
-#                    labels = AUX$Label) +
-#   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+ 
+AUX <- tibble(Feminino = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 10]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX[, 2] <- tibble(Masculino = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 11]/RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Sexo <- ggplot(AUX, 
+                                   aes(x = Ordem, 
+                                       y = Casos)) +
+   labs(caption = Fonte, 
+        x = NULL,
+        y = "Percentual de Ocorrência",
+        title = "Sexo em % dos Casos Notificados (2025)",
+        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
+   geom_bar(stat = "identity",
+            color = "black",
+            fill = "#4169E1",
+            linewidth = 0.8,
+            width = 0.4) +
+   geom_label(aes(label = Casos), 
+              size = 5, 
+              alpha = 0.5,
+              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+   scale_x_discrete(breaks = c(1:2),
+                    labels = AUX$Label) +
+   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+###################################  Sexo histórico    ##############
+
+RS_Historico_Sexo[, 4] <- apply(RS_Historico_Sexo[, -ncol(RS_Historico_Sexo)], 1, sum)
+
+AUX <- tibble(Feminino = (RS_Historico_Sexo[nrow(RS_Historico_Sexo), 1]/RS_Historico_Sexo[nrow(RS_Historico_Sexo), 4]) * 100)
+
+AUX[, 2] <- tibble(Masculino = (RS_Historico_Sexo[nrow(RS_Historico_Sexo), 2]/RS_Historico_Sexo[nrow(RS_Historico_Sexo), 4]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Sexo <- ggplot(AUX, 
+                                   aes(x = Ordem, 
+                                       y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Sexo em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Sexo[nrow(RS_Historico_Sexo), 6])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  scale_x_discrete(breaks = c(1:2),
+                   labels = AUX$Label) +
+  scale_y_discrete(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
 
 #####    Espécie Agressora    ####
 
@@ -2276,34 +2634,113 @@ Doméstico", "Outra")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Agressor <- ggplot(AUX, 
+                                       aes(x = Ordem, 
+                                           y = Casos)) +
+    labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "ESPÉCIE AGRESSORA - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Espécie Agressora em % dos Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#8470FF") +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
    scale_x_discrete(breaks = c(1:7),
                     labels = AUX$Label) +
+  scale_y_discrete(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
+
+###################################  Agressor histórico    ##############
+
+RS_Historico_Agressor[, 9] <- apply(RS_Historico_Agressor[, -ncol(RS_Historico_Agressor)], 1, sum)
+
+AUX <- tibble(Canino = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 1]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 2] <- tibble(Felino = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 2]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 3] <- tibble(Quiróptero = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 3]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 4] <- tibble(Primata = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 4]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 5] <- tibble(Raposa = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 5]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 6] <- tibble(Herbívoro_Doméstico = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 6]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 7] <- tibble(Outra = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 7]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Canina", "Felina", "Quiróptera", "Primata", "Raposa", "Herbívoro 
+Doméstico", "Outra")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Agressor <- ggplot(AUX, 
+                                   aes(x = Ordem, 
+                                       y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Espécie Agressora em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Agressor[nrow(RS_Historico_Agressor), 6])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  scale_x_discrete(breaks = c(1:7),
+                   labels = AUX$Label) +
   scale_y_discrete(expand = expansion(mult = c(0, 0.05))) +
   Theme()
 
@@ -2330,32 +2767,41 @@ Desaparecido")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Cond_Anim <- ggplot(AUX, 
+                                        aes(x = Ordem, 
+                                            y = Casos)) +
+    labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "CONDIÇÃO DO ANIMAL AGRESSOR - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Condição do Animal Agressor em % dos Casos (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#98FB98",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
   scale_x_discrete(breaks = c(1:4),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
@@ -2391,36 +2837,116 @@ Reexposição")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Tratamento <- ggplot(AUX, 
+                                         aes(x = Ordem, 
+                                             y = Casos)) +
+    labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "TRATAMENTO REALIZADO - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Tratamento Realizado em % das Notificações (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#DEB887") +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
   scale_x_discrete(breaks = c(1:6),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
+###################################  Tratamento histórico    ##############
+
+RS_Historico_Tratamento[, 8] <- apply(RS_Historico_Tratamento[, -ncol(RS_Historico_Tratamento)], 1, sum)
+
+AUX <- tibble(Dispensa = (RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 1]/RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8]) * 100)
+
+AUX[, 2] <- tibble(Observacao = (RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 2]/RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8]) * 100)
+
+AUX[, 3] <- tibble(Observacao_Vacina = (RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 3]/RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8]) * 100)
+
+AUX[, 4] <- tibble(Vacina = (RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 4]/RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8]) * 100)
+
+AUX[, 5] <- tibble(Sorovacinacao = (RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 5]/RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8]) * 100)
+
+AUX[, 6] <- tibble(Reesposicao = (RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 6]/RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Dispensa de 
+Tratamento", "Observação do 
+Animal", "Observação do 
+Animal e Vacina", "Vacina", "Sorovacinação", "Esquema de 
+Reexposição")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Tratamento <- ggplot(AUX, 
+                                       aes(x = Ordem, 
+                                           y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Tratamento Realizado em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
+  scale_x_discrete(breaks = c(1:6),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) 
+  
 #####    Tipo de Exposição    ####
 
 AUX <- tibble(Contato_indireto = (RS22_ANTRAB_2025_EXPOSICAO[nrow(RS22_ANTRAB_2025_EXPOSICAO), 5]/apply(RS22_ANTRAB_2025_EXPOSICAO[nrow(RS22_ANTRAB_2025_EXPOSICAO), 5:9], 1, sum)*100))
@@ -2446,35 +2972,111 @@ Indireto", "Arranhadura", "Lambedura", "Mordedura", "Outro")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Exposicao <- ggplot(AUX, 
+                                        aes(x = Ordem, 
+                                            y = Casos)) +
+  labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "TIPO DE Exposição - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Tipo de Exposição em % de Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#5F9EA0",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
   scale_x_discrete(breaks = c(1:5),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+###################################  Exposição histórico    ##############
+
+RS_Historico_Exposicao[, 7] <- apply(RS_Historico_Exposicao[, -ncol(RS_Historico_Exposicao)], 1, sum)
+
+AUX <- tibble(Indireto = (RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 1]/RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7]) * 100)
+
+AUX[, 2] <- tibble(Arranhadura = (RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 2]/RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7]) * 100)
+
+AUX[, 3] <- tibble(Lambedura = (RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 3]/RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7]) * 100)
+
+AUX[, 4] <- tibble(Mordedura = (RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 4]/RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7]) * 100)
+
+AUX[, 5] <- tibble(Outro = (RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 5]/RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Contato
+Indireto", "Arranhadura", "Lambedura", "Mordedura", "Outro")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Exposicao <- ggplot(AUX, 
+                                         aes(x = Ordem, 
+                                             y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Tipo de Exposição em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
+  scale_x_discrete(breaks = c(1:5),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) 
 
 #####    Ferimento    ####
 
@@ -2498,35 +3100,108 @@ AUX[, 2] <- c("Único", "Múltiplo", "Sem Ferimento", "Ignorado")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Ferimento <- ggplot(AUX, 
+                                        aes(x = Ordem, 
+                                            y = Casos)) +
+  labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "Localização da Lesão - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Tipo de Ferimento em % de Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#EEDD82",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
   scale_x_discrete(breaks = c(1:4),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+###################################  Ferimento histórico    ##############
+
+RS_Historico_Ferimento[, 6] <- apply(RS_Historico_Ferimento[, -ncol(RS_Historico_Ferimento)], 1, sum)
+
+AUX <- tibble(Unico = (RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 1]/RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 6]) * 100)
+
+AUX[, 2] <- tibble(Multiplo = (RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 2]/RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 6]) * 100)
+
+AUX[, 3] <- tibble(Sem_Ferimento = (RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 3]/RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 6]) * 100)
+
+AUX[, 4] <- tibble(Ignorado = (RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 4]/RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 6]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Único", "Múltiplo", "Sem Ferimento", "Ignorado")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Ferimento <- ggplot(AUX, 
+                                        aes(x = Ordem, 
+                                            y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Tipo de Ferimento em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 7])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
+  scale_x_discrete(breaks = c(1:4),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) 
 
 #####    Tipo Ferimento    ####
 
@@ -2548,35 +3223,105 @@ AUX[, 2] <- c("Profundo", "Superficial", "Dilacerante")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Ext_Ferimento <- ggplot(AUX, 
+                                        aes(x = Ordem, 
+                                            y = Casos)) +
+  labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "Localização da Lesão - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Extensão da Lesão em % de Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#D3D3D3") +
   geom_label(aes(label = Casos), 
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
   scale_x_discrete(breaks = c(1:3),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+###################################  Tipo Ferimento histórico    ##############
+
+RS_Historico_Tipo_Ferimento[, 5] <- apply(RS_Historico_Tipo_Ferimento[, -ncol(RS_Historico_Tipo_Ferimento)], 1, sum)
+
+AUX <- tibble(Profundo = (RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 1]/RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 5]) * 100)
+
+AUX[, 2] <- tibble(Superficial = (RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 2]/RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 5]) * 100)
+
+AUX[, 3] <- tibble(Dilacerante = (RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 3]/RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 5]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Profundo", "Superficial", "Dilacerante")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Tipo_Ferimento <- ggplot(AUX, 
+                                        aes(x = Ordem, 
+                                            y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Extensão da Lesão em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 5])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
+  scale_x_discrete(breaks = c(1:3),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) 
 
 #####    Localização da lesão    ####
 
@@ -2592,11 +3337,9 @@ AUX[, 5] <- tibble(Membros_Superiores = (RS22_ANTRAB_2025_LOCALIZACAO[nrow(RS22_
 
 AUX[, 6] <- tibble(Membros_Superiores = (RS22_ANTRAB_2025_LOCALIZACAO[nrow(RS22_ANTRAB_2025_LOCALIZACAO), 10]/apply(RS22_ANTRAB_2025_LOCALIZACAO[nrow(RS22_ANTRAB_2025_LOCALIZACAO), 5:10], 1, sum)*100))
 
-AUX <- RS22_ANTRAB_2025_LOCALIZACAO[17, 5:10]
-
-AUX[2,] <- as.factor(colnames(AUX))
-
 AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
 
 AUX[,3] <- as.factor(c(1: nrow(AUX)))
 
@@ -2606,35 +3349,112 @@ AUX[, 2] <- c("Mucosa", "Cabeça/Pescoço", "Mãos/Pés", "Tronco", "Mem. Superi
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Local_Ferimento <- ggplot(AUX, 
+                                            aes(x = Ordem, 
+                                                y = Casos)) +
+  labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "Localização da Lesão - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Localização do Ferimento em % de Casos Notificados (2025)",
+       subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#2F4F4F",
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
   scale_x_discrete(breaks = c(1:6),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+###################################  Localização histórico    ##############
+
+RS_Historico_Localizacao[, 8] <- apply(RS_Historico_Localizacao[, -ncol(RS_Historico_Localizacao)], 1, sum)
+
+AUX <- tibble(Mucosa = (RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 1]/RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8]) * 100)
+
+AUX[, 2] <- tibble(Cabeca_Pescoco = (RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 2]/RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8]) * 100)
+
+AUX[, 3] <- tibble(Maos_Pes = (RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 3]/RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8]) * 100)
+
+AUX[, 4] <- tibble(Tronco = (RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 4]/RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8]) * 100)
+
+AUX[, 5] <- tibble(Membros_Superiores = (RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 5]/RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8]) * 100)
+
+AUX[, 6] <- tibble(Membros_Inferiores = (RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 6]/RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Mucosa", "Cabeça/Pescoço", "Mãos/Pés", "Tronco", "Mem. Superiores", "Mem. Inferiores")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Localizacao <- ggplot(AUX, 
+                                             aes(x = Ordem, 
+                                                 y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Percentual de ocorrência",
+       title = "Localização do Ferimento em % dos Casos Notificados (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
+           linewidth = 0.8,
+           width = 0.4) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
+  scale_x_discrete(breaks = c(1:6),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) 
 
 #####    Animal Observável    ####
 
@@ -2654,26 +3474,19 @@ AUX[, 2] <- c("Sim", "Não")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Observavel <- ggplot(AUX, 
+                                         aes(x = Ordem, 
+                                             y = Casos)) +
+  labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "ANIMAL OBSERVÁVEL - 22ªRS",
-       subtitle = "Apenas Cães e Gatos") +
+       y = "Percentagem de Ocorrência",
+       title = "Passível de Observação* em % de Casos Notificados (2025)",
+       subtitle = paste0("*Apenas cães e gatos. 
+N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "green") +
@@ -2681,6 +3494,21 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
              size = 3, 
              alpha = 0.5,
              vjust = 0.1) +
+  Theme() +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
   scale_x_discrete(breaks = c(1:2),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
@@ -2705,25 +3533,17 @@ AUX[, 2] <- c("Sim", "Não", "Ignorado")
 
 AUX[, 1] <- as.numeric(AUX[, 1])
 
-ggplot(AUX, aes(x = Ordem, y = Casos)) +
-  theme(axis.text.x = element_text(angle = 0, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_2025_Observavel <- ggplot(AUX, 
+                                         aes(x = Ordem, 
+                                             y = Casos)) +
+    labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = "UTILIZAÇÃO DE SORO/IMUNOGLOBULINA - 22ªRS") +
+       y = "Percentual de Ocorrência",
+       title = "Utilização de SAR/IGHAR em - 22ªRS") +
   geom_bar(stat = "identity",
            color = "black",
            fill = "green") +
@@ -2779,38 +3599,6 @@ ggplot(AUX, aes(x = Ordem, y = Casos)) +
              vjust = 0.1) +
   scale_x_discrete(breaks = c(1:2),
                    labels = AUX$Label) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
-
-#####   Notificados por município   ####
-
-AUX <- RS22_ANTRAB_2025_GERAL[1 : (nrow(RS22_ANTRAB_2025_GERAL) -1), c(2, 5)]
-
-ggplot(AUX, aes(x = Município, y = Notificados)) +
-  theme(axis.text.x = element_text(angle = 70, 
-                                   vjust = 0.5,
-                                   face = "bold",
-                                   size = 12),
-        axis.text.y = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 0.5,
-                                   face = "bold"),
-        panel.grid.major = element_line(color = "#C0C0C0"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "#F5F5F5"),
-        plot.title = element_text(face = "bold",
-                                  size = 19,
-                                  colour = "#556B2F")) +
-  labs(caption = "Fonte", 
-       x = NULL,
-       y = "Número de Casos",
-       title = "Notificações por Município - 22ªRS") +
-  geom_bar(stat = "identity",
-           color = "black",
-           fill = "green") +
-  geom_label(aes(label = Notificados), 
-             size = 3, 
-             alpha = 0.5,
-             vjust = 0.1) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####################  Pirâmide Etária Série Histórica  ########################
@@ -3012,7 +3800,7 @@ AUX <- AUX %>%
   )
   )
 
-RS_PECONHENTOS_GRAF_PIRAMIDE_HIST <- ggplot(AUX, 
+RS_ANTRAB_GRAF_PIRAMIDE_HIST <- ggplot(AUX, 
                                             aes(x = Pop,
                                                 y = grupo_Idade_FACT, 
                                                 fill = Sexo_Legenda)) +
@@ -3237,7 +4025,7 @@ AUX <- AUX %>%
   )
   )
 
-RS_PECONHENTOS_GRAF_PIRAMIDE <- ggplot(AUX, 
+RS_ANTRAB_GRAF_PIRAMIDE <- ggplot(AUX, 
                                        aes(x = Pop,
                                            y = grupo_Idade_FACT, 
                                            fill = Sexo_Legenda)) +
@@ -3296,7 +4084,7 @@ doméstico") %>%
 
 gt(RS22_ANTRAB_2025_SOROTERAPIA[-nrow(RS22_ANTRAB_2025_SOROTERAPIA), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Uso de Soro/imunoglobulina por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 53 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3315,7 +4103,7 @@ gt(RS22_ANTRAB_2025_SOROTERAPIA[-nrow(RS22_ANTRAB_2025_SOROTERAPIA), -c(1, 3, 4)
 
 gt(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGICO[-nrow(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGICO), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Tipo de Imunobiológico Utilizado**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 55 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3336,7 +4124,7 @@ gt(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGICO[-nrow(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGI
 
 gt(RS22_ANTRAB_2025_LOCALIZACAO[-nrow(RS22_ANTRAB_2025_LOCALIZACAO), -c(1, 3, 4)]) %>%
   tab_header(title = md("**TLocalização da Lesão por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 33 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3362,7 +4150,7 @@ Inferiores") %>%
 
 gt(RS22_ANTRAB_2025_EXPOSICAO[-nrow(RS22_ANTRAB_2025_EXPOSICAO), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Tipo de Exposição por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 32 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3383,7 +4171,7 @@ gt(RS22_ANTRAB_2025_EXPOSICAO[-nrow(RS22_ANTRAB_2025_EXPOSICAO), -c(1, 3, 4)]) %
 
 gt(RS22_ANTRAB_2025_FERIMENTO[-nrow(RS22_ANTRAB_2025_FERIMENTO), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Ferimento por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 34 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3407,7 +4195,7 @@ Ferimento") %>%
 
 gt(RS22_ANTRAB_2025_TRATAMENTO[-nrow(RS22_ANTRAB_2025_TRATAMENTO), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Esquema de Tratamento por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 43 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3436,7 +4224,7 @@ Vacina",
 
 gt(RS22_ANTRAB_2025_COND_ANIMAL_ACID[-nrow(RS22_ANTRAB_2025_COND_ANIMAL_ACID), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Condição do Animal Causador do Acidente por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 41 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3458,7 +4246,7 @@ Desaparecido") %>%
 
 gt(RS22_ANTRAB_2025_OBSERVAVEL[-nrow(RS22_ANTRAB_2025_OBSERVAVEL), -c(1, 3, 4)]) %>%
   tab_header(title = md("**Animal Observável (cães/gatos) por Município**"),
-             subtitle = "(Campo 40 SINAN)") %>%
+             subtitle = "(Campo 42 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
               column_labels.border.top.width = px(3)) %>%
@@ -3473,5 +4261,245 @@ gt(RS22_ANTRAB_2025_OBSERVAVEL[-nrow(RS22_ANTRAB_2025_OBSERVAVEL), -c(1, 3, 4)])
   ) %>%
   tab_footnote(footnote = Fonte) %>%
   tab_options(table.font.size = "small")
+
+#################################################################################################
+###############   MAPAS  ########################################################################
+
+AUX <- left_join(SHAPEFILE_REGIONAL, RS_ANTRAB_HISTORICO_GAL, by = c("NM_MUNICIP" = "Município"))
+
+
+#########################   Índice Geral 
+
+AUX <- AUX %>% mutate(Cortes = cut(x = `Índice 
+Total Amostras`,
+                                           breaks = c(0, 1, 50, 70, 100, 150, 200, 300, 500, +Inf),
+                                           labels = c("0", "0.1 - 50", "50.1 - 70", "70.1 - 100", 
+                                                      "100.1 - 150", "150.1 - 200", "200.1 - 300", 
+                                                      "300.1 - 500", "> 500")))
+
+AUX$Cortes <- as.character(AUX$Cortes)
+
+AUX$Cortes <-replace(AUX$Cortes, is.na(AUX$Cortes), "Sem Encaminhamentos")
+
+ggplot(AUX) +
+  geom_sf(aes(fill = factor(Cortes)),
+          size = 0.5,
+          color = "black") +
+  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "#40E0D0",
+                                                                     "0.1 - 50" = "#7FFFD4",
+                                                                     "50.1 - 70" = "#66CDAA",
+                                                                     "70.1 - 100" = "#8FBC8F",
+                                                                     "100.1 - 150" = "#20B2AA",
+                                                                     "150.1 - 200" = "#9ACD32",
+                                                                     "200.1 - 300" = "#228B22",
+                                                                     "300.1 - 500" = "#6B8E23",
+                                                                     "> 500" = "#556B2F",
+                                                                     "Sem Encaminhamentos" = "red")) +
+  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR",
+       subtitle = "Amostras/100.000 habitantes (2016 - 2025)",
+       caption = Fonte) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr")+
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold",
+                                size = 14),  
+    legend.text = element_text(size = 14), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 12,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 20)   
+  ) 
+
+######################   Índice 2025
+
+AUX <- AUX %>% mutate(Cortes_1 = cut(x = `Índice 2025`,
+                                   breaks = c(0, 1, 50, 70, 100, 150, 200, 300, 500, +Inf),
+                                   labels = c("0", "0.1 - 50", "50.1 - 70", "70.1 - 100", 
+                                              "100.1 - 150", "150.1 - 200", "200.1 - 300", 
+                                              "300.1 - 500", "> 500")))
+
+AUX$Cortes_1 <- as.character(AUX$Cortes_1)
+
+AUX$Cortes_1 <-replace(AUX$Cortes_1, is.na(AUX$Cortes_1), "Sem Encaminhamentos")
+
+ggplot(AUX) +
+  geom_sf(aes(fill = factor(Cortes_1)),
+          size = 0.5,
+          color = "black") +
+  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "#40E0D0",
+                                                                 "0.1 - 50" = "#7FFFD4",
+                                                                 "50.1 - 70" = "#66CDAA",
+                                                                 "70.1 - 100" = "#8FBC8F",
+                                                                 "100.1 - 150" = "#20B2AA",
+                                                                 "150.1 - 200" = "#9ACD32",
+                                                                 "200.1 - 300" = "#228B22",
+                                                                 "300.1 - 500" = "#6B8E23",
+                                                                 "> 500" = "#556B2F",
+                                                                 "Sem Encaminhamentos" = "red")) +
+  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR",
+       subtitle = "Amostras/100.000 habitantes (2016 - 2025)",
+       caption = Fonte) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr")+
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold",
+                                size = 14),  
+    legend.text = element_text(size = 14), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 12,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 20)   
+  ) 
+
+########################  Morcegos
+
+AUX <- AUX %>% mutate(Cortes_2 = cut(x = Quirópteros,
+                                     breaks = c(0, 1, 3, 6, 10, 15, 30, 50, 70, +Inf),
+                                     labels = c("Sem Encaminhamentos", "1 - 3", "4 - 6", "7 - 10", 
+                                                "11 - 15", "16 - 30", "31 - 50", 
+                                                "51 - 70", "> 70")))
+
+AUX$Cortes_2 <- as.character(AUX$Cortes_2)
+
+AUX$Cortes_2 <-replace(AUX$Cortes_2, is.na(AUX$Cortes_2), "Sem Encaminhamentos")
+
+ggplot(AUX) +
+  geom_sf(aes(fill = factor(Cortes_2)),
+          size = 0.5,
+          color = "black") +
+  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "red",
+                                                                 "1 - 3" = "#7FFFD4",
+                                                                 "4 - 6" = "#66CDAA",
+                                                                 "7 - 10" = "#8FBC8F",
+                                                                 "11 - 15" = "#20B2AA",
+                                                                 "16 - 30" = "#9ACD32",
+                                                                 "31 - 50" = "#228B22",
+                                                                 "51 - 70" = "#6B8E23",
+                                                                 "> 70" = "#556B2F",
+                                                                 "Sem Encaminhamentos" = "red")) +
+  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR",
+       subtitle = "Amostras/100.000 habitantes (2016 - 2025)",
+       caption = Fonte) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr")+
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold",
+                                size = 14),  
+    legend.text = element_text(size = 14), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 12,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 20)   
+  ) 
+
+######################################################################################################################################
+###############################################  Salvando Gráficos, Tabelas e Mapas  #################################################
+
+########################  Gráficos   ###############################################
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_CE_Notificados_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_CE_Notificados,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_Serie_Historica_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_Serie_Historica,     
+       width = 50,             
+       height = 15,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_Serie_Historica_Incidencia_I_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_Serie_Historica_Incidencia_I,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_Serie_Historica_Incidencia_II_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_Serie_Historica_Incidencia_II,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_Serie_Historica_Incidencia_II_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_Serie_Historica_Incidencia_II,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_PIRAMIDE_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_PIRAMIDE,     
+       width = 26,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_PIRAMIDE_HIST_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_PIRAMIDE_HIST,     
+       width = 26,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Escolaridade_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Escolaridade,     
+       width = 40,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Escolaridade_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Escolaridade,     
+       width = 40,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Raca_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Raca,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Raca_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Raca,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Zona_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Zona,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Zona_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Zona,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+
 
 rm(AUX, AUX_GRAF, BASE_IBGE, RS_CE_ANTRAB)
