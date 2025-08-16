@@ -27,6 +27,8 @@ RS <- 22   #####  Deve-se colocar AQUI a Regional
 ######################  Definindo o Objeto Fonte   ######################
 
 Fonte <- "Base DBF. Acessada em 22/07//2025. Dados sujeitos a alteração"
+Fonte1 <- "Fonte: LACEN/PR. Acesso em 22/07/2025"
+Fonte2 <- "Fonte: SIES. Acesso em 22/07//2025"
 
 ###########################         Localizações   #########################
 
@@ -108,6 +110,10 @@ RS_Historico_Tratamento <- read.csv(file = "Tabulacoes_R/Raiva/RS_Historico_Trat
                                   header = TRUE,
                                   sep = ",")
 
+RS_Historico_Cond_Animal <- read.csv(file = "Tabulacoes_R/Raiva/RS_Historico_Cond_Animal.csv",
+                                    header = TRUE,
+                                    sep = ",")
+
 RS_SINAN_Piramide <- read.csv(file = "Tabulacoes_R/Raiva/RS_SINAN_Piramide.csv",
                                     header = TRUE,
                                     sep = ",")
@@ -131,6 +137,14 @@ RS_Historico_Escolaridade <- read.csv(file = "Tabulacoes_R/Raiva/RS_Historico_Es
 RS_GAL_Animal <- read.csv(file = "Base_de_Dados/LACEN/Animal/LACEN_ANIMAL.csv",
                                       header = TRUE,
                                       sep = ",")
+
+SIES_IMUNOGLOBULINA_ANTIRRABICA <- read.csv(file = "Base_de_Dados/SIES/SIES_IMUNOGLOBULINA_ANTIRRABICA.csv",
+                          header = TRUE,
+                          sep = ",")
+
+SIES_SORO_ANTIRRABICO <- read.csv(file = "Base_de_Dados/SIES/SIES_SORO_ANTIRRABICO.csv",
+                                                 header = TRUE,
+                                                 sep = ",")
 
 SHAPEFILE_REGIONAL <- st_read("Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde.shp")
 
@@ -1434,15 +1448,15 @@ AUX$Nao <- NA
 for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
   
   AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(SINAN_ANTRAB_2025 %>% 
-                                                                                                                 filter(ID_MN_RESI == i,
-                                                                                                                        TRA_INTERR == "1") %>%   
-                                                                                                                 count()
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INTERR == "1") %>%   
+                                                   count()
   )    
   
   AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(SINAN_ANTRAB_2025 %>% 
-                                                                                                                 filter(ID_MN_RESI == i,
-                                                                                                                        TRA_INTERR == "2") %>%   
-                                                                                                                 count()
+                                                   filter(ID_MN_RESI == i,
+                                                          TRA_INTERR == "2") %>%   
+                                                   count()
   )
 }
 
@@ -1722,6 +1736,839 @@ Total Amostras",
 nâo Humanos", "Outros")
 
 RS_ANTRAB_HISTORICO_GAL <- AUX
+
+############################   Tabelas SIES   ################################
+
+#############   Soro   ################
+
+SIES_SORO_ANTIRRABICO[, 8] <- c(1: nrow(SIES_SORO_ANTIRRABICO))
+
+SIES_SORO_ANTIRRABICO <- SIES_SORO_ANTIRRABICO[, c(8, 1:7)]
+
+AUX <- format(as.Date(SIES_SORO_ANTIRRABICO$Data, "%d/%m/%Y"), "%Y-%m-%d")
+
+AUX <- as.Date(AUX)
+
+SIES_SORO_ANTIRRABICO[, 9] <- epiweek(AUX)
+
+SIES_SORO_ANTIRRABICO[, 10] <- str_sub(SIES_SORO_ANTIRRABICO$Data, start = 7, end = 10)
+
+colnames(SIES_SORO_ANTIRRABICO)[c(1, 9, 10)] <- c("Ordem", "SE", "Ano")
+
+SIES_SORO_ANTIRRABICO <- SIES_SORO_ANTIRRABICO %>%
+  mutate(Ano = case_when(Ano == "20" ~ "2020",
+                         Ano == "21" ~ "2021",
+                         Ano == "22" ~ "2022",
+                         Ano == "23" ~ "2023",
+                         Ano == "24" ~ "2024",
+                         Ano == "25" ~ "2025"))
+
+AUX <- matrix(data = NA, 
+              nrow = 6, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Ano" 
+
+AUX[,1] <- c("2020", "2021", "2022", "2023", "2024", "2025")
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in SIES_SORO_ANTIRRABICO[, 10]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 1)%>%
+                                          summarise('2' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 2)%>%
+                                          summarise('3' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 3)%>%
+                                          summarise('4' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 5] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 4)%>%
+                                          summarise('5' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 5)%>%
+                                          summarise('6' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 6)%>%
+                                          summarise('7' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 7)%>%
+                                          summarise('8' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                          filter(Ano == i &
+                                                   SE == 8)%>%
+                                          summarise('9' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 9)%>%
+                                           summarise('10' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 10)%>%
+                                           summarise('11' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 11)%>%
+                                           summarise('12' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 12)%>%
+                                           summarise('13' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 13)%>%
+                                           summarise('14' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 14)%>%
+                                           summarise('15' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 15)%>%
+                                           summarise('16' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 16)%>%
+                                           summarise('17' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 17)%>%
+                                           summarise('18' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 18)%>%
+                                           summarise('19' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 19)%>%
+                                           summarise('20' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 21] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 20)%>%
+                                           summarise('21' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 21)%>%
+                                           summarise('22' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 22)%>%
+                                           summarise('23' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 23)%>%
+                                           summarise('24' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 24)%>%
+                                           summarise('25' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 25)%>%
+                                           summarise('26' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 26)%>%
+                                           summarise('27' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 27)%>%
+                                           summarise('28' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 28)%>%
+                                           summarise('29' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 29)%>%
+                                           summarise('30' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 30)%>%
+                                           summarise('31' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 31)%>%
+                                           summarise('32' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 32)%>%
+                                           summarise('33' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 33)%>%
+                                           summarise('34' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 34)%>%
+                                           summarise('35' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 35)%>%
+                                           summarise('36' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 36)%>%
+                                           summarise('37' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 37)%>%
+                                           summarise('38' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 38)%>%
+                                           summarise('39' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 39)%>%
+                                           summarise('40' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 40)%>%
+                                           summarise('41' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 41)%>%
+                                           summarise('42' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 42)%>%
+                                           summarise('43' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 43)%>%
+                                           summarise('44' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 44)%>%
+                                           summarise('45' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 45)%>%
+                                           summarise('46' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 46)%>%
+                                           summarise('47' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 47)%>%
+                                           summarise('48' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 48)%>%
+                                           summarise('49' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 49)%>%
+                                           summarise('50' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 50)%>%
+                                           summarise('51' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 51)%>%
+                                           summarise('52' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 52)%>%
+                                           summarise('53' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SIES_SORO_ANTIRRABICO %>%
+                                           filter(Ano == i &
+                                                    SE == 53)%>%
+                                           summarise('54' = sum(Quantidade))
+                                         
+  )
+}
+
+assign(paste0("RS", RS, "_ANTRAB_2025_SE_SORO_ANTIRRABICO"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SE_SORO_ANTIRRABICO"), AUX), 
+           paste0("RS", RS, "_RAIVA_2025_SE_SORO_ANTIRRABICO.csv"), 
+           row.names = FALSE)
+
+###########################    Imunoglobulina
+
+SIES_IMUNOGLOBULINA_ANTIRRABICA[, 8] <- c(1: nrow(SIES_IMUNOGLOBULINA_ANTIRRABICA))
+
+SIES_IMUNOGLOBULINA_ANTIRRABICA <- SIES_IMUNOGLOBULINA_ANTIRRABICA[, c(8, 1:7)]
+
+AUX <- format(as.Date(SIES_IMUNOGLOBULINA_ANTIRRABICA$Data, "%d/%m/%Y"), "%Y-%m-%d")
+
+AUX <- as.Date(AUX)
+
+SIES_IMUNOGLOBULINA_ANTIRRABICA[, 9] <- epiweek(AUX)
+
+SIES_IMUNOGLOBULINA_ANTIRRABICA[, 10] <- str_sub(SIES_IMUNOGLOBULINA_ANTIRRABICA$Data, start = 7, end = 10)
+
+colnames(SIES_IMUNOGLOBULINA_ANTIRRABICA)[c(1, 9, 10)] <- c("Ordem", "SE", "Ano")
+
+SIES_IMUNOGLOBULINA_ANTIRRABICA <- SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+  mutate(Ano = case_when(Ano == "20" ~ "2020",
+                         Ano == "21" ~ "2021",
+                         Ano == "22" ~ "2022",
+                         Ano == "23" ~ "2023",
+                         Ano == "24" ~ "2024",
+                         Ano == "25" ~ "2025"))
+AUX <- matrix(data = NA, 
+              nrow = 6, 
+              ncol = 54)
+
+AUX <- as.data.frame(AUX)
+
+colnames(AUX)[1] <- "Ano" 
+
+AUX[,1] <- c("2020", "2021", "2022", "2023", "2024", "2025")
+
+colnames (AUX)[2:54] <- c(1:53)
+
+for (i in SIES_IMUNOGLOBULINA_ANTIRRABICA[, 10]){
+  
+  AUX[which(AUX == i), 2] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 1)%>%
+                                          summarise('2' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 3] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 2)%>%
+                                          summarise('3' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 4] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 3)%>%
+                                          summarise('4' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 5] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 4)%>%
+                                          summarise('5' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 6] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 5)%>%
+                                          summarise('6' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 7] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 6)%>%
+                                          summarise('7' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 8] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 7)%>%
+                                          summarise('8' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 9] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                          filter(Ano == i &
+                                                   SE == 8)%>%
+                                          summarise('9' = sum(Quantidade))
+                                        
+  )
+  
+  AUX[which(AUX == i), 10] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 9)%>%
+                                           summarise('10' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 11] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 10)%>%
+                                           summarise('11' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 12] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 11)%>%
+                                           summarise('12' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 13] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 12)%>%
+                                           summarise('13' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 14] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 13)%>%
+                                           summarise('14' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 15] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 14)%>%
+                                           summarise('15' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 16] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 15)%>%
+                                           summarise('16' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 17] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 16)%>%
+                                           summarise('17' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 18] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 17)%>%
+                                           summarise('18' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 19] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 18)%>%
+                                           summarise('19' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 20] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 19)%>%
+                                           summarise('20' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 21] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 20)%>%
+                                           summarise('21' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 22] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 21)%>%
+                                           summarise('22' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 23] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 22)%>%
+                                           summarise('23' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 24] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 23)%>%
+                                           summarise('24' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 25] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 24)%>%
+                                           summarise('25' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 26] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 25)%>%
+                                           summarise('26' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 27] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 26)%>%
+                                           summarise('27' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 28] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 27)%>%
+                                           summarise('28' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 29] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 28)%>%
+                                           summarise('29' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 30] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 29)%>%
+                                           summarise('30' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 31] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 30)%>%
+                                           summarise('31' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 32] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 31)%>%
+                                           summarise('32' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 33] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 32)%>%
+                                           summarise('33' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 34] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 33)%>%
+                                           summarise('34' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 35] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 34)%>%
+                                           summarise('35' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 36] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 35)%>%
+                                           summarise('36' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 37] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 36)%>%
+                                           summarise('37' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 38] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 37)%>%
+                                           summarise('38' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 39] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 38)%>%
+                                           summarise('39' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 40] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 39)%>%
+                                           summarise('40' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 41] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 40)%>%
+                                           summarise('41' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 42] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 41)%>%
+                                           summarise('42' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 43] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 42)%>%
+                                           summarise('43' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 44] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 43)%>%
+                                           summarise('44' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 45] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 44)%>%
+                                           summarise('45' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 46] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 45)%>%
+                                           summarise('46' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 47] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 46)%>%
+                                           summarise('47' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 48] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 47)%>%
+                                           summarise('48' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 49] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 48)%>%
+                                           summarise('49' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 50] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 49)%>%
+                                           summarise('50' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 51] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 50)%>%
+                                           summarise('51' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 52] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 51)%>%
+                                           summarise('52' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 53] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 52)%>%
+                                           summarise('53' = sum(Quantidade))
+                                         
+  )
+  
+  AUX[which(AUX == i), 54] <- as.integer(SIES_IMUNOGLOBULINA_ANTIRRABICA %>%
+                                           filter(Ano == i &
+                                                    SE == 53)%>%
+                                           summarise('54' = sum(Quantidade))
+                                         
+  )
+}
+
+assign(paste0("RS", RS, "_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA"), AUX)
+
+write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA"), AUX), 
+           paste0("RS", RS, "_RAIVA_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA.csv"), 
+           row.names = FALSE)
 
 #################################################################################################################
 ##############################FIM FIM FIM FIM FIM FIM FIM ####################################################
@@ -2136,19 +2983,20 @@ RS_ANTRAB_GRAF_2025_Escolaridade <- ggplot(AUX,
            fill = "#EEE8AA",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Escolaridade dos Casos Notificados em % (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição do Nível de Escolaridade dos Casos Notificados em 2025",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2211,19 +3059,20 @@ RS_ANTRAB_GRAF_HIST_Escolaridade <- ggplot(AUX,
            fill = "green",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Escolaridade (%) dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição do Nível de Escolaridade dos Casos Notificados (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Escolaridade[nrow(RS_Historico_Escolaridade), 11])) +
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2275,19 +3124,20 @@ RS_ANTRAB_GRAF_2025_Raca <- ggplot(AUX,
            fill = "#EEE8AA",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Raça em % dos Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição da Raça dos Casos Notificados em 2025",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2302,7 +3152,7 @@ RS_ANTRAB_GRAF_2025_Raca <- ggplot(AUX,
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   Theme()
 
-#####    Escolariadade (2016 - 2024) ####
+#####    Raça (2016 - 2024) ####
 
 RS_Historico_Raca[, 8] <- apply(RS_Historico_Raca[, -ncol(RS_Historico_Raca)], 1, sum)
 
@@ -2341,19 +3191,20 @@ RS_ANTRAB_GRAF_HIST_Raca <- ggplot(AUX,
            fill = "green",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Escolaridade (%) dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição da Raça dos Casos Notificados (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Raca[nrow(RS_Historico_Raca), 11])) +
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2399,15 +3250,15 @@ RS_ANTRAB_GRAF_2025_Zona <- ggplot(AUX,
                                        y = Casos)) +
    labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Zona de Ocorrência em % dos Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Zona (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#66CDAA",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   theme(legend.position = "bottom",  
@@ -2415,6 +3266,7 @@ RS_ANTRAB_GRAF_2025_Zona <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2461,15 +3313,15 @@ RS_ANTRAB_GRAF_HIST_Zona <- ggplot(AUX,
                                        y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Zona de Ocorrência em % dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Zona (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Zona[nrow(RS_Historico_Zona), 6])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#66CDAA",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   theme(legend.position = "bottom",  
@@ -2477,6 +3329,7 @@ RS_ANTRAB_GRAF_HIST_Zona <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2515,8 +3368,8 @@ RS_ANTRAB_GRAF_2025_Sexo <- ggplot(AUX,
                                        y = Casos)) +
    labs(caption = Fonte, 
         x = NULL,
-        y = "Percentual de Ocorrência",
-        title = "Sexo em % dos Casos Notificados (2025)",
+        y = "Ocorrência em %",
+        title = "Distribuição dos Casos Notificados por Sexo (2025)",
         subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
    geom_bar(stat = "identity",
             color = "black",
@@ -2532,6 +3385,7 @@ RS_ANTRAB_GRAF_2025_Sexo <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2574,8 +3428,8 @@ RS_ANTRAB_GRAF_HIST_Sexo <- ggplot(AUX,
                                        y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Sexo em % dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Sexo (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Sexo[nrow(RS_Historico_Sexo), 6])) +
   geom_bar(stat = "identity",
            color = "black",
@@ -2591,6 +3445,7 @@ RS_ANTRAB_GRAF_HIST_Sexo <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2643,8 +3498,8 @@ RS_ANTRAB_GRAF_2025_Agressor <- ggplot(AUX,
                                            y = Casos)) +
     labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Espécie Agressora em % dos Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Espécie Agressora (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
@@ -2657,7 +3512,8 @@ RS_ANTRAB_GRAF_2025_Agressor <- ggplot(AUX,
         legend.title = element_text(face = "bold",
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
-                                   vjust = 0.5,
+                                   vjust = 0.5,,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2713,14 +3569,13 @@ RS_ANTRAB_GRAF_HIST_Agressor <- ggplot(AUX,
                                        y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Espécie Agressora em % dos Casos Notificados (2016 - 2024)",
-       subtitle = paste0("N = ", RS_Historico_Agressor[nrow(RS_Historico_Agressor), 6])) +
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Espécie Agressora (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
-           linewidth = 0.8,
-           width = 0.4) +
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -2730,6 +3585,7 @@ RS_ANTRAB_GRAF_HIST_Agressor <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2776,12 +3632,77 @@ RS_ANTRAB_GRAF_2025_Cond_Anim <- ggplot(AUX,
                                             y = Casos)) +
     labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Condição do Animal Agressor em % dos Casos (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Condição do Animal (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#98FB98",
+           linewidth = 0.8) +
+  geom_label(aes(label = Casos), 
+             size = 5, 
+             alpha = 0.5,
+             vjust = 0.1) +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   vjust = 0.5,
+                                   size = 14,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)) +
+  Theme() +
+  scale_x_discrete(breaks = c(1:4),
+                   labels = AUX$Label) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+###################################  Agressor histórico    ##############
+
+RS_Historico_Cond_Animal[, 6] <- apply(RS_Historico_Cond_Animal[, -ncol(RS_Historico_Cond_Animal)], 1, sum)
+
+AUX <- tibble(Sadio = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 1]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 2] <- tibble(Suspeito = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 2]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 3] <- tibble(Raivoso = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 3]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX[, 4] <- tibble(Morto_Desaparecido = (RS_Historico_Agressor[nrow(RS_Historico_Agressor), 4]/RS_Historico_Agressor[nrow(RS_Historico_Agressor), 9]) * 100)
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- as.factor(colnames(AUX))
+
+AUX[, 3] <- as.factor(c(1: nrow(AUX)))
+
+colnames(AUX) <- c("Casos", "Label", "Ordem")
+
+AUX[, 2] <- c("Sadio", "Suspeito", "Raivoso", "Morto/
+Desaparecido")
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+AUX$Casos <- format(round(AUX$Casos, 2))
+
+AUX$Casos <- as.numeric(AUX$Casos)
+
+RS_ANTRAB_GRAF_HIST_Cond_Animal <- ggplot(AUX, 
+                                          aes(x = Ordem, 
+                                              y = Casos)) +
+  labs(caption = Fonte, 
+       x = NULL,
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Condição do Animal (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Agressor[nrow(RS_Historico_Cond_Animal), 9])) +
+  geom_bar(stat = "identity",
+           color = "black",
+           fill = "#F0FFF0",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
@@ -2801,10 +3722,10 @@ RS_ANTRAB_GRAF_2025_Cond_Anim <- ggplot(AUX,
         plot.title = element_text(hjust = 0, 
                                   face = "bold",
                                   size = 20)) +
-  Theme() +
   scale_x_discrete(breaks = c(1:4),
                    labels = AUX$Label) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+  scale_y_discrete(expand = expansion(mult = c(0, 0.05))) +
+  Theme()
 
 #####    Tratamento Indicado    ####
 
@@ -2846,8 +3767,8 @@ RS_ANTRAB_GRAF_2025_Tratamento <- ggplot(AUX,
                                              y = Casos)) +
     labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Tratamento Realizado em % das Notificações (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Tratamento (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
@@ -2861,6 +3782,7 @@ RS_ANTRAB_GRAF_2025_Tratamento <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -2916,14 +3838,13 @@ RS_ANTRAB_GRAF_HIST_Tratamento <- ggplot(AUX,
                                            y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Tratamento Realizado em % dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Tratamento (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Tratamento[nrow(RS_Historico_Tratamento), 8])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
-           linewidth = 0.8,
-           width = 0.4) +
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -2981,15 +3902,15 @@ RS_ANTRAB_GRAF_2025_Exposicao <- ggplot(AUX,
                                             y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Tipo de Exposição em % de Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Tipo de Exposição (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#5F9EA0",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   theme(legend.position = "bottom",  
@@ -2997,6 +3918,7 @@ RS_ANTRAB_GRAF_2025_Exposicao <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3047,14 +3969,13 @@ RS_ANTRAB_GRAF_HIST_Exposicao <- ggplot(AUX,
                                              y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Tipo de Exposição em % dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Tipo de Exposição (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Exposicao[nrow(RS_Historico_Exposicao), 7])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
-           linewidth = 0.8,
-           width = 0.4) +
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -3064,6 +3985,7 @@ RS_ANTRAB_GRAF_HIST_Exposicao <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3109,8 +4031,8 @@ RS_ANTRAB_GRAF_2025_Ferimento <- ggplot(AUX,
                                             y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Tipo de Ferimento em % de Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por TIpo de Ferimento (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
@@ -3125,6 +4047,7 @@ RS_ANTRAB_GRAF_2025_Ferimento <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3172,14 +4095,13 @@ RS_ANTRAB_GRAF_HIST_Ferimento <- ggplot(AUX,
                                             y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Tipo de Ferimento em % dos Casos Notificados (2016 - 2024)",
-       subtitle = paste0("N = ", RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 7])) +
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Tipo de Ferimento (2016 - 2024)",
+       subtitle = paste0("N = ", RS_Historico_Ferimento[nrow(RS_Historico_Ferimento), 6])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
-           linewidth = 0.8,
-           width = 0.4) +
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -3232,14 +4154,14 @@ RS_ANTRAB_GRAF_2025_Ext_Ferimento <- ggplot(AUX,
                                             y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Extensão da Lesão em % de Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Extensão do Ferimento (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#D3D3D3") +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   theme(legend.position = "bottom",  
@@ -3247,6 +4169,7 @@ RS_ANTRAB_GRAF_2025_Ext_Ferimento <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3287,19 +4210,18 @@ AUX$Casos <- format(round(AUX$Casos, 2))
 
 AUX$Casos <- as.numeric(AUX$Casos)
 
-RS_ANTRAB_GRAF_HIST_Tipo_Ferimento <- ggplot(AUX, 
+RS_ANTRAB_GRAF_HIST_Ext_Ferimento <- ggplot(AUX, 
                                         aes(x = Ordem, 
                                             y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Extensão da Lesão em % dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Extensão do Ferimento (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Tipo_Ferimento[nrow(RS_Historico_Tipo_Ferimento), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
-           linewidth = 0.8,
-           width = 0.4) +
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -3309,6 +4231,7 @@ RS_ANTRAB_GRAF_HIST_Tipo_Ferimento <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3358,8 +4281,8 @@ RS_ANTRAB_GRAF_2025_Local_Ferimento <- ggplot(AUX,
                                                 y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de Ocorrência",
-       title = "Localização do Ferimento em % de Casos Notificados (2025)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Localização da Lesão (2025)",
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
@@ -3374,6 +4297,7 @@ RS_ANTRAB_GRAF_2025_Local_Ferimento <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3387,6 +4311,162 @@ RS_ANTRAB_GRAF_2025_Local_Ferimento <- ggplot(AUX,
   scale_x_discrete(breaks = c(1:6),
                    labels = AUX$Label) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+#######  Imunoglobulina Antirrábica por SE    #####################
+
+AUX <- RS22_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA[str_detect(RS22_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA$Ano, "2025"), ]
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- rownames(AUX)
+
+colnames(AUX) <- c("Quantidade", "SE")
+
+AUX <- AUX[-1,]
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+levels(AUX$SE)
+
+AUX$SE <- factor(AUX$SE, levels = AUX$SE)
+
+RS_ANTRAB_SIES_Imunoglobulina <- ggplot(AUX, 
+                                        aes(x = SE)) +
+  geom_bar(aes(y = Quantidade),
+           stat = "identity",
+           color = "black",
+           fill = "#F0E68C",
+           linewidth = 0.8) +
+  labs(title = "Ampolas de Imunoglobulina Antirrábica Dispensadas por Semana Epidemiológica (2025)",
+       y = "Ampolas Dispensadas",
+       x = "Semana Epidemiológica",
+       caption = Fonte2) + 
+  geom_label(aes(label = Quantidade,
+                 x = as.factor(SE),
+                 y = Quantidade),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_x_discrete(breaks = as.factor(AUX$SE), 
+                   label = AUX$SE ) +
+  scale_y_discrete(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)    
+  ) 
+
+#######  Soro ANtirrábico por SE    #####################
+
+AUX <- RS22_ANTRAB_2025_SE_SORO_ANTIRRABICO[str_detect(RS22_ANTRAB_2025_SE_SORO_ANTIRRABICO$Ano, "2025"), ]
+
+AUX <- as.data.frame(t(AUX))
+
+AUX[, 2] <- rownames(AUX)
+
+colnames(AUX) <- c("Quantidade", "SE")
+
+AUX <- AUX[-1,]
+
+AUX[, 1] <- as.numeric(AUX[, 1])
+
+levels(AUX$SE)
+
+AUX$SE <- factor(AUX$SE, levels = AUX$SE)
+
+RS_ANTRAB_GRAF_SIES_Imunoglobulina <- ggplot(AUX,
+                                        aes(x = SE)) +
+  geom_bar(aes(y = Quantidade),
+           stat = "identity",
+           color = "black",
+           fill = "#D2B48C",
+           linewidth = 0.8) +
+  labs(title = "Ampolas de Soro ANtirrábico Dispensadas por Semana Epidemiológica (2025)",
+       y = "Ampolas Dispensadas",
+       x = "Semana Epidemiológica",
+       caption = Fonte2) + 
+  geom_label(aes(label = Quantidade,
+                 x = as.factor(SE),
+                 y = Quantidade),
+             alpha = 0.5,
+             vjust = 0.1)  +
+  scale_x_discrete(breaks = as.factor(AUX$SE), 
+                   label = AUX$SE ) +
+  scale_y_discrete(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)    
+  ) 
+
+
+################   Consumo de Imunobiilógicos por ano   ################
+
+AUX <- as.data.frame(RS22_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA[, 1])
+
+AUX[, 2] <- as.data.frame(apply(RS22_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA[, 2:54], 1, sum))
+
+AUX[, 3] <- as.data.frame(apply(RS22_ANTRAB_2025_SE_SORO_ANTIRRABICO[, 2:54], 1, sum))
+
+colnames(AUX) <- c("Ano", "Imunoglobulina", "Soro")
+
+AUX <- pivot_longer(AUX, 2:3, 
+                    names_to = "Produto", 
+                    values_to = "Quantidade")
+
+RS_ANTRAB_GRAF_SIES_HIST <- ggplot(AUX, 
+                                   aes(x = Ano,
+                                       y = Quantidade)) +
+  geom_bar(stat = "identity",
+           color = "black",
+           position = "dodge",
+           aes(fill = Produto)) +
+  geom_label(aes(label = Quantidade,
+                 x = Ano,
+                 y = Quantidade),
+             position = position_dodge2(width = 0.9),
+             alpha = 0.5,
+             vjust = 0.1) +
+  labs(title = "Consumo de Imunobiológicos do Programa da Raiva por Ano",
+       y = "Ampolas Dispensadas",
+       x = NULL,
+       caption = Fonte2) + 
+  scale_y_discrete(expand = expansion(mult = c(0, 0.1)
+  )
+  ) +
+  Theme() +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0,
+                                   face = "bold"),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)    
+  ) 
 
 ###################################  Localização histórico    ##############
 
@@ -3420,19 +4500,18 @@ AUX$Casos <- format(round(AUX$Casos, 2))
 
 AUX$Casos <- as.numeric(AUX$Casos)
 
-RS_ANTRAB_GRAF_HIST_Localizacao <- ggplot(AUX, 
+RS_ANTRAB_GRAF_HIST_Local_Ferimento <- ggplot(AUX, 
                                              aes(x = Ordem, 
                                                  y = Casos)) +
   labs(caption = Fonte, 
        x = NULL,
-       y = "Percentual de ocorrência",
-       title = "Localização do Ferimento em % dos Casos Notificados (2016 - 2024)",
+       y = "Ocorrência em %",
+       title = "Distribuição dos Casos Notificados por Localização da Lesão (2016 - 2024)",
        subtitle = paste0("N = ", RS_Historico_Localizacao[nrow(RS_Historico_Localizacao), 8])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
-           linewidth = 0.8,
-           width = 0.4) +
+           linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -3442,6 +4521,7 @@ RS_ANTRAB_GRAF_HIST_Localizacao <- ggplot(AUX,
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3484,14 +4564,14 @@ RS_ANTRAB_GRAF_2025_Observavel <- ggplot(AUX,
   labs(caption = Fonte, 
        x = NULL,
        y = "Percentagem de Ocorrência",
-       title = "Passível de Observação* em % de Casos Notificados (2025)",
+       title = "Distribuição dos Casos Notificados por Animais Passíveis de Observação (2025)",
        subtitle = paste0("*Apenas cães e gatos. 
 N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "green") +
   geom_label(aes(label = Casos), 
-             size = 3, 
+             size = 5, 
              alpha = 0.5,
              vjust = 0.1) +
   Theme() +
@@ -3500,6 +4580,7 @@ N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
                                     size = 14), 
         axis.text.x = element_text(angle = 0,
                                    vjust = 0.5,
+                                   size = 14,
                                    face = "bold"),
         legend.text = element_text(size = 14), 
         plot.subtitle = element_text(hjust = 0,
@@ -3537,7 +4618,7 @@ AUX$Casos <- format(round(AUX$Casos, 2))
 
 AUX$Casos <- as.numeric(AUX$Casos)
 
-RS_ANTRAB_GRAF_2025_Observavel <- ggplot(AUX, 
+RS_ANTRAB_GRAF_2025_Soroterapia <- ggplot(AUX, 
                                          aes(x = Ordem, 
                                              y = Casos)) +
     labs(caption = Fonte, 
@@ -4123,7 +5204,7 @@ gt(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGICO[-nrow(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGI
 ##############   Localização (2025)   ###########################
 
 gt(RS22_ANTRAB_2025_LOCALIZACAO[-nrow(RS22_ANTRAB_2025_LOCALIZACAO), -c(1, 3, 4)]) %>%
-  tab_header(title = md("**TLocalização da Lesão por Município**"),
+  tab_header(title = md("**Localização da Lesão por Município**"),
              subtitle = "(Campo 33 SINAN)") %>%
   tab_options(heading.align = "left",
               column_labels.border.top.color = "black",
@@ -4262,11 +5343,250 @@ gt(RS22_ANTRAB_2025_OBSERVAVEL[-nrow(RS22_ANTRAB_2025_OBSERVAVEL), -c(1, 3, 4)])
   tab_footnote(footnote = Fonte) %>%
   tab_options(table.font.size = "small")
 
+##############   Série Histórica Zona    ###########################
+
+RS_ANTRAB_TAB_ZONA_OCORRENCIA_HIST <- gt(RS_ANTRAB_Serie_Historica[c(5:13), c(1, 4:7)]) %>%
+  tab_header(title = md("**Notificações por Zona de Ocorrência (2016 - 2024)**"),
+             subtitle = "(Campo 29 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Zona de Ocorrência",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", 
+             columns = c(2:5)
+  )  %>%
+  cols_label(Zona_Urbana = "Urbana",
+             Zona_Rural = "Rural",
+             Zona_Periurbana = "Periurbana",
+             Zona_Ignorados = "Ignorado") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############    Zona Municípios (2025)  ###########################
+
+RS_ANTRAB_TAB_ZONA_OCORRENCIA <- gt(RS22_ANTRAB_2025_GERAL[-c(nrow(RS22_ANTRAB_2025_GERAL)), c(2, 6:9)]) %>%
+  tab_header(title = md("**Notificações por Zona de Ocorrência (2025)**"),
+             subtitle = "(Campo 29 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Zona de Ocorrência",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", 
+             columns = c(2:5)
+  )  %>%
+  cols_label(Zona_Urbana = "Urbana",
+             Zona_Rural = "Rural",
+             Zona_Periurbana = "Periurbana",
+             Zona_Ignorados = "Ignorado") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############    Histórico de Agressor  ###########################
+
+RS_ANTRAB_TAB_HIST_Agressor <- gt(RS_Historico_Agressor[-c(nrow(RS_Historico_Agressor)), c(8, 1:7)]) %>%
+  tab_header(title = md("**Notificações por Espécie Agressora (2016 - 2024)**"),
+             subtitle = "(Campo 40 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Espécie Agressora",
+              columns = c(2:8)) %>%
+  cols_align(align = "center", 
+             columns = c(2:8)
+  )  %>%
+  cols_label(Municipios = "Municípios",
+             Canino = "Canina",
+             Felino = "Felina",
+             Quiróptero = "Quiróptera",
+             Herbívoro.Doméstico = "Herbívoro Doméstico") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Agressor 2025 ###########################
+
+RS_ANTRAB_TAB_Agressor <- gt(RS22_ANTRAB_2025_AGRESSOR[-c(nrow(RS22_ANTRAB_2025_AGRESSOR)), c(2, 5:11)]) %>%
+  tab_header(title = md("**Notificações por Espécie Agressora (2025)**"),
+             subtitle = "(Campo 40 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Espécie Agressora",
+              columns = c(2:8)) %>%
+  cols_align(align = "center", 
+             columns = c(2:8)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Canina = "Canina",
+             Felina = "Felina",
+             Quiroptera = "Quiróptera",
+             Herbivoro_Domestico = "Herbívoro Doméstico") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Passível de Observação 2025 ###########################
+
+RS_ANTRAB_TAB_Observacao <- gt(RS22_ANTRAB_2025_OBSERVAVEL[-c(nrow(RS22_ANTRAB_2025_OBSERVAVEL)), c(2, 5:6)]) %>%
+  tab_header(title = md("**Animal Passível de Observação* (2025)**"),
+             subtitle = "* Apenas câo e gato. (Campo 42 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Observável",
+              columns = c(2:3)) %>%
+  cols_align(align = "center", 
+             columns = c(2:3)
+  )  %>%
+  cols_label(Município = "Municípios") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Condição do Animal 2025 ###########################
+
+RS_ANTRAB_TAB_Cond_Animal <- gt(RS22_ANTRAB_2025_COND_ANIMAL_ACID[-c(nrow(RS22_ANTRAB_2025_COND_ANIMAL_ACID)), c(2, 5:8)]) %>%
+  tab_header(title = md("**Condição do Animal Agressor para Fins de Tratamento (2025)**"),
+             subtitle = "(Campo 41 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Espécie Agressora",
+              columns = c(2:5)) %>%
+  cols_align(align = "center", 
+             columns = c(2:5)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Morto_Desaparecido = "Morto Desaparecido") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Histórico Tratamento     ###########################
+
+RS_ANTRAB_TAB_HIST_Tratamento <- gt(RS_Historico_Tratamento[-c(nrow(RS_Historico_Tratamento)), c(7, 1:6)]) %>%
+  tab_header(title = md("**Esquema de Tratamento Indicado por Município (2016 - 2024)**"),
+             subtitle = "(Campo 43 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Espécie Agressora",
+              columns = c(2:7)) %>%
+  cols_align(align = "center", 
+             columns = c(2:7)
+  )  %>%
+  cols_label(Municipios = "Municípios",
+             Dispensa.Tratamento = "Dispensa de Tratamento",
+             Observação.do.Animal = "Observação",
+             Observação.e.Vacina = "Observação e Vacina",
+             Esquema.de.Reexposição = "Reexposição") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Tratamento  (2025)   ###########################
+
+RS_ANTRAB_TAB_2025_Tratamento <- gt(RS22_ANTRAB_2025_TRATAMENTO[-c(nrow(RS22_ANTRAB_2025_TRATAMENTO)), c(2, 5:10)]) %>%
+  tab_header(title = md("**Esquema de Tratamento Indicado por Município (2025)**"),
+             subtitle = "(Campo 43 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Espécie Agressora",
+              columns = c(2:7)) %>%
+  cols_align(align = "center", 
+             columns = c(2:7)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Dispensa_Tratamento = "Dispensa de Tratamento",
+             Observação_Animal = "Observação",
+             Observação_Vacina = "Observação e Vacina",
+             Soro_Vacina = "Sorovacinação",
+             Esquema_Reexposicao = "Reexposição") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Tipo Imunobiológico  (2025)   ###########################
+
+RS_ANTRAB_TAB_2025_Tipo_Imunobiologico <- gt(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGICO[-c(nrow(RS22_ANTRAB_2025_TIPO_IMUNOBIOLOGICO)), c(2, 5:6)]) %>%
+  tab_header(title = md("**Tipo de Imunobiológico Utilizado por Município (2025)**"),
+             subtitle = "(Campo 55 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Espécie Agressora",
+              columns = c(2:3)) %>%
+  cols_align(align = "center", 
+             columns = c(2:3)
+  )  %>%
+  cols_label(Município = "Municípios") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############     Tipo Imunobiológico  (2025)   ###########################
+
+RS_ANTRAB_TAB_2025_Cond_final <- gt(RS22_ANTRAB_2025_COND_FINAL_ANIMAL[-c(nrow(RS22_ANTRAB_2025_COND_FINAL_ANIMAL)), c(2, 5:10)]) %>%
+  tab_header(title = md("**Condição do Animal* após Período de Observação por Município (2025)**"),
+             subtitle = "* Apenas cão e gato.
+(Campo 55 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Condição Final",
+              columns = c(2:7)) %>%
+  cols_align(align = "center", 
+             columns = c(2:7)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Negativo_Clinico = "Negativo (clínico)",
+             Negativo_Lab = "Negativo (laboratorial)",
+             Positivo_Clinico = "Positivo (clínico)", 
+             Positivo_Lab = "Positivo (Laboratorial)", 
+             Morto_SemDiagnostico = "Morto/Sem Diagnóstico") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
 #################################################################################################
 ###############   MAPAS  ########################################################################
 
 AUX <- left_join(SHAPEFILE_REGIONAL, RS_ANTRAB_HISTORICO_GAL, by = c("NM_MUNICIP" = "Município"))
-
 
 #########################   Índice Geral 
 
@@ -4500,6 +5820,141 @@ ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRA
        units = "cm",           
        dpi = 300)
 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Agressor_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Agressor,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Agressor_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Agressor,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Ferimento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Ferimento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Ferimento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Ferimento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Local_Ferimento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Local_Ferimento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Local_Ferimento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Local_Ferimento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Exposicao_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Exposicao,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Exposicao_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Exposicao,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Ext_Ferimentp_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Ext_Ferimento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Ext_Ferimento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Ext_Ferimento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Cond_Anim_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Cond_Anim,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Cond_Animal_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Cond_Animal,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Observavel_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Observavel,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Tratamento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_2025_Tratamento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Tratamento_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Tratamento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+#######################################    Tabelas  ##################################################################
+
+gtsave(data = RS_ANTRAB_TAB_ZONA_OCORRENCIA_HIST,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_ZONA_OCORRENCIA_HIST_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_ZONA_OCORRENCIA,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_ZONA_OCORRENCIA_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_Agressor,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_Agressor_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_HIST_Agressor,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_HIST_Agressor_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_Cond_Animal,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_Cond_Animal_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_Observacao,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_Observacao_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_HIST_Tratamento,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_HIST_Tratamento_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_2025_Tratamento,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_2025_Tratamento_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_2025_Tipo_Imunobiologico,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_2025_Tipo_Imunobiologico_Pag_16_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_2025_Cond_final,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_2025_Cond_final_Pag_16_B.png")
 
 rm(AUX, AUX_GRAF, BASE_IBGE, RS_CE_ANTRAB)

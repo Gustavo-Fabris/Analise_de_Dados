@@ -2,7 +2,7 @@ rm(list =ls())
 
 ####Indicando Diretório de Trabalho.#####
 
-setwd("/home/gustavo/Área de Trabalho/Análise_de_Dados/")
+setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 
 ####Planilha com os dados dos municípios e com os códigos do IBGE. Será utilizada nos for loops para buscar dados######## 
 ####dos municípios e vinculá-los com os dados da base DBF do SINAN#######################################################
@@ -55,10 +55,10 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 #########   Criando objeto Fonte para ser utilizado pelos gráficos   ######
 
-Fonte <- "Fonte: SINAN. Base DBF acessada em 14/07/2025. Dados Sujeitos a alteração."
+Fonte <- "Fonte: SINAN. Base DBF acessada em 01/08/2025. Dados Sujeitos a alteração."
 Fonte1 <- "Fonte: Controle Interno 22ª Regional de Saúde."
-Fonte2 <- "Fonte: SINAP. Acesso em 14/07/2025. Dados sujeitos a alteração."
-Fonte3 <- "Fonte: SIES. Acesso em 09/07/2025. Dados correspondentes a data da baixa do imunobiológico no sistema"
+Fonte2 <- "Fonte: SINAP. Acesso em 04/08/2025. Dados sujeitos a alteração."
+Fonte3 <- "Fonte: SIES. Acesso em 04/08/2025. Dados correspondentes a data da baixa do imunobiológico no sistema"
 
 ####   Estabelecendo o número de municípios em cada RS
 
@@ -172,9 +172,9 @@ RS_PECONHENTOS_2022_Incidencia  <- read.csv(file = paste0("Tabulacoes_R/Peconhen
                                             header = TRUE,
                                             sep = ",")
 
-SHAPEFILE_REGIONAL <- st_read("/home/gustavo/Área de Trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde.shp")
+SHAPEFILE_REGIONAL <- st_read("/home/gustavo/Área de trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde.shp")
 
-SHAPEFILE_REGIONAL_Dissolvido <- st_read("/home/gustavo/Área de Trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde_Dissolvido.shp")
+SHAPEFILE_REGIONAL_Dissolvido <- st_read("/home/gustavo/Área de trabalho/Análise_de_Dados/Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde_Dissolvido.shp")
 
 ##################################################################
 ###############    2025   ########################################
@@ -12065,14 +12065,14 @@ RS_PECONHENTOS_MAP_ACID_LAGARTA_HIST <- ggplot(AUX) +
 
 ########################  Gráficos   ###############################################
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Geral_Pag_08_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Geral_Pag_08_A.png", 
        plot = RS_PECONHENTOS_GRAF_CE_Geral,     
        width = 50,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Serpente_Pag_09_C.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Serpente_Pag_09_C.png", 
 #        plot = RS_PECONHENTOS_GRAF_CE_Serpentes,     
 #        width = 50,             
 #        height = 20,           
@@ -12080,7 +12080,7 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS
 #        dpi = 300) 
 # 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Aranha_Pag_09_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Aranha_Pag_09_A.png", 
        plot = RS_PECONHENTOS_GRAF_CE_Aranhas,     
        width = 50,             
        height = 20,           
@@ -12088,322 +12088,322 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS
        dpi = 300) 
 
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Escorpiao_Pag_00.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Escorpiao_Pag_00.png", 
 #        plot = RS_PECONHENTOS_GRAF_CE_Escorpiao,     
 #        width = 50,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300) 
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Abelha_Pag_00.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Abelha_Pag_00.png", 
 #        plot = RS_PECONHENTOS_GRAF_CE_Abelha ,     
 #        width = 50,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300) 
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Lagarta_Pag_00.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Lagarta_Pag_00.png", 
 #        plot = RS_PECONHENTOS_GRAF_CE_Lagarta,     
 #        width = 50,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300) 
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Outros_Pag_.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_CE_Outros_Pag_.png", 
 #        plot = RS_PECONHENTOS_GRAF_CE_Outros,     
 #        width = 50,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Geral_Pag_08_B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Geral_Pag_08_B.png", 
        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Geral,     
        width = 50,             
        height = 15,           
        units = "cm",           
        dpi = 300) 
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Serpente_Pag.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Serpente_Pag.png", 
 #        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Serpente,     
 #        width = 50,             
 #        height = 15,           
 #        units = "cm",           
 #        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Aranhas_Pag_09_B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Aranhas_Pag_09_B.png", 
        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Aranha,     
        width = 50,             
        height = 15,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_DEMAIS_09_C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_DEMAIS_09_C.png", 
        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_DEMAIS,     
        width = 50,             
        height = 15,           
        units = "cm",           
        dpi = 300)
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Escorpiao_Pag.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Escorpiao_Pag.png", 
 #        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Escorpiao,     
 #        width = 50,             
 #        height = 15,           
 #        units = "cm",           
 #        dpi = 300) 
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Abelha_Pag.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Abelha_Pag.png", 
 #        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Abelha,     
 #        width = 50,             
 #        height = 15,           
 #        units = "cm",           
 #        dpi = 300) 
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Lagarta_Pag.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Lagarta_Pag.png", 
 #        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Lagarta,     
 #        width = 50,             
 #        height = 15,           
 #        units = "cm",           
 #        dpi = 300) 
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Outros_Pag.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Outros_Pag.png", 
 #        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Outros,     
 #        width = 50,             
 #        height = 15,           
 #        units = "cm",           
 #        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Incidencia_1_Pag_10_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Incidencia_1_Pag_10_A.png", 
        plot = RS_PECONHENTOS_GRAF_Incidencia_01,     
        width = 50,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Incidencia_02_Pag_10_B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Incidencia_02_Pag_10_B.png", 
        plot = RS_PECONHENTOS_GRAF_Incidencia_02,     
        width = 50,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_RACA_HIST_11_E.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_RACA_HIST_11_E.png", 
        plot = RS_PECONHENTOS_GRAF_RACA_HIST,     
        width = 32,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_RACA_11_F.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_RACA_11_F.png", 
        plot = RS_PECONHENTOS_GRAF_RACA,     
        width = 32,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Historico_Pag_12_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Historico_Pag_12_A.png", 
        plot = RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Historico,     
        width = 32,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Pag_12_C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_ZONA_REGIONAL_Pag_12_C.png", 
        plot = RS_PECONHENTOS_GRAF_ZONA_REGIONAL,     
        width = 32,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/RS_PECONHENTOS_GRAF_SEXO_HIST_Pag.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RS_PECONHENTOS_GRAF_SEXO_HIST_Pag.png", 
 #        plot = RS_PECONHENTOS_GRAF_SEXO_HIST,     
 #        width = 30,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SEXO_Pag_11_B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SEXO_Pag_11_B.png", 
        plot = RS_PECONHENTOS_GRAF_SEXO,     
        width = 30,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_PIRAMIDE_Pag_11_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_PIRAMIDE_Pag_11_A.png", 
        plot = RS_PECONHENTOS_GRAF_PIRAMIDE,     
        width = 26,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_PIRAMIDE_HIST_Pag_10_D.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_PIRAMIDE_HIST_Pag_10_D.png", 
        plot = RS_PECONHENTOS_GRAF_PIRAMIDE_HIST,     
        width = 26,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Escolaridade_Pag_11C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_SERIE_HIST_Escolaridade_Pag_11C.png", 
        plot = RS_PECONHENTOS_GRAF_SERIE_HIST_Escolaridade,     
        width = 40,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Escolaridade_Pag_11_D.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_Escolaridade_Pag_11_D.png", 
        plot = RS_PECONHENTOS_GRAF_Escolaridade,     
        width = 40,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_14_E.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_14_E.png", 
        plot = RS_PECONHENTOS_GRAF_TIPO_ACID,     
        width = 28,             
        height = 20,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_HIST_12_E.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_HIST_12_E.png", 
        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_HIST,     
        width = 32,             
        height = 16,           
        units = "cm",           
        dpi = 300)
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente.png", 
 #        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Serpente,     
 #        width = 24,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300) 
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha.png", 
 #        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Aranha,     
 #        width = 24,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha.png", 
 #        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Abelha,     
 #        width = 24,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao.png", 
 #        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Escorpiao,     
 #        width = 24,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta.png", 
 #        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Lagarta,     
 #        width = 24,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros.png", 
 #        plot = RS_PECONHENTOS_GRAF_TIPO_ACID_Municipios_Outros,     
 #        width = 24,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional_Pag_16_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional_Pag_16_A.png", 
        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_regional,     
        width = 33,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Serpente_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Serpente_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Serpente_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Aranha_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Aranha_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Aranha_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Escorpiao_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Escorpiao_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Escorpiao_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Lagarta_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Lagarta_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Lagarta_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_regional_Pag_15_E.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_regional_Pag_15_E.png", 
        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_regional,     
        width = 33,             
        height = 20,           
        units = "cm",           
        dpi = 300)
 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Serpente_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Serpente_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Serpente_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Aranha_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Aranha_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Aranha_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Escorpiao_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Escorpiao_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Escorpiao_regional,     
 #        width = 29,             
 #        height = 20,           
 #        units = "cm",           
 #        dpi = 300)
 # 
-# ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Lagarta_regional.png", 
+# ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Lagarta_regional.png", 
 #        plot = RS_PECONHENTOS_GRAF_LOCAL_PICADA_Historico_Lagarta_regional,     
 #        width = 32,             
 #        height = 16,           
 #        units = "cm",           
 #        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_SIES_ANTIBOTROPICO_Pag_17_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_SIES_ANTIBOTROPICO_Pag_17_A.png", 
        plot = RS_PECONHENTOS_SIES_ANTIBOTROPICO,     
        width = 50,             
        height = 15,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_SIES_ANTICROTALICO_Pag_17B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_SIES_ANTICROTALICO_Pag_17B.png", 
        plot = RS_PECONHENTOS_SIES_ANTICROTALICO,     
        width = 50,             
        height = 15,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TEMPO_ATEND_HIST_Pag_16_C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TEMPO_ATEND_HIST_Pag_16_C.png", 
        plot = RS_PECONHENTOS_GRAF_TEMPO_ATEND_HIST,     
        width = 32,             
        height = 16,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TEMPO_ATEND_Pag_16_E.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_GRAF_TEMPO_ATEND_Pag_16_E.png", 
        plot = RS_PECONHENTOS_GRAF_TEMPO_ATEND,     
        width = 32,             
        height = 16,           
@@ -12413,161 +12413,161 @@ ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS
 #######################################    Tabelas  ##################################################################
 
 gtsave(data = RS_PECONHENTOS_TAB_LOCAL_PICADA,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_LOCAL_PICADA_Pag_16_B.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_LOCAL_PICADA_Pag_16_B.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_LOCAL_PICADA_HIST,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_LOCAL_PICADA_HIST_Pag_15_F.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_LOCAL_PICADA_HIST_Pag_15_F.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Pag_13_A.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Pag_13_A.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Serpente,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Serpente_Pag_13_B.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Serpente_Pag_13_B.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Aranha,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Aranha_Pag_13_D.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Aranha_Pag_13_D.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_HIST_Lagarta,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TAB_TIPO_ACID_HIST_Lagarta_Pag_14_A.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TAB_TIPO_ACID_HIST_Lagarta_Pag_14_A.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_ZONA_OCORRENCIA_HIST,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_ZONA_HIST_Pag12_B.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_ZONA_HIST_Pag12_B.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_ZONA_OCORRENCIA_Municipios,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_ZONA_Municipios_Pag_12_D.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_ZONA_Municipios_Pag_12_D.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_SEXO_HIST,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SEXO_HIST_Pag_10_D.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SEXO_HIST_Pag_10_D.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_SINAP_GERAL,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_GERAL_Pag_19_B.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_GERAL_Pag_19_B.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_SINAP_Laudos_1,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_Laudos_1_Pag_20.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_Laudos_1_Pag_20.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_SINAP_Laudos_2,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_Laudos_2_Pag_21.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_SINAP_Laudos_2_Pag_21.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipios,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Pag_15_A.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Pag_15_A.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Serpente,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Serpente_Pag_15_B.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Serpente_Pag_15_B.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Aranha,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Aranha_15_C.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Aranha_15_C.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_lagarta,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Lagarta_15_D.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_ACID_Municipios_Lagarta_15_D.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_SINAN_ENCERRAMENTO,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_ENCERRAMENTO_Pag_18_A.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_ENCERRAMENTO_Pag_18_A.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Serpentes,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Serpentes_Pag_18_B.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Serpentes_Pag_18_B.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Outros,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Outros_Pag_18_C.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TIPO_SINAN_INCONSISTENCIAS_Outros_Pag_18_C.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_OBITOS,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_OBITOS_Pag_17_D.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_OBITOS_Pag_17_D.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_OBITOS_HIST,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_OBITOS_HIST_Pag_17_C.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_OBITOS_HIST_Pag_17_C.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TEMPO_ATEND,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TEMPO_ATEND_Pag_16_D.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TEMPO_ATEND_Pag_16_D.png")
 
 gtsave(data = RS_PECONHENTOS_TAB_TEMPO_ATEND_HIST,
-       filename = "/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TEMPO_ATEND_HIST_Pag_16_F.png")
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_TAB_TEMPO_ATEND_HIST_Pag_16_F.png")
 
 #######################################    Mapas     #################################################################################
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_SORO_ESC_Pag_04_B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_SORO_ESC_Pag_04_B.png", 
        plot = RS_PECONHENTOS_MAPA_REDE_SORO_ESC,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Ivaipora_Pag_05_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Ivaipora_Pag_05_A.png", 
        plot = RS_PECONHENTOS_MAPA_REDE_Ivaipora,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_SJI.Pag_06_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_SJI.Pag_06_A.png", 
        plot = RS_PECONHENTOS_MAPA_REDE_SJI,     
        width = 34,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Nova_Tebas_Pag_08_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Nova_Tebas_Pag_08_A.png", 
        plot = RS_PECONHENTOS_MAPA_REDE_Nova_Tebas,     
        width = 40,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_MRI_Pag_07_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_MRI_Pag_07_A.png", 
        plot = RS_PECONHENTOS_MAPA_REDE_MRI,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Lunardelli_Pag_08_C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_REDE_Lunardelli_Pag_08_C.png", 
        plot = RS_PECONHENTOS_MAPA_REDE_Lunardelli,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_ESCORPIOES_Pag_04_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_ESCORPIOES_Pag_04_A.png", 
        plot = RS_PECONHENTOS_MAPA_ESCORPIOES,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300)
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_SINAP_Amostras_Pag_19_A.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAPA_SINAP_Amostras_Pag_19_A.png", 
        plot = RS_PECONHENTOS_MAPA_SINAP_Amostras,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_ABELHA_HIST_Pag_14_C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_ABELHA_HIST_Pag_14_C.png", 
        plot = RS_PECONHENTOS_MAP_ACID_ABELHA_HIST,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_ESCORPIAO_HIST_Pag_14_D.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_ESCORPIAO_HIST_Pag_14_D.png", 
        plot = RS_PECONHENTOS_MAP_ACID_ESCORPIAO_HIST,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_ARANHAS_HIST_Pag_13_E.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_ARANHAS_HIST_Pag_13_E.png", 
        plot = RS_PECONHENTOS_MAP_ACID_ARANHAS_HIST,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
 
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_SERPENTES_HIST_Pag_13_C.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_SERPENTES_HIST_Pag_13_C.png", 
        plot = RS_PECONHENTOS_MAP_ACID_SERPENTES_HIST,     
        width = 32,             
        height = 30,           
        units = "cm",           
        dpi = 300) 
  
-ggsave("/home/gustavo/Área de Trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_LAGARTA_HIST_Pag_14_B.png", 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/PECONHENTOS/RS_PECONHENTOS_MAP_ACID_LAGARTA_HIST_Pag_14_B.png", 
        plot = RS_PECONHENTOS_MAP_ACID_LAGARTA_HIST,     
        width = 32,             
        height = 30,           

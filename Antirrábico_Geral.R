@@ -18879,6 +18879,7 @@ rm(SINAN_ANTRAB_2024, ANTRAB2024)
 write.csv (SINAN_Piramide, 
            "Tabulacoes_R/Raiva/RS_SINAN_Piramide.csv", 
            row.names = FALSE)
+
 #####  Série Histórica GERAL 
 
 AUX <- RS22_ANTRAB_2012_GERAL[17,]
@@ -19001,6 +19002,48 @@ colnames(RS_Historico_Sexo)[3] <- "Municipios"
 
 write.csv (RS_Historico_Sexo, 
            "Tabulacoes_R/Raiva/RS_Historico_Sexo.csv", 
+           row.names = FALSE)
+
+##################   Histórico Condição do Animal   #######################
+
+RS_Historico_Cond_Animal <- RS22_ANTRAB_2016_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)] %>%
+  rbind(RS22_ANTRAB_2017_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2018_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2019_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2020_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2021_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2022_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2023_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) %>% 
+  rbind(RS22_ANTRAB_2024_COND_ANIMAL_ACID[, c(1, 2, 3, 4, 5:8)]) 
+
+RS_Historico_Cond_Animal$Município[which(is.na(RS_Historico_Sexo$Município))] <- "TOTAL"
+
+AUX <-  as.data.frame(tapply(RS_Historico_Cond_Animal[, 5], 
+                             RS_Historico_Cond_Animal$Município,
+                             sum))
+
+AUX[, 2] <-  tapply(RS_Historico_Cond_Animal[, 6], 
+                    RS_Historico_Cond_Animal$Município,
+                    sum)
+
+AUX[, 3] <-  tapply(RS_Historico_Cond_Animal[, 7], 
+                    RS_Historico_Cond_Animal$Município,
+                    sum)
+
+AUX[, 4] <-  tapply(RS_Historico_Cond_Animal[, 8], 
+                    RS_Historico_Cond_Animal$Município,
+                    sum)
+
+colnames(AUX) <- c("Sadio", "Suspeito", "Raivoso", "Morto_Desaparecido")
+
+RS_Historico_Cond_Animal <- AUX
+
+RS_Historico_Cond_Animal[, 5] <- rownames(RS_Historico_Cond_Animal)
+
+colnames(RS_Historico_Cond_Animal)[5] <- "Municipios"
+
+write.csv (RS_Historico_Cond_Animal, 
+           "Tabulacoes_R/Raiva/RS_Historico_Cond_Animal.csv", 
            row.names = FALSE)
 
 ##################   Histórico Raça   #######################
@@ -19450,6 +19493,5 @@ colnames(RS_Historico_Tratamento)[7] <- "Municipios"
 write.csv (RS_Historico_Tratamento, 
            "Tabulacoes_R/Raiva/RS_Historico_Tratamento.csv", 
            row.names = FALSE)
-
 
 #rm(AUX, BASE_IBGE, i, ID_REG, nrow, RS)
