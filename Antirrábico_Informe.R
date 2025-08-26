@@ -26,9 +26,9 @@ RS <- 22   #####  Deve-se colocar AQUI a Regional
 
 ######################  Definindo o Objeto Fonte   ######################
 
-Fonte <- "Base DBF. Acessada em 22/07//2025. Dados sujeitos a alteração"
-Fonte1 <- "Fonte: LACEN/PR. Acesso em 22/07/2025"
-Fonte2 <- "Fonte: SIES. Acesso em 22/07//2025"
+Fonte <- "SINAN. Base DBF. Acessada em 18/08/2025. Dados sujeitos a alteração"
+Fonte1 <- "Fonte: LACEN/PR. Acesso em 18/08/2025"
+Fonte2 <- "Fonte: SIES. Acesso em 18/08/2025"
 
 ###########################         Localizações   #########################
 
@@ -1606,7 +1606,7 @@ rm(SINAN_ANTRAB_2025, ANTRAB2025)
 ###########  FIltrando o programa da raiva   ###########
 
 RS_GAL_Animal <- RS_GAL_Animal %>% 
-  filter(Investigacao == "Investiga��o de Raiva")
+  filter(Investigacao == "Investigação de Raiva")
 
 ### stringr para separar data de hora da coluna Dt_Cadastro ####
 
@@ -1690,7 +1690,7 @@ AUX[, 8] <- (AUX$V7/AUX$Populacao) *100000
 for (i in AUX$Município){
   AUX[which(AUX$Município== i), 9] <- as.integer(AUX1 %>%
                                                    filter(Municipio == i,
-                                                          Grupo == "Quir�pteros") %>%
+                                                          Grupo == "Quirópteros") %>%
                                                    count()
   )
 }
@@ -1698,7 +1698,7 @@ for (i in AUX$Município){
 for (i in AUX$Município){
   AUX[which(AUX$Município== i), 10] <- as.integer(AUX1 %>%
                                                    filter(Municipio == i,
-                                                          Grupo == "Can�deos") %>%
+                                                          Grupo == "Canídeos") %>%
                                                    count()
   )
 }
@@ -1706,7 +1706,7 @@ for (i in AUX$Município){
 for (i in AUX$Município){
   AUX[which(AUX$Município== i), 11] <- as.integer(AUX1 %>%
                                                     filter(Municipio == i,
-                                                           Grupo == "Fel�deos") %>%
+                                                           Grupo == "Felídeos") %>%
                                                     count()
   )
 }
@@ -1714,7 +1714,7 @@ for (i in AUX$Município){
 for (i in AUX$Município){
   AUX[which(AUX$Município== i), 12] <- as.integer(AUX1 %>%
                                                     filter(Municipio == i,
-                                                           Grupo == "Primatas n�o humanos") %>%
+                                                           Grupo == "Primatas não humanos") %>%
                                                     count()
   )
 }
@@ -1726,14 +1726,27 @@ for (i in AUX$Município){
                                                              Grupo == "Marsupiais") %>%
                                                     count()
   )
+  
+  
 }
 
-colnames(AUX)[c(5:13)] <- c("Total
+for (i in AUX$Município){
+  AUX[which(AUX$Município== i), 14] <- as.integer(RS_GAL_Animal %>%
+                                                    filter(Municipio == i,
+                                                           Resultado == "Positivo ") %>%
+                                                    count()
+  )
+  
+  
+}
+
+colnames(AUX)[c(5:14)] <- c("Total
 Amostras", "Índice 
 Total Amostras",
                             "2025", "Índice 2025", "Quirópteros", "Canídeos", "Felídeos", 
                             "Primatas
-nâo Humanos", "Outros")
+nâo Humanos", "Outros", "Raiva")
+
 
 RS_ANTRAB_HISTORICO_GAL <- AUX
 
@@ -2879,8 +2892,14 @@ RS_ANTRAB_GRAF_2025_CE_Notificados <- ggplot(AUX_GRAF, aes(Semana_Epidemiológic
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#FF3333"),
-    plot.title = element_text(face = "bold",
-                              size = 19)
+    plot.subtitle = element_text(hjust = 0,
+                                 size = 12),
+    plot.caption = element_text(size = 12,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold",
+                              size = 20)
+    
   ) +
   geom_area(aes(y = Lim_Superior), 
             fill = "#F0E68C",
@@ -3056,7 +3075,7 @@ RS_ANTRAB_GRAF_HIST_Escolaridade <- ggplot(AUX,
            y = Casos)) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green",
+           fill = "#B0E0E6",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
@@ -3188,7 +3207,7 @@ RS_ANTRAB_GRAF_HIST_Raca <- ggplot(AUX,
                                                y = Casos)) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green",
+           fill = "#9370DB",
            linewidth = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
@@ -3198,7 +3217,7 @@ RS_ANTRAB_GRAF_HIST_Raca <- ggplot(AUX,
        x = NULL,
        y = "Ocorrência em %",
        title = "Distribuição da Raça dos Casos Notificados (2016 - 2024)",
-       subtitle = paste0("N = ", RS_Historico_Raca[nrow(RS_Historico_Raca), 11])) +
+       subtitle = paste0("N = ", RS_Historico_Raca[nrow(RS_Historico_Raca), 8])) +
   theme(legend.position = "bottom",  
         legend.title = element_text(face = "bold",
                                     size = 14), 
@@ -3351,7 +3370,7 @@ AUX[, 2] <- tibble(Masculino = (RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GER
 
 AUX <- as.data.frame(t(AUX))
 
-AUX[, 2] <- as.factor(colnames(AUX))
+AUX[, 2] <- as.factor(rownames(AUX))
 
 AUX[, 3] <- as.factor(c(1: nrow(AUX)))
 
@@ -3375,7 +3394,7 @@ RS_ANTRAB_GRAF_2025_Sexo <- ggplot(AUX,
             color = "black",
             fill = "#4169E1",
             linewidth = 0.8,
-            width = 0.4) +
+            width = 0.8) +
    geom_label(aes(label = Casos), 
               size = 5, 
               alpha = 0.5,
@@ -3410,8 +3429,7 @@ AUX[, 2] <- tibble(Masculino = (RS_Historico_Sexo[nrow(RS_Historico_Sexo), 2]/RS
 
 AUX <- as.data.frame(t(AUX))
 
-AUX[, 2] <- as.factor(colnames(AUX))
-
+AUX[, 2] <- as.factor(rownames(AUX))
 
 AUX[, 3] <- as.factor(c(1: nrow(AUX)))
 
@@ -3430,12 +3448,12 @@ RS_ANTRAB_GRAF_HIST_Sexo <- ggplot(AUX,
        x = NULL,
        y = "Ocorrência em %",
        title = "Distribuição dos Casos Notificados por Sexo (2016 - 2024)",
-       subtitle = paste0("N = ", RS_Historico_Sexo[nrow(RS_Historico_Sexo), 6])) +
+       subtitle = paste0("N = ", RS_Historico_Sexo[nrow(RS_Historico_Sexo), 4])) +
   geom_bar(stat = "identity",
            color = "black",
            fill = "#F0FFF0",
            linewidth = 0.8,
-           width = 0.4) +
+           width = 0.8) +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -3503,7 +3521,7 @@ RS_ANTRAB_GRAF_2025_Agressor <- ggplot(AUX,
        subtitle = paste0("N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "#8470FF") +
+           fill = "#00FF7F") +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -4330,7 +4348,7 @@ levels(AUX$SE)
 
 AUX$SE <- factor(AUX$SE, levels = AUX$SE)
 
-RS_ANTRAB_SIES_Imunoglobulina <- ggplot(AUX, 
+RS_ANTRAB_GRAF_SIES_Imunoglobulina <- ggplot(AUX, 
                                         aes(x = SE)) +
   geom_bar(aes(y = Quantidade),
            stat = "identity",
@@ -4383,14 +4401,14 @@ levels(AUX$SE)
 
 AUX$SE <- factor(AUX$SE, levels = AUX$SE)
 
-RS_ANTRAB_GRAF_SIES_Imunoglobulina <- ggplot(AUX,
+RS_ANTRAB_GRAF_SIES_Soro <- ggplot(AUX,
                                         aes(x = SE)) +
   geom_bar(aes(y = Quantidade),
            stat = "identity",
            color = "black",
            fill = "#D2B48C",
            linewidth = 0.8) +
-  labs(title = "Ampolas de Soro ANtirrábico Dispensadas por Semana Epidemiológica (2025)",
+  labs(title = "Ampolas de Soro Antirrábico Dispensadas por Semana Epidemiológica (2025)",
        y = "Ampolas Dispensadas",
        x = "Semana Epidemiológica",
        caption = Fonte2) + 
@@ -4569,7 +4587,7 @@ RS_ANTRAB_GRAF_2025_Observavel <- ggplot(AUX,
 N = ", RS22_ANTRAB_2025_GERAL[nrow(RS22_ANTRAB_2025_GERAL), 5])) +
   geom_bar(stat = "identity",
            color = "black",
-           fill = "green") +
+           fill = "#9ACD32") +
   geom_label(aes(label = Casos), 
              size = 5, 
              alpha = 0.5,
@@ -5137,6 +5155,58 @@ RS_ANTRAB_GRAF_PIRAMIDE <- ggplot(AUX,
 ############################################################################################################
 #########################    Tabelas   #####################################################################
 
+##############   Sexo Histórico   ###########################
+
+RS_ANTRAB_TAB_Serie_Historica_Sexo <- gt(RS_ANTRAB_Serie_Historica[-c(nrow(RS_ANTRAB_Serie_Historica), 1, 2, 3, 4), c(1, 8, 9)]) %>%
+  tab_header(title = md("**Casos Notificados por Sexo (2016 - 2024)**"),
+             subtitle = "(Campo 11 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Sexo",
+              columns = c(2:3),
+              id = "Sexo") %>%
+  cols_align(align = "center", columns = c(2:3)
+  ) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+##############   Sexo Histórico por município   ###########################
+
+RS_Historico_Sexo[, 1] <- RS_Historico_Sexo[, 1] / RS_Historico_Sexo[, 4] * 100
+
+RS_Historico_Sexo[, 2] <- RS_Historico_Sexo[, 2] / RS_Historico_Sexo[, 4] * 100
+
+RS_Historico_Sexo[, 1] <- format(round(RS_Historico_Sexo[, 1], 2))
+
+RS_Historico_Sexo[, 2] <- format(round(RS_Historico_Sexo[, 2], 2))
+
+RS_ANTRAB_TAB_HIST_SEXO <- gt(RS_Historico_Sexo[-nrow(RS_Historico_Sexo), c(3, 1, 2, 4)]) %>%
+  tab_header(title = md("**Distribuição dos Casos Notificados por Sexo (2016 - 2024)**"),
+             subtitle = "(Campo 11 SINAN)") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Sexo (%)",
+              columns = c(2:3),
+              id = "Sexo") %>%
+  tab_spanner(label = "Casos",
+              columns = 4,
+              id = "Numero") %>%
+  cols_align(align = "center", columns = c(2:4)
+  ) %>%
+  cols_label(V4 = "N") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
 ##############   Agressor por município (2025)   ###########################
 
 gt(RS22_ANTRAB_2025_AGRESSOR[-nrow(RS22_ANTRAB_2025_AGRESSOR), -c(1, 3, 4)]) %>%
@@ -5583,29 +5653,317 @@ RS_ANTRAB_TAB_2025_Cond_final <- gt(RS22_ANTRAB_2025_COND_FINAL_ANIMAL[-c(nrow(R
   tab_footnote(footnote = Fonte) %>%
   tab_options(table.font.size = "small")
 
+##############     Tipo Imunobiológico  (2025)   ###########################
+
+RS_ANTRAB_TAB_Historico_GAL <- gt(RS_ANTRAB_HISTORICO_GAL[, c(2, 5, 7, 9:13)]) %>%
+  tab_header(title = md("**Encaminhamento de Amostras para Pesquisa da Raiva Animal (2016 - 2025)**")) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Nº Amostras",
+              columns = c(2:3),
+              id = "1") %>%
+  tab_spanner(label = "Nº por Animal",
+              columns = c(4:8),
+              id = "2") %>%
+  cols_align(align = "center", 
+             columns = c(2:8)
+  )  %>%
+  cols_label(Município = "Municípios",
+             '2025' = "Total em 2025") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte1) %>%
+  tab_options(table.font.size = "small")
+
+#############################   ANÁLISE SINAN   ##################################
+
+######  FIchas Abertas   ###################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Abertas <- NA
+
+AUX$Mais_30_d <- NA
+
+AUX$Mais_60_d <- NA
+
+Abertas <- RS22_ANTRAB_2025_SINAN %>%
+  filter(is.na(DT_ENCERRA))
+
+Abertas$DT_NOTIFIC <- as.Date(Abertas$DT_NOTIFIC)
+
+Abertas <- Abertas %>%
+  mutate(MAIS60 = as.numeric(difftime(DT_NOTIFIC, Sys.Date(), units = "days") * -1))
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(Abertas %>% 
+                                                   filter(ID_MN_RESI == i) %>%   
+                                                   count() 
+  )
+
+
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(Abertas %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            MAIS60 > 30) %>%   
+                                                   count() 
+  )
+
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(Abertas %>% 
+                                                   filter(ID_MN_RESI ==i &
+                                                            MAIS60 > 60) %>%   
+                                                   count()
+  )
+  }
+  
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2025_SINAN_PROB_ENCERRAMENTO"), AUX)
+
+RS_ANTRAB_TAB_SINAN_ENCERRAMENTO <- gt(RS22_ANTRAB_2025_SINAN_PROB_ENCERRAMENTO[-nrow(RS22_ANTRAB_2025_SINAN_PROB_ENCERRAMENTO), c(2, 5, 6, 7)]) %>%
+  tab_header(title = md("**Fichas de Notificação SINAN.NET Abertas no Sistema**")) %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Fichas Abertas",
+              columns = c(2:4),
+              id = "1")  %>%
+  cols_align(align = "center", 
+             columns = c(2:4)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Abertas = "Abertas",
+             Mais_30_d = "Mais de 30 dias",
+             Mais_60_d = "Mais de 60 dias") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+######  Falha Início Tratamento   ###################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Não_OBS_Sem_Vacina <- NA
+
+AUX$Outros_ANi_Sem_Vacina<- NA
+
+AUX$CAO_GATO_Sem_OBS <- NA
+
+AUX$CAO_GATO_Morto_Ign <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            is.na(DT_DOSE_1),
+                                                            ANIMAL == 1 |
+                                                            ANIMAL == 2,
+                                                          OBSERVACAO == 2) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            is.na(DT_DOSE_1),
+                                                          ANIMAL == 3 |
+                                                            ANIMAL == 4 |
+                                                            ANIMAL == 5 |
+                                                            ANIMAL == 6 |
+                                                            ANIMAL == 7) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                             is.na(DT_DOSE_1),
+                                                          is.na(FIM_ANIMAL),
+                                                           ANIMAL == 1 |
+                                                             ANIMAL == 2,
+                                                           OBSERVACAO == 1) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 8] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            is.na(DT_DOSE_1),
+                                                            ANIMAL == 1 |
+                                                            ANIMAL == 2,
+                                                          OBSERVACAO == 1,
+                                                            FIM_ANIMAL == 5 |
+                                                            FIM_ANIMAL == 9) %>%   
+                                                   count() 
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2025_SINAN_Falha_Inicio_Esquema"), AUX)
+
+RS_ANTRAB_TAB_SINAN_Falha_Esquema <- gt(RS22_ANTRAB_2025_SINAN_Falha_Inicio_Esquema[-nrow(RS22_ANTRAB_2025_SINAN_PROB_ENCERRAMENTO), c(2, 5, 6, 7, 8)]) %>%
+  tab_header(title = md("**Notificações em que a Análise da Ficha Aponta Falha de Conduta**"),
+             subtitle = "Indicativo ou de falha de conduta na profilaxia ou de inconsistência da ficha") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Inconsistências",
+              columns = c(2:5),
+              id = "1")  %>%
+  cols_align(align = "center", 
+             columns = c(2:5)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Não_OBS_Sem_Vacina = "Cão/gato nâo Observável sem Início de Esquema",
+             Outros_ANi_Sem_Vacina = "Outros Animais sem Início de Esquema",
+             CAO_GATO_Sem_OBS = "Cão/gato Observável mas sem Indicação da Condição Final",
+             CAO_GATO_Morto_Ign = "Cão/gato Assinalado como Morto/Ignorado e sem Início de Esquema") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+####################   Falta de Soro/Imunoglobulina   ##################
+
+AUX <- data.frame(Município = BASE_IBGE[which(BASE_IBGE$RS == RS), 3])
+
+AUX$COD_IBGE <- BASE_IBGE[which(BASE_IBGE$RS == RS), 2]
+
+AUX$Populacao <- BASE_IBGE[which(BASE_IBGE$RS == RS), 5]
+
+AUX$RS <- BASE_IBGE[which(BASE_IBGE$RS == RS), 1]
+
+AUX <- AUX[,c(4, 1, 2, 3)]
+
+AUX$Morcego <- NA
+
+AUX$Acidente_Grave_CAO_GATO <- NA
+
+AUX$Acidente_Grave_Outros <- NA
+
+for(i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 2]){
+  
+  AUX[which(AUX$COD_IBGE == i), 5] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            ANIMAL == 3 & 
+                                                            TRAT_ATUAL != 6) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 6] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            OBSERVACAO == 2,
+                                                          ANIMAL == 1 |
+                                                            ANIMAL == 2,
+                                                          ANT_MUCOSA == 1 |
+                                                            ANT_CABECA == 1 |
+                                                            ANT_MAOS == 1 & 
+                                                            FERIMENTO == 2 |
+                                                            ANT_PROFUN == 1 |
+                                                            ANT_DILACE == 1 &
+                                                            TRAT_ATUAL != 6) %>%   
+                                                   count() 
+  )
+  
+  AUX[which(AUX$COD_IBGE == i), 7] <- as.integer(RS22_ANTRAB_2025_SINAN %>% 
+                                                   filter(ID_MN_RESI == i &
+                                                            ANIMAL != 1,
+                                                          ANIMAL != 2,
+                                                          ANIMAL != 3,
+                                                          ANT_MUCOSA == 1 |
+                                                            ANT_CABECA == 1 |
+                                                            ANT_MAOS == 1 & 
+                                                            FERIMENTO == 2 |
+                                                            ANT_PROFUN == 1 |
+                                                            ANT_DILACE == 1 &
+                                                            TRAT_ATUAL != 6) %>%   
+                                                   count() 
+  )
+  
+}
+
+AUX[(nrow(AUX) +1), 4:ncol(AUX)] <- apply(AUX[, 4:ncol(AUX)], 2, sum)
+
+AUX[nrow(AUX), 1] <- "Total"
+
+assign(paste0("RS", RS, "_ANTRAB_2025_SINAN_Falta_Soro"), AUX)
+
+RS_ANTRAB_TAB_SINAN_Falta_Soro <- gt(RS22_ANTRAB_2025_SINAN_Falta_Soro[-nrow(RS22_ANTRAB_2025_SINAN_PROB_ENCERRAMENTO), c(2, 5, 6, 7)]) %>%
+  tab_header(title = md("**Notificações em que a Análise da Ficha Aponta Acidente Grave sem Uso de SAR/IGHAR**"),
+             subtitle = "Indicativo ou de falha de conduta na profilaxia ou de inconsistência da ficha") %>%
+  tab_options(heading.align = "left",
+              column_labels.border.top.color = "black",
+              column_labels.border.top.width = px(3)) %>%
+  tab_spanner(label = "Inconsistências",
+              columns = c(2:4),
+              id = "1")  %>%
+  cols_align(align = "center", 
+             columns = c(2:4)
+  )  %>%
+  cols_label(Município = "Municípios",
+             Acidente_Grave_CAO_GATO = "Acidente Grave com Cão/gato não Observável",
+             Acidente_Grave_Outros = "Acidente Grave com Outros Animais") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything()
+            )
+  ) %>%
+  tab_footnote(footnote = "Considerado apenas cães/gatos não observáveis") %>%
+  tab_footnote(footnote = "Acidente grave considerando apenas lesões nas mãos, pés, cabeça, pescoço e/ou múltiplas e/ou profundas e/ou dilacerantes") %>%
+  tab_footnote(footnote = Fonte) %>%
+  tab_options(table.font.size = "small")
+
+
 #################################################################################################
 ###############   MAPAS  ########################################################################
 
-AUX <- left_join(SHAPEFILE_REGIONAL, RS_ANTRAB_HISTORICO_GAL, by = c("NM_MUNICIP" = "Município"))
+AUX <- left_join(SHAPEFILE_REGIONAL, RS_ANTRAB_HISTORICO_GAL, 
+                 by = c("NM_MUNICIP" = "Município"))
 
 #########################   Índice Geral 
 
 AUX <- AUX %>% mutate(Cortes = cut(x = `Índice 
 Total Amostras`,
-                                           breaks = c(0, 1, 50, 70, 100, 150, 200, 300, 500, +Inf),
+                                           breaks = c(-Inf, 1, 50, 70, 100, 150, 200, 300, 500, +Inf),
                                            labels = c("0", "0.1 - 50", "50.1 - 70", "70.1 - 100", 
                                                       "100.1 - 150", "150.1 - 200", "200.1 - 300", 
                                                       "300.1 - 500", "> 500")))
 
 AUX$Cortes <- as.character(AUX$Cortes)
 
-AUX$Cortes <-replace(AUX$Cortes, is.na(AUX$Cortes), "Sem Encaminhamentos")
 
-ggplot(AUX) +
+RS_ANTRAB_MAP_INDICE_GERAL <- ggplot(AUX) +
   geom_sf(aes(fill = factor(Cortes)),
           size = 0.5,
           color = "black") +
-  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "#40E0D0",
+  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "red",
                                                                      "0.1 - 50" = "#7FFFD4",
                                                                      "50.1 - 70" = "#66CDAA",
                                                                      "70.1 - 100" = "#8FBC8F",
@@ -5613,10 +5971,9 @@ ggplot(AUX) +
                                                                      "150.1 - 200" = "#9ACD32",
                                                                      "200.1 - 300" = "#228B22",
                                                                      "300.1 - 500" = "#6B8E23",
-                                                                     "> 500" = "#556B2F",
-                                                                     "Sem Encaminhamentos" = "red")) +
-  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR",
-       subtitle = "Amostras/100.000 habitantes (2016 - 2025)",
+                                                                     "> 500" = "#556B2F")) +
+  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR (2016 - 2025)",
+       subtitle = "Amostras/100.000 habitantes",
        caption = Fonte) +
   annotation_scale(location = "br") +
   annotation_north_arrow(which_north = "true",
@@ -5637,20 +5994,20 @@ ggplot(AUX) +
 ######################   Índice 2025
 
 AUX <- AUX %>% mutate(Cortes_1 = cut(x = `Índice 2025`,
-                                   breaks = c(0, 1, 50, 70, 100, 150, 200, 300, 500, +Inf),
-                                   labels = c("0", "0.1 - 50", "50.1 - 70", "70.1 - 100", 
-                                              "100.1 - 150", "150.1 - 200", "200.1 - 300", 
-                                              "300.1 - 500", "> 500")))
+                                     breaks = c(-Inf, 1, 50, 70, 100, 150, 200, 300, 500, +Inf),
+                                     labels = c("0", "0.1 - 50", "50.1 - 70", "70.1 - 100", 
+                                                "100.1 - 150", "150.1 - 200", "200.1 - 300", 
+                                                "300.1 - 500", "> 500")))
 
 AUX$Cortes_1 <- as.character(AUX$Cortes_1)
 
 AUX$Cortes_1 <-replace(AUX$Cortes_1, is.na(AUX$Cortes_1), "Sem Encaminhamentos")
 
-ggplot(AUX) +
+RS_ANTRAB_MAP_INDICE_2025 <- ggplot(AUX) +
   geom_sf(aes(fill = factor(Cortes_1)),
           size = 0.5,
           color = "black") +
-  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "#40E0D0",
+  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "red",
                                                                  "0.1 - 50" = "#7FFFD4",
                                                                  "50.1 - 70" = "#66CDAA",
                                                                  "70.1 - 100" = "#8FBC8F",
@@ -5658,10 +6015,9 @@ ggplot(AUX) +
                                                                  "150.1 - 200" = "#9ACD32",
                                                                  "200.1 - 300" = "#228B22",
                                                                  "300.1 - 500" = "#6B8E23",
-                                                                 "> 500" = "#556B2F",
-                                                                 "Sem Encaminhamentos" = "red")) +
-  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR",
-       subtitle = "Amostras/100.000 habitantes (2016 - 2025)",
+                                                                 "> 500" = "#556B2F")) +
+  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR (2025)",
+       subtitle = "Amostras/100.000 habitantes",
        caption = Fonte) +
   annotation_scale(location = "br") +
   annotation_north_arrow(which_north = "true",
@@ -5679,34 +6035,17 @@ ggplot(AUX) +
                               size = 20)   
   ) 
 
-########################  Morcegos
+########################   Confirmados RAIVA   ####################
+AUX$Raiva <- as.factor(AUX$Raiva)
 
-AUX <- AUX %>% mutate(Cortes_2 = cut(x = Quirópteros,
-                                     breaks = c(0, 1, 3, 6, 10, 15, 30, 50, 70, +Inf),
-                                     labels = c("Sem Encaminhamentos", "1 - 3", "4 - 6", "7 - 10", 
-                                                "11 - 15", "16 - 30", "31 - 50", 
-                                                "51 - 70", "> 70")))
-
-AUX$Cortes_2 <- as.character(AUX$Cortes_2)
-
-AUX$Cortes_2 <-replace(AUX$Cortes_2, is.na(AUX$Cortes_2), "Sem Encaminhamentos")
-
-ggplot(AUX) +
-  geom_sf(aes(fill = factor(Cortes_2)),
+RS_ANTRAB_MAP_Casos_Confirmados <- ggplot(AUX) +
+  geom_sf(aes(fill = Raiva),
           size = 0.5,
           color = "black") +
-  scale_fill_manual(name = "Amostras/100.habitantes", values = c("0" = "red",
-                                                                 "1 - 3" = "#7FFFD4",
-                                                                 "4 - 6" = "#66CDAA",
-                                                                 "7 - 10" = "#8FBC8F",
-                                                                 "11 - 15" = "#20B2AA",
-                                                                 "16 - 30" = "#9ACD32",
-                                                                 "31 - 50" = "#228B22",
-                                                                 "51 - 70" = "#6B8E23",
-                                                                 "> 70" = "#556B2F",
-                                                                 "Sem Encaminhamentos" = "red")) +
-  labs(title = "Índice de Encaminhamento de Amostras para o LACEN/PR",
-       subtitle = "Amostras/100.000 habitantes (2016 - 2025)",
+  scale_fill_manual(name = "Casos Confirmados", values = c("1" = "#FF4500",
+                                                           "0" = "#F5DEB3")) +
+  labs(title = "Municípios com Casos Confirmados",
+       subtitle = "Primeiras confirmações em 2025",
        caption = Fonte) +
   annotation_scale(location = "br") +
   annotation_north_arrow(which_north = "true",
@@ -5723,6 +6062,38 @@ ggplot(AUX) +
                               face = "bold", 
                               size = 20)   
   ) 
+
+#########################   CAPA   #############################################
+
+RS_ANTRAB_MAP_Capa <- ggplot(AUX) +
+  geom_sf(size = 0.5,
+          color = "black",
+          fill = "#E0FFFF") +
+  labs(title = "22ª Regional de Saúde",
+       y= NULL,
+       x = NULL) +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(which_north = "true",
+                         location = "tr")+
+  geom_sf_label(data = AUX, 
+                aes(label = NM_MUNICIP),
+                size = 2,
+                alpha = 0.5,
+                position = "identity") +
+  theme(
+    legend.position = "bottom",  
+    legend.title = element_text(face = "bold",
+                                size = 14),  
+    legend.text = element_text(size = 14), 
+    plot.subtitle = element_text(hjust = 0),
+    plot.caption = element_text(size = 12,
+                                hjust = 0),
+    plot.title = element_text(hjust = 0, 
+                              face = "bold", 
+                              size = 20)   
+  ) 
+
+
 
 ######################################################################################################################################
 ###############################################  Salvando Gráficos, Tabelas e Mapas  #################################################
@@ -5764,6 +6135,19 @@ ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRA
        units = "cm",           
        dpi = 300)
 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_SIES_IMUNOGLOBULINA_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_SIES_Imunoglobulina,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_SIES_Soro_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_SIES_Soro,     
+       width = 50,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
 ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_PIRAMIDE_Pag_08_A.png", 
        plot = RS_ANTRAB_GRAF_PIRAMIDE,     
        width = 26,             
@@ -5911,6 +6295,20 @@ ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRA
        units = "cm",           
        dpi = 300)
 
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Sexo_Pag_07_B.png", 
+       plot = RS_ANTRAB_GRAF_HIST_Sexo,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Sexo_Pag_07_D.png", 
+       plot = RS_ANTRAB_GRAF_2025_Sexo,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
 ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_2025_Tratamento_Pag_08_A.png", 
        plot = RS_ANTRAB_GRAF_2025_Tratamento,     
        width = 32,             
@@ -5920,6 +6318,13 @@ ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRA
 
 ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_HIST_Tratamento_Pag_08_A.png", 
        plot = RS_ANTRAB_GRAF_HIST_Tratamento,     
+       width = 32,             
+       height = 20,           
+       units = "cm",           
+       dpi = 300)
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_GRAF_SIES_HIST_Pag_08_A.png", 
+       plot = RS_ANTRAB_GRAF_SIES_HIST,     
        width = 32,             
        height = 20,           
        units = "cm",           
@@ -5957,4 +6362,51 @@ gtsave(data = RS_ANTRAB_TAB_2025_Tipo_Imunobiologico,
 gtsave(data = RS_ANTRAB_TAB_2025_Cond_final,
        filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_2025_Cond_final_Pag_16_B.png")
 
+gtsave(data = RS_ANTRAB_TAB_Serie_Historica_Sexo,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_Serie_Historica_Sexo_Pag_07_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_Historico_GAL,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_Historico_GAL_Pag_07_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_SINAN_ENCERRAMENTO,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_SINAN_ENCERRAMENTO_Pag_07_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_SINAN_Falha_Esquema,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_SINAN_Falha_Esquema_Pag_07_B.png")
+
+gtsave(data = RS_ANTRAB_TAB_SINAN_Falta_Soro,
+       filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_TAB_SINAN_Falta_Soro_Pag_07_B.png")
+
+
+##############################   MAPAS   #######################################################
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_MAP_INDICE_2025_Pag_14_B.png", 
+       plot = RS_ANTRAB_MAP_INDICE_2025,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_MAP_INDICE_GERAL_Pag_14_B.png", 
+       plot = RS_ANTRAB_MAP_INDICE_GERAL,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_MAP_Capa_Pag_14_B.png", 
+       plot = RS_ANTRAB_MAP_Capa,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
+ggsave("/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/RAIVA/RS_ANTRAB_MAP_Confirmados_Pag_14_B.png", 
+       plot = RS_ANTRAB_MAP_Casos_Confirmados,     
+       width = 32,             
+       height = 30,           
+       units = "cm",           
+       dpi = 300) 
+
 rm(AUX, AUX_GRAF, BASE_IBGE, RS_CE_ANTRAB)
+

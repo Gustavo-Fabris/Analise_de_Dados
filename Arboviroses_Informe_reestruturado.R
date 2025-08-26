@@ -56,9 +56,9 @@ setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 03/06/2025"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 25/08/2025"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 26/05/2025"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 25/08/2025"            ##### Fonte dos gráficos relacionados ao LACEN
 
 Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 28/03/2025"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
@@ -86,41 +86,41 @@ RS <- 22   #####  Deve-se colocar AQUI a Regional
 ###########        COMENTAR AS LINHAS DOS PERÍODOS EPIDÊMICOS         #####################################
 ###########################################################################################################
 
-Periodos_Epidêmicos_RS <- c("2009",
-                            "2010",
-                            "2011",
-                            "2012",
-                            "2013",
-                            "2014",
-                            "2015",
+Periodos_Epidêmicos_RS <- c(#  "2009",
+                            #  "2010",
+                            #  "2011",
+                            #  "2012",
+                            #  "2013",
+                            #  "2014",
+                            #  "2015",
                             "2016",
                             "2017",
                             "2018",
                             "2019",
                             #  "2020",
                             "2021",
-                          ##  "2022",
-                           #  "2023",
-                           #  "2024",
+                            "2022",
+                            #  "2023",
+                            #  "2024",
                             "2025"
 )
 
-Periodos_Epidêmicos_SEDE <- c("2009",
-                              "2010",
-                              "2011",
-                              "2012",
-                              "2013",
-                              "2014",
-                              "2015",
+Periodos_Epidêmicos_SEDE <- c(# "2009",
+                              # "2010",
+                              # "2011",
+                              # "2012",
+                              # "2013",
+                              # "2014",
+                              # "2015",
                               "2016",
                               "2017",
                               "2018",
                               "2019",
-                             #  "2020",
+                              #  "2020",
                               "2021",
-                            #   "2022",
-                           #    "2023",
-                           #    "2024",
+                              "2022",
+                              "2023",
+                              #    "2024",
                               "2025"
 )
 ####  libraries a serem utilizadas  ###
@@ -130,15 +130,13 @@ library(foreign)
 library (dplyr)
 library (googlesheets4)
 library (ggplot2)
-###Não sei usar o httpuv!!!###
 library (httpuv)
 library(stringr)
 library(lubridate)
-#library(xlsx)
-library(geobr)
 library(ggspatial)
 library(ggplot2)
-library(tidyr)
+#library(tidyr)
+library(gt)
 
 ####  Importando as bases de dados para formulação do Informe Epidemiológico      ####
 ####       As Bases IBGE são planilhas contendo os nomes do municípios e o        ####
@@ -193,6 +191,12 @@ CHIKON2025 <- read.dbf("Base_de_Dados/DBF/CHIKON2025.dbf",
                                                  GRAV_TAQUI, GRAV_EXTRE, GRAV_HIPOT, GRAV_HEMAT, GRAV_MELEN, GRAV_METRO, GRAV_SANG, GRAV_AST, 
                                                  GRAV_MIOC, GRAV_CONSC, GRAV_ORGAO, MANI_HEMOR, EPISTAXE, GENGIVO, METRO, DS_OBS)
 
+NINDINET2025 <- read.dbf("Base_de_Dados/DBF/NINDINET2025.DBF",
+                       as.is = FALSE) %>% select(NU_NOTIFIC, ID_AGRAVO, DT_NOTIFIC, SEM_NOT, NU_ANO, ID_MUNICIP,
+                                                 ID_REGIONA, DT_SIN_PRI, SEM_PRI, NM_PACIENT, NU_IDADE_N, CS_SEXO,
+                                                 ID_MN_RESI, CLASSI_FIN, TPAUTOCTO) %>%
+  filter(ID_AGRAVO == "A928")
+                         
 RS_Serie_Historica_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_Serie_Historica_Base.csv"),
                                     header = TRUE,
                                     sep = ",")
@@ -2842,11 +2846,11 @@ RS_CE_Notificados <- AUX
 
 ######        Criando a coluna de média no data.frame            #####################
 
-AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados)-1)], 1 , mean)
+AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados)-1)], 1 , median)
 
 RS_CE_Notificados <- as.data.frame(RS_CE_Notificados)
 
-RS_CE_Notificados$Media <- AUX
+RS_CE_Notificados$Mediana <- AUX
 
 ######              Criando a coluna de Desvio Padrão no data frame                ###############
 
@@ -2858,7 +2862,7 @@ RS_CE_Notificados$Desvio_Padrao <- AUX
 
 AUX <- RS_CE_Notificados[, (ncol(RS_CE_Notificados)-1):ncol(RS_CE_Notificados)]
 
-AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 RS_CE_Notificados$Lim_Superior <- AUX$Lim_Superior
 
@@ -2887,7 +2891,7 @@ AUX_GRAF <- RS_CE_Notificados[, Periodos_Epidêmicos_RS]
 
 ###      Usando apply para tirar a média por semana epidemiológica      ####
 
-AUX_GRAF$Media <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , mean)
+AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
 
 ###       Usando apply para tirar o desvio padrão por semana epidemiológica      #####
 
@@ -2899,7 +2903,7 @@ AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
 
 AUX_GRAF$Lim_Superior <- NA
 
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
@@ -2948,7 +2952,7 @@ RS_2025_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
   geom_area(aes(y = Lim_Superior), 
             fill = "#F0E68C",
             alpha = 0.9) +
-  geom_area(aes(y = Media), 
+  geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
   geom_line(aes(y = `2025`), 
             stat = "identity", 
@@ -2990,11 +2994,11 @@ RS_CE_Confirmados <- AUX
 
 ######     Criando a coluna de média no data.frame     #####################
 
-AUX <- apply(RS_CE_Confirmados[, 1: (ncol(RS_CE_Confirmados)-1)], 1 , mean)
+AUX <- apply(RS_CE_Confirmados[, 1: (ncol(RS_CE_Confirmados)-1)], 1 , median)
 
 RS_CE_Confirmados <- as.data.frame(RS_CE_Confirmados)
 
-RS_CE_Confirmados$Media <- AUX
+RS_CE_Confirmados$Mediana <- AUX
 
 ######     Criando a coluna de Desvio Padrão no data frame     ###############
 
@@ -3006,7 +3010,7 @@ RS_CE_Confirmados$Desvio_Padrao <- AUX
 
 AUX <- RS_CE_Confirmados[, (ncol(RS_CE_Confirmados)-1):ncol(RS_CE_Confirmados)]
 
-AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 RS_CE_Confirmados$Lim_Superior <- AUX$Lim_Superior
 
@@ -3035,7 +3039,7 @@ AUX_GRAF <- RS_CE_Confirmados[, Periodos_Epidêmicos_RS]
 
 ###                   Usando apply para tirar a média por semana epidemiológica
 
-AUX_GRAF$Media <- apply(AUX_GRAF[,-ncol(AUX_GRAF)], 1 , mean)
+AUX_GRAF$Mediana <- apply(AUX_GRAF[,-ncol(AUX_GRAF)], 1 , median)
 
 ###                Usando apply para tirar o desvio padrão por semana epidemiológica
 
@@ -3047,7 +3051,7 @@ AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
 
 AUX_GRAF$Lim_Superior <- NA
 
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 ###                      Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
@@ -3096,7 +3100,7 @@ RS_2025_GRAF_CE_Confirmados <- ggplot(AUX_GRAF, aes(Ordem))  +
   geom_area(aes(y = Lim_Superior), 
             fill = "#F0E68C",
             alpha = 0.9) +
-  geom_area(aes(y = Media), 
+  geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
   geom_line(aes(y = `2025`), 
             stat = "identity", 
@@ -3791,7 +3795,7 @@ AUX_GRAF <- RS_CE_Confirmados[, Periodos_Epidêmicos_RS]
 
 ###             Usando apply para tirar a média por semana epidemiológica
 
-AUX_GRAF$Media <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , mean)
+AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
 
 ###             Usando apply para tirar o desvio padrão por semana epidemiológica
 
@@ -3803,7 +3807,7 @@ AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
 
 AUX_GRAF$Lim_Superior <- NA
 
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
@@ -3837,7 +3841,7 @@ AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3",
 
 RS_2025_SE_Provaveis <- RS_2025_SE_Provaveis[, -54]
 
-AUX_GRAF[, 8] <- t(RS_2025_SE_Provaveis[nrow(RS_2025_SE_Provaveis),-1 ])
+AUX_GRAF[, 8] <- t(RS_2025_SE_Provaveis[nrow(RS_2025_SE_Provaveis), -1 ])
 
 colnames(AUX_GRAF)[8] <- "Provaveis"
 
@@ -3859,7 +3863,7 @@ RS_2025_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
   geom_area(aes(y = Lim_Superior), 
             fill = "#F0E68C",
             alpha = 0.9) +
-  geom_area(aes(y = Media), 
+  geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
   geom_line(aes(y = Provaveis), 
             stat = "identity", 
@@ -3992,7 +3996,7 @@ AUX_HIST_NOT_LIST <- AUX_GRAF %>%
         title = titulo
       ) +
       scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
-         Theme_Hist()
+      Theme_Hist()
   })
 
 RS_2025_GRAF_Histograma_Notificados_01 <- (AUX_HIST_NOT_LIST[[1]] + AUX_HIST_NOT_LIST[[2]]) / 
@@ -4259,59 +4263,457 @@ Theme <- function(){
         legend.position = "bottom")
 }
 
-#######  Gráficos de dados EXTRA  ######
+####################################    Pirâmide Etária RS  ###########################################################
 
-####  Faixa etária  ####
+AUX <- c("< 01", "< 01", "01 - 04", "01 - 04", "05 - 09", "05 - 09", "10 - 14", "10 - 14", "15 - 19", "15 - 19", "20 - 24", "20 - 24", 
+         "25 - 29", "25 - 29", "30 - 34", "30 - 34", "35 - 39", "35 - 39", "40 - 44", "40 - 44", "45 - 49", "45 - 49", "50 - 54", "50 - 54",
+         "55 - 59", "55 - 59", "60 - 64", "60 - 64", "65 - 69", "65 - 69", "70 - 74",  "70 - 74", "75 - 79", "75 - 79", "80 - 84", 
+         "80 - 84", "> 84", "> 84")
 
-AUX_GRAF <- tibble(Rotulos = colnames(RS22_2025_EXTRA[4:9]),
-                   Ordem = as.factor(1:(9-3)),
-                   Notificados = apply(RS22_2025_EXTRA[, 4:9], 2, sum),
-                   Confirmados = apply(RS22_2025_EXTRA_Confirmados[, 4:9], 2, sum) 
-)
+AUX <- as.data.frame(AUX)
 
-AUX_GRAF[,1] <- c("< 1 ano", "1 |-- 5 anos", "5 |-- 12 anos", 
-                  "12 |-- 18 anos", "18 |-- 60 anos", "> 60 anos")
+AUX[, 2] <- c("M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", 
+              "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F")
 
-RS22_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF, 
-                                  aes(x = Ordem)) + 
-  labs(caption = Fonte, 
-       x = NULL,
-       y = "Número de Casos",
-       title = paste0("FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS 
-(2025)")) +
-  geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = -.20)) + 
-  geom_label(aes(y = Notificados,
-                 label = Notificados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = -.20,
-             vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#118395", "Confirmados" = "#3B9511")) +
-  geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = .20)) +
-  geom_label(aes(y = Confirmados,
-                 label = Confirmados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = .20,
-             vjust = 0.1) +
-  scale_x_discrete(breaks = c(1:6),
-                   labels = AUX_GRAF$Rotulos) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme() + 
-  theme(axis.text.x = element_text(angle = 65),
-        plot.title = element_text(face = "bold",
-                                  size = 16,
-                                  colour = "#556B2F"))
+AUX[1, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N <= 4000 & CS_SEXO == "M") %>%
+  count()
+
+AUX[2, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N <= 4000 & CS_SEXO == "F") %>%
+  count()
+
+AUX[3, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4000 & NU_IDADE_N <= 4004 & CS_SEXO == "M") %>%
+  count()
+
+AUX[4, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4000 & NU_IDADE_N <= 4004 & CS_SEXO == "F") %>%
+  count()
+
+AUX[5, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4004 & NU_IDADE_N <= 4009 & CS_SEXO == "M") %>%
+  count()
+
+AUX[6, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4004 & NU_IDADE_N <= 4009 & CS_SEXO == "F") %>%
+  count()
+
+AUX[7, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4009 & NU_IDADE_N <= 4014 & CS_SEXO == "M") %>%
+  count()
+
+AUX[8, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4009 & NU_IDADE_N <= 4014 & CS_SEXO == "F") %>%
+  count()
+
+AUX[9, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4014 & NU_IDADE_N <= 4019 & CS_SEXO == "M") %>%
+  count()
+
+AUX[10, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4014 & NU_IDADE_N <= 4019 & CS_SEXO == "F") %>%
+  count()
+
+AUX[11, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4019 & NU_IDADE_N <= 4024 & CS_SEXO == "M") %>%
+  count()
+
+AUX[12, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4019 & NU_IDADE_N <= 4024 & CS_SEXO == "F") %>%
+  count()
+
+AUX[13, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4024 & NU_IDADE_N <= 4029 & CS_SEXO == "M") %>%
+  count()
+
+AUX[14, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4024 & NU_IDADE_N <= 4029 & CS_SEXO == "F") %>%
+  count()
+
+AUX[15, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4029 & NU_IDADE_N <= 4034 & CS_SEXO == "M") %>%
+  count()
+
+AUX[16, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4029 & NU_IDADE_N <= 4034 & CS_SEXO == "F") %>%
+  count()
+
+AUX[17, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4034 & NU_IDADE_N <= 4039 & CS_SEXO == "M") %>%
+  count()
+
+AUX[18, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4034 & NU_IDADE_N <= 4039 & CS_SEXO == "F") %>%
+  count()
+
+AUX[19, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4039 & NU_IDADE_N <= 4044 & CS_SEXO == "M") %>%
+  count()
+
+AUX[20, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4039 & NU_IDADE_N <= 4044 & CS_SEXO == "F") %>%
+  count()
+
+AUX[21, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4044 & NU_IDADE_N <= 4049 & CS_SEXO == "M") %>%
+  count()
+
+AUX[22, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4044 & NU_IDADE_N <= 4049 & CS_SEXO == "F") %>%
+  count()
+
+AUX[23, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4049 & NU_IDADE_N <= 4054 & CS_SEXO == "M") %>%
+  count()
+
+AUX[24, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4049 & NU_IDADE_N <= 4054 & CS_SEXO == "F") %>%
+  count()
+
+AUX[25, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4054 & NU_IDADE_N <= 4059 & CS_SEXO == "M") %>%
+  count()
+
+AUX[26, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4054 & NU_IDADE_N <= 4059 & CS_SEXO == "F") %>%
+  count()
+
+AUX[27, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4059 & NU_IDADE_N <= 4064 & CS_SEXO == "M") %>%
+  count()
+
+AUX[28, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4059 & NU_IDADE_N <= 4064 & CS_SEXO == "F") %>%
+  count()
+
+AUX[29, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4064 & NU_IDADE_N <= 4069 & CS_SEXO == "M") %>%
+  count()
+
+AUX[30, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4064 & NU_IDADE_N <= 4069 & CS_SEXO == "F") %>%
+  count()
+
+AUX[31, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4069 & NU_IDADE_N <= 4074 & CS_SEXO == "M") %>%
+  count()
+
+AUX[32, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4069 & NU_IDADE_N <= 4074 & CS_SEXO == "F") %>%
+  count()
+
+AUX[33, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4074 & NU_IDADE_N <= 4079 & CS_SEXO == "M") %>%
+  count()
+
+AUX[34, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4074 & NU_IDADE_N <= 4079 & CS_SEXO == "F") %>%
+  count()
+
+AUX[35, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4079 & NU_IDADE_N <= 4084 & CS_SEXO == "M") %>%
+  count()
+
+AUX[36, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4079 & NU_IDADE_N <= 4084 & CS_SEXO == "F") %>%
+  count()
+
+AUX[37, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4084 & CS_SEXO == "M") %>%
+  count()
+
+AUX[38, 3] <- RS22_2025_SINAN[, 15:16] %>%
+  filter(NU_IDADE_N > 4084 & CS_SEXO == "F") %>%
+  count()
+
+colnames(AUX) <- c("Grupo_Idade", "Sexo", "Populacao")
+
+AUX <- AUX %>%
+  mutate(Pop = case_when(Sexo == "M" ~ Populacao * -1,
+                         Sexo == "F" ~ Populacao ))
+
+AUX <- AUX %>% 
+  mutate(Sexo_Legenda = case_when(Sexo == "M" ~ "Masculino",
+                                  Sexo == "F" ~ "Feminino"))
+
+AUX <- AUX %>%
+  mutate(grupo_Idade_FACT = factor(Grupo_Idade, 
+                                   levels = c(
+                                     "< 01",
+                                     "01 - 04",
+                                     "05 - 09",
+                                     "10 - 14",
+                                     "15 - 19",
+                                     "20 - 24",
+                                     "25 - 29",
+                                     "30 - 34",
+                                     "35 - 39",
+                                     "40 - 44",
+                                     "45 - 49",
+                                     "50 - 54",
+                                     "55 - 59",
+                                     "60 - 64",
+                                     "65 - 69",
+                                     "70 - 74",
+                                     "75 - 79",
+                                     "80 - 84",
+                                     "> 84")
+  )
+  )
+
+RS_2025_GRAF_PIRAMIDE_RS <- ggplot(AUX, 
+                                   aes(x = Pop,
+                                       y = grupo_Idade_FACT, 
+                                       fill = Sexo_Legenda)) +
+  geom_col(color = "black",
+           linewidth = 0.8) +
+  labs(title = "Pirâmide Etária 22ª RS (2025)",
+       y = "Faixa Etária",
+       x = "Nº de Notificações",
+       fill = "Sexo",
+       caption = Fonte) +
+  scale_x_continuous(labels = abs) +
+  Theme() +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)    
+  )
+
+####################################    Pirâmide Etária ESTADO  ###########################################################
+
+AUX <- c("< 01", "< 01", "01 - 04", "01 - 04", "05 - 09", "05 - 09", "10 - 14", "10 - 14", "15 - 19", "15 - 19", "20 - 24", "20 - 24", 
+         "25 - 29", "25 - 29", "30 - 34", "30 - 34", "35 - 39", "35 - 39", "40 - 44", "40 - 44", "45 - 49", "45 - 49", "50 - 54", "50 - 54",
+         "55 - 59", "55 - 59", "60 - 64", "60 - 64", "65 - 69", "65 - 69", "70 - 74",  "70 - 74", "75 - 79", "75 - 79", "80 - 84", 
+         "80 - 84", "> 84", "> 84")
+
+AUX <- as.data.frame(AUX)
+
+AUX[, 2] <- c("M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", 
+              "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F", "M", "F")
+
+AUX[1, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N <= 4000 & CS_SEXO == "M") %>%
+  count()
+
+AUX[2, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N <= 4000 & CS_SEXO == "F") %>%
+  count()
+
+AUX[3, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4000 & NU_IDADE_N <= 4004 & CS_SEXO == "M") %>%
+  count()
+
+AUX[4, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4000 & NU_IDADE_N <= 4004 & CS_SEXO == "F") %>%
+  count()
+
+AUX[5, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4004 & NU_IDADE_N <= 4009 & CS_SEXO == "M") %>%
+  count()
+
+AUX[6, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4004 & NU_IDADE_N <= 4009 & CS_SEXO == "F") %>%
+  count()
+
+AUX[7, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4009 & NU_IDADE_N <= 4014 & CS_SEXO == "M") %>%
+  count()
+
+AUX[8, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4009 & NU_IDADE_N <= 4014 & CS_SEXO == "F") %>%
+  count()
+
+AUX[9, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4014 & NU_IDADE_N <= 4019 & CS_SEXO == "M") %>%
+  count()
+
+AUX[10, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4014 & NU_IDADE_N <= 4019 & CS_SEXO == "F") %>%
+  count()
+
+AUX[11, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4019 & NU_IDADE_N <= 4024 & CS_SEXO == "M") %>%
+  count()
+
+AUX[12, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4019 & NU_IDADE_N <= 4024 & CS_SEXO == "F") %>%
+  count()
+
+AUX[13, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4024 & NU_IDADE_N <= 4029 & CS_SEXO == "M") %>%
+  count()
+
+AUX[14, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4024 & NU_IDADE_N <= 4029 & CS_SEXO == "F") %>%
+  count()
+
+AUX[15, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4029 & NU_IDADE_N <= 4034 & CS_SEXO == "M") %>%
+  count()
+
+AUX[16, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4029 & NU_IDADE_N <= 4034 & CS_SEXO == "F") %>%
+  count()
+
+AUX[17, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4034 & NU_IDADE_N <= 4039 & CS_SEXO == "M") %>%
+  count()
+
+AUX[18, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4034 & NU_IDADE_N <= 4039 & CS_SEXO == "F") %>%
+  count()
+
+AUX[19, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4039 & NU_IDADE_N <= 4044 & CS_SEXO == "M") %>%
+  count()
+
+AUX[20, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4039 & NU_IDADE_N <= 4044 & CS_SEXO == "F") %>%
+  count()
+
+AUX[21, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4044 & NU_IDADE_N <= 4049 & CS_SEXO == "M") %>%
+  count()
+
+AUX[22, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4044 & NU_IDADE_N <= 4049 & CS_SEXO == "F") %>%
+  count()
+
+AUX[23, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4049 & NU_IDADE_N <= 4054 & CS_SEXO == "M") %>%
+  count()
+
+AUX[24, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4049 & NU_IDADE_N <= 4054 & CS_SEXO == "F") %>%
+  count()
+
+AUX[25, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4054 & NU_IDADE_N <= 4059 & CS_SEXO == "M") %>%
+  count()
+
+AUX[26, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4054 & NU_IDADE_N <= 4059 & CS_SEXO == "F") %>%
+  count()
+
+AUX[27, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4059 & NU_IDADE_N <= 4064 & CS_SEXO == "M") %>%
+  count()
+
+AUX[28, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4059 & NU_IDADE_N <= 4064 & CS_SEXO == "F") %>%
+  count()
+
+AUX[29, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4064 & NU_IDADE_N <= 4069 & CS_SEXO == "M") %>%
+  count()
+
+AUX[30, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4064 & NU_IDADE_N <= 4069 & CS_SEXO == "F") %>%
+  count()
+
+AUX[31, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4069 & NU_IDADE_N <= 4074 & CS_SEXO == "M") %>%
+  count()
+
+AUX[32, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4069 & NU_IDADE_N <= 4074 & CS_SEXO == "F") %>%
+  count()
+
+AUX[33, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4074 & NU_IDADE_N <= 4079 & CS_SEXO == "M") %>%
+  count()
+
+AUX[34, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4074 & NU_IDADE_N <= 4079 & CS_SEXO == "F") %>%
+  count()
+
+AUX[35, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4079 & NU_IDADE_N <= 4084 & CS_SEXO == "M") %>%
+  count()
+
+AUX[36, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4079 & NU_IDADE_N <= 4084 & CS_SEXO == "F") %>%
+  count()
+
+AUX[37, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4084 & CS_SEXO == "M") %>%
+  count()
+
+AUX[38, 3] <- DENGON2025[, 15:16] %>%
+  filter(NU_IDADE_N > 4084 & CS_SEXO == "F") %>%
+  count()
+
+colnames(AUX) <- c("Grupo_Idade", "Sexo", "Populacao")
+
+AUX <- AUX %>%
+  mutate(Pop = case_when(Sexo == "M" ~ Populacao * -1,
+                         Sexo == "F" ~ Populacao ))
+
+AUX <- AUX %>% 
+  mutate(Sexo_Legenda = case_when(Sexo == "M" ~ "Masculino",
+                                  Sexo == "F" ~ "Feminino"))
+
+AUX <- AUX %>%
+  mutate(grupo_Idade_FACT = factor(Grupo_Idade, 
+                                   levels = c(
+                                     "< 01",
+                                     "01 - 04",
+                                     "05 - 09",
+                                     "10 - 14",
+                                     "15 - 19",
+                                     "20 - 24",
+                                     "25 - 29",
+                                     "30 - 34",
+                                     "35 - 39",
+                                     "40 - 44",
+                                     "45 - 49",
+                                     "50 - 54",
+                                     "55 - 59",
+                                     "60 - 64",
+                                     "65 - 69",
+                                     "70 - 74",
+                                     "75 - 79",
+                                     "80 - 84",
+                                     "> 84")
+  )
+  )
+
+RS_2025_GRAF_PIRAMIDE_Estado <- ggplot(AUX, 
+                                   aes(x = Pop,
+                                       y = grupo_Idade_FACT, 
+                                       fill = Sexo_Legenda)) +
+  geom_col(color = "black",
+           linewidth = 0.8) +
+  labs(title = "Pirâmide Etária 22ª RS (2025)",
+       y = "Faixa Etária",
+       x = "Nº de Notificações",
+       fill = "Sexo",
+       caption = Fonte) +
+  scale_x_continuous(labels = abs) +
+  Theme() +
+  theme(legend.position = "bottom",  
+        legend.title = element_text(face = "bold",
+                                    size = 14), 
+        axis.text.x = element_text(angle = 0),
+        legend.text = element_text(size = 14), 
+        plot.subtitle = element_text(hjust = 0,
+                                     size = 12),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        plot.title = element_text(hjust = 0, 
+                                  face = "bold",
+                                  size = 20)    
+  )
 
 ##########   Escolaridade   #####
 
@@ -4320,49 +4722,56 @@ AUX_GRAF <- tibble(Rotulos = colnames(RS22_2025_EXTRA[14:21]),
                    Notificados = apply(RS22_2025_EXTRA[, 14:21], 2, sum),
                    Confirmados = apply(RS22_2025_EXTRA_Confirmados[, 14:21], 2, sum) )
 
+AUX_GRAF[, 5] <- AUX_GRAF[, 3]/ apply(AUX_GRAF[, 3], 2, sum) *100
+
+AUX_GRAF[, 6] <- AUX_GRAF[, 4]/ apply(AUX_GRAF[, 4], 2, sum) *100
+
+colnames(AUX_GRAF)[5:6] <- c("Not", "Conf")
+
+AUX_GRAF$Not <- as.numeric(format(round(AUX_GRAF$Not , 2))
+)
+
+AUX_GRAF$Conf <- as.numeric(format(round(AUX_GRAF$Conf , 2))
+)
+
+AUX_GRAF <- AUX_GRAF[, c(1, 5:6)]
+
 AUX_GRAF[,1] <- c("Analfabeto", "Fundamental 
 Incompleto", "Fundamental", "Médio 
 Incompleto", 
                   "Médio", "Superior 
 Incompleto", "Superior", "Ignorado")
 
+colnames(AUX_GRAF)[2:3] <- c("1. Notificado", "2. Confirmado")
+
+AUX_GRAF <- pivot_longer(AUX_GRAF, 
+                         2:3, 
+                         values_to = "Perc", 
+                         names_to = "Status")
+
 RS22_GRAF_Escolaridade <- ggplot (AUX_GRAF, 
-                                  aes(x = Ordem)) + 
+                                  aes(x = Rotulos,
+                                      y = Perc)) + 
   labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = paste0("ESCOLARIADE NOTIFICADOS/CONFIRMADOS ", RS, "ªRS 
+       y = "Percentual de Casos",
+       title = paste0("Distribuição das Notificações por Escolaridade ", RS, "ªRS 
 (2025)")) +
-  geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = -.20)) + 
-  geom_label(aes(y = Notificados,
-                 label = Notificados),
-             size = 3, 
+  geom_bar(aes(fill = Status),
+           stat = "identity",
+           position = "dodge",
+           color = "black",
+           linewidth = 0.8) + 
+  geom_label(aes(label = Perc,
+                 y = Perc),
+             position = position_dodge2(width = 0.9),
+             size = 2.3, 
              alpha = 0.5,
-             nudge_x = -.20,
              vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#C4BF7A", "Confirmados" = "#C4A37A")) +
-  geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = .20)) +
-  geom_label(aes(y = Confirmados,
-                 label = Confirmados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = .20,
-             vjust = 0.1) +
-  scale_x_discrete(breaks = c(1:(21-13)),
-                   labels = AUX_GRAF$Rotulos) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  scale_fill_manual(name = "", values = c("1. Notificado" = "#C4BF7A", 
+                                          "2. Confirmado" = "#C4A37A")) +
   Theme() +
-  theme(axis.text.x = element_text(angle = 65),
+  theme(axis.text.x = element_text(angle = 25),
         plot.title = element_text(face = "bold",
                                   size = 16,
                                   colour = "#556B2F"))
@@ -4376,93 +4785,50 @@ AUX_GRAF <- tibble(Rotulos = colnames(RS22_2025_EXTRA[10:11]),
 
 AUX_GRAF[,1] <- c("Urbana", "Rural")
 
+AUX_GRAF[, 5] <- AUX_GRAF[, 3]/ apply(AUX_GRAF[, 3], 2, sum) *100
+
+AUX_GRAF[, 6] <- AUX_GRAF[, 4]/ apply(AUX_GRAF[, 4], 2, sum) *100
+
+colnames(AUX_GRAF)[5:6] <- c("Not", "Conf")
+
+AUX_GRAF$Not <- as.numeric(format(round(AUX_GRAF$Not , 2))
+)
+
+AUX_GRAF$Conf <- as.numeric(format(round(AUX_GRAF$Conf , 2))
+)
+
+AUX_GRAF <- AUX_GRAF[, c(1, 5:6)]
+
+colnames(AUX_GRAF)[2:3] <- c("1. Notificado", "2. Confirmado")
+
+AUX_GRAF <- pivot_longer(AUX_GRAF, 
+                         2:3, 
+                         values_to = "Perc", 
+                         names_to = "Status")
+
 RS22_GRAF_Zona <- ggplot (AUX_GRAF, 
-                          aes(x = Ordem)) + 
+                                  aes(x = Rotulos,
+                                      y = Perc)) + 
   labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
-       title = paste0("ZONA OCORRÊNCIA NOTIFICADOS/CONFIRMADOS ", RS, "ªRS 
-(2024/25)")) +
-  geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = -.20)) + 
-  geom_label(aes(y = Notificados,
-                 label = Notificados),
-             size = 3, 
+       y = "Percentual de Casos",
+       title = paste0("Distribuição das Notificações por Escolaridade ", RS, "ªRS 
+(2025)")) +
+  geom_bar(aes(fill = Status),
+           stat = "identity",
+           position = "dodge",
+           color = "black",
+           linewidth = 0.8) + 
+  geom_label(aes(label = Perc,
+                 y = Perc),
+             position = position_dodge2(width = 0.9),
+             size = 4, 
              alpha = 0.5,
-             nudge_x = -.20,
              vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#614352", "Confirmados" = "#436155")) +
-  geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = .20)) +
-  geom_label(aes(y = Confirmados,
-                 label = Confirmados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = .20,
-             vjust = 0.1) +
-  scale_x_discrete(breaks = c(1:2),
-                   labels = AUX_GRAF$Rotulos) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  scale_fill_manual(name = "", values = c("1. Notificado" = "#614352",
+                                          "2. Confirmado" = "#436155")) +
   Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.title = element_text(face = "bold",
-                                  size = 16,
-                                  colour = "#556B2F"))
-
-######  SEXO  ####
-
-AUX_GRAF <- tibble(Rotulos = colnames(RS22_2025_EXTRA[12:13]),
-                   Ordem = as.factor(1:2),
-                   Notificados = apply(RS22_2025_EXTRA[, 12:13], 2, sum),
-                   Confirmados = apply(RS22_2025_EXTRA_Confirmados[, 12:13], 2, sum) )
-
-AUX_GRAF[,1] <- c("Feminino", "Masculino")
-
-RS22_GRAF_Sexo <- ggplot (AUX_GRAF, 
-                          aes(x = Ordem)) + 
-  labs(caption = Fonte, 
-       x = NULL,
-       y = "Número de Casos",
-       title = paste0("SEXO NOTIFICADOS/CONFIRMADOS ", RS, "ªRS (2025)")) +
-  geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = -.20)) + 
-  geom_label(aes(y = Notificados,
-                 label = Notificados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = -.20,
-             vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#541E98", "Confirmados" = "#98941E")) +
-  geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = .20)) +
-  geom_label(aes(y = Confirmados,
-                 label = Confirmados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = .20,
-             vjust = 0.1) +
-  theme(axis.text.x = element_text(angle = 0)) +
-  scale_x_discrete(breaks = c(1:2),
-                   labels = AUX_GRAF$Rotulos) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme() +
-  theme(axis.text.x = element_text(angle = 0),
+  theme(axis.text.x = element_text(angle = 25),
         plot.title = element_text(face = "bold",
                                   size = 16,
                                   colour = "#556B2F"))
@@ -4587,7 +4953,7 @@ RS22_GRAF_Serie_Historica_Sorotipo <- ggplot (RS_Serie_Historica,
 #########################################
 
 RS22_GRAF_2025_Encerramento <- ggplot (RS22_2025_GERAL, 
-                                        aes(x = Município)) + 
+                                       aes(x = Município)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4634,48 +5000,95 @@ RS22_GRAF_2025_Encerramento <- ggplot (RS22_2025_GERAL,
 AUX_GRAF <- data.frame(Sintomas = colnames(RS22_2025_SINAIS_Notificados)[-c(1, 2, 3)],
                        Notificados = NA,
                        Confirmados = NA)
-AUX_GRAF[1,2] <- sum(RS22_2025_SINAIS_Notificados[, 4])
-AUX_GRAF[2,2] <- sum(RS22_2025_SINAIS_Notificados[, 5])
-AUX_GRAF[3,2] <- sum(RS22_2025_SINAIS_Notificados[, 6])
-AUX_GRAF[4,2] <- sum(RS22_2025_SINAIS_Notificados[, 7])
-AUX_GRAF[5,2] <- sum(RS22_2025_SINAIS_Notificados[, 8])
-AUX_GRAF[6,2] <- sum(RS22_2025_SINAIS_Notificados[, 9])
-AUX_GRAF[7,2] <- sum(RS22_2025_SINAIS_Notificados[, 10])
-AUX_GRAF[8,2] <- sum(RS22_2025_SINAIS_Notificados[, 11])
-AUX_GRAF[9,2] <- sum(RS22_2025_SINAIS_Notificados[, 12])
-AUX_GRAF[10,2] <- sum(RS22_2025_SINAIS_Notificados[, 13])
-AUX_GRAF[11,2] <- sum(RS22_2025_SINAIS_Notificados[, 14])
-AUX_GRAF[12,2] <- sum(RS22_2025_SINAIS_Notificados[, 15])
-AUX_GRAF[13,2] <- sum(RS22_2025_SINAIS_Notificados[, 16])
-AUX_GRAF[14,2] <- sum(RS22_2025_SINAIS_Notificados[, 17])
 
-AUX_GRAF[1,3] <- sum(RS22_2025_SINAIS_Confirmados[, 4])
-AUX_GRAF[2,3] <- sum(RS22_2025_SINAIS_Confirmados[, 5])
-AUX_GRAF[3,3] <- sum(RS22_2025_SINAIS_Confirmados[, 6])
-AUX_GRAF[4,3] <- sum(RS22_2025_SINAIS_Confirmados[, 7])
-AUX_GRAF[5,3] <- sum(RS22_2025_SINAIS_Confirmados[, 8])
-AUX_GRAF[6,3] <- sum(RS22_2025_SINAIS_Confirmados[, 9])
-AUX_GRAF[7,3] <- sum(RS22_2025_SINAIS_Confirmados[, 10])
-AUX_GRAF[8,3] <- sum(RS22_2025_SINAIS_Confirmados[, 11])
-AUX_GRAF[9,3] <- sum(RS22_2025_SINAIS_Confirmados[, 12])
-AUX_GRAF[10,3] <- sum(RS22_2025_SINAIS_Confirmados[, 13])
-AUX_GRAF[11,3] <- sum(RS22_2025_SINAIS_Confirmados[, 14])
-AUX_GRAF[12,3] <- sum(RS22_2025_SINAIS_Confirmados[, 15])
-AUX_GRAF[13,3] <- sum(RS22_2025_SINAIS_Confirmados[, 16])
-AUX_GRAF[14,3] <- sum(RS22_2025_SINAIS_Confirmados[, 17])
+AUX_GRAF[1,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 4])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[2,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 5])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[3,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 6])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[4,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 7])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[5,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 8])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[6,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 9])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[7,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 10])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[8,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 11])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[9,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 12])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[10,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 13])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[11,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 14])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[12,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 15])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[13,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 16])/(sum(RS22_2025_GERAL[, 5]))*100)))
+AUX_GRAF[14,2] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Notificados[, 17])/(sum(RS22_2025_GERAL[, 5]))*100)))
 
-AUX_GRAF[,1] <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", "Artrite", 
-                  "Artralgia Intensa", "Petéquias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital")
+AUX_GRAF[1,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 4])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                          sum(RS22_2025_GERAL[, 8])))*100)))
+AUX_GRAF[2,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 5])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[3,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 6])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[4,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 7])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[5,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 8])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[6,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 9])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[7,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 10])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[8,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 11])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[9,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 12])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                    sum(RS22_2025_GERAL[, 7]) +
+                                                                                    sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[10,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 13])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                     sum(RS22_2025_GERAL[, 7]) +
+                                                                                     sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[11,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 14])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                     sum(RS22_2025_GERAL[, 7]) +
+                                                                                     sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[12,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 15])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                     sum(RS22_2025_GERAL[, 7]) +
+                                                                                     sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[13,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 16])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                     sum(RS22_2025_GERAL[, 7]) +
+                                                                                     sum(RS22_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[14,3] <- as.numeric(format(round(sum(RS22_2025_SINAIS_Confirmados[, 17])/((sum(RS22_2025_GERAL[, 6]) + 
+                                                                                     sum(RS22_2025_GERAL[, 7]) +
+                                                                                     sum(RS22_2025_GERAL[, 8])))*100)))
+
+
+AUX_GRAF[,1] <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas 
+Costas", "Conjuntivite", "Artrite", 
+                  "Artralgia 
+Intensa", "Petéquias", "Leucopenia", "Prova do 
+Laço Positiva", "Dor 
+Retroorbital")
 
 RS22_GRAF_2025_SINAIS <- ggplot (AUX_GRAF, 
-                                  aes(x = Sintomas)) + 
+                                 aes(x = Sintomas)) + 
   labs(caption = Fonte, 
        x = NULL,
-       y = "Número de Casos",
+       y = "Percentual de Casos",
        title = paste0("SINAIS/SINTOMAS NOS CASOS NOTIFICADOS E CONFIRMADOS ", RS, "ªRS - 2025"),
        subtitle = "Sinais Clínicos/Sintomas em Notificações de DENGUE Assinalados no Campo 33 da Ficha do SINAN") +
   geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
+    aes( y = Notificados, 
+         fill = "Notificados"),
     stat = "identity",
     color = "black",
     width = .4,
@@ -4704,7 +5117,7 @@ RS22_GRAF_2025_SINAIS <- ggplot (AUX_GRAF,
              vjust = 0.3) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
   Theme() +
-  theme(axis.text.x = element_text(angle = 75))
+  theme(axis.text.x = element_text(angle = 65))
 
 ###########################################################################
 #####      Casos Notificados/Confirmados por município - Período sazonal atual     ####
@@ -4719,7 +5132,7 @@ AUX_GRAF <- data.frame (Municípios = RS22_2025_GERAL[, 2],
 )
 
 RS22_GRAF_2025_Not_Conf <- ggplot (AUX_GRAF, 
-                                    aes(x = Municípios)) + 
+                                   aes(x = Municípios)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4760,8 +5173,8 @@ RS22_GRAF_2025_Not_Conf <- ggplot (AUX_GRAF,
 ###########################################################################
 
 RS22_GRAF_2025_Autoctones <- ggplot (RS22_2025_GERAL, 
-                                      aes(x = Município, 
-                                          y = Autoctones)) + 
+                                     aes(x = Município, 
+                                         y = Autoctones)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4782,8 +5195,8 @@ RS22_GRAF_2025_Autoctones <- ggplot (RS22_2025_GERAL,
 ###########################################################################
 
 RS22_GRAF_2025_Investigacao <- ggplot (RS22_2025_GERAL, 
-                                        aes(x = Município, 
-                                            y = Em_Investigacao)) + 
+                                       aes(x = Município, 
+                                           y = Em_Investigacao)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4804,8 +5217,8 @@ RS22_GRAF_2025_Investigacao <- ggplot (RS22_2025_GERAL,
 ###########################################################################
 
 RS22_GRAF_2025_Incidencia <- ggplot (RS22_2025_GERAL, 
-                                      aes(x = Município, 
-                                          y = Incidencia)) + 
+                                     aes(x = Município, 
+                                         y = Incidencia)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4827,8 +5240,8 @@ RS22_GRAF_2025_Incidencia <- ggplot (RS22_2025_GERAL,
 ###########################################################################
 
 RS22_GRAF_2025_Descartados <- ggplot (RS22_2025_GERAL, 
-                                       aes(x = Município, 
-                                           y = Descartados)) + 
+                                      aes(x = Município, 
+                                          y = Descartados)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4848,8 +5261,8 @@ RS22_GRAF_2025_Descartados <- ggplot (RS22_2025_GERAL,
 ###########################################################################
 
 RS22_GRAF_2025_Hospitalizados <- ggplot (RS22_2025_GERAL, 
-                                          aes(x = Município, 
-                                              y = Hospitalizacao)) + 
+                                         aes(x = Município, 
+                                             y = Hospitalizacao)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Casos",
@@ -4874,8 +5287,8 @@ AUX_GRAF <- data.frame (Municípios = RS22_2025_GERAL[, 2],
 )
 
 RS22_GRAF_2025_Inconclusivos <- ggplot (AUX_GRAF, 
-                                         aes(x = Municípios, 
-                                             y = Inconclusivos)) + 
+                                        aes(x = Municípios, 
+                                            y = Inconclusivos)) + 
   labs(caption = Fonte, 
        y = NULL,
        title = "CASOS INCONCLUSIVOS/MUNICÍPIO - 2025",
@@ -4916,11 +5329,11 @@ RS_CE_Notificados_SEDE <- AUX
 
 ######Criando a coluna de média no data.frame#####################
 
-AUX <- apply(RS_CE_Notificados_SEDE[,1: (ncol(RS_CE_Notificados_SEDE)-1)], 1 , mean)
+AUX <- apply(RS_CE_Notificados_SEDE[,1: (ncol(RS_CE_Notificados_SEDE)-1)], 1 , median)
 
 RS_CE_Notificados_SEDE <- as.data.frame(RS_CE_Notificados_SEDE)
 
-RS_CE_Notificados_SEDE$Media <- AUX
+RS_CE_Notificados_SEDE$Mediana <- AUX
 
 ######Criando a coluna de Desvio Padrão no data frame###############
 
@@ -4932,7 +5345,7 @@ RS_CE_Notificados_SEDE$Desvio_Padrao <- AUX
 
 AUX <- RS_CE_Notificados_SEDE[, (ncol(RS_CE_Notificados_SEDE)-1):ncol(RS_CE_Notificados_SEDE)]
 
-AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 RS_CE_Notificados_SEDE$Lim_Superior <- AUX$Lim_Superior
 
@@ -4962,7 +5375,7 @@ AUX_GRAF <- RS_CE_Notificados_SEDE[, Periodos_Epidêmicos_SEDE]
 
 ###Usando apply para tirar a média por semana epidemiológica
 
-AUX_GRAF$Media <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , mean)
+AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
 
 ###Usando apply para tirar o desvio padrão por semana epidemiológica
 
@@ -4974,7 +5387,7 @@ AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
 
 AUX_GRAF$Lim_Superior <- NA
 
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
@@ -4989,23 +5402,23 @@ AUX_GRAF$Sem_Epidemiológica <- RS_CE_Notificados_SEDE$Semana_Epidemiológica
 AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
-                                "2025/4",  "2025/5",  "2025/6",  
-                                "2025/7",  "2025/8",  "2025/9",  
-                                "2025/10",  "2025/11",  "2025/12",  
-                                "2025/13",  "2025/14",  "2025/15",  
-                                "2025/16",  "2025/17",  "2025/18",  
-                                "2025/19",  "2025/20",  "2025/21",  
-                                "2025/22",  "2025/23",  
-                                "2025/24",  "2025/25",  "2025/26",  
-                                "2025/27",  "2025/28",  "2025/29",  
-                                "2025/30",  "2025/31",  "2025/32", 
-                                "2025/33",  "2025/34",  "2025/35",  
-                                "2025/36",  "2025/37",  "2025/38",  
-                                "2025/39",  "2025/40",  "2025/41",  
-                                "2025/42",  "2025/43",  "2025/44",  
-                                "2025/45",  "2025/46",  "2025/47",  
-                                "2025/48",  "2025/49",  "2025/50",  
-                                "2025/51",  "2025/52")
+                                  "2025/4",  "2025/5",  "2025/6",  
+                                  "2025/7",  "2025/8",  "2025/9",  
+                                  "2025/10",  "2025/11",  "2025/12",  
+                                  "2025/13",  "2025/14",  "2025/15",  
+                                  "2025/16",  "2025/17",  "2025/18",  
+                                  "2025/19",  "2025/20",  "2025/21",  
+                                  "2025/22",  "2025/23",  
+                                  "2025/24",  "2025/25",  "2025/26",  
+                                  "2025/27",  "2025/28",  "2025/29",  
+                                  "2025/30",  "2025/31",  "2025/32", 
+                                  "2025/33",  "2025/34",  "2025/35",  
+                                  "2025/36",  "2025/37",  "2025/38",  
+                                  "2025/39",  "2025/40",  "2025/41",  
+                                  "2025/42",  "2025/43",  "2025/44",  
+                                  "2025/45",  "2025/46",  "2025/47",  
+                                  "2025/48",  "2025/49",  "2025/50",  
+                                  "2025/51",  "2025/52")
 )
 
 RS_2025_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
@@ -5024,7 +5437,7 @@ RS_2025_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
                               colour = "#556B2F")
   ) +
   geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes( y = Media), fill = "#556B2F") +
+  geom_area(aes( y = Mediana), fill = "#556B2F") +
   geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
@@ -5052,11 +5465,11 @@ RS_CE_Confirmados_SEDE <- AUX
 
 ######Criando a coluna de média no data.frame#####################
 
-AUX <- apply(RS_CE_Confirmados_SEDE[, 1: (ncol(RS_CE_Confirmados_SEDE)-1)], 1 , mean)
+AUX <- apply(RS_CE_Confirmados_SEDE[, 1: (ncol(RS_CE_Confirmados_SEDE)-1)], 1 , median)
 
 RS_CE_Confirmados_SEDE <- as.data.frame(RS_CE_Confirmados_SEDE)
 
-RS_CE_Confirmados_SEDE$Media <- AUX
+RS_CE_Confirmados_SEDE$Mediana <- AUX
 
 ######Criando a coluna de Desvio Padrão no data frame###############
 
@@ -5068,7 +5481,7 @@ RS_CE_Confirmados_SEDE$Desvio_Padrao <- AUX
 
 AUX <- RS_CE_Confirmados_SEDE[, (ncol(RS_CE_Confirmados_SEDE)-1):ncol(RS_CE_Confirmados_SEDE)]
 
-AUX <- AUX %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 RS_CE_Confirmados_SEDE$Lim_Superior <- AUX$Lim_Superior
 
@@ -5098,7 +5511,7 @@ AUX_GRAF <- RS_CE_Confirmados_SEDE[, Periodos_Epidêmicos_SEDE]
 
 ###Usando apply para tirar a média por semana epidemiológica
 
-AUX_GRAF$Media <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , mean)
+AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
 
 ###Usando apply para tirar o desvio padrão por semana epidemiológica
 
@@ -5110,7 +5523,7 @@ AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
 
 AUX_GRAF$Lim_Superior <- NA
 
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
@@ -5160,7 +5573,7 @@ RS_2025_GRAF_CE_Confirmados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
                               colour = "#556B2F")
   ) +
   geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(y = Media), fill = "#556B2F") +
+  geom_area(aes(y = Mediana), fill = "#556B2F") +
   geom_line(aes(y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
@@ -5187,7 +5600,7 @@ AUX_GRAF <- RS_CE_Confirmados_SEDE[, Periodos_Epidêmicos_SEDE]
 
 ###Usando apply para tirar a média por semana epidemiológica
 
-AUX_GRAF$Media <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , mean)
+AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
 
 ###Usando apply para tirar o desvio padrão por semana epidemiológica
 
@@ -5199,7 +5612,7 @@ AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
 
 AUX_GRAF$Lim_Superior <- NA
 
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Media + 1.96 * Desvio_Padrao))
+AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
 
 ###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
 
@@ -5255,7 +5668,7 @@ RS_2025_GRAF_CE_Provaveis_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   geom_area(aes(y = Lim_Superior), 
             fill = "#F0E68C",
             alpha = 0.9) +
-  geom_area(aes(y = Media), 
+  geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
   geom_line(aes(y = Provaveis), 
             stat = "identity", 
@@ -6802,7 +7215,7 @@ AUX_HIST_CHIK_NOT_LIST <- AUX_GRAF %>%
                       y = value)
     ) + 
       geom_col(color = "black", 
-               fill = "#8FBC8F") + 
+               fill = "#00FF00") + 
       geom_label(aes(label = value), 
                  alpha = 0.5, 
                  vjust = 0.1) +
@@ -7037,7 +7450,7 @@ AUX_HIST_CHIK_PROV_LIST <- AUX_GRAF %>%
                       y = value)
     ) + 
       geom_col(color = "black", 
-               fill = "#F0E68C") + 
+               fill = "#DAA520") + 
       geom_label(aes(label = value), 
                  alpha = 0.5, 
                  vjust = 0.1) +
@@ -7070,8 +7483,12 @@ RS_2025_GRAF_CHIK_Histograma_Provaveis_02 <- (AUX_HIST_CHIK_PROV_LIST[[9]] + AUX
 ###########################################################################################################################################
 
 RS22_2025_LACEN_PESQ_ARBO <- read.csv("/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_PESQUISA_ARBOVIRUS_2025.csv",
-                                       header = TRUE,
-                                       sep = ",")
+                                      header = TRUE,
+                                      sep = ",")
+
+# RS22_2025_LACEN_ZDC <- read.csv("/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_PESQUISA_ARBOVIRUS_ZDC_LACEN_2025.csv",
+#                                 header = TRUE,
+#                                 sep = ",")
 
 #######################    Manipulando dados para criação da coluna SE   #########################################################
 
@@ -7129,8 +7546,8 @@ RS22_2025_LACEN_PESQ_ARBO[, 24] <- as.factor(RS22_2025_LACEN_PESQ_ARBO[, 24])
 ###########################################################################################################################################
 
 RS22_2025_LACEN_SOROLOGIA <- read.csv("/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_SOROLOGIA_2025.csv",
-                                       header = TRUE,
-                                       sep = ",")
+                                      header = TRUE,
+                                      sep = ",")
 
 #######################    Manipulando dados para criação da coluna SE   #########################################################
 
@@ -7186,8 +7603,8 @@ rm(AUX)
 ###########################################################################################################################################
 
 RS22_2025_LACEN_SOROLOGIA_CHIK <- read.csv("/home/gustavo/Área de trabalho/Análise_de_Dados/Base_de_Dados/LACEN/Arboviroses/LACEN_SOROLOGIA_CHIK_2025.csv",
-                                      header = TRUE,
-                                      sep = ",")
+                                           header = TRUE,
+                                           sep = ",")
 
 #######################    Manipulando dados para criação da coluna SE   #########################################################
 
@@ -7243,8 +7660,8 @@ rm(AUX)
 #####################  Realizando a contagem de exames por SE PESQ ARBO GERAL  #############################################################
 
 RS22_2025_SE_PESQ_ARB <- matrix(data = NA, 
-                                 nrow = nrow, 
-                                 ncol = 54)
+                                nrow = nrow, 
+                                ncol = 54)
 
 RS22_2025_SE_PESQ_ARB <- as.data.frame(RS22_2025_SE_PESQ_ARB)
 
@@ -7257,41 +7674,327 @@ colnames (RS22_2025_SE_PESQ_ARB)[2:54] <- c(1:53)
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 2] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                filter(Municipio_Residencia == i,
-                                                                                       SE == 1,
-                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automaçăo em Processamento" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem" |
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                count()
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 1,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem" |
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                              count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 3] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                filter(Municipio_Residencia == i,
-                                                                                       SE == 2,
-                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automaçăo em Processamento" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem"|
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                count()
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 2,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem"|
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                              count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 4] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 3,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem"|
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                              count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i),5] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                             filter(Municipio_Residencia == i,
+                                                                                    SE == 4,
+                                                                                    Status_Exame == "Resultado Liberado" |
+                                                                                      Status_Exame == "Automaçăo em Processamento" |
+                                                                                      Status_Exame == "Disponivel para Encaminhar" |
+                                                                                      Status_Exame == "Aguardando Triagem"|
+                                                                                      Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                             count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 5,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem"|
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                              count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 6,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem"|
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                              count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 7,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem"|
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                              count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                              filter(Municipio_Residencia == i,
+                                                                                     SE == 8,
+                                                                                     Status_Exame == "Resultado Liberado" |
+                                                                                       Status_Exame == "Automaçăo em Processamento" |
+                                                                                       Status_Exame == "Disponivel para Encaminhar" |
+                                                                                       Status_Exame == "Aguardando Triagem"|
+                                                                                       Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                              count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 9,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 10,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 11,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 12,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 13,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 14,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 15,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 16,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 17,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%       
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 18,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%     
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 19,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
                                                                                 filter(Municipio_Residencia == i,
-                                                                                       SE == 3,
+                                                                                       SE == 20,
                                                                                        Status_Exame == "Resultado Liberado" |
                                                                                          Status_Exame == "Automaçăo em Processamento" |
                                                                                          Status_Exame == "Disponivel para Encaminhar" |
                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                count()
+                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                                count() 
   )
   
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i),5] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
                                                                                filter(Municipio_Residencia == i,
-                                                                                      SE == 4,
+                                                                                      SE == 21,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 22,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 23,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 24,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 25,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 26,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 27,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 28,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 29,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 30,
                                                                                       Status_Exame == "Resultado Liberado" |
                                                                                         Status_Exame == "Automaçăo em Processamento" |
                                                                                         Status_Exame == "Disponivel para Encaminhar" |
@@ -7300,543 +8003,257 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                count()
   )
   
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                filter(Municipio_Residencia == i,
-                                                                                       SE == 5,
-                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automaçăo em Processamento" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem"|
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                filter(Municipio_Residencia == i,
-                                                                                       SE == 6,
-                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automaçăo em Processamento" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem"|
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                filter(Municipio_Residencia == i,
-                                                                                       SE == 7,
-                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automaçăo em Processamento" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem"|
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                filter(Municipio_Residencia == i,
-                                                                                       SE == 8,
-                                                                                       Status_Exame == "Resultado Liberado" |
-                                                                                         Status_Exame == "Automaçăo em Processamento" |
-                                                                                         Status_Exame == "Disponivel para Encaminhar" |
-                                                                                         Status_Exame == "Aguardando Triagem"|
-                                                                                         Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 9,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 10,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 11,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 12,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 13,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 14,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 15,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 16,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 17,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%       
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 18,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%     
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 19,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 20,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Disponivel para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem"|
-                                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                  count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 21,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 22,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 23,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 24,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 25,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 26,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 27,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 28,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 29,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 30,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count()
-  )
-  
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 32] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 31,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 31,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 33] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 32,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 32,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 34] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 33,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 33,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 35] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 34,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 34,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 36] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 35,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 35,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 37] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 36,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 36,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 38] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 37,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 37,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 39] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 38,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 38,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 40] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 39,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 39,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 41] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 40,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 40,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 42] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 41,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 41,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 43] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 42,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 42,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 44] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 43,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 43,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 45] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 44,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 44,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 46] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 45,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count()
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 45,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 47] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 46,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 46,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 48] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 47,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 47,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 49] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 48,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 48,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 50] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 49,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count()
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 49,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                               count()
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 51] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 50,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 50,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 52] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 51,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 51,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 53] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 52,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 52,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
   
   RS22_2025_SE_PESQ_ARB[which(RS22_2025_SE_PESQ_ARB == i), 54] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                 filter(Municipio_Residencia == i,
-                                                                                        SE == 53,
-                                                                                        Status_Exame == "Resultado Liberado" |
-                                                                                          Status_Exame == "Automaçăo em Processamento" |
-                                                                                          Status_Exame == "Disponivel para Encaminhar" |
-                                                                                          Status_Exame == "Aguardando Triagem"|
-                                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
-                                                                                 count() 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 53,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Disponivel para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem"|
+                                                                                        Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>%
+                                                                               count() 
   )
 }
 
@@ -7848,8 +8265,8 @@ RS22_2025_SE_PESQ_ARB[nrow(RS22_2025_SE_PESQ_ARB),1] <- "Total"
 #####################  Realizando a contagem de exames por SE PESQ ARBO  DETECTÁVEIS GERAL  #############################################################
 
 RS22_2025_SE_PESQ_ARB_DETECTAVEL <- matrix(data = NA, 
-                                            nrow = nrow, 
-                                            ncol = 54)
+                                           nrow = nrow, 
+                                           ncol = 54)
 
 RS22_2025_SE_PESQ_ARB_DETECTAVEL <- as.data.frame(RS22_2025_SE_PESQ_ARB_DETECTAVEL)
 
@@ -7862,374 +8279,374 @@ colnames (RS22_2025_SE_PESQ_ARB_DETECTAVEL)[2:54] <- c(1:53)
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == 22)), 3]){
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 2] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 1,
-                                                                                                             Resultado == "Detectável ") %>%
-                                                                                                      count()
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 1,
+                                                                                                           Resultado == "Detectável ") %>%
+                                                                                                    count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 3] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 2,
-                                                                                                             Resultado == "Detectável ") %>% 
-                                                                                                      count()
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 2,
+                                                                                                           Resultado == "Detectável ") %>% 
+                                                                                                    count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 4] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 3,
-                                                                                                             Resultado == "Detectável ") %>% 
-                                                                                                      count()
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 3,
+                                                                                                           Resultado == "Detectável ") %>% 
+                                                                                                    count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i),5] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 4,
+                                                                                                          Resultado == "Detectável ") %>% 
+                                                                                                   count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 5,
+                                                                                                           Resultado == "Detectável ") %>% 
+                                                                                                    count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 6,
+                                                                                                           Resultado == "Detectável ") %>%
+                                                                                                    count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 7,
+                                                                                                           Resultado == "Detectável ") %>% 
+                                                                                                    count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 8,
+                                                                                                           Resultado == "Detectável ") %>% 
+                                                                                                    count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                            SE == 4,
+                                                                                                            SE == 9,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 10,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 11,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 12,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 13,
+                                                                                                            Resultado == "Detectável ") %>% 
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 14,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 15,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 16,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 17,
+                                                                                                            Resultado == "Detectável ") %>%       
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 18,
+                                                                                                            Resultado == "Detectável ") %>%     
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 19,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                      filter(Municipio_Residencia == i,
+                                                                                                             SE == 20,
+                                                                                                             Resultado == "Detectável ") %>%
+                                                                                                      count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 21,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 22,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 23,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 24,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 25,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 26,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 27,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 28,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 29,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
+  )
+  
+  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 30,
                                                                                                             Resultado == "Detectável ") %>% 
                                                                                                      count()
   )
   
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 5,
-                                                                                                             Resultado == "Detectável ") %>% 
-                                                                                                      count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 6,
-                                                                                                             Resultado == "Detectável ") %>%
-                                                                                                      count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 7,
-                                                                                                             Resultado == "Detectável ") %>% 
-                                                                                                      count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 8,
-                                                                                                             Resultado == "Detectável ") %>% 
-                                                                                                      count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 9,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 10,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 11,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 12,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 13,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 14,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 15,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 16,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 17,
-                                                                                                              Resultado == "Detectável ") %>%       
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 18,
-                                                                                                              Resultado == "Detectável ") %>%     
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 19,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                        filter(Municipio_Residencia == i,
-                                                                                                               SE == 20,
-                                                                                                               Resultado == "Detectável ") %>%
-                                                                                                        count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 21,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 22,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 23,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 24,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 25,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 26,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 27,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 28,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 29,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
-  )
-  
-  RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 30,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count()
-  )
-  
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 32] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 31,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 31,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 33] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 32,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 32,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 34] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 33,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 33,
+                                                                                                            Resultado == "Detectável ") %>% 
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 35] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 34,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 34,
+                                                                                                            Resultado == "Detectável ") %>% 
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 36] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 35,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 35,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 37] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 36,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 36,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 38] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 37,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 37,
+                                                                                                            Resultado == "Detectável ") %>% 
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 39] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 38,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 38,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 40] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 39,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 39,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 41] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 40,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 40,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 42] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 41,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 41,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 43] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 42,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 42,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 44] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 43,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 43,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 45] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 44,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 44,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 46] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 45,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count()
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 45,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 47] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 46,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 46,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 48] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 47,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 47,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 49] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 48,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 48,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 50] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 49,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count()
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 49,
+                                                                                                            Resultado == "Detectável ") %>% 
+                                                                                                     count()
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 51] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 50,
-                                                                                                              Resultado == "Detectável ") %>% 
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 50,
+                                                                                                            Resultado == "Detectável ") %>% 
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 52] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 51,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 51,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 53] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 52,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 52,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
   
   RS22_2025_SE_PESQ_ARB_DETECTAVEL[which(RS22_2025_SE_PESQ_ARB_DETECTAVEL == i), 54] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                                       filter(Municipio_Residencia == i,
-                                                                                                              SE == 53,
-                                                                                                              Resultado == "Detectável ") %>%
-                                                                                                       count() 
+                                                                                                     filter(Municipio_Residencia == i,
+                                                                                                            SE == 53,
+                                                                                                            Resultado == "Detectável ") %>%
+                                                                                                     count() 
   )
 }
 
@@ -8241,8 +8658,8 @@ RS22_2025_SE_PESQ_ARB_DETECTAVEL[nrow(RS22_2025_SE_PESQ_ARB_DETECTAVEL),1] <- "T
 #####################  Realizando a contagem de exames por SE UNIDADE SENTINELA #############################################################
 
 RS22_2025_SE_US <- matrix(data = NA, 
-                           nrow = nrow, 
-                           ncol = 54)
+                          nrow = nrow, 
+                          ncol = 54)
 
 RS22_2025_SE_US <- as.data.frame(RS22_2025_SE_US)
 
@@ -8255,41 +8672,327 @@ colnames (RS22_2025_SE_US)[2:54] <- c(1:53)
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 2] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                    filter(Municipio_Requisitante == i,
-                                                                           SE == 1,
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                           Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                             Status_Exame == "Disponivel para Encaminhar" |
-                                                                             Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
-                                                                    count()
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 1,
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo") %>% 
+                                                                  count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 3] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                    filter(Municipio_Requisitante == i,
-                                                                           SE == 2,
-                                                                           Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                             Status_Exame == "Disponivel para Encaminhar" |
-                                                                             Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                    count()
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 2,
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                  count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 4] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 3,
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                  count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i),5] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                 filter(Municipio_Requisitante == i,
+                                                                        SE == 4,
+                                                                        Status_Exame == "Resultado Liberado" |
+                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                          Status_Exame == "Disponivel para Encaminhar" |
+                                                                          Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                        Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                 count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 5,
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                  count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 6,
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                  count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 7,
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                  count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                  filter(Municipio_Requisitante == i,
+                                                                         SE == 8,
+                                                                         Status_Exame == "Resultado Liberado" |
+                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                           Status_Exame == "Disponivel para Encaminhar" |
+                                                                           Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                         Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                  count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 9,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 10,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 11,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 12,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 13,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 14,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 15,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 16,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 17,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%       
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 18,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%     
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 19,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
                                                                     filter(Municipio_Requisitante == i,
-                                                                           SE == 3,
+                                                                           SE == 20,
                                                                            Status_Exame == "Resultado Liberado" |
                                                                              Status_Exame == "Automaçăo em Processamento" |
                                                                              Status_Exame == "Disponivel para Encaminhar" |
                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                    count()
+                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                    count() 
   )
   
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i),5] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
                                                                    filter(Municipio_Requisitante == i,
-                                                                          SE == 4,
+                                                                          SE == 21,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 22,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 23,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 24,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 25,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 26,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 27,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 28,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 29,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
+  )
+  
+  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 30,
                                                                           Status_Exame == "Resultado Liberado" |
                                                                             Status_Exame == "Automaçăo em Processamento" |
                                                                             Status_Exame == "Disponivel para Encaminhar" |
@@ -8298,543 +9001,257 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                    count()
   )
   
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                    filter(Municipio_Requisitante == i,
-                                                                           SE == 5,
-                                                                           Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                             Status_Exame == "Disponivel para Encaminhar" |
-                                                                             Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                    count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                    filter(Municipio_Requisitante == i,
-                                                                           SE == 6,
-                                                                           Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                             Status_Exame == "Disponivel para Encaminhar" |
-                                                                             Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                    count()
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                    filter(Municipio_Requisitante == i,
-                                                                           SE == 7,
-                                                                           Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                             Status_Exame == "Disponivel para Encaminhar" |
-                                                                             Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                    count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                    filter(Municipio_Requisitante == i,
-                                                                           SE == 8,
-                                                                           Status_Exame == "Resultado Liberado" |
-                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                             Status_Exame == "Disponivel para Encaminhar" |
-                                                                             Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                           Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                    count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 9,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 10,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 11,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 12,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 13,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 14,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 15,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 16,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 17,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%       
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 18,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%     
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 19,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                      filter(Municipio_Requisitante == i,
-                                                                             SE == 20,
-                                                                             Status_Exame == "Resultado Liberado" |
-                                                                               Status_Exame == "Automaçăo em Processamento" |
-                                                                               Status_Exame == "Disponivel para Encaminhar" |
-                                                                               Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                             Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                      count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 21,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 22,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 23,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 24,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 25,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 26,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 27,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 28,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 29,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
-  )
-  
-  RS22_2025_SE_US[which(RS22_2025_SE_US == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 30,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count()
-  )
-  
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 32] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 31,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 31,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 33] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 32,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 32,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 34] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 33,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 33,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 35] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 34,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 34,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 36] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 35,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 35,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 37] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 36,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 36,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 38] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 37,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 37,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 39] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 38,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 38,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 40] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 39,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 39,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 41] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 40,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 40,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 42] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 41,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar"|
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 41,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar"|
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 43] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 42,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 42,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 44] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 43,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 43,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 45] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 44,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 44,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 46] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 45,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count()
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 45,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 47] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 46,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 46,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 48] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 47,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 47,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 49] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 48,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 48,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 50] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 49,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count()
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 49,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                   count()
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 51] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 50,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 50,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>% 
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 52] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 51,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 51,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 53] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 52,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 52,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
   
   RS22_2025_SE_US[which(RS22_2025_SE_US == i), 54] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                     filter(Municipio_Requisitante == i,
-                                                                            SE == 53,
-                                                                            Status_Exame == "Resultado Liberado" |
-                                                                              Status_Exame == "Automaçăo em Processamento" |
-                                                                              Status_Exame == "Disponivel para Encaminhar" |
-                                                                              Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
-                                                                            Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
-                                                                     count() 
+                                                                   filter(Municipio_Requisitante == i,
+                                                                          SE == 53,
+                                                                          Status_Exame == "Resultado Liberado" |
+                                                                            Status_Exame == "Automaçăo em Processamento" |
+                                                                            Status_Exame == "Disponivel para Encaminhar" |
+                                                                            Status_Exame == "Exame Aprovado. Aguardando Automaçăo",
+                                                                          Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA") %>%
+                                                                   count() 
   )
 }
 
@@ -8847,8 +9264,8 @@ RS22_2025_SE_US[nrow(RS22_2025_SE_US),1] <- "Total"
 #####################  Realizando a contagem de exames por SE UNIDADE SENTINELA DETECTÁVEL #############################################################
 
 RS22_2025_SE_US_DETECTAVEL <- matrix(data = NA, 
-                                      nrow = nrow, 
-                                      ncol = 54)
+                                     nrow = nrow, 
+                                     ncol = 54)
 
 RS22_2025_SE_US_DETECTAVEL <- as.data.frame(RS22_2025_SE_US_DETECTAVEL)
 
@@ -8861,433 +9278,433 @@ colnames (RS22_2025_SE_US_DETECTAVEL)[2:54] <- c(1:53)
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 2] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 1,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>%
-                                                                                          count()
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 1,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>%
+                                                                                        count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 3] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 2,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>% 
-                                                                                          count()
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 2,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>% 
+                                                                                        count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 4] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 3,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>% 
-                                                                                          count()
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 3,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>% 
+                                                                                        count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i),5] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                         filter(Municipio_Requisitante == i,
-                                                                                                SE == 4,
-                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                Resultado == "Detectável ") %>% 
-                                                                                         count()
+                                                                                       filter(Municipio_Requisitante == i,
+                                                                                              SE == 4,
+                                                                                              Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                              Resultado == "Detectável ") %>% 
+                                                                                       count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 6] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 5,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>% 
-                                                                                          count() 
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 5,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>% 
+                                                                                        count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 7] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 6,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>%
-                                                                                          count()
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 6,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>%
+                                                                                        count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 8] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 7,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>% 
-                                                                                          count() 
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 7,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>% 
+                                                                                        count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 9] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                          filter(Municipio_Requisitante == i,
-                                                                                                 SE == 8,
-                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                 Resultado == "Detectável ") %>% 
-                                                                                          count() 
+                                                                                        filter(Municipio_Requisitante == i,
+                                                                                               SE == 8,
+                                                                                               Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                               Resultado == "Detectável ") %>% 
+                                                                                        count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 10] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 9,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 9,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 11] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 10,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 10,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 12] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 11,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 11,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 13] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 12,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 12,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 14] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 13,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>% 
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 13,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>% 
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 15] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 14,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 14,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 16] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 15,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 15,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 17] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 16,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 16,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 18] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 17,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%       
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 17,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%       
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 19] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 18,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%     
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 18,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%     
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 20] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 19,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável ") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 19,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável ") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i),  21] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                            filter(Municipio_Requisitante == i,
-                                                                                                   SE == 20,
-                                                                                                   Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                   Resultado == "Detectável") %>%
-                                                                                            count() 
+                                                                                          filter(Municipio_Requisitante == i,
+                                                                                                 SE == 20,
+                                                                                                 Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                 Resultado == "Detectável") %>%
+                                                                                          count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 22] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 21,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 21,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 23] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 22,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 22,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 24] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 23,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 23,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 25] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 24,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 24,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 26] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 25,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 25,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 27] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 26,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 26,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 28] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 27,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 27,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 29] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 28,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 28,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 30] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 29,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 29,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 31] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 30,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 30,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>% 
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 32] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 31,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 31,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 33] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 32,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 32,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 34] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 33,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 33,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>% 
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 35] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 34,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 34,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>% 
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 36] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 35,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 35,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 37] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 36,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 36,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 38] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 37,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 37,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>% 
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 39] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 38,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 38,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 40] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 39,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 39,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 41] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 40,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 40,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 42] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 41,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 41,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 43] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 42,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 42,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 44] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 43,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 43,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 45] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 44,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 44,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 46] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 45,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 45,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 47] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 46,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 46,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 48] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 47,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 47,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 49] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 48,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 48,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 50] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 49,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
-                                                                                           count()
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 49,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>% 
+                                                                                         count()
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 51] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 50,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>% 
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 50,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>% 
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 52] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 51,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 51,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 53] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>%
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 52,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 52,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
   
   RS22_2025_SE_US_DETECTAVEL[which(RS22_2025_SE_US_DETECTAVEL == i), 54] <- as.integer(RS22_2025_LACEN_PESQ_ARBO%>% 
-                                                                                           filter(Municipio_Requisitante == i,
-                                                                                                  SE == 53,
-                                                                                                  Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
-                                                                                                  Resultado == "Detectável") %>%
-                                                                                           count() 
+                                                                                         filter(Municipio_Requisitante == i,
+                                                                                                SE == 53,
+                                                                                                Requisitante == "POSTO DE SAUDE CENTRAL DE IVAIPORA",
+                                                                                                Resultado == "Detectável") %>%
+                                                                                         count() 
   )
 }
 
 RS22_2025_SE_US_DETECTAVEL[(nrow(RS22_2025_SE_US_DETECTAVEL)+1), 2:54] <- apply(RS22_2025_SE_US_DETECTAVEL[, 2:54], 
-                                                                                  2, 
-                                                                                  sum)
+                                                                                2, 
+                                                                                sum)
 
 RS22_2025_SE_US_DETECTAVEL[nrow(RS22_2025_SE_US_DETECTAVEL), 1] <- "Total"
 
@@ -9295,8 +9712,8 @@ RS22_2025_SE_US_DETECTAVEL[nrow(RS22_2025_SE_US_DETECTAVEL), 1] <- "Total"
 #####################  Realizando a contagem de exames por SE SOROLOGIA GERAL  #############################################################
 
 RS22_2025_SE_SOROLOGIA <- matrix(data = NA, 
-                                  nrow = nrow, 
-                                  ncol = 54)
+                                 nrow = nrow, 
+                                 ncol = 54)
 
 RS22_2025_SE_SOROLOGIA <- as.data.frame(RS22_2025_SE_SOROLOGIA)
 
@@ -9309,41 +9726,96 @@ colnames (RS22_2025_SE_SOROLOGIA)[2:54] <- c(1:53)
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 2] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 1,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>% 
-                                                                                  count()
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 1,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 3] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 2,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>% 
-                                                                                  count()
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 2,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 4] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 3,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>%  
-                                                                                  count()
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 3,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>%  
+                                                                                count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i),5] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                               filter(Municipio_Residencia == i,
+                                                                                      SE == 4,
+                                                                                      Status_Exame == "Resultado Liberado" |
+                                                                                        Status_Exame == "Automaçăo em Processamento" |
+                                                                                        Status_Exame == "Exame em Análise" |
+                                                                                        Status_Exame == "Disponível para Encaminhar" |
+                                                                                        Status_Exame == "Aguardando Triagem") %>% 
+                                                                               count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 6] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 5,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 7] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 6,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 8] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 7,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 9] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                filter(Municipio_Residencia == i,
+                                                                                       SE == 8,
+                                                                                       Status_Exame == "Resultado Liberado" |
+                                                                                         Status_Exame == "Automaçăo em Processamento" |
+                                                                                         Status_Exame == "Exame em Análise" |
+                                                                                         Status_Exame == "Disponível para Encaminhar" |
+                                                                                         Status_Exame == "Aguardando Triagem") %>% 
+                                                                                count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 10] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
                                                                                  filter(Municipio_Residencia == i,
-                                                                                        SE == 4,
+                                                                                        SE == 9,
                                                                                         Status_Exame == "Resultado Liberado" |
                                                                                           Status_Exame == "Automaçăo em Processamento" |
                                                                                           Status_Exame == "Exame em Análise" |
@@ -9352,549 +9824,494 @@ for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
                                                                                  count()
   )
   
-  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 6] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 5,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>% 
-                                                                                  count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 7] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 6,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>% 
-                                                                                  count()
-  )
-  
-  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 8] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 7,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>% 
-                                                                                  count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 9] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                  filter(Municipio_Residencia == i,
-                                                                                         SE == 8,
-                                                                                         Status_Exame == "Resultado Liberado" |
-                                                                                           Status_Exame == "Automaçăo em Processamento" |
-                                                                                           Status_Exame == "Exame em Análise" |
-                                                                                           Status_Exame == "Disponível para Encaminhar" |
-                                                                                           Status_Exame == "Aguardando Triagem") %>% 
-                                                                                  count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 10] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 9,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
-  )
-  
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 11] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 10,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 10,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 12] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 11,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 11,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 13] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 12,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 12,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 14] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 13,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 13,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 15] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 14,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 14,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 16] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 15,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 15,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 17] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 16,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 16,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 18] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 17,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>%       
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 17,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%       
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 19] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 18,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>%    
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 18,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>%    
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 20] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 19,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 19,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i),  21] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                    filter(Municipio_Residencia == i,
-                                                                                           SE == 20,
-                                                                                           Status_Exame == "Resultado Liberado" |
-                                                                                             Status_Exame == "Automaçăo em Processamento" |
-                                                                                             Status_Exame == "Exame em Análise" |
-                                                                                             Status_Exame == "Disponível para Encaminhar" |
-                                                                                             Status_Exame == "Aguardando Triagem") %>% 
-                                                                                    count() 
+                                                                                  filter(Municipio_Residencia == i,
+                                                                                         SE == 20,
+                                                                                         Status_Exame == "Resultado Liberado" |
+                                                                                           Status_Exame == "Automaçăo em Processamento" |
+                                                                                           Status_Exame == "Exame em Análise" |
+                                                                                           Status_Exame == "Disponível para Encaminhar" |
+                                                                                           Status_Exame == "Aguardando Triagem") %>% 
+                                                                                  count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 22] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 21,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 21,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 23] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 22,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 22,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 24] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 23,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 23,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 25] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 24,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 24,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 26] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 25,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 25,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 27] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 26,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 26,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 28] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 27,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 27,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 29] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 28,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 28,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 30] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 29,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 29,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 31] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 30,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 30,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 32] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 31,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 31,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 33] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 32,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 32,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 34] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 33,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 33,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 35] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 34,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 34,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 36] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 35,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 35,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 37] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 36,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 36,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 38] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 37,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 37,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 39] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 38,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 38,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 40] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 39,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 39,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 41] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 40,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 40,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 42] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 41,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 41,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 43] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 42,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 42,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 44] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 43,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 43,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 45] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 44,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 44,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 46] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 45,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 45,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 47] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 46,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 46,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 48] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 47,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 47,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 49] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 48,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 48,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 50] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 49,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count()
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 49,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count()
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 51] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 50,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 50,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 52] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 51,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 51,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 53] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 52,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 52,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
   
   RS22_2025_SE_SOROLOGIA[which(RS22_2025_SE_SOROLOGIA == i), 54] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                   filter(Municipio_Residencia == i,
-                                                                                          SE == 53,
-                                                                                          Status_Exame == "Resultado Liberado" |
-                                                                                            Status_Exame == "Automaçăo em Processamento" |
-                                                                                            Status_Exame == "Exame em Análise" |
-                                                                                            Status_Exame == "Disponível para Encaminhar" |
-                                                                                            Status_Exame == "Aguardando Triagem") %>% 
-                                                                                   count() 
+                                                                                 filter(Municipio_Residencia == i,
+                                                                                        SE == 53,
+                                                                                        Status_Exame == "Resultado Liberado" |
+                                                                                          Status_Exame == "Automaçăo em Processamento" |
+                                                                                          Status_Exame == "Exame em Análise" |
+                                                                                          Status_Exame == "Disponível para Encaminhar" |
+                                                                                          Status_Exame == "Aguardando Triagem") %>% 
+                                                                                 count() 
   )
 }
 
 RS22_2025_SE_SOROLOGIA[(nrow(RS22_2025_SE_SOROLOGIA) +1), 2:54] <- apply(RS22_2025_SE_SOROLOGIA[, 2:54], 
-                                                                           2, 
-                                                                           sum)
+                                                                         2, 
+                                                                         sum)
 
 RS22_2025_SE_SOROLOGIA[nrow(RS22_2025_SE_SOROLOGIA),1] <- "Total"
 
@@ -9902,8 +10319,8 @@ RS22_2025_SE_SOROLOGIA[nrow(RS22_2025_SE_SOROLOGIA),1] <- "Total"
 #####################  Realizando a contagem de exames por SE SOROLOGIA REAGENTES GERAL  #############################################################
 
 RS22_2025_SE_SOROLOGIA_REAGENTE <- matrix(data = NA, 
-                                           nrow = nrow, 
-                                           ncol = 54)
+                                          nrow = nrow, 
+                                          ncol = 54)
 
 RS22_2025_SE_SOROLOGIA_REAGENTE <- as.data.frame(RS22_2025_SE_SOROLOGIA_REAGENTE)
 
@@ -9916,427 +10333,427 @@ colnames (RS22_2025_SE_SOROLOGIA_REAGENTE)[2:54] <- c(1:53)
 for (i in BASE_IBGE[(which(BASE_IBGE$RS == RS)), 3]){
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 2] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 1,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>%
-                                                                                                    count()
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 1,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>%
+                                                                                                  count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 3] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 2,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>% 
-                                                                                                    count()
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 2,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>% 
+                                                                                                  count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 4] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 3,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>% 
-                                                                                                    count()
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 3,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>% 
+                                                                                                  count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i),5] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                 filter(Municipio_Residencia == i,
+                                                                                                        SE == 4,
+                                                                                                        Resultado == "Reagente " |
+                                                                                                          Resultado == "Reagente") %>% 
+                                                                                                 count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 6] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 5,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>% 
+                                                                                                  count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 7] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 6,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>%
+                                                                                                  count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 8] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 7,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>% 
+                                                                                                  count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 9] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                  filter(Municipio_Residencia == i,
+                                                                                                         SE == 8,
+                                                                                                         Resultado == "Reagente " |
+                                                                                                           Resultado == "Reagente") %>% 
+                                                                                                  count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 10] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                          SE == 4,
+                                                                                                          SE == 9,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 11] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 10,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 12] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 11,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 13] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 12,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 14] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 13,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>% 
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 15] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 14,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 16] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 15,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 17] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 16,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 18] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 17,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%       
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 19] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 18,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%     
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 20] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 19,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i),  21] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                    filter(Municipio_Residencia == i,
+                                                                                                           SE == 20,
+                                                                                                           Resultado == "Reagente " |
+                                                                                                             Resultado == "Reagente") %>%
+                                                                                                    count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 22] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 21,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 23] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 22,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 24] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 23,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 25] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 24,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 26] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 25,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 27] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 26,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 28] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 27,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 29] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 28,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 30] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 29,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
+  )
+  
+  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 31] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 30,
                                                                                                           Resultado == "Reagente " |
                                                                                                             Resultado == "Reagente") %>% 
                                                                                                    count()
   )
   
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 6] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 5,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>% 
-                                                                                                    count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 7] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 6,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>%
-                                                                                                    count()
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 8] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 7,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>% 
-                                                                                                    count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 9] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                    filter(Municipio_Residencia == i,
-                                                                                                           SE == 8,
-                                                                                                           Resultado == "Reagente " |
-                                                                                                             Resultado == "Reagente") %>% 
-                                                                                                    count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 10] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 9,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 11] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 10,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 12] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 11,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 13] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 12,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 14] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 13,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 15] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 14,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 16] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 15,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 17] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 16,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 18] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 17,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%       
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 19] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 18,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%     
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 20] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 19,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i),  21] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                      filter(Municipio_Residencia == i,
-                                                                                                             SE == 20,
-                                                                                                             Resultado == "Reagente " |
-                                                                                                               Resultado == "Reagente") %>%
-                                                                                                      count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 22] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 21,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 23] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 22,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 24] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 23,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 25] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 24,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 26] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 25,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 27] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 26,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 28] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 27,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 29] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 28,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 30] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 29,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
-  )
-  
-  RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 31] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 30,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count()
-  )
-  
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 32] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 31,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 31,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 33] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 32,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 32,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 34] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 33,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 33,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>% 
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 35] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 34,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 34,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>% 
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 36] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 35,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 35,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 37] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 36,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 36,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 38] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 37,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 37,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>% 
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 39] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 38,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 38,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 40] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 39,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 39,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 41] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 40,
-                                                                                                            Resultado == "Reagente "|
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 40,
+                                                                                                          Resultado == "Reagente "|
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 42] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 41,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 41,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 43] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 42,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 42,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 44] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 43,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 43,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 45] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 44,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 44,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 46] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 45,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count()
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 45,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 47] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 46,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 46,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 48] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 47,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 47,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 49] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 48,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 48,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 50] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 49,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count()
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 49,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>% 
+                                                                                                   count()
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 51] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 50,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>% 
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 50,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>% 
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 52] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 51,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 51,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 53] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>%
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 52,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 52,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
   
   RS22_2025_SE_SOROLOGIA_REAGENTE[which(RS22_2025_SE_SOROLOGIA_REAGENTE == i), 54] <- as.integer(RS22_2025_LACEN_SOROLOGIA%>% 
-                                                                                                     filter(Municipio_Residencia == i,
-                                                                                                            SE == 53,
-                                                                                                            Resultado == "Reagente " |
-                                                                                                              Resultado == "Reagente") %>%
-                                                                                                     count() 
+                                                                                                   filter(Municipio_Residencia == i,
+                                                                                                          SE == 53,
+                                                                                                          Resultado == "Reagente " |
+                                                                                                            Resultado == "Reagente") %>%
+                                                                                                   count() 
   )
 }
 
@@ -10351,8 +10768,8 @@ RS22_2025_SE_SOROLOGIA_REAGENTE[, 13] <- as.numeric(RS22_2025_SE_SOROLOGIA_REAGE
 ####CORREÇÔES####
 
 RS22_2025_SE_SOROLOGIA_REAGENTE[(nrow(RS22_2025_SE_SOROLOGIA_REAGENTE) +1), 2:54] <- apply(RS22_2025_SE_SOROLOGIA_REAGENTE[, 2:54], 
-                                                                                             2, 
-                                                                                             sum)
+                                                                                           2, 
+                                                                                           sum)
 
 RS22_2025_SE_SOROLOGIA_REAGENTE[nrow(RS22_2025_SE_SOROLOGIA_REAGENTE),1] <- "Total"
 
@@ -10621,7 +11038,6 @@ RS22_GRAF_LACEN_MUNIC <- ggplot (AUX,
   scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
   Theme() +
   theme(axis.text.x = element_text(angle = 75))
-
 
 ##########################LACEN CHIKUNGUNYA   ############################################################
 ############################################################################################################################################
@@ -11842,7 +12258,7 @@ AUX$POSITIVAS <- (AUX$Sorologia_Reag)
 ####Correções###
 
 RS22_GRAF_LACEN_MUNIC_CHIK <- ggplot (AUX, 
-                                 aes(x = Município)) + 
+                                      aes(x = Município)) + 
   labs(caption = Fonte, 
        x = NULL,
        y = "Número de Amostras",
@@ -11906,16 +12322,16 @@ for(i in BASE_IBGE[, 2]){
   
   ###Notiicações###  
   PR_CHIK_2025_GERAL[which(PR_CHIK_2025_GERAL$Código_IBGE == i), 5] <- as.integer(PR_CHIK_2025_SINAN%>% 
-                                                                                      filter(ID_MN_RESI == i) %>%   
-                                                                                      count()
+                                                                                    filter(ID_MN_RESI == i) %>%   
+                                                                                    count()
   )   
   
   ###Chikungunya###
   
   PR_CHIK_2025_GERAL[which(PR_CHIK_2025_GERAL$Código_IBGE == i), 6] <-as.integer(PR_CHIK_2025_SINAN%>% 
-                                                                                     filter(CLASSI_FIN == 13, 
-                                                                                            ID_MN_RESI == i) %>%
-                                                                                     count() 
+                                                                                   filter(CLASSI_FIN == 13, 
+                                                                                          ID_MN_RESI == i) %>%
+                                                                                   count() 
   )
   
   ###Descartados###
@@ -11923,37 +12339,37 @@ for(i in BASE_IBGE[, 2]){
   
   
   PR_CHIK_2025_GERAL[which(PR_CHIK_2025_GERAL$Código_IBGE == i), 7]<- as.integer(PR_CHIK_2025_SINAN%>% 
-                                                                                     filter(CLASSI_FIN == 5,
-                                                                                            ID_MN_RESI == i) %>% 
-                                                                                     count()
+                                                                                   filter(CLASSI_FIN == 5,
+                                                                                          ID_MN_RESI == i) %>% 
+                                                                                   count()
   )  
   
   ###Autóctones###
   
   
   PR_CHIK_2025_GERAL[which(PR_CHIK_2025_GERAL$Código_IBGE == i), 8]<- as.integer(PR_CHIK_2025_SINAN%>% 
-                                                                                     filter(ID_MN_RESI == i, 
-                                                                                            TPAUTOCTO == 1,
-                                                                                            CLASSI_FIN == 13) %>% 
-                                                                                     count() 
+                                                                                   filter(ID_MN_RESI == i, 
+                                                                                          TPAUTOCTO == 1,
+                                                                                          CLASSI_FIN == 13) %>% 
+                                                                                   count() 
   )
   
   ###Importados###
   
   
   PR_CHIK_2025_GERAL[which(PR_CHIK_2025_GERAL$Código_IBGE == i), 9]<- as.integer(PR_CHIK_2025_SINAN%>% 
-                                                                                     filter(ID_MN_RESI == i, 
-                                                                                            TPAUTOCTO == 2,
-                                                                                            CLASSI_FIN == 13) %>% 
-                                                                                     count() 
+                                                                                   filter(ID_MN_RESI == i, 
+                                                                                          TPAUTOCTO == 2,
+                                                                                          CLASSI_FIN == 13) %>% 
+                                                                                   count() 
   )
   
   ###Óbitos###
   
   PR_CHIK_2025_GERAL[which(PR_CHIK_2025_GERAL$Código_IBGE == i), 10] <- as.integer(PR_CHIK_2025_SINAN%>% 
-                                                                                       filter(ID_MN_RESI == i, 
-                                                                                              EVOLUCAO == 2) %>% 
-                                                                                       count() 
+                                                                                     filter(ID_MN_RESI == i, 
+                                                                                            EVOLUCAO == 2) %>% 
+                                                                                     count() 
   )
 }
 
@@ -11976,224 +12392,224 @@ PR_CHIK_2025_GERAL[400, 3:10] <- apply(PR_CHIK_2025_GERAL[, 3:10], 2, sum)
 PR_2025_SINAN_DECODIFICADO_CHIK <- PR_CHIK_2025_SINAN
 
 PR_2025_SINAN_DECODIFICADO_CHIK$ID_AGRAVO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ID_AGRAVO,
-                                                     label = c("Dengue", "Chikungunya"), 
-                                                     levels = c("A90", "A92.0")
+                                                    label = c("Dengue", "Chikungunya"), 
+                                                    levels = c("A90", "A92.0")
 )
 
 ###Sintomas###
 PR_2025_SINAN_DECODIFICADO_CHIK$FEBRE <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$FEBRE,
+                                                label = c("SIM", "NÃO"), 
+                                                levels = c(1, 2)
+)
+
+PR_2025_SINAN_DECODIFICADO_CHIK$MIALGIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$MIALGIA,
+                                                  label = c("SIM", "NÃO"), 
+                                                  levels = c(1, 2)
+)
+
+PR_2025_SINAN_DECODIFICADO_CHIK$CEFALEIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CEFALEIA,
+                                                   label = c("SIM", "NÃO"), 
+                                                   levels = c(1, 2)
+)
+
+PR_2025_SINAN_DECODIFICADO_CHIK$EXANTEMA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$EXANTEMA,
+                                                   label = c("SIM", "NÃO"), 
+                                                   levels = c(1, 2)
+)
+
+PR_2025_SINAN_DECODIFICADO_CHIK$VOMITO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$VOMITO,
                                                  label = c("SIM", "NÃO"), 
                                                  levels = c(1, 2)
 )
 
-PR_2025_SINAN_DECODIFICADO_CHIK$MIALGIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$MIALGIA,
-                                                   label = c("SIM", "NÃO"), 
-                                                   levels = c(1, 2)
-)
-
-PR_2025_SINAN_DECODIFICADO_CHIK$CEFALEIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CEFALEIA,
-                                                    label = c("SIM", "NÃO"), 
-                                                    levels = c(1, 2)
-)
-
-PR_2025_SINAN_DECODIFICADO_CHIK$EXANTEMA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$EXANTEMA,
-                                                    label = c("SIM", "NÃO"), 
-                                                    levels = c(1, 2)
-)
-
-PR_2025_SINAN_DECODIFICADO_CHIK$VOMITO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$VOMITO,
-                                                  label = c("SIM", "NÃO"), 
-                                                  levels = c(1, 2)
-)
-
 PR_2025_SINAN_DECODIFICADO_CHIK$NAUSEA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$NAUSEA,
-                                                  label = c("SIM", "NÃO"), 
-                                                  levels = c(1, 2)
+                                                 label = c("SIM", "NÃO"), 
+                                                 levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$DOR_COSTAS <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$DOR_COSTAS,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$DOR_RETRO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$DOR_RETRO,
-                                                     label = c("SIM", "NÃO"), 
-                                                     levels = c(1, 2)
+                                                    label = c("SIM", "NÃO"), 
+                                                    levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$CONJUNTVIT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CONJUNTVIT,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
-)
-
-PR_2025_SINAN_DECODIFICADO_CHIK$ARTRALGIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ARTRALGIA,
                                                      label = c("SIM", "NÃO"), 
                                                      levels = c(1, 2)
 )
 
+PR_2025_SINAN_DECODIFICADO_CHIK$ARTRALGIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ARTRALGIA,
+                                                    label = c("SIM", "NÃO"), 
+                                                    levels = c(1, 2)
+)
+
 PR_2025_SINAN_DECODIFICADO_CHIK$ARTRITE <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ARTRITE,
-                                                   label = c("SIM", "NÃO"), 
-                                                   levels = c(1, 2)
+                                                  label = c("SIM", "NÃO"), 
+                                                  levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$PETEQUIA_N <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$PETEQUIA_N,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$LEUCOPENIA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$LEUCOPENIA,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$LACO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$LACO,
-                                                label = c("SIM", "NÃO"), 
-                                                levels = c(1, 2)
+                                               label = c("SIM", "NÃO"), 
+                                               levels = c(1, 2)
 )
 
 ###Doenças Pré-existentes
 
 PR_2025_SINAN_DECODIFICADO_CHIK$DIABETES <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$DIABETES,
+                                                   label = c("SIM", "NÃO"), 
+                                                   levels = c(1, 2)
+)
+
+PR_2025_SINAN_DECODIFICADO_CHIK$HEMATOLOG <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$HEMATOLOG,
                                                     label = c("SIM", "NÃO"), 
                                                     levels = c(1, 2)
 )
 
-PR_2025_SINAN_DECODIFICADO_CHIK$HEMATOLOG <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$HEMATOLOG,
-                                                     label = c("SIM", "NÃO"), 
-                                                     levels = c(1, 2)
-)
-
 PR_2025_SINAN_DECODIFICADO_CHIK$HEPATOPAT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$HEPATOPAT,
-                                                     label = c("SIM", "NÃO"), 
-                                                     levels = c(1, 2)
+                                                    label = c("SIM", "NÃO"), 
+                                                    levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$RENAL <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$RENAL,
-                                                 label = c("SIM", "NÃO"), 
-                                                 levels = c(1, 2)
+                                                label = c("SIM", "NÃO"), 
+                                                levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$HIPERTENSA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$HIPERTENSA,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$ACIDO_PEPT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ACIDO_PEPT,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$AUTO_IMUNE <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$AUTO_IMUNE,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 ####Outros####
 
 PR_2025_SINAN_DECODIFICADO_CHIK$CS_GESTANT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CS_GESTANT,
-                                                      label = c("1_TRI", "2_TRI", "3_TRI", "IDADE GESTACIONAL IGN", "NÃO", "NÃO SE APLICA", "IGNORADO"), 
-                                                      levels = c(1, 2, 3, 4, 5, 6, 9)
+                                                     label = c("1_TRI", "2_TRI", "3_TRI", "IDADE GESTACIONAL IGN", "NÃO", "NÃO SE APLICA", "IGNORADO"), 
+                                                     levels = c(1, 2, 3, 4, 5, 6, 9)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$CS_ESCOL_N <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CS_ESCOL_N,
-                                                      label = c("ANALFABETO", "1 a 4 SÉRIE DO FUNDAMENTAL INCOMPLETA", "4 SÉRIE DO FUNDAMENTAL COMPLETA", "5 a 8 SÉRIE DO FUNDAMENTAL INCOMPLETA", "FUNDAMENTAL COMPLETO", "ENSINO MÉDIO INCOMPLETO", "ENSINO MÉDIO COMPLETO", "SUPERIOR INCONPLETO", "SUPERIOR COMPLETO", "IGNORADO", "NÃO SE APLICA"), 
-                                                      levels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                                                     label = c("ANALFABETO", "1 a 4 SÉRIE DO FUNDAMENTAL INCOMPLETA", "4 SÉRIE DO FUNDAMENTAL COMPLETA", "5 a 8 SÉRIE DO FUNDAMENTAL INCOMPLETA", "FUNDAMENTAL COMPLETO", "ENSINO MÉDIO INCOMPLETO", "ENSINO MÉDIO COMPLETO", "SUPERIOR INCONPLETO", "SUPERIOR COMPLETO", "IGNORADO", "NÃO SE APLICA"), 
+                                                     levels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$RESUL_SORO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$RESUL_SORO,
-                                                      label = c("REAGENTE", "NÃO REAGENTE", "INCONCLUSIVO", "NÃO REALIZADO"), 
-                                                      levels = c(1, 2, 3, 4)
+                                                     label = c("REAGENTE", "NÃO REAGENTE", "INCONCLUSIVO", "NÃO REALIZADO"), 
+                                                     levels = c(1, 2, 3, 4)
 )
 
 
 PR_2025_SINAN_DECODIFICADO_CHIK$RESUL_PCR_ <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$RESUL_PCR_,
-                                                      label = c("DETECTÁVEL", "NÃO DETECTÀVEL", "INCONCLUSIVO", "NÃO REALIZADO"), 
-                                                      levels = c(1, 2, 3, 4)
+                                                     label = c("DETECTÁVEL", "NÃO DETECTÀVEL", "INCONCLUSIVO", "NÃO REALIZADO"), 
+                                                     levels = c(1, 2, 3, 4)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$SOROTIPO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$SOROTIPO,
-                                                    label = c("I", "II", "III", "IV"), 
-                                                    levels = c(1, 2, 3, 4)
+                                                   label = c("I", "II", "III", "IV"), 
+                                                   levels = c(1, 2, 3, 4)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$CLASSI_FIN <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CLASSI_FIN,
-                                                      label = c("DESCARTADO", "DENGUE", "D.S.A.", "IDENGUE_GRAVE", "CHIKUNGUNYA"), 
-                                                      levels = c(5, 10, 11, 12, 13)
+                                                     label = c("DESCARTADO", "DENGUE", "D.S.A.", "IDENGUE_GRAVE", "CHIKUNGUNYA"), 
+                                                     levels = c(5, 10, 11, 12, 13)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$CRITERIO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CRITERIO,
-                                                    label = c("LABORATORIAL", "CLÍNICO-EPIDEMIOLÓGICO", "EM INVESTIGAÇÃO"), 
-                                                    levels = c(1, 2, 3)
+                                                   label = c("LABORATORIAL", "CLÍNICO-EPIDEMIOLÓGICO", "EM INVESTIGAÇÃO"), 
+                                                   levels = c(1, 2, 3)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$TPAUTOCTO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$TPAUTOCTO,
-                                                     label = c("SIM", "NÃO"), 
-                                                     levels = c(1, 2)
+                                                    label = c("SIM", "NÃO"), 
+                                                    levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$HOSPITALIZ <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$HOSPITALIZ,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$EVOLUCAO <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$EVOLUCAO,
-                                                    label = c("CURA", "ÓBITO PELO AGRAVO", "ÓBITO POR OUTRAS CAUSAS","ÓBITO EM INVESTIGAÇÃO", "INDETERMINADO"), 
-                                                    levels = c(1, 2, 3, 4, 9)
+                                                   label = c("CURA", "ÓBITO PELO AGRAVO", "ÓBITO POR OUTRAS CAUSAS","ÓBITO EM INVESTIGAÇÃO", "INDETERMINADO"), 
+                                                   levels = c(1, 2, 3, 4, 9)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$CS_ZONA <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$CS_ZONA,
-                                                   label = c("URBANA", "RURAL", "PERIURBANA","INDETERMINADO"), 
-                                                   levels = c(1, 2, 3, 9)
+                                                  label = c("URBANA", "RURAL", "PERIURBANA","INDETERMINADO"), 
+                                                  levels = c(1, 2, 3, 9)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_LETAR <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_LETAR,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_HEPAT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_HEPAT,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_LIQ <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_LIQ,
-                                                    label = c("SIM", "NÃO"), 
-                                                    levels = c(1, 2)
+                                                   label = c("SIM", "NÃO"), 
+                                                   levels = c(1, 2)
 )
 
 PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_HIPOT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_HIPOT,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
-)
-
-PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_PLAQ <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_PLAQ,
                                                      label = c("SIM", "NÃO"), 
                                                      levels = c(1, 2)
 )
 
-PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_VOM <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_VOM,
+PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_PLAQ <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_PLAQ,
                                                     label = c("SIM", "NÃO"), 
                                                     levels = c(1, 2)
 )
 
+PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_VOM <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_VOM,
+                                                   label = c("SIM", "NÃO"), 
+                                                   levels = c(1, 2)
+)
+
 PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_SANG <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_SANG,
+                                                    label = c("SIM", "NÃO"), 
+                                                    levels = c(1, 2)
+)
+
+PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_HEMAT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_LETAR,
                                                      label = c("SIM", "NÃO"), 
                                                      levels = c(1, 2)
 )
 
-PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_HEMAT <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_LETAR,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
-)
-
 PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_ABDOM <- factor(PR_2025_SINAN_DECODIFICADO_CHIK$ALRM_ABDOM,
-                                                      label = c("SIM", "NÃO"), 
-                                                      levels = c(1, 2)
+                                                     label = c("SIM", "NÃO"), 
+                                                     levels = c(1, 2)
 )
 ####PR_2025_SINAN_DECODIFICADO_CHIK$Municipio 
 
 PR_2025_SINAN_DECODIFICADO_CHIK_AUX <- data.frame(COD = PR_2025_SINAN_DECODIFICADO_CHIK[,12], 
-                                                   Municipio = NA)
+                                                  Municipio = NA)
 
 for (i in PR_2025_SINAN_DECODIFICADO_CHIK[,12]){
   PR_2025_SINAN_DECODIFICADO_CHIK_AUX[which(PR_2025_SINAN_DECODIFICADO_CHIK_AUX$COD == i), 2] <- BASE_IBGE_BRASIL[which(BASE_IBGE_BRASIL$Código.Município.Completo == i),13]
@@ -12205,7 +12621,7 @@ PR_2025_SINAN_DECODIFICADO_CHIK[,12] <- PR_2025_SINAN_DECODIFICADO_CHIK_AUX[, 2]
 ####Município de Residência
 
 PR_2025_SINAN_DECODIFICADO_CHIK_AUX <- data.frame(COD = PR_2025_SINAN_DECODIFICADO_CHIK[,20], 
-                                                   Municipio = NA)
+                                                  Municipio = NA)
 
 for (i in PR_2025_SINAN_DECODIFICADO_CHIK[,20]){
   PR_2025_SINAN_DECODIFICADO_CHIK_AUX[which(PR_2025_SINAN_DECODIFICADO_CHIK_AUX$COD == i), 2] <- BASE_IBGE_BRASIL[which(BASE_IBGE_BRASIL$Código.Município.Completo == i),13]
@@ -12217,125 +12633,125 @@ PR_2025_SINAN_DECODIFICADO_CHIK[,20] <- PR_2025_SINAN_DECODIFICADO_CHIK_AUX[, 2]
 rm (PR_2025_SINAN_DECODIFICADO_CHIK_AUX)
 
 colnames(PR_2025_SINAN_DECODIFICADO_CHIK)<- c("RS", "SINAN", "Latitude", "Longitude", "Agravo", "Data_Notificacao", 
-                                               "ANO", "SE_Notificacao", "Data_Primeiros_Sintomas", "SE_Primeiros_Sintomas", 
-                                               "UF_Notificacao", "Municipio", "Nome", "Data_Nascimento", "Idade", "Sexo", "Gestante", 
-                                               "Escolaridade", "Nome_Mae", "Municipio_Residencia", "UF_Residencia", "RS_Residencia", 
-                                               "Logradouro", "Numero", "Bairro", "CEP", "Zona", "Data_Digitacao", "Data_Investigacao",
-                                               "Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", 
-                                               "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", 
-                                               "Dor_retroorbital", "Diabetes", "Doenca_Hematologica", "Hepatopatia", "Doenca_Renal", 
-                                               "Hipertensao", "Doenca_Acido_Peptica", "Doenca_Auto_Imune", "Data_Sorologia", 
-                                               "Resultado_Sorologia", "Data_PCR", "Resultado_PCR", "Sorotipo", "Classificacao_Final", 
-                                               "Critério_Encerramento", "Autoctone", "UF_Infeccao", "Municipio_Infeccao", "Bairro_Infeccao", 
-                                               "Evolucao", "Hospitalizado", "Data_Internamento", "Data_Obito", "Data_Encerramento", "Data_SNA", 
-                                               "Letargia", "Hepatomegalia", "Acumulo_Liquidos", "Hipotensao_Lipotimia", "Queda_Abrupta_Plaquetas", 
-                                               "Vomitos_Persistentes", "Hemorragias", "Aumento_Hematocrito", "Dor_Abdominal", 
-                                               "Data_Dengue_Grave", "Pulso_Debil", "PA_Convergente", "TPC", "Acumulo_Liq_Insuficiencia_Resp", 
-                                               "Taquicardia", "Extremidades_Frias", "Hipotensao", "Hematemese", "Melena", "Metrorragia_", 
-                                               "Sangramento_SNC", "Aumento_AST_ALT", "Miocardite", "Alteracao_Consciencia", "Outros_Orgaos", 
-                                               "Manifestacao_Hemorragica", "Epistaxe", "Gengivorragia", "Metrorragia", "Observacoes" )
+                                              "ANO", "SE_Notificacao", "Data_Primeiros_Sintomas", "SE_Primeiros_Sintomas", 
+                                              "UF_Notificacao", "Municipio", "Nome", "Data_Nascimento", "Idade", "Sexo", "Gestante", 
+                                              "Escolaridade", "Nome_Mae", "Municipio_Residencia", "UF_Residencia", "RS_Residencia", 
+                                              "Logradouro", "Numero", "Bairro", "CEP", "Zona", "Data_Digitacao", "Data_Investigacao",
+                                              "Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", 
+                                              "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", 
+                                              "Dor_retroorbital", "Diabetes", "Doenca_Hematologica", "Hepatopatia", "Doenca_Renal", 
+                                              "Hipertensao", "Doenca_Acido_Peptica", "Doenca_Auto_Imune", "Data_Sorologia", 
+                                              "Resultado_Sorologia", "Data_PCR", "Resultado_PCR", "Sorotipo", "Classificacao_Final", 
+                                              "Critério_Encerramento", "Autoctone", "UF_Infeccao", "Municipio_Infeccao", "Bairro_Infeccao", 
+                                              "Evolucao", "Hospitalizado", "Data_Internamento", "Data_Obito", "Data_Encerramento", "Data_SNA", 
+                                              "Letargia", "Hepatomegalia", "Acumulo_Liquidos", "Hipotensao_Lipotimia", "Queda_Abrupta_Plaquetas", 
+                                              "Vomitos_Persistentes", "Hemorragias", "Aumento_Hematocrito", "Dor_Abdominal", 
+                                              "Data_Dengue_Grave", "Pulso_Debil", "PA_Convergente", "TPC", "Acumulo_Liq_Insuficiencia_Resp", 
+                                              "Taquicardia", "Extremidades_Frias", "Hipotensao", "Hematemese", "Melena", "Metrorragia_", 
+                                              "Sangramento_SNC", "Aumento_AST_ALT", "Miocardite", "Alteracao_Consciencia", "Outros_Orgaos", 
+                                              "Manifestacao_Hemorragica", "Epistaxe", "Gengivorragia", "Metrorragia", "Observacoes" )
 
 PR_2025_CHIK_SINAIS_NOTIFICADOS <- tibble(Febre = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>% 
-                                                                filter(Febre == "SIM" ) %>%
+                                                               filter(Febre == "SIM" ) %>%
+                                                               count()),
+                                          Mialgia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                 filter(Mialgia == "SIM" ) %>%
+                                                                 count()),
+                                          Cefaleia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                  filter(Cefaleia == "SIM") %>%
+                                                                  count()),
+                                          Exantema = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                  filter(Exantema == "SIM") %>%
+                                                                  count()),
+                                          Vomito = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                filter(Vomito == "SIM") %>%
                                                                 count()),
-                                           Mialgia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                  filter(Mialgia == "SIM" ) %>%
-                                                                  count()),
-                                           Cefaleia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                   filter(Cefaleia == "SIM") %>%
-                                                                   count()),
-                                           Exantema = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                   filter(Exantema == "SIM") %>%
-                                                                   count()),
-                                           Vomito = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                 filter(Vomito == "SIM") %>%
+                                          Nausea = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                filter(Nausea == "SIM") %>%
+                                                                count()),
+                                          Dor_nas_Costas = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                        filter(Dor_nas_Costas == "SIM") %>%
+                                                                        count()),
+                                          Conjuntivite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                      filter(Conjuntivite == "SIM") %>%
+                                                                      count()),
+                                          Artrite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                 filter(Artrite == "SIM") %>%
                                                                  count()),
-                                           Nausea = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                 filter(Nausea == "SIM") %>%
-                                                                 count()),
-                                           Dor_nas_Costas = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                         filter(Dor_nas_Costas == "SIM") %>%
-                                                                         count()),
-                                           Conjuntivite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                       filter(Conjuntivite == "SIM") %>%
-                                                                       count()),
-                                           Artrite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                  filter(Artrite == "SIM") %>%
-                                                                  count()),
-                                           Artralgia_Intensa = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                            filter(Artralgia_Intensa == "SIM") %>%
-                                                                            count()),
-                                           Petequias = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                    filter(Petequias == "SIM") %>%
+                                          Artralgia_Intensa = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                           filter(Artralgia_Intensa == "SIM") %>%
+                                                                           count()),
+                                          Petequias = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                   filter(Petequias == "SIM") %>%
+                                                                   count()),
+                                          Leucopenia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                    filter(Leucopenia == "SIM") %>%
                                                                     count()),
-                                           Leucopenia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                     filter(Leucopenia == "SIM") %>%
-                                                                     count()),
-                                           Prova_do_Laco_Positiva = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                                 filter(Prova_do_Laco_Positiva == "SIM") %>%
-                                                                                 count()),
-                                           Dor_retroorbital = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                           filter(Dor_retroorbital == "SIM") %>%
-                                                                           count())
+                                          Prova_do_Laco_Positiva = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                                filter(Prova_do_Laco_Positiva == "SIM") %>%
+                                                                                count()),
+                                          Dor_retroorbital = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                          filter(Dor_retroorbital == "SIM") %>%
+                                                                          count())
 )
 colnames(PR_2025_CHIK_SINAIS_NOTIFICADOS) <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", "Dor_Retroorbital")
 
 PR_2025_CHIK_SINAIS_Confirmados <- tibble(Febre = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>% 
-                                                                filter(Febre == "SIM",
+                                                               filter(Febre == "SIM",
+                                                                      Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                               count()),
+                                          Mialgia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                 filter(Mialgia == "SIM",
+                                                                        Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                 count()),
+                                          Cefaleia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                  filter(Cefaleia == "SIM",
+                                                                         Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                  count()),
+                                          Exantema = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                  filter(Exantema == "SIM",
+                                                                         Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                  count()),
+                                          Vomito = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                filter(Vomito == "SIM",
                                                                        Classificacao_Final == "CHIKUNGUNYA") %>%
                                                                 count()),
-                                           Mialgia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                  filter(Mialgia == "SIM",
-                                                                         Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                  count()),
-                                           Cefaleia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                   filter(Cefaleia == "SIM",
-                                                                          Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                   count()),
-                                           Exantema = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                   filter(Exantema == "SIM",
-                                                                          Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                   count()),
-                                           Vomito = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                 filter(Vomito == "SIM",
+                                          Nausea = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                filter(Nausea == "SIM",
+                                                                       Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                count()),
+                                          Dor_nas_Costas = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                        filter(Dor_nas_Costas == "SIM",
+                                                                               Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                        count()),
+                                          Conjuntivite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                      filter(Conjuntivite == "SIM",
+                                                                             Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                      count()),
+                                          Artrite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                 filter(Artrite == "SIM",
                                                                         Classificacao_Final == "CHIKUNGUNYA") %>%
                                                                  count()),
-                                           Nausea = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                 filter(Nausea == "SIM",
-                                                                        Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                 count()),
-                                           Dor_nas_Costas = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                         filter(Dor_nas_Costas == "SIM",
-                                                                                Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                         count()),
-                                           Conjuntivite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                       filter(Conjuntivite == "SIM",
-                                                                              Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                       count()),
-                                           Artrite = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                  filter(Artrite == "SIM",
-                                                                         Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                  count()),
-                                           Artralgia_Intensa = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                            filter(Artralgia_Intensa == "SIM",
-                                                                                   Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                            count()),
-                                           Petequias = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                    filter(Petequias == "SIM",
+                                          Artralgia_Intensa = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                           filter(Artralgia_Intensa == "SIM",
+                                                                                  Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                           count()),
+                                          Petequias = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                   filter(Petequias == "SIM",
+                                                                          Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                   count()),
+                                          Leucopenia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                    filter(Leucopenia == "SIM",
                                                                            Classificacao_Final == "CHIKUNGUNYA") %>%
                                                                     count()),
-                                           Leucopenia = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                     filter(Leucopenia == "SIM",
-                                                                            Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                     count()),
-                                           Prova_do_Laco_Positiva = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                                 filter(Prova_do_Laco_Positiva == "SIM",
-                                                                                        Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                                 count()),
-                                           Dor_retroorbital = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
-                                                                           filter(Dor_retroorbital == "SIM",
-                                                                                  Classificacao_Final == "CHIKUNGUNYA") %>%
-                                                                           count())
+                                          Prova_do_Laco_Positiva = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                                filter(Prova_do_Laco_Positiva == "SIM",
+                                                                                       Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                                count()),
+                                          Dor_retroorbital = as.integer(PR_2025_SINAN_DECODIFICADO_CHIK %>%
+                                                                          filter(Dor_retroorbital == "SIM",
+                                                                                 Classificacao_Final == "CHIKUNGUNYA") %>%
+                                                                          count())
 )
 #colnames(PR_2025_CHIK_SINAIS_NOTIFICADOS) <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vomito", "Nausea", "Dor_nas_Costas", "Conjuntivite", "Artrite", "Artralgia_Intensa", "Petequias", "Leucopenia", "Prova_do_Laco_Positiva", "Dor_Retroorbital")
 
@@ -12344,38 +12760,38 @@ AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", 
                        Notificados = NA,
                        Confirmados = NA)
 
-AUX_GRAF[1,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 1]
-AUX_GRAF[2,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 2]
-AUX_GRAF[3,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 3]
-AUX_GRAF[4,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 4]
-AUX_GRAF[5,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 5]
-AUX_GRAF[6,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 6]
-AUX_GRAF[7,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 7]
-AUX_GRAF[8,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 8]
-AUX_GRAF[9,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 9]
-AUX_GRAF[10,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 10]
-AUX_GRAF[11,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 11]
-AUX_GRAF[12,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 12]
-AUX_GRAF[13,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 13]
-AUX_GRAF[14,2] <- PR_2025_CHIK_SINAIS_NOTIFICADOS[, 14]
+AUX_GRAF[1,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 1])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[2,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 2])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[3,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 3])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[4,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 4])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[5,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 5])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[6,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 6])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[7,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 7])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[8,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 8])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[9,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 9])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[10,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 10])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[11,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 11])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[12,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 12])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[13,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 13])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
+AUX_GRAF[14,2] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_NOTIFICADOS[, 14])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 4])*100)))
 
-AUX_GRAF[1,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 1]
-AUX_GRAF[2,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 2]
-AUX_GRAF[3,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 3]
-AUX_GRAF[4,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 4]
-AUX_GRAF[5,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 5]
-AUX_GRAF[6,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 6]
-AUX_GRAF[7,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 7]
-AUX_GRAF[8,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 8]
-AUX_GRAF[9,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 9]
-AUX_GRAF[10,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 10]
-AUX_GRAF[11,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 11]
-AUX_GRAF[12,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 12]
-AUX_GRAF[13,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 13]
-AUX_GRAF[14,3] <- PR_2025_CHIK_SINAIS_Confirmados[, 14]
+AUX_GRAF[1,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 1])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[2,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 2])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[3,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 3])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[4,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 4])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[5,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 5])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[6,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 6])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[7,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 7])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[8,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 8])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[9,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 9])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[10,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 10])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[11,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 11])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[12,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 12])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[13,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 13])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
+AUX_GRAF[14,3] <- as.numeric(format(round(sum(PR_2025_CHIK_SINAIS_Confirmados[, 14])/(PR_CHIK_2025_GERAL[nrow(PR_CHIK_2025_GERAL), 5])*100)))
 
 PR_2025_GRAF_SINAIS_CHIK <- ggplot (AUX_GRAF, 
-                                     aes(x = Sintomas)) + 
+                                    aes(x = Sintomas)) + 
   theme(axis.text.x = element_text(angle = 80, 
                                    vjust = .5,
                                    face = "bold",
@@ -12463,32 +12879,32 @@ for(i in BASE_IBGE[, 2]){
   
   ###Notiicações###  
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 5] <- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                          filter(ID_MN_RESI == i) %>%   
-                                                                                          count()
+                                                                                        filter(ID_MN_RESI == i) %>%   
+                                                                                        count()
   )   
   
   ###Dengue###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 6] <-as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                         filter(CLASSI_FIN == 10, 
-                                                                                                ID_MN_RESI == i) %>%
-                                                                                         count() 
+                                                                                       filter(CLASSI_FIN == 10, 
+                                                                                              ID_MN_RESI == i) %>%
+                                                                                       count() 
   )
   
   ###D.S.A.###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 7] <- as.integer(PR_DENGUE_2025_SINAN %>%  
-                                                                                          filter(CLASSI_FIN == 11, 
-                                                                                                 ID_MN_RESI == i) %>% 
-                                                                                          count()
+                                                                                        filter(CLASSI_FIN == 11, 
+                                                                                               ID_MN_RESI == i) %>% 
+                                                                                        count()
   )
   
   ###Dengue Grave###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 8] <- as.integer(PR_DENGUE_2025_SINAN %>%  
-                                                                                          filter(CLASSI_FIN == 12, 
-                                                                                                 ID_MN_RESI == i) %>% 
-                                                                                          count()
+                                                                                        filter(CLASSI_FIN == 12, 
+                                                                                               ID_MN_RESI == i) %>% 
+                                                                                        count()
   )
   
   ###Descartados###
@@ -12496,75 +12912,75 @@ for(i in BASE_IBGE[, 2]){
   
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 9]<- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                         filter(CLASSI_FIN == 5,
-                                                                                                ID_MN_RESI == i) %>% 
-                                                                                         count()
+                                                                                       filter(CLASSI_FIN == 5,
+                                                                                              ID_MN_RESI == i) %>% 
+                                                                                       count()
   )  
   
   ###Autóctones###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 10]<- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                          filter(ID_MN_RESI == i, 
-                                                                                                 TPAUTOCTO == 1,
-                                                                                                 CLASSI_FIN == 10) %>% 
-                                                                                          count() 
+                                                                                        filter(ID_MN_RESI == i, 
+                                                                                               TPAUTOCTO == 1,
+                                                                                               CLASSI_FIN == 10) %>% 
+                                                                                        count() 
   )
   
   ###DENV I###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 12]<- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                          filter(ID_MN_RESI == i, 
-                                                                                                 SOROTIPO == 1) %>% 
-                                                                                          count() 
+                                                                                        filter(ID_MN_RESI == i, 
+                                                                                               SOROTIPO == 1) %>% 
+                                                                                        count() 
   )
   
   ###DENV II###
   
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 13] <- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                           filter(ID_MN_RESI == i, 
-                                                                                                  SOROTIPO == 2) %>% 
-                                                                                           count() 
+                                                                                         filter(ID_MN_RESI == i, 
+                                                                                                SOROTIPO == 2) %>% 
+                                                                                         count() 
   )
   
   ###DENV III###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 14] <- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                           filter(ID_MN_RESI == i, 
-                                                                                                  SOROTIPO == 3) %>% 
-                                                                                           count() 
+                                                                                         filter(ID_MN_RESI == i, 
+                                                                                                SOROTIPO == 3) %>% 
+                                                                                         count() 
   )
   ###DENV IV###                                     
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 15]<- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                          filter(ID_MN_RESI == i, 
-                                                                                                 SOROTIPO == 4) %>% 
-                                                                                          count() 
+                                                                                        filter(ID_MN_RESI == i, 
+                                                                                               SOROTIPO == 4) %>% 
+                                                                                        count() 
   )
   
   ###Óbitos###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 16] <- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                           filter(ID_MN_RESI == i, 
-                                                                                                  EVOLUCAO == 2) %>% 
-                                                                                           count() 
+                                                                                         filter(ID_MN_RESI == i, 
+                                                                                                EVOLUCAO == 2) %>% 
+                                                                                         count() 
   )
   
   ###Inconclusivos###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 17] <-as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                          filter(CLASSI_FIN == 8, 
-                                                                                                 ID_MN_RESI == i) %>%
-                                                                                          count() 
+                                                                                        filter(CLASSI_FIN == 8, 
+                                                                                               ID_MN_RESI == i) %>%
+                                                                                        count() 
   )
   
   ###Importados###
   
   PR_DENGUE_2025_GERAL[which(PR_DENGUE_2025_GERAL$Código_IBGE == i), 18]<- as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                                          filter(ID_MN_RESI == i, 
-                                                                                                 TPAUTOCTO == 2,
-                                                                                                 CLASSI_FIN == 10) %>% 
-                                                                                          count() 
+                                                                                        filter(ID_MN_RESI == i, 
+                                                                                               TPAUTOCTO == 2,
+                                                                                               CLASSI_FIN == 10) %>% 
+                                                                                        count() 
   )
 }
 
@@ -12592,162 +13008,162 @@ PR_DENGUE_2025_GERAL <- PR_DENGUE_2025_GERAL[, c(1, 3, 4, 5, 19, 6, 7, 8, 22, 9,
 ######################################################################################################
 
 PR_2025_DENGUE_SINAIS_Notificados <- tibble(Febre = as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                  filter(FEBRE == 1 ) %>%
+                                                                 filter(FEBRE == 1 ) %>%
+                                                                 count()),
+                                            Mialgia = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                   filter(MIALGIA == 1 ) %>%
+                                                                   count()),
+                                            Cefaleia = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                    filter(CEFALEIA == 1) %>%
+                                                                    count()),
+                                            Exantema = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                    filter(EXANTEMA == 1) %>%
+                                                                    count()),
+                                            Vomito = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                  filter(VOMITO == 1) %>%
                                                                   count()),
-                                             Mialgia = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                    filter(MIALGIA == 1 ) %>%
-                                                                    count()),
-                                             Cefaleia = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                     filter(CEFALEIA == 1) %>%
-                                                                     count()),
-                                             Exantema = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                     filter(EXANTEMA == 1) %>%
-                                                                     count()),
-                                             Vomito = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                   filter(VOMITO == 1) %>%
+                                            Nausea = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                  filter(NAUSEA == 1) %>%
+                                                                  count()),
+                                            Dor_nas_Costas = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                          filter(DOR_COSTAS == 1) %>%
+                                                                          count()),
+                                            Conjuntivite = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                        filter(CONJUNTVIT == 1) %>%
+                                                                        count()),
+                                            Artrite = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                   filter(ARTRITE == 1) %>%
                                                                    count()),
-                                             Nausea = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                   filter(NAUSEA == 1) %>%
-                                                                   count()),
-                                             Dor_nas_Costas = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                           filter(DOR_COSTAS == 1) %>%
-                                                                           count()),
-                                             Conjuntivite = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                         filter(CONJUNTVIT == 1) %>%
-                                                                         count()),
-                                             Artrite = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                    filter(ARTRITE == 1) %>%
-                                                                    count()),
-                                             Artralgia_Intensa = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                              filter(ARTRALGIA == 1) %>%
-                                                                              count()),
-                                             Petequias = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                      filter(PETEQUIA_N == 1) %>%
+                                            Artralgia_Intensa = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                             filter(ARTRALGIA == 1) %>%
+                                                                             count()),
+                                            Petequias = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                     filter(PETEQUIA_N == 1) %>%
+                                                                     count()),
+                                            Leucopenia = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                      filter(LEUCOPENIA == 1) %>%
                                                                       count()),
-                                             Leucopenia = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                       filter(LEUCOPENIA == 1) %>%
-                                                                       count()),
-                                             Prova_do_Laco_Positiva = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                                   filter(LACO == 1) %>%
-                                                                                   count()),
-                                             Dor_retroorbital = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                             filter(DOR_RETRO == 1) %>%
-                                                                             count())
+                                            Prova_do_Laco_Positiva = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                                  filter(LACO == 1) %>%
+                                                                                  count()),
+                                            Dor_retroorbital = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                            filter(DOR_RETRO == 1) %>%
+                                                                            count())
 )
 colnames(PR_2025_DENGUE_SINAIS_Notificados) <- c("Febre", "Mialgia", "Cefaleia", "Exantema", "Vômito", "Náusea", "Dor nas Costas", "Conjuntivite", "Artrite", "Artralgia Intensa", "Petéquias", "Leucopenia", "Prova do Laco Positiva", "Dor Retroorbital")
 
 PR_2025_DENGUE_SINAIS_Confirmados <- tibble(Febre = as.integer(PR_DENGUE_2025_SINAN %>% 
-                                                                  filter(FEBRE == 1,
+                                                                 filter(FEBRE == 1,
+                                                                        CLASSI_FIN == 10 
+                                                                        | 
+                                                                          CLASSI_FIN == 11 
+                                                                        |
+                                                                          CLASSI_FIN == 12                                                            |                                                              CLASSI_FIN == 11                                                            |                                                             CLASSI_FIN == 12,) %>%
+                                                                 count()),
+                                            Mialgia = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                   filter(MIALGIA == 1,
+                                                                          CLASSI_FIN == 10 
+                                                                          | 
+                                                                            CLASSI_FIN == 11 
+                                                                          |
+                                                                            CLASSI_FIN == 12) %>%
+                                                                   count()),
+                                            Cefaleia = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                    filter(CEFALEIA == 1,
+                                                                           CLASSI_FIN == 10 
+                                                                           | 
+                                                                             CLASSI_FIN == 11 
+                                                                           |
+                                                                             CLASSI_FIN == 12) %>%
+                                                                    count()),
+                                            Exantema = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                    filter(EXANTEMA == 1,
+                                                                           CLASSI_FIN == 10 
+                                                                           | 
+                                                                             CLASSI_FIN == 11 
+                                                                           |
+                                                                             CLASSI_FIN == 12) %>%
+                                                                    count()),
+                                            Vomito = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                  filter(VOMITO == 1,
                                                                          CLASSI_FIN == 10 
                                                                          | 
                                                                            CLASSI_FIN == 11 
                                                                          |
-                                                                           CLASSI_FIN == 12                                                            |                                                              CLASSI_FIN == 11                                                            |                                                             CLASSI_FIN == 12,) %>%
+                                                                           CLASSI_FIN == 12) %>%
                                                                   count()),
-                                             Mialgia = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                    filter(MIALGIA == 1,
-                                                                           CLASSI_FIN == 10 
-                                                                           | 
-                                                                             CLASSI_FIN == 11 
-                                                                           |
-                                                                             CLASSI_FIN == 12) %>%
-                                                                    count()),
-                                             Cefaleia = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                     filter(CEFALEIA == 1,
-                                                                            CLASSI_FIN == 10 
-                                                                            | 
-                                                                              CLASSI_FIN == 11 
-                                                                            |
-                                                                              CLASSI_FIN == 12) %>%
-                                                                     count()),
-                                             Exantema = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                     filter(EXANTEMA == 1,
-                                                                            CLASSI_FIN == 10 
-                                                                            | 
-                                                                              CLASSI_FIN == 11 
-                                                                            |
-                                                                              CLASSI_FIN == 12) %>%
-                                                                     count()),
-                                             Vomito = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                   filter(VOMITO == 1,
+                                            Nausea = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                  filter(NAUSEA == 1,
+                                                                         CLASSI_FIN == 10 
+                                                                         | 
+                                                                           CLASSI_FIN == 11 
+                                                                         |
+                                                                           CLASSI_FIN == 12) %>%
+                                                                  count()),
+                                            Dor_nas_Costas = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                          filter(DOR_COSTAS == 1,
+                                                                                 CLASSI_FIN == 10 
+                                                                                 | 
+                                                                                   CLASSI_FIN == 11 
+                                                                                 |
+                                                                                   CLASSI_FIN == 12) %>%
+                                                                          count()),
+                                            Conjuntivite = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                        filter(CONJUNTVIT == 1,
+                                                                               CLASSI_FIN == 10 
+                                                                               | 
+                                                                                 CLASSI_FIN == 11 
+                                                                               |
+                                                                                 CLASSI_FIN == 12) %>%
+                                                                        count()),
+                                            Artrite = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                   filter(ARTRITE == 1,
                                                                           CLASSI_FIN == 10 
                                                                           | 
                                                                             CLASSI_FIN == 11 
                                                                           |
                                                                             CLASSI_FIN == 12) %>%
                                                                    count()),
-                                             Nausea = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                   filter(NAUSEA == 1,
-                                                                          CLASSI_FIN == 10 
-                                                                          | 
-                                                                            CLASSI_FIN == 11 
-                                                                          |
-                                                                            CLASSI_FIN == 12) %>%
-                                                                   count()),
-                                             Dor_nas_Costas = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                           filter(DOR_COSTAS == 1,
-                                                                                  CLASSI_FIN == 10 
-                                                                                  | 
-                                                                                    CLASSI_FIN == 11 
-                                                                                  |
-                                                                                    CLASSI_FIN == 12) %>%
-                                                                           count()),
-                                             Conjuntivite = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                         filter(CONJUNTVIT == 1,
-                                                                                CLASSI_FIN == 10 
-                                                                                | 
-                                                                                  CLASSI_FIN == 11 
-                                                                                |
-                                                                                  CLASSI_FIN == 12) %>%
-                                                                         count()),
-                                             Artrite = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                    filter(ARTRITE == 1,
-                                                                           CLASSI_FIN == 10 
-                                                                           | 
-                                                                             CLASSI_FIN == 11 
-                                                                           |
-                                                                             CLASSI_FIN == 12) %>%
-                                                                    count()),
-                                             Artralgia_Intensa = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                              filter(ARTRALGIA == 1,
-                                                                                     CLASSI_FIN == 10 
-                                                                                     | 
-                                                                                       CLASSI_FIN == 11 
-                                                                                     |
-                                                                                       CLASSI_FIN == 12) %>%
-                                                                              count()),
-                                             Petequias = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                      filter(PETEQUIA_N == 1,
+                                            Artralgia_Intensa = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                             filter(ARTRALGIA == 1,
+                                                                                    CLASSI_FIN == 10 
+                                                                                    | 
+                                                                                      CLASSI_FIN == 11 
+                                                                                    |
+                                                                                      CLASSI_FIN == 12) %>%
+                                                                             count()),
+                                            Petequias = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                     filter(PETEQUIA_N == 1,
+                                                                            CLASSI_FIN == 10 
+                                                                            | 
+                                                                              CLASSI_FIN == 11 
+                                                                            |
+                                                                              CLASSI_FIN == 12) %>%
+                                                                     count()),
+                                            Leucopenia = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                      filter(LEUCOPENIA == 1,
                                                                              CLASSI_FIN == 10 
                                                                              | 
                                                                                CLASSI_FIN == 11 
                                                                              |
                                                                                CLASSI_FIN == 12) %>%
                                                                       count()),
-                                             Leucopenia = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                       filter(LEUCOPENIA == 1,
-                                                                              CLASSI_FIN == 10 
-                                                                              | 
-                                                                                CLASSI_FIN == 11 
-                                                                              |
-                                                                                CLASSI_FIN == 12) %>%
-                                                                       count()),
-                                             Prova_do_Laco_Positiva = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                                   filter(LACO == 1,
-                                                                                          CLASSI_FIN == 10 
-                                                                                          | 
-                                                                                            CLASSI_FIN == 11 
-                                                                                          |
-                                                                                            CLASSI_FIN == 12) %>%
-                                                                                   count()),
-                                             Dor_retroorbital = as.integer(PR_DENGUE_2025_SINAN %>%
-                                                                             filter(DOR_RETRO == 1,
-                                                                                    CLASSI_FIN == 10 
-                                                                                    | 
-                                                                                      CLASSI_FIN == 11 
-                                                                                    |
-                                                                                      CLASSI_FIN == 12) %>%
-                                                                             count())
+                                            Prova_do_Laco_Positiva = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                                  filter(LACO == 1,
+                                                                                         CLASSI_FIN == 10 
+                                                                                         | 
+                                                                                           CLASSI_FIN == 11 
+                                                                                         |
+                                                                                           CLASSI_FIN == 12) %>%
+                                                                                  count()),
+                                            Dor_retroorbital = as.integer(PR_DENGUE_2025_SINAN %>%
+                                                                            filter(DOR_RETRO == 1,
+                                                                                   CLASSI_FIN == 10 
+                                                                                   | 
+                                                                                     CLASSI_FIN == 11 
+                                                                                   |
+                                                                                     CLASSI_FIN == 12) %>%
+                                                                            count())
 )
 
 AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema", 
@@ -12757,40 +13173,82 @@ AUX_GRAF <- data.frame(Sintomas = c("Febre", "Mialgia", "Cefaleia", "Exantema",
                        Notificados = NA,
                        Confirmados = NA)
 
-AUX_GRAF[1,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 1]
-AUX_GRAF[2,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 2]
-AUX_GRAF[3,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 3]
-AUX_GRAF[4,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 4]
-AUX_GRAF[5,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 5]
-AUX_GRAF[6,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 6]
-AUX_GRAF[7,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 7]
-AUX_GRAF[8,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 8]
-AUX_GRAF[9,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 9]
-AUX_GRAF[10,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 10]
-AUX_GRAF[11,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 11]
-AUX_GRAF[12,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 12]
-AUX_GRAF[13,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 13]
-AUX_GRAF[14,2] <- PR_2025_DENGUE_SINAIS_Notificados[, 14]
+AUX_GRAF[1,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 1])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[2,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 2])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[3,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 3])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[4,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 4])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[5,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 5])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[6,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 6])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[7,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 7])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[8,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 8])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[9,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 9])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[10,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 10])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[11,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 11])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[12,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 12])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[13,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 13])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
+AUX_GRAF[14,2] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Notificados[, 14])/(sum(PR_DENGUE_2025_GERAL[, 4]))*100)))
 
-AUX_GRAF[1,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 1]
-AUX_GRAF[2,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 2]
-AUX_GRAF[3,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 3]
-AUX_GRAF[4,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 4]
-AUX_GRAF[5,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 5]
-AUX_GRAF[6,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 6]
-AUX_GRAF[7,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 7]
-AUX_GRAF[8,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 8]
-AUX_GRAF[9,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 9]
-AUX_GRAF[10,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 10]
-AUX_GRAF[11,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 11]
-AUX_GRAF[12,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 12]
-AUX_GRAF[13,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 13]
-AUX_GRAF[14,3] <- PR_2025_DENGUE_SINAIS_Confirmados[, 14]
+AUX_GRAF[1,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 1])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                                          sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                                          sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[2,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 2])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[3,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 3])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[4,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 4])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[5,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 5])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[6,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 6])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[7,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 7])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[8,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 8])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[9,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 9])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                         sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[10,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 10])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[11,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 11])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[12,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 12])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[13,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 13])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
+AUX_GRAF[14,3] <- as.numeric(format(round(sum(PR_2025_DENGUE_SINAIS_Confirmados[, 14])/((sum(PR_DENGUE_2025_GERAL[, 6]) + 
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 7]) +
+                                                                                          sum(PR_DENGUE_2025_GERAL[, 8])))*100)))
+
 
 ######  Construção do Gráfico de SInais Estadual   #####
 
 PR_DENGUE_2025_GRAF_SINAIS <- ggplot (AUX_GRAF, 
-                                       aes(x = Sintomas)) + 
+                                      aes(x = Sintomas)) + 
   theme(axis.text.x = element_text(angle = 80, 
                                    vjust = .5,
                                    face = "bold",
@@ -13065,69 +13523,26 @@ AUX02 <- tibble(Menos_1_ano = as.integer(PR_DENGUE_2025_SINAN %>%
                                                              CLASSI_FIN == 12) %>% 
                                                     count()))
 
-
-####   Faixa etária   ####
-
-AUX_GRAF <- tibble(Rotulos = colnames(AUX01[1:6]),
-                   Ordem = as.factor(1:(7-1)),
-                   Notificados = t(AUX01[,1:6]),
-                   Confirmados = t(AUX02[,1:6]) 
-)
-
-AUX_GRAF[,1] <- c("< 1 ano", "1 |-- 5 anos", "5 |-- 12 anos", 
-                  "12 |-- 18 anos", "18 |-- 60 anos", "≥ 60 anos")
-
-colnames(AUX_GRAF)[3] <- "Notificados"
-
-colnames(AUX_GRAF)[4] <- "Confirmados"
-
-PR_GRAF_Faixa_Etaria <- ggplot (AUX_GRAF, 
-                                aes(x = Ordem)) + 
-  labs(caption = Fonte, 
-       x = NULL,
-       y = "Número de Casos",
-       title = "FAIXA ETÁRIA NOTIFICADOS/CONFIRMADOS PARANÁ
-(2025)") +
-  geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = -.20)) + 
-  geom_label(aes(y = Notificados,
-                 label = Notificados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = -.20,
-             vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#118395", "Confirmados" = "#3B9511")) +
-  geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = .20)) +
-  geom_label(aes(y = Confirmados,
-                 label = Confirmados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = .20,
-             vjust = 0.1) +
-  scale_x_discrete(breaks = c(1:6),
-                   labels = AUX_GRAF$Rotulos) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme() +
-  theme(axis.text.x = element_text(angle = 65),
-        plot.title = element_text(face = "bold",
-                                  size = 16,
-                                  colour = "#556B2F"))
-
 ##########   Escolaridade   #####
 
 AUX_GRAF <- tibble(Rotulos = colnames(AUX01[11:18]),
                    Ordem = as.factor(1:(18-10)),
                    Notificados = t(AUX01[, 11:18]),
                    Confirmados = t(AUX02[, 11:18]))
+
+AUX_GRAF[, 5] <- (AUX_GRAF[, 3]/ apply(AUX_GRAF[, 3], 2, sum)) *100
+
+AUX_GRAF[, 6] <- (AUX_GRAF[, 4]/ apply(AUX_GRAF[, 4], 2, sum)) *100
+
+colnames(AUX_GRAF)[5:6] <- c("Not", "Conf")
+
+AUX_GRAF$Not <- as.numeric(format(round(AUX_GRAF$Not , 2))
+)
+
+AUX_GRAF$Conf <- as.numeric(format(round(AUX_GRAF$Conf , 2))
+)
+
+AUX_GRAF <- AUX_GRAF[, c(1, 2, 5:6)]
 
 AUX_GRAF[,1] <- c("Analfabeto", "Fundamental 
 Incompleto", "Fundamental", "Médio 
@@ -13185,6 +13600,20 @@ AUX_GRAF <- tibble(Rotulos = colnames(AUX01[7:8]),
                    Notificados = t(AUX01[, 7:8]),
                    Confirmados = t(AUX02[, 7:8]))
 
+AUX_GRAF[, 5] <- (AUX_GRAF[, 3]/ apply(AUX_GRAF[, 3], 2, sum)) *100
+
+AUX_GRAF[, 6] <- (AUX_GRAF[, 4]/ apply(AUX_GRAF[, 4], 2, sum)) *100
+
+colnames(AUX_GRAF)[5:6] <- c("Not", "Conf")
+
+AUX_GRAF$Not <- as.numeric(format(round(AUX_GRAF$Not , 2))
+)
+
+AUX_GRAF$Conf <- as.numeric(format(round(AUX_GRAF$Conf , 2))
+)
+
+AUX_GRAF <- AUX_GRAF[, c(1, 2, 5:6)]
+
 AUX_GRAF[,1] <- c("Urbana", "Rural")
 
 colnames(AUX_GRAF)[3:4] <- c("Notificados", "Confirmados")
@@ -13230,58 +13659,6 @@ PARANÁ (2025)") +
                                   size = 16,
                                   colour = "#556B2F"))
 
-######  SEXO  ####
-
-AUX_GRAF <- tibble(Rotulos = colnames(AUX01[9:10]),
-                   Ordem = as.factor(1:2),
-                   Notificados = t(AUX01[, 9:10]),
-                   Confirmados = t(AUX02[, 9:10]))
-
-AUX_GRAF[,1] <- c("Feminino", "Masculino")
-
-colnames(AUX_GRAF)[3:4] <- c("Notificados", "Confirmados")
-
-PR_GRAF_Sexo <- ggplot (AUX_GRAF, 
-                        aes(x = Ordem)) + 
-  labs(caption = Fonte, 
-       x = NULL,
-       y = "Número de Casos",
-       title = "SEXO NOTIFICADOS/CONFIRMADOS PARANÁ (2025)") +
-  geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = -.20)) + 
-  geom_label(aes(y = Notificados,
-                 label = Notificados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = -.20,
-             vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#541E98", "Confirmados" = "#98941E")) +
-  geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
-    stat = "identity",
-    color = "black",
-    width = .4,
-    position = position_nudge(x = .20)) +
-  geom_label(aes(y = Confirmados,
-                 label = Confirmados),
-             size = 3, 
-             alpha = 0.5,
-             nudge_x = .20,
-             vjust = 0.1) +
-  theme(axis.text.x = element_text(angle = 0)) +
-  scale_x_discrete(breaks = c(1:2),
-                   labels = AUX_GRAF$Rotulos) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  Theme() +
-  theme(axis.text.x = element_text(angle = 0),
-        plot.title = element_text(face = "bold",
-                                  size = 16,
-                                  colour = "#556B2F"))
-
 ###############################################################################################
 ################################################################################################
 #####################################################################################################################
@@ -13307,10 +13684,13 @@ sheet_write(PR_DENGUE_2025_GERAL, ss = "https://docs.google.com/spreadsheets/d/1
             sheet = "Dengue")
 
 PR_ZIKA_2025_GERAL <- read_sheet ("https://docs.google.com/spreadsheets/d/1DNR7tyVt2tZ6ItiwJN96Bb-I4nODOmcP0G_oG0Tf_28/edit#gid=1817054379", 
-                                   sheet ="Zika")
+                                  sheet ="Zika")
 
 RS22_2025_REDE_OVITRAMPAS <- read_sheet("https://docs.google.com/spreadsheets/d/1cFq9tkfZYApiOdtJHM1WrQtwIMtUMKt8H2NZ9rDyduU/edit?gid=863361484#gid=863361484", 
-                                         sheet = "Consolidado")
+                                        sheet = "Consolidado")
+
+RS22_2025_INDICES_OVITRAMPAS <- read_sheet("https://docs.google.com/spreadsheets/d/1QWxmCxl7fPiE_6wnyPLZ-B7a0yXm6NxRhFAbhGOtHeU/edit?gid=863361484#gid=863361484", 
+                                        sheet = "Consolidado")
 
 RS22_2025_CICLOS_LOCALIDADES <- read_sheet("https://docs.google.com/spreadsheets/d/1JbvsInTDKdgRXNSIW75glk6v2abEXvDpUlcSK_PDA4E/edit?gid=764914932#gid=764914932")
 
@@ -13337,7 +13717,7 @@ RS22_2025_RG_MUNICIPIOS <- read_sheet("https://docs.google.com/spreadsheets/d/1K
 RS22_2025_RG_LOCALIDADES <- read_sheet("https://docs.google.com/spreadsheets/d/176wM7py-JuHl5gmQXnEzP_tohiNdCAItTiQ5VW1FUDk/edit?gid=877642872#gid=877642872")
 
 RS22_2025_PE <- read_sheet("https://docs.google.com/spreadsheets/d/1JdRMkASZRTpDa9V7lBIXY5aJxlLoSp01PVQ_WmziyjA/edit?gid=863361484#gid=863361484", 
-                            sheet = "Consolidado")
+                           sheet = "Consolidado")
 
 ####Por alguma razão a planilha veio como uma lista####
 
@@ -13345,7 +13725,7 @@ RS22_2025_PE <- read_sheet("https://docs.google.com/spreadsheets/d/1JdRMkASZRTpD
 #                                    unlist))
 
 RS22_2025_ASSISTENCIA <- read_sheet("https://docs.google.com/spreadsheets/d/1Xx7t478C3knk-OZAkBc3exz0Ki7vDgFA-RPy98kmpiA/edit?gid=863361484#gid=863361484",
-                                     sheet = "Consolidado")
+                                    sheet = "Consolidado")
 
 ###Upload tabelas a serem usadas nos Dashboards mmunicipais
 
@@ -13373,10 +13753,10 @@ sheet_write(RS22_2025_DOENCAS_PRE_EXISTENTES, ss = "https://docs.google.com/spre
 ###Criando tabela Geral Resumida para utilização no Informe###
 
 RS22_2025_Resumida <- tibble(Notificados = sum(RS22_2025_GERAL$Notificados),
-                              Dengue = sum(RS22_2025_GERAL$Dengue),
-                              DSA = sum(RS22_2025_GERAL$D_S_A),
-                              Dengue_Grave = sum(RS22_2025_GERAL$Dengue_Grave),
-                              Obitos = sum(RS22_2025_GERAL$Obitos)
+                             Dengue = sum(RS22_2025_GERAL$Dengue),
+                             DSA = sum(RS22_2025_GERAL$D_S_A),
+                             Dengue_Grave = sum(RS22_2025_GERAL$Dengue_Grave),
+                             Obitos = sum(RS22_2025_GERAL$Obitos)
 )
 
 sheet_write(RS22_2025_Resumida, ss = "https://docs.google.com/spreadsheets/d/1bAPfOaZfUOf7ZP8-sxNLXa91YRGJ9QtnBL5cFeLpJPc/edit#gid=0", 
@@ -13493,7 +13873,7 @@ write.csv (RS22_Serie_Historica,
 ####     Buscando a planilha RS22_2025_SINAN_DECODIFICADO do google sheets com as coordenadas geográficas inseridas pelos municípios   ####
 
 RS22_2025_SINAN_DECODIFICADO <- read_sheet("https://docs.google.com/spreadsheets/d/167vkgU2HLIRk2JKAr_dsxOvhu1luR60e6eMnpw9iIPI/edit?gid=1437725143#gid=1437725143", 
-                                            sheet= "SINAN")
+                                           sheet= "SINAN")
 
 ####      Gravando a planilha RS22_2025_SINAN_DECODIFICADO no diretório para ser utilizada pelo QGIS    ###
 
@@ -13513,14 +13893,15 @@ write.csv(AUX, "/home/gustavo/Área de trabalho/Análise_de_Dados/Tabulacoes_R/A
 
 #####   Criando o Mapa Regional Dissolvida  e Mapa Base ####
 
-RS22_Dissolvida <- read_health_region(year = 2013)
+SHAPEFILE_REGIONAL <- st_read("Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde.shp")
 
-RS22_Dissolvida <- RS22_Dissolvida %>% filter(code_state == 41,
-                                              code_health_region == 41022)
+SHAPEFILE_REGIONAL_Dissolvido <- st_read("Shapefiles/22ª_Regional_de_Saúde/22ª_Regional_de_Saúde_Dissolvido.shp")
 
-MAPA_BASE <- read_municipality(code_muni = "PR", year = 2020)
+SHAPEFILE_ESTADUAL <- st_read("Shapefiles/Paraná/41MUE250GC_SIR.shp")
 
-MAPA_BASE$name_muni <- toupper(MAPA_BASE$name_muni)
+MAPA_BASE <- SHAPEFILE_ESTADUAL
+
+MAPA_BASE$NM_MUN <- toupper(MAPA_BASE$NM_MUN)
 
 #####   Trabalhando os Mapas de dengue estaduais   ###
 
@@ -13535,10 +13916,7 @@ PR_DENGUE_2025_GERAL[127, 2] <- "SÃO JORGE D'OESTE"
 
 ####  SOROTIPOS ESTADO   ##########
 
-MAPA_BASE_PR <- left_join(MAPA_BASE, PR_DENGUE_2025_GERAL, by = c("name_muni" = "Município_sem_Código"))
-
-######  Código abaixo pode ser utilizado para o mesmo propósito no próximo  ##############
-######  Período sazonal.                                                    ##############
+MAPA_BASE_PR <- left_join(MAPA_BASE, PR_DENGUE_2025_GERAL, by = c("NM_MUN" = "Município_sem_Código"))
 
 AUX_I <- MAPA_BASE_PR %>% filter(DENV_I > 0 & DENV_II == 0 & DENV_III == 0 & DENV_IV == 0)
 AUX_II <- MAPA_BASE_PR %>% filter(DENV_I == 0 & DENV_II > 0 & DENV_III == 0 & DENV_IV == 0)
@@ -13582,6 +13960,7 @@ PR_2025_GRAF_SOROTIPO_PR <- ggplot() +
                                 "II" = "blue",
                                 "I, II" = "#2F4F4F",
                                 "I, III" ="#A0522D",
+                                "I, II, III" ="#A0522D",
                                 "III" = "yellow",
                                 "II, III" = "red")) +
   theme(legend.position = "bottom") +
@@ -13597,9 +13976,9 @@ PR_2025_GRAF_SOROTIPO_PR <- ggplot() +
                                    size = 24,
                                    colour = "#556B2F")
   ) +
-  geom_sf(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, 
           fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
@@ -13641,9 +14020,9 @@ PR_2025_GRAF_INCIDENCIA_PR <- ggplot() +
                                    size = 24,
                                    colour = "#556B2F")
   ) +
-  geom_sf(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, 
           fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
@@ -13686,9 +14065,9 @@ Casos Prováveis = Casos Notificados - Casos Descartados") +
                                    size = 24,
                                    colour = "#556B2F")
   ) +
-  geom_sf(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, 
           fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
@@ -13706,7 +14085,7 @@ PR_CHIK_2025_GERAL[184, 2] <- "RANCHO ALEGRE D'OESTE"
 PR_CHIK_2025_GERAL[239, 2] <- "SANTA CRUZ DE MONTE CASTELO"
 PR_CHIK_2025_GERAL[127, 2] <- "SÃO JORGE D'OESTE"
 
-MAPA_BASE_PR <- left_join(MAPA_BASE, PR_CHIK_2025_GERAL, by = c("name_muni" = "Município_sem_Código"))
+MAPA_BASE_PR <- left_join(MAPA_BASE, PR_CHIK_2025_GERAL, by = c("NM_MUN" = "Município_sem_Código"))
 
 ###### Mapa Notificados   ############################
 
@@ -13743,8 +14122,8 @@ PR_2025_GRAF_CHIK_Notificados <- ggplot() +
        caption = Fonte, 
        title = "Casos Notificados de Chikungunya - Paraná",
        subtitle = "Números absolutos") +
-  geom_sf(data = RS22_Dissolvida, fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, fill = "grey") +
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
@@ -13785,28 +14164,95 @@ PR_2025_GRAF_CHIK_Incidência <- ggplot() +
        caption = Fonte, 
        title = "Incidência de Chikungunya - Paraná",
        subtitle = "Casos autóctones por 100.000 hab") +
-  geom_sf(data = RS22_Dissolvida, fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, 
+          fill = "grey") +
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
 
-##############    ZIKA    ##########################################
+#####################   ZIKA VIRUS   ################################
 
-PR_ZIKA_2025_GERAL[104, 2] <- "BELA VISTA DA CAROBA"
-PR_ZIKA_2025_GERAL[360, 2] <- "DIAMANTE D'OESTE"
-PR_ZIKA_2025_GERAL[93, 2] <- "ITAPEJARA D'OESTE"
-PR_ZIKA_2025_GERAL[265, 2] <- "MUNHOZ DE MELO"
-PR_ZIKA_2025_GERAL[117, 2] <- "PÉROLA D'OESTE"
-PR_ZIKA_2025_GERAL[184, 2] <- "RANCHO ALEGRE D'OESTE"
-PR_ZIKA_2025_GERAL[239, 2] <- "SANTA CRUZ DE MONTE CASTELO"
-PR_ZIKA_2025_GERAL[127, 2] <- "SÃO JORGE D'OESTE"
+####Elaborando for loop para criar tabela de dados gerais de notificação da 22ª RS###
 
-MAPA_BASE_PR <- left_join(MAPA_BASE, PR_ZIKA_2025_GERAL, by = c("name_muni" = "MUNICÍPIO"))
+PR_ZIKA_2025_GERAL <- BASE_IBGE[, -c(4, 6)]
+
+PR_ZIKA_2025_GERAL$Notificados <- NA
+
+PR_ZIKA_2025_GERAL$Confirmados <- NA
+
+PR_ZIKA_2025_GERAL$Descartados <- NA
+
+PR_ZIKA_2025_GERAL$Autoctones <- NA
+
+PR_ZIKA_2025_GERAL$Incidencia <- NA
+
+PR_ZIKA_2025_GERAL$Em_Investigacao <- NA
+
+for(i in BASE_IBGE[, 2]){
+  
+  ###Notiicações###  
+  PR_ZIKA_2025_GERAL[which(PR_ZIKA_2025_GERAL$Código_IBGE == i), 5] <- as.integer(NINDINET2025%>% 
+                                                                                    filter(ID_MN_RESI == i) %>%   
+                                                                                    count()
+  )   
+  
+  ###ZIKA###
+  
+  PR_ZIKA_2025_GERAL[which(PR_ZIKA_2025_GERAL$Código_IBGE == i), 6] <-as.integer(NINDINET2025%>% 
+                                                                                   filter(CLASSI_FIN == 1, 
+                                                                                          ID_MN_RESI == i) %>%
+                                                                                   count() 
+  )
+  
+  ###Descartados###
+  
+  
+  
+  PR_ZIKA_2025_GERAL[which(PR_ZIKA_2025_GERAL$Código_IBGE == i), 7]<- as.integer(NINDINET2025%>% 
+                                                                                   filter(CLASSI_FIN == 2,
+                                                                                          ID_MN_RESI == i) %>% 
+                                                                                   count()
+  )  
+  
+  ###Autóctones###
+  
+  
+  PR_ZIKA_2025_GERAL[which(PR_ZIKA_2025_GERAL$Código_IBGE == i), 8]<- as.integer(NINDINET2025%>% 
+                                                                                   filter(ID_MN_RESI == i, 
+                                                                                          TPAUTOCTO == 1,
+                                                                                          CLASSI_FIN == 13) %>% 
+                                                                                   count() 
+  )
+  
+}
+
+###Incidência###FORA DO LOOP###
+
+PR_ZIKA_2025_GERAL$Incidencia <- (PR_ZIKA_2025_GERAL$Autoctones/PR_ZIKA_2025_GERAL$População)*100000  
+PR_ZIKA_2025_GERAL$Incidencia <- format(round(PR_ZIKA_2025_GERAL$Incidencia, 2))
+PR_ZIKA_2025_GERAL$Incidencia <- as.numeric(PR_ZIKA_2025_GERAL$Incidencia)
+
+PR_ZIKA_2025_GERAL$Em_Investigacao <- as.integer(PR_ZIKA_2025_GERAL$Notificados) - as.integer(PR_ZIKA_2025_GERAL$Confirmados + PR_ZIKA_2025_GERAL$Descartados)
+
+PR_ZIKA_2025_GERAL[400, 4:10] <- apply(PR_ZIKA_2025_GERAL[, 4:10], 2, sum)
+
+##############   MAPAS ZIKA    ##########################################
+
+PR_ZIKA_2025_GERAL[104, 3] <- "BELA VISTA DA CAROBA"
+PR_ZIKA_2025_GERAL[360, 3] <- "DIAMANTE D'OESTE"
+PR_ZIKA_2025_GERAL[93, 3] <- "ITAPEJARA D'OESTE"
+PR_ZIKA_2025_GERAL[265, 3] <- "MUNHOZ DE MELO"
+PR_ZIKA_2025_GERAL[117, 3] <- "PÉROLA D'OESTE"
+PR_ZIKA_2025_GERAL[184, 3] <- "RANCHO ALEGRE D'OESTE"
+PR_ZIKA_2025_GERAL[239, 3] <- "SANTA CRUZ DE MONTE CASTELO"
+PR_ZIKA_2025_GERAL[127, 3] <- "SÃO JORGE D'OESTE"
+
+MAPA_BASE_PR <- left_join(MAPA_BASE, PR_ZIKA_2025_GERAL, by = c("NM_MUN" = "Município_sem_Código"))
 
 ###### Mapa Notificados   ############################
 
-MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = NOTIFICADOS,
+MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = Notificados,
                                            breaks = c(-Inf, 0, 10, 50, 100, 500, 100000000),
                                            labels = c("0 casos", "1 - 10", "11 - 50", 
                                                       "51 - 100", "101 - 500", ">500"))
@@ -13839,15 +14285,16 @@ PR_2025_ZIKA_CHIK_Notificados <- ggplot() +
        caption = Fonte, 
        title = "Casos Notificados de Zika - Paraná",
        subtitle = "Números absolutos") +
-  geom_sf(data = RS22_Dissolvida, fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, 
+          fill = "grey") +
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
 
 ###### Mapa Incidência  ############################
 
-MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = INCIDENCIA,
+MAPA_BASE_PR$Cat <- with(MAPA_BASE_PR, cut(x = Incidencia,
                                            breaks = c(-Inf, 0, 50, 100, 300, 500, 100000),
                                            labels = c("0 casos", "0,001 - 50", "50,001 - 100", 
                                                       "100,001 - 300", "300,001 - 500", ">500")
@@ -13881,17 +14328,17 @@ PR_2025_GRAF_ZIKA_Incidência <- ggplot() +
        caption = Fonte, 
        title = "Incidência de Zika - Paraná",
        subtitle = "Casos autóctones por 100.000 hab") +
-  geom_sf(data = RS22_Dissolvida, fill = "grey") +
-  geom_sf_label(data = RS22_Dissolvida, 
+  geom_sf(data = SHAPEFILE_REGIONAL_Dissolvido, 
+          fill = "grey") +
+  geom_sf_label(data = SHAPEFILE_REGIONAL_Dissolvido, 
                 aes(label = "22 RS"),
                 size = 4,
                 position = "identity")
 
-
 #####  Mapas Regional   #####
 
 MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_GERAL, 
-                          by = c("name_muni" = "Município")
+                          by = c("NM_MUN" = "Município")
 )
 
 MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(RS == RS)
@@ -13949,12 +14396,13 @@ RS22_2025_GRAF_Sorotipo <- ggplot() +
 #########################   Mapa Chikungunya notificados REGIONAL   #####################################################
 
 MAPA_BASE_RS <- left_join(MAPA_BASE, PR_CHIK_2025_GERAL, 
-                          by = c("name_muni" = "Município_sem_Código")
+                          by = c("NM_MUN" = "Município_sem_Código")
 )
 
 MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(RS == 22)
 
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = Notificados,
+MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, 
+                         cut(x = Notificados,
                                            breaks = c(-Inf, 0, 5, 10, 50, 100, 500, 1000000),
                                            labels = c("0 casos", "1 - 5", "6 - 10", "11 - 50", 
                                                       "51 - 100", "101 - 500", ">500"))
@@ -13994,12 +14442,13 @@ RS22_2025_GRAF_CHK_Not <- ggplot() +
 #########################   Mapa Chikungunya Confirmados REGIONAL   #####################################################
 
 MAPA_BASE_RS <- left_join(MAPA_BASE, PR_CHIK_2025_GERAL, 
-                          by = c("name_muni" = "Município_sem_Código")
+                          by = c("NM_MUN" = "Município_sem_Código")
 )
 
 MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(RS == 22)
 
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = Incidencia,
+MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS,
+                         cut(x = Incidencia,
                                            breaks = c(-Inf, 0, 50, 100, 300, 500, 100000),
                                            labels = c("0 casos", "0,001 - 50", "50,001 - 100", 
                                                       "100,001 - 300", "300,001 - 500", ">500")
@@ -14038,1086 +14487,39 @@ RS22_2025_GRAF_CHK_Conf <- ggplot() +
 
 #########################################################################################################################
 ##################################   Entomologia   ######################################################################
-#########################   Mapa IIP REGIONAL  1º Ciclo/2025     ########################################################
+#########################   Índices Ovitrampas     ########################################################
 
-MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_CICLOS_MUNICIPIOS, 
-                          by = c("name_muni" = "Município")
-)
+AUX_GRAF <- RS22_2025_INDICES_OVITRAMPAS[which(RS22_2025_INDICES_OVITRAMPAS[, 1] == "Ariranha do Ivaí"),]
 
-AUX_MAP <- MAPA_BASE_RS %>% filter(`1CICLO_2025_IIP` > 199)
+AUX_GRAF <- pivot_longer(AUX_GRAF[, -1], 2:4, names_to = "Rotulos", values_to = "Dados")
 
-AUX_MAP$Cat  <- "S/I"
-
-AUX_MAP$`1CICLO_2025_IIP` <- "S/I"
-
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(`1CICLO_2025_IIP` >= 0 & `1CICLO_2025_IIP` < 200)
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `1CICLO_2025_IIP`,
-                                           breaks = c(-Inf, 1, 4, 100),
-                                           labels = c("0 - 0,9", "1 - 3,9", 
-                                                      "> 4"))
-)
-
-MAPA_BASE_RS$`1CICLO_2025_IIP` <- format(round(MAPA_BASE_RS$`1CICLO_2025_IIP`, 2))
-
-MAPA_BASE_RS <-rbind(MAPA_BASE_RS, AUX_MAP)
-
-RS22_2025_GRAF_IIP_Ciclo1 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `1CICLO_2025_IIP`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("0 - 0,9" = "green",
-                                "1 - 3,9" = "yellow",
-                                "> 4" = "red",
-                                "S/I" = "white")
+ggplot(AUX_GRAF, 
+       aes(x = as.factor(SE),
+           y = Dados,
+           group = 1)) +
+  geom_line(linewidth = 1.8,
+            colour = "black") +
+  geom_point(fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(label = Dados), 
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  labs(caption = Fonte, 
+       x = "Ano",
+       y = "Notificados",
+       title = "Série Histórica - Atendimentos Antirrábicos (2016 a 2025)") +
+  Theme() +
+  theme(axis.text.x = element_text(angle = 0,
+                                   size = 12,
+                                   vjust = 1,
+                                   face = "bold"),
+        plot.caption = element_text(size = 12,
+                                    hjust = 0),
+        axis.text.y = element_text(angle = 90,
+                                   vjust = 0.5,
+                                   hjust = 0.5,
+                                   face = "bold"),
   ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Índice de Infestação Predial 1º Ciclo/2025",
-       subtitle = "22ªRS") + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  ) 
-
-###########    Tratamento 1º Ciclo  ###################################
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `1ºCICLO_2025_%_Visitas`,
-                                           breaks = c(-Inf, 30, 60, 80, 200),
-                                           labels = c("< 30%", "30,01 a 60%", 
-                                                      "60,01 a 80%", "> 80%"))
-)
-
-MAPA_BASE_RS$`1ºCICLO_2025_%_Visitas` <- format(round(MAPA_BASE_RS$`1ºCICLO_2025_%_Visitas`, 2))
-
-RS22_2025_GRAF_Tratamento_Ciclo1 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `1ºCICLO_2025_%_Visitas`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("< 30%" = "red",
-                                "30,01 a 60%" = "#FFA07A",
-                                "60,01 a 80%" = "yellow",
-                                "> 80%" = "green")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Porcentual de Imóveis Visitados 1º Ciclo/2025",
-       subtitle = "22ªRS") + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  )
-
-#########################################################################################################################
-#########################   Mapa IIP REGIONAL  2º Ciclo/2025     ########################################################
-
-MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_CICLOS_MUNICIPIOS, 
-                          by = c("name_muni" = "Município")
-)
-
-AUX_MAP <- MAPA_BASE_RS %>% filter(`2ºCICLO_IIP` > 199)
-
-AUX_MAP$Cat  <- "S/I"
-
-AUX_MAP$`2ºCICLO_IIP` <- "S/I"
-
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(`2ºCICLO_IIP` >= 0 & `2ºCICLO_IIP` < 200)
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `2ºCICLO_IIP`,
-                                           breaks = c(-Inf, 1, 4, 100),
-                                           labels = c("0 - 0,9", "1 - 3,9", 
-                                                      "> 4"))
-)
-
-MAPA_BASE_RS$`2ºCICLO_IIP` <- format(round(MAPA_BASE_RS$`2ºCICLO_IIP`, 2))
-
-MAPA_BASE_RS <-rbind(MAPA_BASE_RS, AUX_MAP)
-
-RS22_2025_GRAF_IIP_Ciclo2 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `2ºCICLO_IIP`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("0 - 0,9" = "green",
-                                "1 - 3,9" = "yellow",
-                                "> 4" = "red",
-                                "S/I" = "white")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Índice de Infestação Predial 2º Ciclo/2025",
-       subtitle = "22ªRS")  + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  ) 
-
-###########    Tratamento 2º Ciclo  ###################################
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `2ºCICLO_2025_%_Visitas`,
-                                           breaks = c(-Inf, 30, 60, 80, 200),
-                                           labels = c("< 30%", "30,01 a 60%", 
-                                                      "60,01 a 80%", "> 80%"))
-)
-
-MAPA_BASE_RS$`2ºCICLO_2025_%_Visitas` <- format(round(MAPA_BASE_RS$`2ºCICLO_2025_%_Visitas`, 2))
-
-RS22_2025_GRAF_Tratamento_Ciclo2 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `2ºCICLO_2025_%_Visitas`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("< 30%" = "red",
-                                "30,01 a 60%" = "#FFA07A",
-                                "60,01 a 80%" = "yellow",
-                                "> 80%" = "green")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Porcentual de Imóveis Visitados 2º Ciclo/2025",
-       subtitle = "22ªRS")+ 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  )
-
-#########################################################################################################################
-#########################   Mapa IIP REGIONAL  3º Ciclo/2025     ########################################################
-
-MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_CICLOS_MUNICIPIOS, 
-                          by = c("name_muni" = "Município")
-)
-
-AUX_MAP <- MAPA_BASE_RS %>% filter(`3ºCICLO_IIP` > 199)
-
-AUX_MAP$Cat  <- "S/I"
-
-AUX_MAP$`3ºCICLO_IIP` <- "S/I"
-
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(`3ºCICLO_IIP` >= 0 & `3ºCICLO_IIP` < 200)
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `3ºCICLO_IIP`,
-                                           breaks = c(-Inf, 1, 4, 100),
-                                           labels = c("0 - 0,9", "1 - 3,9", 
-                                                      "> 4"))
-)
-
-MAPA_BASE_RS$`3ºCICLO_IIP` <- format(round(MAPA_BASE_RS$`3ºCICLO_IIP`, 2))
-
-MAPA_BASE_RS <-rbind(MAPA_BASE_RS, AUX_MAP)
-
-RS22_2025_GRAF_IIP_Ciclo3 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `3ºCICLO_IIP`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("0 - 0,9" = "green",
-                                "1 - 3,9" = "yellow",
-                                "> 4" = "red",
-                                "S/I" = "white")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Índice de Infestação Predial 3º Ciclo/2025",
-       subtitle = "22ªRS")  + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  ) 
-
-###########    Tratamento 3º Ciclo  ###################################
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `3ºCICLO_2025_%_Visitas`,
-                                           breaks = c(-Inf, 30, 60, 80, 200),
-                                           labels = c("< 30%", "30,01 a 60%", 
-                                                      "60,01 a 80%", "> 80%"))
-)
-
-MAPA_BASE_RS$`3ºCICLO_2025_%_Visitas` <- format(round(MAPA_BASE_RS$`3ºCICLO_2025_%_Visitas`, 2))
-
-RS22_2025_GRAF_Tratamento_Ciclo3 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `3ºCICLO_2025_%_Visitas`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("< 30%" = "red",
-                                "30,01 a 60%" = "#FFA07A",
-                                "60,01 a 80%" = "yellow",
-                                "> 80%" = "green")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Porcentual de Imóveis Visitados 3º Ciclo/2025",
-       subtitle = "22ªRS") + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  )
-
-#########################################################################################################################
-#########################   Mapa IIP REGIONAL  4º Ciclo/2025     ########################################################
-
-MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_CICLOS_MUNICIPIOS, 
-                          by = c("name_muni" = "Município")
-)
-
-AUX_MAP <- MAPA_BASE_RS %>% filter(`4ºCICLO_IIP` > 199)
-
-AUX_MAP$Cat  <- "S/I"
-
-AUX_MAP$`4ºCICLO_IIP` <- "S/I"
-
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(`4ºCICLO_IIP` >= 0 & `4ºCICLO_IIP` < 200)
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `4ºCICLO_IIP`,
-                                           breaks = c(-Inf, 1, 4, 100),
-                                           labels = c("0 - 0,9", "1 - 3,9", 
-                                                      "> 4"))
-)
-
-MAPA_BASE_RS$`4ºCICLO_IIP` <- format(round(MAPA_BASE_RS$`4ºCICLO_IIP`, 2))
-
-MAPA_BASE_RS <-rbind(MAPA_BASE_RS, AUX_MAP)
-
-RS22_2025_GRAF_IIP_Ciclo4 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `4ºCICLO_IIP`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("0 - 0,9" = "green",
-                                "1 - 3,9" = "yellow",
-                                "> 4" = "red",
-                                "S/I" = "white")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Índice de Infestação Predial 4º Ciclo/2025",
-       subtitle = "22ªRS")  + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  ) 
-
-###########    Tratamento 4º Ciclo  ###################################
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `4ºCICLO_2025_%_Visitas`,
-                                           breaks = c(-Inf, 30, 60, 80, 200),
-                                           labels = c("< 30%", "30,01 a 60%", 
-                                                      "60,01 a 80%", "> 80%"))
-)
-
-MAPA_BASE_RS$`4ºCICLO_2025_%_Visitas` <- format(round(MAPA_BASE_RS$`4ºCICLO_2025_%_Visitas`, 2))
-
-RS22_2025_GRAF_Tratamento_Ciclo4 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `4ºCICLO_2025_%_Visitas`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("< 30%" = "red",
-                                "30,01 a 60%" = "#FFA07A",
-                                "60,01 a 80%" = "yellow",
-                                "> 80%" = "green")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Porcentual de Imóveis Visitados 4º Ciclo/2025",
-       subtitle = "22ªRS") + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  )
-
-#########################################################################################################################
-#########################   Mapa IIP REGIONAL  5º Ciclo/2025     ########################################################
-
-MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_CICLOS_MUNICIPIOS, 
-                          by = c("name_muni" = "Município")
-)
-
-AUX_MAP <- MAPA_BASE_RS %>% filter(`5ºCICLO_IIP` > 199)
-
-AUX_MAP$Cat  <- "S/I"
-
-AUX_MAP$`5ºCICLO_IIP` <- "S/I"
-
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(`5ºCICLO_IIP` >= 0 & `5ºCICLO_IIP` < 200)
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `5ºCICLO_IIP`,
-                                           breaks = c(-Inf, 1, 4, 100),
-                                           labels = c("0 - 0,9", "1 - 3,9", 
-                                                      "> 4"))
-)
-
-MAPA_BASE_RS$`5ºCICLO_IIP` <- format(round(MAPA_BASE_RS$`5ºCICLO_IIP`, 2))
-
-MAPA_BASE_RS <-rbind(MAPA_BASE_RS, AUX_MAP)
-
-RS22_2025_GRAF_IIP_Ciclo5 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `5ºCICLO_IIP`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("0 - 0,9" = "green",
-                                "1 - 3,9" = "yellow",
-                                "> 4" = "red",
-                                "S/I" = "white")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Índice de Infestação Predial 5º Ciclo/2025",
-       subtitle = "22ªRS")  + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  ) 
-
-###########    Tratamento 5º Ciclo  ###################################
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `5ºCICLO_2025_%_Visitas`,
-                                           breaks = c(-Inf, 30, 60, 80, 200),
-                                           labels = c("< 30%", "30,01 a 60%", 
-                                                      "60,01 a 80%", "> 80%"))
-)
-
-MAPA_BASE_RS$`5ºCICLO_2025_%_Visitas` <- format(round(MAPA_BASE_RS$`5ºCICLO_2025_%_Visitas`, 2))
-
-RS22_2025_GRAF_Tratamento_Ciclo5 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `5ºCICLO_2025_%_Visitas`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("< 30%" = "red",
-                                "30,01 a 60%" = "#FFA07A",
-                                "60,01 a 80%" = "yellow",
-                                "> 80%" = "green")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Porcentual de Imóveis Visitados 5º Ciclo/2025",
-       subtitle = "22ªRS") + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  )
-
-#########################################################################################################################
-#########################   Mapa IIP REGIONAL  6º Ciclo/2025     ########################################################
-
-MAPA_BASE_RS <- left_join(MAPA_BASE, RS22_2025_CICLOS_MUNICIPIOS, 
-                          by = c("name_muni" = "Município")
-)
-
-AUX_MAP <- MAPA_BASE_RS %>% filter(`6ºCICLO_IIP` > 199)
-
-AUX_MAP$Cat  <- "S/I"
-
-AUX_MAP$`6ºCICLO_IIP` <- "S/I"
-
-MAPA_BASE_RS <- MAPA_BASE_RS %>% filter(`6ºCICLO_IIP` >= 0 & `6ºCICLO_IIP` < 200)
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `6ºCICLO_IIP`,
-                                           breaks = c(-Inf, 1, 4, 100),
-                                           labels = c("0 - 0,9", "1 - 3,9", 
-                                                      "> 4"))
-)
-
-MAPA_BASE_RS$`6ºCICLO_IIP` <- format(round(MAPA_BASE_RS$`6ºCICLO_IIP`, 2))
-
-MAPA_BASE_RS <-rbind(MAPA_BASE_RS, AUX_MAP)
-
-RS22_2025_GRAF_IIP_Ciclo6 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `6ºCICLO_IIP`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("0 - 0,9" = "green",
-                                "1 - 3,9" = "yellow",
-                                "> 4" = "red",
-                                "S/I" = "white")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Índice de Infestação Predial 6º Ciclo/2025",
-       subtitle = "22ªRS")  + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  ) 
-
-###########    Tratamento 6º Ciclo  ###################################
-
-MAPA_BASE_RS$Cat <- with(MAPA_BASE_RS, cut(x = `6ºCICLO_2025_%_Visitas`,
-                                           breaks = c(-Inf, 30, 60, 80, 200),
-                                           labels = c("< 30%", "30,01 a 60%", 
-                                                      "60,01 a 80%", "> 80%"))
-)
-
-MAPA_BASE_RS$`6ºCICLO_2025_%_Visitas` <- format(round(MAPA_BASE_RS$`6ºCICLO_2025_%_Visitas`, 2))
-
-RS22_2025_GRAF_Tratamento_Ciclo6 <- ggplot() + 
-  geom_sf(data = MAPA_BASE_RS, 
-          color = "black", 
-          aes(fill = Cat)) + 
-  coord_sf(expand = FALSE) +
-  geom_sf_label(data = MAPA_BASE_RS, 
-                aes(label = `6ºCICLO_2025_%_Visitas`),
-                label.padding = unit(0.5, "mm"),
-                size = 3,
-                position = "identity") +
-  scale_fill_manual (name = "",
-                     values = c("< 30%" = "red",
-                                "30,01 a 60%" = "#FFA07A",
-                                "60,01 a 80%" = "yellow",
-                                "> 80%" = "green")
-  ) +
-  annotation_scale(location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  labs(x = NULL,
-       y = NULL,
-       caption = Fonte_2, 
-       title = "Porcentual de Imóveis Visitados 6º Ciclo/2025",
-       subtitle = "22ªRS") + 
-  theme( panel.grid.major = element_line(color = "#C0C0C0"),
-         panel.grid.minor = element_blank(),
-         panel.background = element_rect(fill = "#F5F5F5"),
-         plot.title = element_text(face = "bold", 
-                                   size = 14,
-                                   colour = "#556B2F"),
-         legend.position = "bottom"
-  )
-
-#####     Salvando os Gráficos e Mapas
-
-###      Série Histórica - Pag_03
-
-RS22_2025_INFORME_Pag_03 <- (RS22_GRAF_Serie_Historica_Not_Conf / RS22_GRAF_Serie_Historica_Sorotipo /RS22_GRAF_Serie_Historica_Hospitalizados)
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_03.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_Pag_03 
-
-dev.off()
-
-###          Canal Endêmicos Notificados/Confirmados - Pag 04
-
-RS22_2025_INFORME_Pag_04 <- (RS_2025_GRAF_CE_Notificados / RS_2025_GRAF_CE_Provaveis / RS_2025_GRAF_CE_Confirmados)
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_04.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_Pag_04 
-
-dev.off()
-
-####           Canal Endêmico Prováveis - Pag 05
-
-RS22_2025_INFORME_Pag_05 <- RS22_GRAF_2025_Incidencia
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_2025_INFORME_Pag_05.png", 
-    width = 33,
-    height = 20,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_Pag_05 
-
-dev.off()
-
-
-###            Notificados/Confirmados - Pag 06
-
-RS22_2025_INFORME_Pag_06 <- (RS22_GRAF_2025_Not_Conf / RS22_GRAF_2025_Autoctones / RS22_GRAF_2025_Investigacao)
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_2025_INFORME_Pag_06.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_Pag_06
-
-dev.off()
-
-###      Autóctones/Descartados
-
-RS22_2025_INFORME_Pag_07 <- (RS22_GRAF_2025_Hospitalizados / RS22_GRAF_2025_Descartados / RS22_GRAF_2025_Inconclusivos)
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_2025_INFORME_Pag_07.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_Pag_07
-
-dev.off()
-
-
-###    Em Investigação/Incidência
-
-RS22_2025_INFORME_Pag_08 <- (RS22_GRAF_2025_Encerramento / PR_DENGUE_2025_GRAF_SINAIS / RS22_GRAF_2025_SINAIS)
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_2025_INFORME_Pag_08.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_Pag_08
-
-dev.off()
-
-####   EXTRA  #####
-
-RS22_2025_INFORME_PAG_09 <- ((PR_GRAF_Faixa_Etaria + RS22_GRAF_Faixa_Etaria) / (PR_GRAF_Escolaridade + RS22_GRAF_Escolaridade)/
-                                (PR_GRAF_Sexo + RS22_GRAF_Sexo) / (PR_GRAF_Zona + RS22_GRAF_Zona))
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_2025_INFORME_Pag_09.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_INFORME_PAG_09
-
-dev.off()
-
-####  Canais Endêmicos IVAIPORÃ
-
-RS_2025_CE_SEDE <- (RS_2025_GRAF_CE_Notificados_SEDE / RS_2025_GRAF_CE_Provaveis_SEDE / RS_2025_GRAF_CE_Confirmados_SEDE)
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES//RS22_2025_INFORME_Pag_10.png", 
-    width = 33,
-    height = 40,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_CE_SEDE
-
-dev.off()
-
-###      Histogramas Notificados - Pag 10
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_11.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_Histograma_Notificados_01
-
-dev.off()
-
-###        Histogramas Notificados - Pag 11
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_12.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_Histograma_Notificados_02
-
-dev.off()
-
-###      Histogramas Confirmados - ##PAG 12
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_13.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_Histograma_Confirmados_01
-
-dev.off()
-
-###      Histogramas Confirmados - ##PAG 13
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_14.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_Histograma_Confirmados_02
-
-dev.off()
-
-###     Histogramas Prováveis - ##PAG 14
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_15.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_Histograma_Provaveis_01
-
-dev.off()
-
-###     Histogramas Prováveis - ##PAG 15
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_16.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_Histograma_Provaveis_02
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (PR_2025_GRAF_SOROTIPO_PR / RS22_2025_GRAF_Sorotipo)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_17.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (RS22_GRAF_2025_US_TOTAL / RS22_GRAF_2025_US_DETEC)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_18A.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (RS22_2025_GRAF_SORO_TOTAL / RS22_2025_GRAF_SORO_REAG)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_18B.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-##### Exames Municípios  
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_19A.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_GRAF_LACEN_MUNIC
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (RS22_2025_GRAF_SORO_CHIK_TOTAL / RS22_2025_GRAF_SORO_CHIK_REAG)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_19B.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_20.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_GRAF_LACEN_MUNIC_CHIK
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (PR_2025_GRAF_INCIDENCIA_PR / PR_2025_GRAF_INCIDENCIA_PROV_PR)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_21.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (PR_2025_GRAF_CHIK_Notificados / PR_2025_GRAF_CHIK_Incidência)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_22.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- PR_2025_GRAF_SINAIS_CHIK 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_23A.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (RS22_2025_GRAF_CHK_Not + RS22_2025_GRAF_CHK_Conf) 
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_23B.png", 
-    width = 36,
-    height = 23,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_24.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_CHIK_Histograma_Notificados_01
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_25.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_CHIK_Histograma_Notificados_02
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_26.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_CHIK_Histograma_Confirmados_01
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_27.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_CHIK_Histograma_Confirmados_02
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_28.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_CHIK_Histograma_Provaveis_01
-
-dev.off()
-
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_29.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS_2025_GRAF_CHIK_Histograma_Provaveis_02
-
-dev.off()
-
-RS22_2025_GRAF_1 <- (PR_2025_ZIKA_CHIK_Notificados / PR_2025_GRAF_ZIKA_Incidência)
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_30.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- ((RS22_2025_GRAF_IIP_Ciclo1 + RS22_2025_GRAF_Tratamento_Ciclo1) / 
-                        (RS22_2025_GRAF_IIP_Ciclo2 + RS22_2025_GRAF_Tratamento_Ciclo2) / 
-                        (RS22_2025_GRAF_IIP_Ciclo3 + RS22_2025_GRAF_Tratamento_Ciclo3))
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_31.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-RS22_2025_GRAF_1 <- ((RS22_2025_GRAF_IIP_Ciclo4 + RS22_2025_GRAF_Tratamento_Ciclo4) / 
-                        (RS22_2025_GRAF_IIP_Ciclo5 + RS22_2025_GRAF_Tratamento_Ciclo5) / 
-                        (RS22_2025_GRAF_IIP_Ciclo6 + RS22_2025_GRAF_Tratamento_Ciclo6))
-png(filename = "/home/gustavo/Área de trabalho/Análise_de_Dados/Imagens/ARBOVIROSES/RS22_2025_INFORME_Pag_32.png", 
-    width = 36,
-    height = 46,
-    units = "cm", pointsize = 8, res = 300)
-
-RS22_2025_GRAF_1
-
-dev.off()
-
-rm(RS22_GRAF_Serie_Historica_Not_Conf,
-   RS22_GRAF_Serie_Historica_Sorotipo, 
-   RS22_GRAF_Serie_Historica_Hospitalizados,
-   RS_2025_GRAF_CE_Notificados,
-   RS_2025_GRAF_CE_Provaveis,
-   RS_2025_GRAF_CE_Confirmados,
-   RS22_GRAF_2025_Incidencia,
-   RS22_GRAF_2025_Not_Conf,
-   RS22_GRAF_2025_Autoctones,
-   RS22_GRAF_2025_Investigacao,
-   RS22_GRAF_2025_Hospitalizados,
-   RS22_GRAF_2025_Descartados,
-   RS22_GRAF_2025_Inconclusivos,
-   RS22_2025_GRAF_IIP_Ciclo4,
-   RS22_2025_GRAF_Tratamento_Ciclo4,
-   RS22_2025_GRAF_IIP_Ciclo5,
-   RS22_2025_GRAF_Tratamento_Ciclo5,
-   RS22_2025_GRAF_IIP_Ciclo6,
-   RS22_2025_GRAF_Tratamento_Ciclo6,
-   RS22_2025_GRAF_IIP_Ciclo1, 
-   RS22_2025_GRAF_Tratamento_Ciclo1,
-   RS22_2025_GRAF_IIP_Ciclo2,
-   RS22_2025_GRAF_Tratamento_Ciclo2,
-   RS22_2025_GRAF_IIP_Ciclo3,
-   RS22_2025_GRAF_Tratamento_Ciclo3,
-   AUX,
-   AUX_GRAF,
-   AUX_2,
-   AUX_I,
-   AUX_II,
-   AUX_III,
-   AUX_IV,
-   AUX_MAP,
-   AUX_V,
-   AUX_VI,
-   AUX01,
-   AUX02,
-   AUX_HIST_CONF_LIST,
-   AUX_HIST_NOT_LIST,
-   AUX_HIST_PROV_LIST,
-   MAPA_BASE,
-   MAPA_BASE_PR,
-   MAPA_BASE_RS,
-   BASE_IBGE,
-   BASE_IBGE_BRASIL,
-   CHIKON2025,
-   SINAN_DENGUE_RS,
-   SINAN_CHIK_RS,
-   RS22_GRAF_2025_Encerramento,
-   RS22_GRAF_LACEN_MUNIC,
-   RS22_Dissolvida,
-   RS22_2025_Resumida,
-   RS22_2025_INFORME_Pag_03,
-   RS22_2025_INFORME_Pag_04,
-   RS22_2025_INFORME_Pag_05,
-   RS22_2025_INFORME_Pag_06,
-   RS22_2025_INFORME_Pag_07,
-   RS22_2025_INFORME_Pag_08,
-   Fonte,
-   Fonte_1,
-   Fonte_2,
-   i,
-   ID_REG,
-   nrow,
-   Periodos_Epidêmicos_RS,
-   Periodos_Epidêmicos_SEDE,
-   RS,
-   SE,
-   Theme_Hist,
-   RS_2025_GRAF_Histograma_Confirmados_01,
-   RS_2025_GRAF_Histograma_Confirmados_02,
-   RS_2025_GRAF_Histograma_Notificados_01,
-   RS_2025_GRAF_Histograma_Notificados_02,
-   RS_2025_GRAF_Histograma_Provaveis_01,
-   RS_2025_GRAF_Histograma_Provaveis_02,
-   RS_2025_GRAF_CE_Confirmados_SEDE,
-   RS_2025_GRAF_CE_Notificados_SEDE,
-   RS_2025_GRAF_CE_Provaveis_SEDE,
-   RS_2025_CE_SEDE,
-   PR_2025_GRAF_CHIK_Incidência,
-   PR_2025_GRAF_CHIK_Notificados,
-   PR_2025_GRAF_INCIDENCIA_PR,
-   PR_2025_GRAF_INCIDENCIA_PROV_PR,
-   PR_2025_GRAF_SINAIS_CHIK,
-   PR_2025_GRAF_SOROTIPO_PR,
-   PR_2025_GRAF_ZIKA_Incidência,
-   PR_2025_CHIK_SINAIS_Confirmados,
-   PR_2025_CHIK_SINAIS_NOTIFICADOS,
-   PR_2025_DENGUE_SINAIS_Confirmados,
-   PR_2025_DENGUE_SINAIS_Notificados,
-   PR_2025_ZIKA_CHIK_Notificados,
-   PR_DENGUE_2025_GRAF_SINAIS,
-   RS22_2025_GRAF_1,
-   RS22_2025_GRAF_CHK_Conf,
-   RS22_2025_GRAF_CHK_Not,
-   RS22_GRAF_2025_SINAIS,
-   RS22_2025_GRAF_SORO_REAG,
-   RS22_2025_GRAF_SORO_TOTAL,
-   RS22_2025_GRAF_Sorotipo,
-   RS22_GRAF_2025_US_DETEC,
-   RS22_GRAF_2025_US_TOTAL,
-   PR_CHIK_2025_SINAN,
-   RS_2025_SE_Confirmados,
-   RS_2025_SE_Notificados,
-   RS_CE_Confirmados,
-   RS_CE_Confirmados_SEDE,
-   RS_CE_Notificados,
-   RS_CE_Notificados_SEDE,
-   RS_Serie_Historica,
-   AUX_VII,
-   DENGON2025
-)
-
-warnings()
-
+  scale_y_continuous(expand = expansion(mult = c(0.5, 0.5)))
