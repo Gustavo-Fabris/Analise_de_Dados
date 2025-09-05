@@ -55,10 +55,10 @@ ID_REG <- as.numeric(ID_REG[1,1])
 
 #########   Criando objeto Fonte para ser utilizado pelos gráficos   ######
 
-Fonte <- "Fonte: SINAN. Base DBF acessada em 01/08/2025. Dados Sujeitos a alteração."
+Fonte <- "Fonte: SINAN. Base DBF acessada em 29/08/2025. Dados Sujeitos a alteração."
 Fonte1 <- "Fonte: Controle Interno 22ª Regional de Saúde."
-Fonte2 <- "Fonte: SINAP. Acesso em 04/08/2025. Dados sujeitos a alteração."
-Fonte3 <- "Fonte: SIES. Acesso em 04/08/2025. Dados correspondentes a data da baixa do imunobiológico no sistema"
+Fonte2 <- "Fonte: SINAP. Acesso em 29/08/2025. Dados sujeitos a alteração."
+Fonte3 <- "Fonte: SIES. Acesso em 29/08/2025. Dados correspondentes a data da baixa do imunobiológico no sistema"
 
 ####   Estabelecendo o número de municípios em cada RS
 
@@ -7398,7 +7398,7 @@ for (i in SIES_SORO_ANTIBOTROPICO[, 10]){
 assign(paste0("RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTIBOTROPICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTIBOTROPICO"), AUX), 
-           paste0("RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTIBOTROPICO.csv"), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTIBOTROPICO.csv"), 
            row.names = FALSE)
 
 
@@ -7807,7 +7807,7 @@ for (i in SIES_SORO_ANTICROTALICO[, 10]){
 assign(paste0("RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTICROTALICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTICROTALICO"), AUX), 
-           paste0("RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTICROTALICO.csv"), 
+           paste0("Tabulacoes_R/Peconhentos/RS", RS, "_PECONHENTOS_2025_SE_SIES_ANTICROTALICO.csv"), 
            row.names = FALSE)
 
 ############################    Gráficos e Mapas    ##################################################################################
@@ -11721,6 +11721,7 @@ RS_PECONHENTOS_MAPA_REDE_Lunardelli <- ggplot(SHAPEFILE_LUNARDELLI) +
 
 SHAPEFILE_Escorpiao_Amarelo <- SHAPEFILE_REGIONAL %>% mutate(ESC_AMAR = case_when(NM_MUNICIP == "IVAIPORÃ" 
                                                                                   | NM_MUNICIP == "JARDIM ALEGRE" 
+                                                                                  | NM_MUNICIP == "ARIRANHA DO IVAÍ" 
                                                                                   | NM_MUNICIP == "LUNARDELLI"
                                                                                   | NM_MUNICIP == "SÃO JOÃO DO IVAÍ"
                                                                                   | NM_MUNICIP == "MANOEL RIBAS" 

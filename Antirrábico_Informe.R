@@ -26,9 +26,9 @@ RS <- 22   #####  Deve-se colocar AQUI a Regional
 
 ######################  Definindo o Objeto Fonte   ######################
 
-Fonte <- "SINAN. Base DBF. Acessada em 18/08/2025. Dados sujeitos a alteração"
-Fonte1 <- "Fonte: LACEN/PR. Acesso em 18/08/2025"
-Fonte2 <- "Fonte: SIES. Acesso em 18/08/2025"
+Fonte <- "SINAN. Base DBF. Acessada em 29/08/2025. Dados sujeitos a alteração"
+Fonte1 <- "Fonte: LACEN/PR. Acesso em 29/08/2025"
+Fonte2 <- "Fonte: SIES. Acesso em 29/08/2025"
 
 ###########################         Localizações   #########################
 
@@ -2165,7 +2165,7 @@ for (i in SIES_SORO_ANTIRRABICO[, 10]){
 assign(paste0("RS", RS, "_ANTRAB_2025_SE_SORO_ANTIRRABICO"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SE_SORO_ANTIRRABICO"), AUX), 
-           paste0("RS", RS, "_RAIVA_2025_SE_SORO_ANTIRRABICO.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_RAIVA_2025_SE_SORO_ANTIRRABICO.csv"), 
            row.names = FALSE)
 
 ###########################    Imunoglobulina
@@ -2580,7 +2580,7 @@ for (i in SIES_IMUNOGLOBULINA_ANTIRRABICA[, 10]){
 assign(paste0("RS", RS, "_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA"), AUX)
 
 write.csv (assign(paste0("RS", RS, "_ANTRAB_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA"), AUX), 
-           paste0("RS", RS, "_RAIVA_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA.csv"), 
+           paste0("Tabulacoes_R/Raiva/RS", RS, "_RAIVA_2025_SE_SIES_IMUNOGLOBULINA_ANTIRRABICA.csv"), 
            row.names = FALSE)
 
 #################################################################################################################
@@ -6068,7 +6068,7 @@ RS_ANTRAB_MAP_Casos_Confirmados <- ggplot(AUX) +
 RS_ANTRAB_MAP_Capa <- ggplot(AUX) +
   geom_sf(size = 0.5,
           color = "black",
-          fill = "#E0FFFF") +
+          fill = "#FAF0E6") +
   labs(title = "22ª Regional de Saúde",
        y= NULL,
        x = NULL) +
