@@ -4,6 +4,8 @@ library (googlesheets4)
 
 setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 
+gs4_auth()
+
 PR_2025_Chik <- read_sheet ("https://docs.google.com/spreadsheets/d/1ul_41n7CWg7YG0jAMKGoh4u_pmVXCmSeOnh6cOsXr9k/edit?gid=1019073941#gid=1019073941", 
                                            sheet ="Chikungunya_PR")
 
@@ -17,7 +19,7 @@ RS22_2025_Dengue <- read_sheet ("https://docs.google.com/spreadsheets/d/1ul_41n7
                               sheet ="Dengue")
 
 RS_Jardim_Alegre_SINAN <- read_sheet ("https://docs.google.com/spreadsheets/d/13HgONdkmmWhhufINnwVzmZhxBBnOLDmZm75uGR5R7lU/edit?gid=799627228#gid=799627228", 
-                                  sheet ="Notificações SINAN")
+                                  sheet ="Notificações_SINAN")
 
 RS_Jardim_Alegre_Locais_Risco <- read_sheet ("https://docs.google.com/spreadsheets/d/13HgONdkmmWhhufINnwVzmZhxBBnOLDmZm75uGR5R7lU/edit?gid=1454301175#gid=1454301175", 
                                       sheet ="Locais de Risco")
@@ -53,6 +55,9 @@ colnames(RS_Jardim_Alegre_Ovitrampas)[22] <- "Coleta_4"
 colnames(RS_Jardim_Alegre_Ovitrampas)[23] <- "OBS_4"
 colnames(RS_Jardim_Alegre_Ovitrampas)[24] <- "Resultado_4"
 
+RS_Ivaipora_SINAN_10S <- read_sheet ("https://docs.google.com/spreadsheets/d/13HgONdkmmWhhufINnwVzmZhxBBnOLDmZm75uGR5R7lU/edit?gid=2130934097#gid=2130934097", 
+                                     sheet ="Notificações_10S")
+
 write.csv(PR_2025_Chik, 
           "/home/gustavo/Área de trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/PR_2025_SIG_CHIK.csv",
           row.names = FALSE)
@@ -87,5 +92,9 @@ write.csv(RS_Jardim_Alegre_Assistencia,
 
 write.csv(RS_Jardim_Alegre_Ovitrampas, 
           "/home/gustavo/Área de trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_2025_Ovitrampas_Jardim_Alegre.csv",
+          row.names = FALSE)
+
+write.csv(RS_Ivaipora_SINAN_10S, 
+          "/home/gustavo/Área de trabalho/Análise_de_Dados/Tabulacoes_R/Arboviroses/RS22_2025_SINAN_DECODIFICADO_10S_Jardim_Alegre.csv",
           row.names = FALSE)
 
