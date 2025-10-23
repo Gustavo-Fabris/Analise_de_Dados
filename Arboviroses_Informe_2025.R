@@ -56,17 +56,17 @@ setwd("/home/gustavo/Área de trabalho/Análise_de_Dados/")
 #####   Fonte para "labs(caption = Fonte...")                                         ####
 #####   Importante para os gráficos terem a DATA em que a base DBF foi acessada       ####
 
-Fonte <- "Fonte: SINAN. BASE DBF acessada em 16/09/2025"   ##### Fonte dos gráficos relacionados ao SINAN
+Fonte <- "Fonte: SINAN. BASE DBF acessada em 14/10/2025"   ##### Fonte dos gráficos relacionados ao SINAN
 
-Fonte_1 <- "Fonte: Lacen. Acesso em 19/08/2025"            ##### Fonte dos gráficos relacionados ao LACEN
+Fonte_1 <- "Fonte: Lacen. Acesso em 26/08/2025"            ##### Fonte dos gráficos relacionados ao LACEN
 
-Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 19/09/2025"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
+Fonte_2 <- "Fonte: Planilhas de Controle Municipais. Acesso em 03/10/2025"     ##### Fonte dos gráficos relacionados às Planilhas Municipais
 
 ####     Objeto SE irá ser utilizado como auxiliar definidor de ponto                   ####
 ####     a partir do qual os histogramas de casos Notificados/Confirmados/Prováveis     ####
 ####     nas últimas 10 semanas irá buscar os dados.                                    ####
 
-SE <- as.data.frame("38")  ### Colocar a Semana Epidemiológica atual
+SE <- as.data.frame("42")  ### Colocar a Semana Epidemiológica atual
 
 SE <- as.numeric(SE)
 
@@ -97,11 +97,11 @@ Periodos_Epidêmicos_RS <- c(#  "2009",
                             "2017",
                             "2018",
                             "2019",
-                            #  "2020",
+                            "2020",
                             "2021",
                             "2022",
-                            #  "2023",
-                            #  "2024",
+                            "2023",
+                            "2024",
                             "2025"
 )
 
@@ -116,11 +116,11 @@ Periodos_Epidêmicos_SEDE <- c(# "2009",
                               "2017",
                               "2018",
                               "2019",
-                              #  "2020",
+                              "2020",
                               "2021",
                               "2022",
                               "2023",
-                              #    "2024",
+                              "2024",
                               "2025"
 )
 ####  libraries a serem utilizadas  ###
@@ -137,7 +137,7 @@ library(ggspatial)
 library(sf)
 library(ggplot2)
 library(tidyr)
-library(gt)
+#library(gt)
 
 ####  Importando as bases de dados para formulação do Informe Epidemiológico      ####
 ####       As Bases IBGE são planilhas contendo os nomes do municípios e o        ####
@@ -206,33 +206,95 @@ RS_CE_Notificados_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", 
                                    header = TRUE,
                                    sep = ",")
 
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Notificados_Base <- RS_CE_Notificados_Base[-16,]
+
+RS_CE_Notificados_Base[15, 33:54] <- 0
+
 RS_CE_Confirmados_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Base.csv"),
                                    header = TRUE,
                                    sep = ",")
+
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Confirmados_Base <- RS_CE_Confirmados_Base[-16,]
+
+RS_CE_Confirmados_Base[15, 33:54] <- 0
+
+######################################################
 
 RS_CE_Notificados_SEDE_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_Sede_Base.csv"),
                                         header = TRUE,
                                         sep = ",")
 
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Notificados_SEDE_Base <- RS_CE_Notificados_Base[-16,]
+
+RS_CE_Notificados_SEDE_Base[15, 33:54] <- 0
+
+######################################################
+
 RS_CE_Confirmados_SEDE_Base <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_Sede_BASE.csv"),
                                         header = TRUE,
                                         sep = ",")
+
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Confirmados_SEDE_Base <- RS_CE_Confirmados_SEDE_Base[-16,]
+
+RS_CE_Confirmados_SEDE_Base[15, 33:54] <- 0
+
+######################################################
 
 RS_CE_Notificados_JARDIM_BASE <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_JARDIM.csv"),
                                           header = TRUE,
                                           sep = ",")
 
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Notificados_JARDIM_BASE <- RS_CE_Notificados_JARDIM_BASE[-16,]
+
+RS_CE_Notificados_JARDIM_BASE[15, 33:54] <- 0
+
+######################################################
+
 RS_CE_Confirmados_JARDIM_BASE <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_JARDIM.csv"),
                                           header = TRUE,
                                           sep = ",")
+
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Confirmados_JARDIM_BASE <- RS_CE_Confirmados_JARDIM_BASE[-16,]
+
+RS_CE_Confirmados_JARDIM_BASE[15, 33:54] <- 0
+
+######################################################
 
 RS_CE_Notificados_SAO_JOAO_BASE <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SAO_JOAO_DO_IVAI.csv"),
                                                header = TRUE,
                                                sep = ",")
 
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Notificados_SAO_JOAO_BASE <- RS_CE_Notificados_SAO_JOAO_BASE[-16,]
+
+RS_CE_Notificados_SAO_JOAO_BASE[15, 33:54] <- 0
+
+######################################################
+
 RS_CE_Confirmados_SAO_JOAO_BASE <- read.csv(file = paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SAO_JOAO_DO_IVAI.csv"),
                                                header = TRUE,
                                                sep = ",")
+
+#### Removendo 2024 e o final de 2023 dos CSV
+
+RS_CE_Confirmados_SAO_JOAO_BASE <- RS_CE_Confirmados_SAO_JOAO_BASE[-16,]
+
+RS_CE_Confirmados_SAO_JOAO_BASE[15, 33:54] <- 0
+
+######################################################
 
 
 ###################################################################################################
@@ -2861,37 +2923,55 @@ RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base), 2:53] <- as.integer(data.fr
 #####               VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                         #############
 #####################################################################################################################
 
-AUX <- RS_CE_Notificados_Base[, -1]
+AUX <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -7,]
+AUX[2, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -6,]
+AUX[3, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -5,]
+AUX[4, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -4,]
+AUX[5, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -3,]
+AUX[6, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -2,]
+AUX[7, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -1,]
+AUX[8, ] <- RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Notificados_Base[, 1]
+AUX2 <-c(RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -7, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -6, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -5, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -4, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -3, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base) -2, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base)-1, 1],
+         RS_CE_Notificados_Base[nrow(RS_CE_Notificados_Base), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Notificados <- AUX
 
-######        Criando a coluna de média no data.frame            #####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Notificados[, 1:(ncol(RS_CE_Notificados)-1)], 1 , Quartil_1)
 
 RS_CE_Notificados <- as.data.frame(RS_CE_Notificados)
 
+RS_CE_Notificados$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados)-2)], 1 , median)
+
 RS_CE_Notificados$Mediana <- AUX
 
-######              Criando a coluna de Desvio Padrão no data frame                ###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados[, 1: (ncol(RS_CE_Notificados) -2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Notificados$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Notificados[, 1:(ncol(RS_CE_Notificados)-3)], 1 , Quartil_3)
 
-######       Criando a coluna de Média + 2(DP)    ######################
-
-AUX <- RS_CE_Notificados[, (ncol(RS_CE_Notificados)-1):ncol(RS_CE_Notificados)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Notificados$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Notificados$Quartil_3 <- AUX
 
 RS_CE_Notificados[, (ncol(RS_CE_Notificados)+1)] <- rownames(RS_CE_Notificados)
 
@@ -2901,7 +2981,7 @@ RS_CE_Notificados[, 1] <- c(1:52)
 
 colnames(RS_CE_Notificados)[1] <- "Semana_Epidemiológica"
 
-rownames(RS_CE_Notificados) <- c(1: nrow(RS_CE_Notificados))
+rownames(RS_CE_Notificados) <- c(1:nrow(RS_CE_Notificados))
 
 rm(AUX, AUX2, RS_CE_Notificados_Base)
 
@@ -2909,38 +2989,11 @@ write.csv (RS_CE_Notificados,
            paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados.csv"), 
            row.names = FALSE)
 
-###    CANAL ENDÊMICO NOTIFICADOS     ####
-
-###    Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos:   ######
-###                             2015/16, 2019/20 e 2021/22                                  ######
-
-AUX_GRAF <- RS_CE_Notificados[, Periodos_Epidêmicos_RS]
-
-###      Usando apply para tirar a média por semana epidemiológica      ####
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###       Usando apply para tirar o desvio padrão por semana epidemiológica      #####
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-######      Criando a coluna de Média + 2(DP)    ###############
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Notificados
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Notificados))
 
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Notificados$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Notificados$Semana_Epidemiológica
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -2968,7 +3021,7 @@ RS_2025_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos Notificados - 2025") +
+       title = "Canal Endêmico Casos NOTIFICADOS - 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
@@ -2976,11 +3029,13 @@ RS_2025_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), 
+  geom_area(aes(y = Quartil_3), 
             fill = "#F0E68C",
             alpha = 0.9) +
   geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
   geom_line(aes(y = `2025`), 
             stat = "identity", 
             color = "black", 
@@ -2998,8 +3053,10 @@ RS_2025_GRAF_CE_Notificados <- ggplot(AUX_GRAF, aes(Ordem))  +
 RS_CE_Confirmados_Base <- RS_CE_Confirmados_Base[, -54]
 RS_2025_SE_Confirmados <- RS_2025_SE_Confirmados[, -54]
 
+######     Canal Endêmico    CONFIRMADOS#####
+
 RS_CE_Confirmados_Base[(nrow(RS_CE_Confirmados_Base) +1), 1] <- "2025"
-RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 2:53] <- as.integer(data.frame(RS_2025_SE_Confirmados[17, 2:53]))
+RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 2:53] <- as.integer(data.frame(RS_2025_SE_Confirmados[nrow(RS_2025_SE_Confirmados), 2:53]))
 
 #####################################################################################################################
 #####                   Utilizando objetos auxiliares porque se transpor o data frame                   #############
@@ -3009,37 +3066,55 @@ RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 2:53] <- as.integer(data.fr
 #####               VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                         #############
 #####################################################################################################################
 
-AUX <- RS_CE_Confirmados_Base[, -1]
+AUX <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -7,]
+AUX[2, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -6,]
+AUX[3, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -5,]
+AUX[4, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -4,]
+AUX[5, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -3,]
+AUX[6, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -2,]
+AUX[7, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -1,]
+AUX[8, ] <- RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Confirmados_Base[, 1]
+AUX2 <-c(RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -7, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -6, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -5, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -4, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -3, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base) -2, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base)-1, 1],
+         RS_CE_Confirmados_Base[nrow(RS_CE_Confirmados_Base), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Confirmados <- AUX
 
-######     Criando a coluna de média no data.frame     #####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados[, 1: (ncol(RS_CE_Confirmados)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Confirmados[, 1:(ncol(RS_CE_Confirmados)-1)], 1 , Quartil_1)
 
 RS_CE_Confirmados <- as.data.frame(RS_CE_Confirmados)
 
+RS_CE_Confirmados$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Confirmados[, 1: (ncol(RS_CE_Confirmados)-2)], 1 , median)
+
 RS_CE_Confirmados$Mediana <- AUX
 
-######     Criando a coluna de Desvio Padrão no data frame     ###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados[, 1:(ncol(RS_CE_Confirmados)-2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Confirmados$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Confirmados[, 1:(ncol(RS_CE_Confirmados)-3)], 1 , Quartil_3)
 
-######      Criando a coluna de Média + 2(DP)     ###########
-
-AUX <- RS_CE_Confirmados[, (ncol(RS_CE_Confirmados)-1):ncol(RS_CE_Confirmados)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Confirmados$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Confirmados$Quartil_3 <- AUX
 
 RS_CE_Confirmados[, (ncol(RS_CE_Confirmados)+1)] <- rownames(RS_CE_Confirmados)
 
@@ -3057,38 +3132,11 @@ write.csv (RS_CE_Confirmados,
            paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados.csv"), 
            row.names = FALSE)
 
-###     CANAL ENDÊMICO CONFIRMADOS      ####
-
-###          Puxando os dados da tabela RS22_CE_Confirmados e excluindo os períodos epidêmicos: 
-###                                    2015/16, 2019/20 e 2021/22
-
-AUX_GRAF <- RS_CE_Confirmados[, Periodos_Epidêmicos_RS]
-
-###                   Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[,-ncol(AUX_GRAF)], 1 , median)
-
-###                Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-######                   Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###                      Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Confirmados
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados))
 
 ###                        Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados$Semana_Epidemiológica
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -3124,11 +3172,13 @@ RS_2025_GRAF_CE_Confirmados <- ggplot(AUX_GRAF, aes(Ordem))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), 
+  geom_area(aes(y = Quartil_3), 
             fill = "#F0E68C",
             alpha = 0.9) +
   geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
   geom_line(aes(y = `2025`), 
             stat = "identity", 
             color = "black", 
@@ -3815,34 +3865,11 @@ write.csv (assign(paste0("RS", RS, "_2025_SE_Provaveis"), AUX),
 
 ###     CANAL ENDÊMICO Prováveis         ####
 
-####         Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos:
-####                                2015/16, 2019/20 e 2021/22
+####         Puxando os dados da tabela RS22_CE_Notificados
 
-AUX_GRAF <- RS_CE_Confirmados[, Periodos_Epidêmicos_RS]
-
-###             Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###             Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-######     Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Confirmados[,]
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados))
-
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Notificados$`2025`
 
 AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados$Semana_Epidemiológica
 
@@ -3868,9 +3895,9 @@ AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3",
 
 RS_2025_SE_Provaveis <- RS_2025_SE_Provaveis[, -54]
 
-AUX_GRAF[, 8] <- t(RS_2025_SE_Provaveis[nrow(RS_2025_SE_Provaveis), -1 ])
+AUX_GRAF[, 9] <- t(RS_2025_SE_Provaveis[nrow(RS_2025_SE_Provaveis), -1 ])
 
-colnames(AUX_GRAF)[8] <- "Provaveis"
+colnames(AUX_GRAF)[9] <- "2025"
 
 RS_2025_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
@@ -3878,8 +3905,7 @@ RS_2025_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos PROVÁVEIS - 2025",
-       subtitle = "Casos Prováveis = Casos Notificados - Casos Descartados") +
+       title = "Canal Endêmico Casos PROVÁVEIS - 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
@@ -3887,14 +3913,16 @@ RS_2025_GRAF_CE_Provaveis <- ggplot(AUX_GRAF, aes(Ordem))  +
     plot.title = element_text(face = "bold",
                               size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), 
+  geom_area(aes(y = Quartil_3), 
             fill = "#F0E68C",
             alpha = 0.9) +
   geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
-  geom_line(aes(y = Provaveis), 
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
             stat = "identity", 
-            color = "black",
+            color = "black", 
             linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
@@ -4779,7 +4807,8 @@ RS22_GRAF_Escolaridade <- ggplot (AUX_GRAF,
        title = "Distribuição das Notificações por Escolaridade 22ª RS 
 (2025)") +
   geom_bar(
-    aes( y = Notificados, fill = "Notificados"),
+    aes( y = Notificados, 
+         fill = "Notificados"),
     stat = "identity",
     color = "black",
     width = .4,
@@ -4790,9 +4819,12 @@ RS22_GRAF_Escolaridade <- ggplot (AUX_GRAF,
              alpha = 0.5,
              nudge_x = -.20,
              vjust = 0.1) + 
-  scale_fill_manual(name = "", values = c("Notificados" = "#C4BF7A", "Confirmados" = "#C4A37A")) +
+  scale_fill_manual(name = "", 
+                    values = c("Notificados" = "#C4BF7A", 
+                               "Confirmados" = "#C4A37A")) +
   geom_bar(
-    aes( y = Confirmados, fill = "Confirmados"),
+    aes( y = Confirmados, 
+         fill = "Confirmados"),
     stat = "identity",
     color = "black",
     width = .4,
@@ -5384,93 +5416,85 @@ RS22_GRAF_2025_Inconclusivos <- ggplot (AUX_GRAF,
 RS_CE_Notificados_SEDE_Base[(nrow(RS_CE_Notificados_SEDE_Base) +1), 1] <- "2025"
 RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base), 2:54] <- as.integer(data.frame(RS22_2025_SE_Notificados[6, 2:54]))
 
+### Eliminando a SE 53
+
+RS_CE_Notificados_SEDE_Base <- RS_CE_Notificados_SEDE_Base[, -54]
+
 #####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
 #####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
 ##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
 
-AUX <- RS_CE_Notificados_SEDE_Base[, -1]
+AUX <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -7,]
+AUX[2, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -6,]
+AUX[3, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -5,]
+AUX[4, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -4,]
+AUX[5, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -3,]
+AUX[6, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -2,]
+AUX[7, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -1,]
+AUX[8, ] <- RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Notificados_SEDE_Base[, 1]
+AUX2 <-c(RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -7, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -6, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -5, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -4, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -3, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base) -2, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base)-1, 1],
+         RS_CE_Notificados_SEDE_Base[nrow(RS_CE_Notificados_SEDE_Base), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Notificados_SEDE <- AUX
 
-######Criando a coluna de média no data.frame#####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados_SEDE[,1: (ncol(RS_CE_Notificados_SEDE)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Notificados_SEDE[, 1:(ncol(RS_CE_Notificados_SEDE)-1)], 1 , Quartil_1)
 
 RS_CE_Notificados_SEDE <- as.data.frame(RS_CE_Notificados_SEDE)
 
+RS_CE_Notificados_SEDE$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Notificados_SEDE[, 1: (ncol(RS_CE_Notificados_SEDE)-2)], 1 , median)
+
 RS_CE_Notificados_SEDE$Mediana <- AUX
 
-######Criando a coluna de Desvio Padrão no data frame###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados_SEDE[,1: (ncol(RS_CE_Notificados_SEDE) -2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Notificados_SEDE$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Notificados_SEDE[, 1:(ncol(RS_CE_Notificados_SEDE)-3)], 1 , Quartil_3)
 
-###### Criando a coluna de Média + 2(DP)
-
-AUX <- RS_CE_Notificados_SEDE[, (ncol(RS_CE_Notificados_SEDE)-1):ncol(RS_CE_Notificados_SEDE)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Notificados_SEDE$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Notificados_SEDE$Quartil_3 <- AUX
 
 RS_CE_Notificados_SEDE[, (ncol(RS_CE_Notificados_SEDE)+1)] <- rownames(RS_CE_Notificados_SEDE)
 
 RS_CE_Notificados_SEDE <- RS_CE_Notificados_SEDE[, c(ncol(RS_CE_Notificados_SEDE), 1:(ncol(RS_CE_Notificados_SEDE) -1))]
 
-RS_CE_Notificados_SEDE[,1] <- c(1:53)
+RS_CE_Notificados_SEDE[, 1] <- c(1:52)
 
 colnames(RS_CE_Notificados_SEDE)[1] <- "Semana_Epidemiológica"
 
 rownames(RS_CE_Notificados_SEDE) <- c(1:nrow(RS_CE_Notificados_SEDE))
 
-rm(AUX, AUX2, RS_CE_Notificados_SEDE_Base)
-
-write.csv (RS_CE_Notificados_SEDE, 
-           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SEDE.csv"), 
-           row.names = FALSE)
+rm(AUX, AUX2)
 
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
 ###CANAL ENDÊMICO NOTIFICADOS - IVAIPORÃ####
 
-###Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
-
-AUX_GRAF <- RS_CE_Notificados_SEDE[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Notificados_SEDE
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Notificados_SEDE))
 
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Notificados_SEDE$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Notificados_SEDE$Semana_Epidemiológica
-
-AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -5498,21 +5522,29 @@ RS_2025_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã - 2025") +
+       title = "Canal Endêmico Casos NOTIFICADOS Ivaiporã- 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 24,
-                              colour = "#556B2F")
+                              size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes( y = Mediana), fill = "#556B2F") +
-  geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Quartil_3), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Mediana), 
+            fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:52), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:52), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####Canal Endêmico CONFIRMADOS####
@@ -5520,93 +5552,83 @@ RS_2025_GRAF_CE_Notificados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
 RS_CE_Confirmados_SEDE_Base[(nrow(RS_CE_Confirmados_SEDE_Base) +1), 1] <- "2025"
 RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base), 2:54] <- as.integer(data.frame(RS22_2025_SE_Confirmados[6, 2:54]))
 
+### Eliminando a SE 53
+
+RS_CE_Confirmados_SEDE_Base <- RS_CE_Confirmados_SEDE_Base[, -54]
+
 #####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
 #####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
 ##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
 
-AUX <- RS_CE_Confirmados_SEDE_Base[,-1]
+AUX <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -6,]
+AUX[2, ] <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -5,]
+AUX[3, ] <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -4,]
+AUX[4, ] <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -3,]
+AUX[5, ] <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -2,]
+AUX[6, ] <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -1,]
+AUX[7, ] <- RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Confirmados_SEDE_Base[,1]
+AUX2 <-c(RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -6, 1],
+         RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -5, 1],
+         RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -4, 1],
+         RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -3, 1],
+         RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -2, 1],
+         RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base) -1, 1],
+         RS_CE_Confirmados_SEDE_Base[nrow(RS_CE_Confirmados_SEDE_Base), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Confirmados_SEDE <- AUX
 
-######Criando a coluna de média no data.frame#####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados_SEDE[, 1: (ncol(RS_CE_Confirmados_SEDE)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Confirmados_SEDE[, 1:(ncol(RS_CE_Confirmados_SEDE)-1)], 1 , Quartil_1)
 
 RS_CE_Confirmados_SEDE <- as.data.frame(RS_CE_Confirmados_SEDE)
 
+RS_CE_Confirmados_SEDE$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Confirmados_SEDE[, 1: (ncol(RS_CE_Confirmados_SEDE)-2)], 1 , median)
+
 RS_CE_Confirmados_SEDE$Mediana <- AUX
 
-######Criando a coluna de Desvio Padrão no data frame###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados_SEDE[, 1: (ncol(RS_CE_Confirmados_SEDE) -2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Confirmados_SEDE$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Confirmados_SEDE[, 1:(ncol(RS_CE_Confirmados_SEDE)-3)], 1 , Quartil_3)
 
-###### Criando a coluna de Média + 2(DP)
-
-AUX <- RS_CE_Confirmados_SEDE[, (ncol(RS_CE_Confirmados_SEDE)-1):ncol(RS_CE_Confirmados_SEDE)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Confirmados_SEDE$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Confirmados_SEDE$Quartil_3 <- AUX
 
 RS_CE_Confirmados_SEDE[, (ncol(RS_CE_Confirmados_SEDE)+1)] <- rownames(RS_CE_Confirmados_SEDE)
 
 RS_CE_Confirmados_SEDE <- RS_CE_Confirmados_SEDE[, c(ncol(RS_CE_Confirmados_SEDE), 1:(ncol(RS_CE_Confirmados_SEDE) -1))]
 
-RS_CE_Confirmados_SEDE[,1] <- c(1:53)
+RS_CE_Confirmados_SEDE[, 1] <- c(1:52)
 
 colnames(RS_CE_Confirmados_SEDE)[1] <- "Semana_Epidemiológica"
 
 rownames(RS_CE_Confirmados_SEDE) <- c(1:nrow(RS_CE_Confirmados_SEDE))
 
-rm(AUX, AUX2, RS_CE_Confirmados_SEDE_Base)
-
-write.csv (RS_CE_Confirmados_SEDE, 
-           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SEDE.csv"), 
-           row.names = FALSE)
+rm(AUX, AUX2)
 
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
-###CANAL ENDÊMICO Confirmados - IVAIPORÃ####
+###CANAL ENDÊMICO CONFIRMADOS - IVAIPORÃ####
 
-###Puxando os dados da tabela RS22_CE_Confirmados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
-
-AUX_GRAF <- RS_CE_Confirmados_SEDE[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[,1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Confirmados_SEDE
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados_SEDE))
 
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados_SEDE$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados_SEDE$Semana_Epidemiológica
-
-AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -5634,21 +5656,29 @@ RS_2025_GRAF_CE_Confirmados_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos CONFIRMADOS Ivaiporã- 2025") +
+       title = "Canal Endêmico Casos CONFIRADOS Ivaiporã- 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 24,
-                              colour = "#556B2F")
+                              size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(y = Mediana), fill = "#556B2F") +
-  geom_line(aes(y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Quartil_3), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Mediana), 
+            fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:52), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:52), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####################################################################################################################################
@@ -5667,33 +5697,7 @@ RS_2025_Casos_Provaveis_SEDE <- t(as.data.frame(RS_2025_Casos_Provaveis_SEDE))
 
 ###Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
 
-AUX_GRAF <- RS_CE_Confirmados_SEDE[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
-
-AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados_SEDE))
-
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados_SEDE$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados_SEDE$Semana_Epidemiológica
+AUX_GRAF <- RS_CE_Confirmados_SEDE[,]
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -5712,13 +5716,13 @@ AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3",
                                   "2025/42",  "2025/43",  "2025/44",  
                                   "2025/45",  "2025/46",  "2025/47",  
                                   "2025/48",  "2025/49",  "2025/50",  
-                                  "2025/51",  "2025/52", "2025/53"))
+                                  "2025/51",  "2025/52"))
 
-AUX_GRAF[, 8] <- RS_2025_Casos_Provaveis_SEDE[,1]
+AUX_GRAF[, 8] <- RS_2025_Casos_Provaveis_SEDE[-53, 1]
+
+AUX_GRAF$Ordem <- c(1: nrow(AUX_GRAF))
 
 colnames(AUX_GRAF)[8] <- "Provaveis"
-
-AUX_GRAF <- AUX_GRAF[- nrow(AUX_GRAF),]
 
 RS_2025_GRAF_CE_Provaveis_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
@@ -5736,11 +5740,13 @@ RS_2025_GRAF_CE_Provaveis_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
                               size = 24,
                               colour = "#556B2F")
   ) +
-  geom_area(aes(y = Lim_Superior), 
-            fill = "#F0E68C",
-            alpha = 0.9) +
+  geom_area(aes(y = Quartil_3), 
+             fill = "#F0E68C",
+             alpha = 0.9) +
   geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
   geom_line(aes(y = Provaveis), 
             stat = "identity", 
             color = "black", 
@@ -5754,7 +5760,7 @@ RS_2025_GRAF_CE_Provaveis_SEDE <- ggplot(AUX_GRAF, aes(Ordem))  +
 rm(RS_2025_Casos_Provaveis_SEDE, AUX_GRAF)
 
 ####################################################################################################################
-############      Trabalhando a tabela base do Canal Endêmico - JARDIM ALEGRE      ######################################
+############      Trabalhando a tabela base do Canal Endêmico - IVAIPORÃ      ######################################
 ####################################################################################################################
 
 ######Canal Endêmico NOTIFICADOS#####
@@ -5762,93 +5768,83 @@ rm(RS_2025_Casos_Provaveis_SEDE, AUX_GRAF)
 RS_CE_Notificados_JARDIM_BASE[(nrow(RS_CE_Notificados_JARDIM_BASE) +1), 1] <- "2025"
 RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE), 2:54] <- as.integer(data.frame(RS22_2025_SE_Notificados[7, 2:54]))
 
+### Eliminando a SE 53
+
+RS_CE_Notificados_JARDIM_BASE <- RS_CE_Notificados_JARDIM_BASE[, -54]
+
 #####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
 #####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
 ##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
 
-AUX <- RS_CE_Notificados_JARDIM_BASE[, -1]
+AUX <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -6,]
+AUX[2, ] <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -5,]
+AUX[3, ] <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -4,]
+AUX[4, ] <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -3,]
+AUX[5, ] <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -2,]
+AUX[6, ] <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -1,]
+AUX[7, ] <- RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Notificados_JARDIM_BASE[, 1]
+AUX2 <-c(RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -6, 1],
+         RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -5, 1],
+         RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -4, 1],
+         RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -3, 1],
+         RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -2, 1],
+         RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE) -1, 1],
+         RS_CE_Notificados_JARDIM_BASE[nrow(RS_CE_Notificados_JARDIM_BASE), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Notificados_JARDIM <- AUX
 
-######Criando a coluna de média no data.frame#####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados_JARDIM[,1: (ncol(RS_CE_Notificados_JARDIM)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Notificados_JARDIM[, 1:(ncol(RS_CE_Notificados_JARDIM)-1)], 1 , Quartil_1)
 
 RS_CE_Notificados_JARDIM <- as.data.frame(RS_CE_Notificados_JARDIM)
 
+RS_CE_Notificados_JARDIM$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Notificados_JARDIM[, 1: (ncol(RS_CE_Notificados_JARDIM)-2)], 1 , median)
+
 RS_CE_Notificados_JARDIM$Mediana <- AUX
 
-######Criando a coluna de Desvio Padrão no data frame###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados_JARDIM[,1: (ncol(RS_CE_Notificados_JARDIM) -2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Notificados_JARDIM$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Notificados_JARDIM[, 1:(ncol(RS_CE_Notificados_JARDIM)-3)], 1 , Quartil_3)
 
-###### Criando a coluna de Média + 2(DP)
-
-AUX <- RS_CE_Notificados_JARDIM[, (ncol(RS_CE_Notificados_JARDIM)-1):ncol(RS_CE_Notificados_JARDIM)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Notificados_JARDIM$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Notificados_JARDIM$Quartil_3 <- AUX
 
 RS_CE_Notificados_JARDIM[, (ncol(RS_CE_Notificados_JARDIM)+1)] <- rownames(RS_CE_Notificados_JARDIM)
 
 RS_CE_Notificados_JARDIM <- RS_CE_Notificados_JARDIM[, c(ncol(RS_CE_Notificados_JARDIM), 1:(ncol(RS_CE_Notificados_JARDIM) -1))]
 
-RS_CE_Notificados_JARDIM[,1] <- c(1:53)
+RS_CE_Notificados_JARDIM[, 1] <- c(1:52)
 
 colnames(RS_CE_Notificados_JARDIM)[1] <- "Semana_Epidemiológica"
 
 rownames(RS_CE_Notificados_JARDIM) <- c(1:nrow(RS_CE_Notificados_JARDIM))
 
-rm(AUX, AUX2, RS_CE_Notificados_JARDIM_BASE)
-
-write.csv (RS_CE_Notificados_JARDIM, 
-           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_JARDIM_ALEGRE.csv"), 
-           row.names = FALSE)
+rm(AUX, AUX2)
 
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
-###CANAL ENDÊMICO NOTIFICADOS - JARDIM ALEGRE####
+###CANAL ENDÊMICO NOTIFICADOS - IVAIPORÃ####
 
-###Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
-
-AUX_GRAF <- RS_CE_Notificados_JARDIM[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + (1.96 * Desvio_Padrao)))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Notificados_JARDIM
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Notificados_JARDIM))
 
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Notificados_JARDIM$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Notificados_JARDIM$Semana_Epidemiológica
-
-AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -5882,15 +5878,23 @@ RS_2025_GRAF_CE_Notificados_JARDIM <- ggplot(AUX_GRAF, aes(Ordem))  +
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 24,
-                              colour = "#556B2F")
+                              size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes( y = Mediana), fill = "#556B2F") +
-  geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Quartil_3), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Mediana), 
+            fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:52), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:52), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####Canal Endêmico CONFIRMADOS####
@@ -5898,93 +5902,83 @@ RS_2025_GRAF_CE_Notificados_JARDIM <- ggplot(AUX_GRAF, aes(Ordem))  +
 RS_CE_Confirmados_JARDIM_BASE[(nrow(RS_CE_Confirmados_JARDIM_BASE) +1), 1] <- "2025"
 RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE), 2:54] <- as.integer(data.frame(RS22_2025_SE_Confirmados[7, 2:54]))
 
+### Eliminando a SE 53
+
+RS_CE_Confirmados_JARDIM_BASE <- RS_CE_Confirmados_JARDIM_BASE[, -54]
+
 #####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
 #####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
 ##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
 
-AUX <- RS_CE_Confirmados_JARDIM_BASE[,-1]
+AUX <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -6,]
+AUX[2, ] <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -5,]
+AUX[3, ] <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -4,]
+AUX[4, ] <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -3,]
+AUX[5, ] <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -2,]
+AUX[6, ] <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -1,]
+AUX[7, ] <- RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Confirmados_JARDIM_BASE[,1]
+AUX2 <-c(RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -6, 1],
+         RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -5, 1],
+         RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -4, 1],
+         RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -3, 1],
+         RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -2, 1],
+         RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE) -1, 1],
+         RS_CE_Confirmados_JARDIM_BASE[nrow(RS_CE_Confirmados_JARDIM_BASE), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Confirmados_JARDIM <- AUX
 
-######Criando a coluna de média no data.frame#####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados_JARDIM[, 1: (ncol(RS_CE_Confirmados_JARDIM)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Confirmados_JARDIM[, 1:(ncol(RS_CE_Confirmados_JARDIM)-1)], 1 , Quartil_1)
 
 RS_CE_Confirmados_JARDIM <- as.data.frame(RS_CE_Confirmados_JARDIM)
 
+RS_CE_Confirmados_JARDIM$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Confirmados_JARDIM[, 1: (ncol(RS_CE_Confirmados_JARDIM)-2)], 1 , median)
+
 RS_CE_Confirmados_JARDIM$Mediana <- AUX
 
-######Criando a coluna de Desvio Padrão no data frame###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados_JARDIM[, 1: (ncol(RS_CE_Confirmados_JARDIM) -2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Confirmados_JARDIM$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Confirmados_JARDIM[, 1:(ncol(RS_CE_Confirmados_JARDIM)-3)], 1 , Quartil_3)
 
-###### Criando a coluna de Média + 2(DP)
-
-AUX <- RS_CE_Confirmados_JARDIM[, (ncol(RS_CE_Confirmados_JARDIM)-1):ncol(RS_CE_Confirmados_JARDIM)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Confirmados_JARDIM$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Confirmados_JARDIM$Quartil_3 <- AUX
 
 RS_CE_Confirmados_JARDIM[, (ncol(RS_CE_Confirmados_JARDIM)+1)] <- rownames(RS_CE_Confirmados_JARDIM)
 
 RS_CE_Confirmados_JARDIM <- RS_CE_Confirmados_JARDIM[, c(ncol(RS_CE_Confirmados_JARDIM), 1:(ncol(RS_CE_Confirmados_JARDIM) -1))]
 
-RS_CE_Confirmados_JARDIM[,1] <- c(1:53)
+RS_CE_Confirmados_JARDIM[, 1] <- c(1:52)
 
 colnames(RS_CE_Confirmados_JARDIM)[1] <- "Semana_Epidemiológica"
 
 rownames(RS_CE_Confirmados_JARDIM) <- c(1:nrow(RS_CE_Confirmados_JARDIM))
 
-rm(AUX, AUX2, RS_CE_Confirmados_JARDIM_BASE)
-
-write.csv (RS_CE_Confirmados_JARDIM, 
-           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_JARDIM_ALEGRE.csv"), 
-           row.names = FALSE)
+rm(AUX, AUX2)
 
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
-###CANAL ENDÊMICO Confirmados - JARDIM ALEGRE####
+###CANAL ENDÊMICO CONFIRMADOS - Jardim Alegre ####
 
-###Puxando os dados da tabela RS22_CE_Confirmados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
-
-AUX_GRAF <- RS_CE_Confirmados_JARDIM[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[,1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Confirmados_JARDIM
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados_JARDIM))
 
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados_JARDIM$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados_JARDIM$Semana_Epidemiológica
-
-AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -6012,30 +6006,38 @@ RS_2025_GRAF_CE_Confirmados_JARDIM <- ggplot(AUX_GRAF, aes(Ordem))  +
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos CONFIRMADOS Jardim Alegre- 2025") +
+       title = "Canal Endêmico Casos CONFIRADOS Jardim Alegre - 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 24,
-                              colour = "#556B2F")
+                              size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(y = Mediana), fill = "#556B2F") +
-  geom_line(aes(y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Quartil_3), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Mediana), 
+            fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:52), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:52), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####################################################################################################################################
 ####################################################################################################################################
-###############Canal Endêmico Prováveis - JARDIM ALEGRE
+###############Canal Endêmico Prováveis - Jardim Alegre
 
 ####Casos prováveis por semana epidemiológica. Este objeto será apagado assim que for incluso no AUX_GRAF####
 
-RS_2025_Casos_Provaveis_JARDIM <- (RS22_2025_SE_Provaveis[7, 2:54])
+RS_2025_Casos_Provaveis_JARDIM <- (RS22_2025_SE_Provaveis[7, 2: 54])
 
 rownames(RS_2025_Casos_Provaveis_JARDIM)[1] <- "Provaveis"
 
@@ -6045,33 +6047,7 @@ RS_2025_Casos_Provaveis_JARDIM <- t(as.data.frame(RS_2025_Casos_Provaveis_JARDIM
 
 ###Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
 
-AUX_GRAF <- RS_CE_Confirmados_JARDIM[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
-
-AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados_JARDIM))
-
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados_JARDIM$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados_JARDIM$Semana_Epidemiológica
+AUX_GRAF <- RS_CE_Confirmados_JARDIM[,]
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -6090,13 +6066,13 @@ AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3",
                                   "2025/42",  "2025/43",  "2025/44",  
                                   "2025/45",  "2025/46",  "2025/47",  
                                   "2025/48",  "2025/49",  "2025/50",  
-                                  "2025/51",  "2025/52", "2025/53"))
+                                  "2025/51",  "2025/52"))
 
-AUX_GRAF[, 8] <- RS_2025_Casos_Provaveis_JARDIM[,1]
+AUX_GRAF[, 8] <- RS_2025_Casos_Provaveis_JARDIM[-53, 1]
+
+AUX_GRAF$Ordem <- c(1: nrow(AUX_GRAF))
 
 colnames(AUX_GRAF)[8] <- "Provaveis"
-
-AUX_GRAF <- AUX_GRAF[- nrow(AUX_GRAF),]
 
 RS_2025_GRAF_CE_Provaveis_JARDIM <- ggplot(AUX_GRAF, aes(Ordem))  +
   theme(axis.text.x = element_text(angle = 85, 
@@ -6114,11 +6090,13 @@ RS_2025_GRAF_CE_Provaveis_JARDIM <- ggplot(AUX_GRAF, aes(Ordem))  +
                               size = 24,
                               colour = "#556B2F")
   ) +
-  geom_area(aes(y = Lim_Superior), 
+  geom_area(aes(y = Quartil_3), 
             fill = "#F0E68C",
             alpha = 0.9) +
   geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
   geom_line(aes(y = Provaveis), 
             stat = "identity", 
             color = "black", 
@@ -6132,7 +6110,7 @@ RS_2025_GRAF_CE_Provaveis_JARDIM <- ggplot(AUX_GRAF, aes(Ordem))  +
 rm(RS_2025_Casos_Provaveis_JARDIM, AUX_GRAF)
 
 ####################################################################################################################
-############      Trabalhando a tabela base do Canal Endêmico - São João do Ivaí     ######################################
+############      Trabalhando a tabela base do Canal Endêmico - São João      ######################################
 ####################################################################################################################
 
 ######Canal Endêmico NOTIFICADOS#####
@@ -6140,93 +6118,83 @@ rm(RS_2025_Casos_Provaveis_JARDIM, AUX_GRAF)
 RS_CE_Notificados_SAO_JOAO_BASE[(nrow(RS_CE_Notificados_SAO_JOAO_BASE) +1), 1] <- "2025"
 RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE), 2:54] <- as.integer(data.frame(RS22_2025_SE_Notificados[16, 2:54]))
 
+### Eliminando a SE 53
+
+RS_CE_Notificados_SAO_JOAO_BASE <- RS_CE_Notificados_SAO_JOAO_BASE[, -54]
+
 #####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
 #####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
 ##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
 
-AUX <- RS_CE_Notificados_SAO_JOAO_BASE[, -1]
+AUX <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -6,]
+AUX[2, ] <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -5,]
+AUX[3, ] <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -4,]
+AUX[4, ] <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -3,]
+AUX[5, ] <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -2,]
+AUX[6, ] <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -1,]
+AUX[7, ] <- RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Notificados_SAO_JOAO_BASE[, 1]
+AUX2 <-c(RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -6, 1],
+         RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -5, 1],
+         RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -4, 1],
+         RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -3, 1],
+         RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -2, 1],
+         RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE) -1, 1],
+         RS_CE_Notificados_SAO_JOAO_BASE[nrow(RS_CE_Notificados_SAO_JOAO_BASE), 1])
 
 colnames(AUX) <- AUX2
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI <- AUX
+RS_CE_Notificados_SAO_JOAO <- AUX
 
-######Criando a coluna de média no data.frame#####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Notificados_SAO_JOAO_DO_IVAI[,1: (ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI <- as.data.frame(RS_CE_Notificados_SAO_JOAO_DO_IVAI)
+AUX <- apply(RS_CE_Notificados_SAO_JOAO[, 1:(ncol(RS_CE_Notificados_SAO_JOAO)-1)], 1 , Quartil_1)
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI$Mediana <- AUX
+RS_CE_Notificados_SAO_JOAO <- as.data.frame(RS_CE_Notificados_SAO_JOAO)
 
-######Criando a coluna de Desvio Padrão no data frame###############
+RS_CE_Notificados_SAO_JOAO$Quartil_1 <- AUX
 
-AUX <- apply(RS_CE_Notificados_SAO_JOAO_DO_IVAI[,1: (ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI) -2)], 1 , sd)
+######     Criando a coluna de médiana no data.frame     #####################
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Notificados_SAO_JOAO[, 1: (ncol(RS_CE_Notificados_SAO_JOAO)-2)], 1 , median)
 
-###### Criando a coluna de Média + 2(DP)
+RS_CE_Notificados_SAO_JOAO$Mediana <- AUX
 
-AUX <- RS_CE_Notificados_SAO_JOAO_DO_IVAI[, (ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI)-1):ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI)]
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI$Lim_Superior <- AUX$Lim_Superior
+AUX <- apply(RS_CE_Notificados_SAO_JOAO[, 1:(ncol(RS_CE_Notificados_SAO_JOAO)-3)], 1 , Quartil_3)
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI[, (ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI)+1)] <- rownames(RS_CE_Notificados_SAO_JOAO_DO_IVAI)
+RS_CE_Notificados_SAO_JOAO$Quartil_3 <- AUX
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI <- RS_CE_Notificados_SAO_JOAO_DO_IVAI[, c(ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI), 1:(ncol(RS_CE_Notificados_SAO_JOAO_DO_IVAI) -1))]
+RS_CE_Notificados_SAO_JOAO[, (ncol(RS_CE_Notificados_SAO_JOAO)+1)] <- rownames(RS_CE_Notificados_SAO_JOAO)
 
-RS_CE_Notificados_SAO_JOAO_DO_IVAI[,1] <- c(1:53)
+RS_CE_Notificados_SAO_JOAO <- RS_CE_Notificados_SAO_JOAO[, c(ncol(RS_CE_Notificados_SAO_JOAO), 1:(ncol(RS_CE_Notificados_SAO_JOAO) -1))]
 
-colnames(RS_CE_Notificados_SAO_JOAO_DO_IVAI)[1] <- "Semana_Epidemiológica"
+RS_CE_Notificados_SAO_JOAO[, 1] <- c(1:52)
 
-rownames(RS_CE_Notificados_SAO_JOAO_DO_IVAI) <- c(1:nrow(RS_CE_Notificados_SAO_JOAO_DO_IVAI))
+colnames(RS_CE_Notificados_SAO_JOAO)[1] <- "Semana_Epidemiológica"
 
-rm(AUX, AUX2, RS_CE_Notificados_SAO_JOAO_BASE)
+rownames(RS_CE_Notificados_SAO_JOAO) <- c(1:nrow(RS_CE_Notificados_SAO_JOAO))
 
-write.csv (RS_CE_Notificados_SAO_JOAO_DO_IVAI, 
-           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Notificados_SAO_JOAO_DO_IVAI_ALEGRE.csv"), 
-           row.names = FALSE)
+rm(AUX, AUX2)
 
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
-###CANAL ENDÊMICO NOTIFICADOS - São João do Ivaí####
+###CANAL ENDÊMICO NOTIFICADOS - IVAIPORÃ####
 
-###Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
+AUX_GRAF <- RS_CE_Notificados_SAO_JOAO
 
-AUX_GRAF <- RS_CE_Notificados_SAO_JOAO_DO_IVAI[, Periodos_Epidêmicos_SEDE]
+AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Notificados_SAO_JOAO))
 
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF) -1): ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
-
-AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Notificados_SAO_JOAO_DO_IVAI))
-
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Notificados_SAO_JOAO_DO_IVAI$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Notificados_SAO_JOAO_DO_IVAI$Semana_Epidemiológica
-
-AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -6254,21 +6222,29 @@ RS_2025_GRAF_CE_Notificados_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, aes(Ordem))  +
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos NOTIFICADOS São João do Ivaí- 2025") +
+       title = "Canal Endêmico Casos NOTIFICADOS São João do Ivaí - 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 24,
-                              colour = "#556B2F")
+                              size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes( y = Mediana), fill = "#556B2F") +
-  geom_line(aes( y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Quartil_3), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Mediana), 
+            fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:52), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:52), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####Canal Endêmico CONFIRMADOS####
@@ -6276,93 +6252,83 @@ RS_2025_GRAF_CE_Notificados_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, aes(Ordem))  +
 RS_CE_Confirmados_SAO_JOAO_BASE[(nrow(RS_CE_Confirmados_SAO_JOAO_BASE) +1), 1] <- "2025"
 RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE), 2:54] <- as.integer(data.frame(RS22_2025_SE_Confirmados[16, 2:54]))
 
+### Eliminando a SE 53
+
+RS_CE_Confirmados_SAO_JOAO_BASE <- RS_CE_Confirmados_SAO_JOAO_BASE[, -54]
+
 #####Utilizando objetos auxiliares porque se transpor o data frame direto ele transforma as variáveis em#############
 #####caracter.            NÃO FOI DESCARTADO AINDA OS PERÍODOS EPIDÊMICOS                               #############
 ##### VERIFICAR SE PODE-SE UTILIZAR A MÉDIA COMO LIMITE INFERIOR.                                       #############
 
-AUX <- RS_CE_Confirmados_SAO_JOAO_BASE[,-1]
+AUX <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -6,]
+AUX[2, ] <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -5,]
+AUX[3, ] <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -4,]
+AUX[4, ] <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -3,]
+AUX[5, ] <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -2,]
+AUX[6, ] <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -1,]
+AUX[7, ] <- RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) ,]
+
+AUX <- AUX[, -1]
 
 AUX <- t(AUX)
 
-AUX2 <- RS_CE_Confirmados_SAO_JOAO_BASE[,1]
+AUX2 <-c(RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -6, 1],
+         RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -5, 1],
+         RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -4, 1],
+         RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -3, 1],
+         RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -2, 1],
+         RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE) -1, 1],
+         RS_CE_Confirmados_SAO_JOAO_BASE[nrow(RS_CE_Confirmados_SAO_JOAO_BASE), 1])
 
 colnames(AUX) <- AUX2
 
 RS_CE_Confirmados_SAO_JOAO_DO_IVAI <- AUX
 
-######Criando a coluna de média no data.frame#####################
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, 1: (ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)-1)], 1 , median)
+Quartil_1 <- function(x) quantile(x, probs = 0.25)
+
+AUX <- apply(RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, 1:(ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)-1)], 1 , Quartil_1)
 
 RS_CE_Confirmados_SAO_JOAO_DO_IVAI <- as.data.frame(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)
 
+RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Quartil_1 <- AUX
+
+######     Criando a coluna de médiana no data.frame     #####################
+
+AUX <- apply(RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, 1: (ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)-2)], 1 , median)
+
 RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Mediana <- AUX
 
-######Criando a coluna de Desvio Padrão no data frame###############
+######     Criando a coluna de Quartil_1 no data frame     ###############
 
-AUX <- apply(RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, 1: (ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI) -2)], 1 , sd)
+Quartil_3 <- function(x) quantile(x, probs = 0.75)
 
-RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Desvio_Padrao <- AUX
+AUX <- apply(RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, 1:(ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)-3)], 1 , Quartil_3)
 
-###### Criando a coluna de Média + 2(DP)
-
-AUX <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, (ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)-1):ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)]
-
-AUX <- AUX %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Lim_Superior <- AUX$Lim_Superior
+RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Quartil_3 <- AUX
 
 RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, (ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)+1)] <- rownames(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)
 
 RS_CE_Confirmados_SAO_JOAO_DO_IVAI <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, c(ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI), 1:(ncol(RS_CE_Confirmados_SAO_JOAO_DO_IVAI) -1))]
 
-RS_CE_Confirmados_SAO_JOAO_DO_IVAI[,1] <- c(1:53)
+RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, 1] <- c(1:52)
 
 colnames(RS_CE_Confirmados_SAO_JOAO_DO_IVAI)[1] <- "Semana_Epidemiológica"
 
 rownames(RS_CE_Confirmados_SAO_JOAO_DO_IVAI) <- c(1:nrow(RS_CE_Confirmados_SAO_JOAO_DO_IVAI))
 
-rm(AUX, AUX2, RS_CE_Confirmados_SAO_JOAO_BASE)
-
-write.csv (RS_CE_Confirmados_SAO_JOAO_DO_IVAI, 
-           paste0("Tabulacoes_R/Arboviroses/RS", RS, "_CE_Confirmados_SAO_JOAO_DO_IVAI_ALEGRE.csv"), 
-           row.names = FALSE)
+rm(AUX, AUX2)
 
 #####################################################################################################################################################################################
 #####################################################################################################################################################################################
-###CANAL ENDÊMICO Confirmados - São João do Ivaí####
+###CANAL ENDÊMICO CONFIRMADOS - Jardim Alegre ####
 
-###Puxando os dados da tabela RS22_CE_Confirmados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
-
-AUX_GRAF <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[,1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
+AUX_GRAF <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI
 
 AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados_SAO_JOAO_DO_IVAI))
 
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Semana_Epidemiológica
-
-AUX_GRAF <- AUX_GRAF[-nrow(AUX_GRAF),]
+###                        Puxando o período sazonal atual para o gráfico de linhas
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -6384,36 +6350,46 @@ AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3",
                                   "2025/51",  "2025/52")
 )
 
-RS_2025_GRAF_CE_Confirmados_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, aes(Ordem))  +
+RS_2025_GRAF_CE_Confirmados_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, 
+                                                       aes(Ordem)
+)  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos CONFIRMADOS São João do Ivaí- 2025") +
+       title = "Canal Endêmico Casos CONFIRADOS São João do Ivaí - 2025") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "#DC143C"),
     plot.title = element_text(face = "bold",
-                              size = 24,
-                              colour = "#556B2F")
+                              size = 19)
   ) +
-  geom_area(aes(y = Lim_Superior), fill = "#F0E68C",alpha = 0.9) +
-  geom_area(aes(y = Mediana), fill = "#556B2F") +
-  geom_line(aes(y = `2025`), stat = "identity", color = "black", linewidth = 1.5) +
+  geom_area(aes(y = Quartil_3), 
+            fill = "#F0E68C",
+            alpha = 0.9) +
+  geom_area(aes(y = Mediana), 
+            fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
+  geom_line(aes(y = `2025`), 
+            stat = "identity", 
+            color = "black", 
+            linewidth = 1.5) +
   xlab("Semana Epidemiológica") +
   ylab("Número de Casos") +
-  scale_x_continuous(breaks = c(1:52), label = AUX_GRAF$Sem_EPI) +
+  scale_x_continuous(breaks = c(1:52), 
+                     label = AUX_GRAF$Sem_EPI) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 ####################################################################################################################################
 ####################################################################################################################################
-###############Canal Endêmico Prováveis - São João do Ivaí
+###############Canal Endêmico Prováveis - Jardim Alegre
 
 ####Casos prováveis por semana epidemiológica. Este objeto será apagado assim que for incluso no AUX_GRAF####
 
-RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI <- (RS22_2025_SE_Provaveis[16, 2:54])
+RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI <- (RS22_2025_SE_Provaveis[7, 2: 54])
 
 rownames(RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI)[1] <- "Provaveis"
 
@@ -6423,33 +6399,7 @@ RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI <- t(as.data.frame(RS_2025_Casos_Provav
 
 ###Puxando os dados da tabela RS22_CE_Notificados e excluindo os períodos epidêmicos: 2015/16, 2019/20 e 2021/22
 
-AUX_GRAF <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI[, Periodos_Epidêmicos_SEDE]
-
-###Usando apply para tirar a média por semana epidemiológica
-
-AUX_GRAF$Mediana <- apply(AUX_GRAF[, -ncol(AUX_GRAF)], 1 , median)
-
-###Usando apply para tirar o desvio padrão por semana epidemiológica
-
-AUX_GRAF$Desvio_Padrao <- apply(AUX_GRAF[, 1:(ncol(AUX_GRAF)-2)], 1 , sd)
-
-###### Criando a coluna de Média + 2(DP)
-
-AUX_GRAF <- AUX_GRAF[, c((ncol(AUX_GRAF)-1):ncol(AUX_GRAF))]
-
-AUX_GRAF$Lim_Superior <- NA
-
-AUX_GRAF <- AUX_GRAF %>% mutate(Lim_Superior = (Mediana + 1.96 * Desvio_Padrao))
-
-###Criando uma coluna de ordem das se para o R não colocar em ordem numérica.
-
-AUX_GRAF$Ordem <- c(1: nrow(RS_CE_Confirmados_SAO_JOAO_DO_IVAI))
-
-###Puxando o período sazonal atual para o gráfico de linhas
-
-AUX_GRAF$`2025` <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI$`2025`
-
-AUX_GRAF$Sem_Epidemiológica <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI$Semana_Epidemiológica
+AUX_GRAF <- RS_CE_Confirmados_SAO_JOAO_DO_IVAI[,]
 
 AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3", 
                                   "2025/4",  "2025/5",  "2025/6",  
@@ -6468,21 +6418,23 @@ AUX_GRAF$Sem_EPI <-as.character(c("2025/1",  "2025/2", "2025/3",
                                   "2025/42",  "2025/43",  "2025/44",  
                                   "2025/45",  "2025/46",  "2025/47",  
                                   "2025/48",  "2025/49",  "2025/50",  
-                                  "2025/51",  "2025/52", "2025/53"))
+                                  "2025/51",  "2025/52"))
 
-AUX_GRAF[, 8] <- RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI[,1]
+AUX_GRAF[, 8] <- RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI[-53, 1]
+
+AUX_GRAF$Ordem <- c(1: nrow(AUX_GRAF))
 
 colnames(AUX_GRAF)[8] <- "Provaveis"
 
-AUX_GRAF <- AUX_GRAF[- nrow(AUX_GRAF),]
-
-RS_2025_GRAF_CE_Provaveis_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, aes(Ordem))  +
+RS_2025_GRAF_CE_Provaveis_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, 
+                                                     aes(Ordem)
+)  +
   theme(axis.text.x = element_text(angle = 85, 
                                    vjust = .5,
                                    face = "bold",
                                    size = 12)) +
   labs(caption = Fonte,
-       title = "Canal Endêmico Casos PROVÁVEIS São João do Ivaí- 2025",
+       title = "Canal Endêmico Casos PROVÁVEIS São João do Ivaí - 2025",
        subtitle = "Casos Prováveis = Casos Notificados - Casos Descartados") +
   theme(
     panel.grid.major = element_line(color = "#C0C0C0"),
@@ -6492,11 +6444,13 @@ RS_2025_GRAF_CE_Provaveis_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, aes(Ordem))  +
                               size = 24,
                               colour = "#556B2F")
   ) +
-  geom_area(aes(y = Lim_Superior), 
+  geom_area(aes(y = Quartil_3), 
             fill = "#F0E68C",
             alpha = 0.9) +
   geom_area(aes(y = Mediana), 
             fill = "#556B2F") +
+  geom_area(aes(y = Quartil_1), 
+            fill = "#DCDCDC") +
   geom_line(aes(y = Provaveis), 
             stat = "identity", 
             color = "black", 
@@ -6508,7 +6462,6 @@ RS_2025_GRAF_CE_Provaveis_SAO_JOAO_DO_IVAI <- ggplot(AUX_GRAF, aes(Ordem))  +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
 
 rm(RS_2025_Casos_Provaveis_SAO_JOAO_DO_IVAI, AUX_GRAF)
-
 ##########################################################################################################################################
 ###################### CHIKUNGUNYA REGIONAL   ############################################################################################
 
@@ -15379,27 +15332,40 @@ RS22_2025_GRAF_IPO_ARAPUA <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_ARAPUA <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
+                                    aes(x = as.factor(SE)
+                                    )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
-           position = "dodge",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - ARAPUÃ") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - ARAPUÃ",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15451,27 +15417,40 @@ RS22_2025_GRAF_IPO_ARIRANHA <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_ARIRANHA <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                      aes(x = as.factor(SE)
+                                      )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
+           linewidth = 1.8,
+           colour = "black") +
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
             linewidth = 1.8,
             colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - ARIRANHA DO IVAÍ") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - ARIRANHA DO IVAÍ",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15523,27 +15502,40 @@ RS22_2025_GRAF_IPO_CANDIDO <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_CANDIDO <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                     aes(x = as.factor(SE)
+                                     )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - CÂNDIDO DE ABREU") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - CÂNDIDO DE ABREU",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15557,6 +15549,7 @@ RS22_2025_GRAF_IDO_CANDIDO <- ggplot(AUX_GRAF,
                                    face = "bold"),
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
+
 
 ################   Cruzmaltina   #####
 
@@ -15595,27 +15588,40 @@ RS22_2025_GRAF_IPO_CRUZMALTINA <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_CRUZMALTINA <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                         aes(x = as.factor(SE)
+                                         )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - CRUZMALTINA") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - CRUZMALTINA",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15667,27 +15673,40 @@ RS22_2025_GRAF_IPO_GODOY <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_GODOY <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
+       aes(x = as.factor(SE)
+           )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
-           position = "dodge",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados),
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+             label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - GODOY MOREIRA") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - GODOY MOREIRA",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15739,27 +15758,40 @@ RS22_2025_GRAF_IPO_IVAIPORA <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_IVAIPORA <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
+                                      aes(x = as.factor(SE)
+                                      )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
-           position = "dodge",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados),
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - IVAIPORÃ") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - IVAIPORÃ",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15811,27 +15843,40 @@ RS22_2025_GRAF_IPO_JARDIM <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_JARDIM <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                    aes(x = as.factor(SE)
+                                    )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados),
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - JARDIM ALEGRE") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - JARDIM ALEGRE",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15883,27 +15928,40 @@ RS22_2025_GRAF_IPO_Lidianopolis <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_Lidianopolis <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                          aes(x = as.factor(SE)
+                                          )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados),
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - LIDIANÓPOLIS") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - LIDIANÓPOLIS",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -15955,27 +16013,40 @@ RS22_2025_GRAF_IPO_LUNARDELLI <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_LUNARDELLI <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                         aes(x = as.factor(SE)
+                                         )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - LUNARDELLI")+
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - LUNARDELLI",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16027,27 +16098,40 @@ RS22_2025_GRAF_IPO_MANUEL_RIBAS <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_MANUEL_RIBAS <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                          aes(x = as.factor(SE)
+                                          )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
-             size = 3, 
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
+             size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - MANOEL RIBAS") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - MANOEL RIBAS",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16099,27 +16183,40 @@ RS22_2025_GRAF_IPO_MATO_RICO <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_MATO_RICO <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                       aes(x = as.factor(SE)
+                                       )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - MATO RICO") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - MATO RICO",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16171,27 +16268,40 @@ RS22_2025_GRAF_IPO_NOVA_TEBAS <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_NOVA_TEBAS <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                        aes(x = as.factor(SE)
+                                        )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - NOVA TEBAS") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - NOVA TEBAS",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16243,27 +16353,40 @@ RS22_2025_GRAF_IPO_RIO_BRANCO <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_RIO_BRANCO <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                        aes(x = as.factor(SE)
+                                        )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - RIO BRANCO DO IVAÍ") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - RIO BRANCO DO IVAÍ",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16315,27 +16438,40 @@ RS22_2025_GRAF_IPO_ROSARIO <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_ROSARIO <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                     aes(x = as.factor(SE)
+                                     )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - ROSÁRIO DO IVAÍ") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - ROSÁRIO DO IVAÍ",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16349,6 +16485,7 @@ RS22_2025_GRAF_IDO_ROSARIO <- ggplot(AUX_GRAF,
                                    face = "bold"),
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
+
 
 ################   Santa Maria do Oeste   #####
 
@@ -16387,27 +16524,40 @@ RS22_2025_GRAF_IPO_SANTA_MARIA <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_SANTA_MARIA <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                         aes(x = as.factor(SE)
+                                         )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - SANTA MARIA DO OESTE") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - SANTA MARIA DO OESTE",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -16459,27 +16609,40 @@ RS22_2025_GRAF_IPO_SAO_JOAO <- ggplot(AUX_GRAF,
   ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.5)))
 
-AUX_GRAF <- pivot_longer(AUX_GRAF[, -c(1, 3)], 2:3, 
-                         names_to = "Rotulos", 
-                         values_to = "Dados")
-
 RS22_2025_GRAF_IDO_SAO_JOAO <- ggplot(AUX_GRAF, 
-       aes(x = as.factor(SE),
-           y = Dados)) +
-  geom_bar(aes(fill = Rotulos),
-           position = "dodge",
+                                      aes(x = as.factor(SE)
+                                      )) +
+  geom_bar(aes(y = IMO),
            stat = "identity",
            linewidth = 1.8,
            colour = "black") +
-  geom_label(aes(label = Dados), 
-             position = position_dodge2(width = 0.9),
+  geom_label(aes(y = IMO, 
+                 label = IMO),
+             size = 6, 
+             alpha = 0.5,
+             vjust = -0.1) +
+  geom_line(aes(x = as.factor(SE),
+                y = IDO,
+                group = 1),
+            linewidth = 1.8,
+            colour = "black") +
+  geom_point(aes(x = as.factor(SE),
+                 y = IDO),
+             fill = "grey",
+             size = 7,
+             shape = 21) +
+  geom_label(aes(x = as.factor(SE),
+                 y = IDO,
+                 label = IDO), 
              size = 6, 
              alpha = 0.5,
              vjust = -0.1) +
   labs(caption = Fonte_2, 
        x = "Semana Epidemiológica",
        y = "IDO/IMO",
-       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - SÃO JOÃO DO IVAÍ") +
+       title = "Índice de Densidade de Ovos/Índice Médio de Ovos - SÃO JOÃO DO IVAÍ",
+       subtitle = "Coluna = IMO
+Linha = IDO") +
   Theme() +
   theme(axis.text.x = element_text(angle = 0,
                                    size = 12,
@@ -17237,6 +17400,36 @@ RS22_2025_SIG_IVAIPORA_OVITRAMPAS <- AUX
 sheet_write(RS22_2025_SIG_IVAIPORA_OVITRAMPAS, ss = "https://docs.google.com/spreadsheets/d/1ITIc1Iu3vTl7SwFwsJjevln866P1x0r1sc0JBbMs-IA/edit?gid=1751658261#gid=1751658261", 
             sheet = "SIG_OVITRAMPAS")
 
+####  Rede Ovitrap
+
+RS22_2025_SIG_IVAIPORA_Mosquitrap <- read_sheet ("https://docs.google.com/spreadsheets/d/1ITIc1Iu3vTl7SwFwsJjevln866P1x0r1sc0JBbMs-IA/edit?gid=1953803859#gid=1953803859", 
+                                                 sheet ="Rede Mosquitrap")
+
+AUX <- RS22_2025_SIG_IVAIPORA_Mosquitrap[, c(1:7, 
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -15,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -14,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -13,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -12,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -11,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -10,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -9,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -8,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -7,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -6,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -5,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -4,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -3,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -2,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap) -1,
+                                             ncol(RS22_2025_SIG_IVAIPORA_Mosquitrap)
+                                             ), ]
+
+
+RS22_2025_SIG_IVAIPORA_Mosquitrap <- AUX
+
+sheet_write(RS22_2025_SIG_IVAIPORA_Mosquitrap, ss = "https://docs.google.com/spreadsheets/d/1ITIc1Iu3vTl7SwFwsJjevln866P1x0r1sc0JBbMs-IA/edit?gid=1751658261#gid=1751658261", 
+            sheet = "SIG_Mosquitrap")
+
 #### SINAN 10 semanas - Ivaiporã
 
 RS22_Ivaiporã_2025_SINAN_10S <- RS22_2025_SINAN_10S %>% 
@@ -17366,6 +17559,47 @@ RS22_SAO_JOAO_DO_IVAI_2025_SINAN_10S <- RS22_2025_SINAN_10S %>%
 
 sheet_write(RS22_SAO_JOAO_DO_IVAI_2025_SINAN_10S, 
             ss = "https://docs.google.com/spreadsheets/d/1oEr3yDN7klgpSaGBWgpsDhRY7S0-8yMRoTp0Io-E_ks/edit?gid=2017988045#gid=2017988045",
+            sheet = "Notificações_10S")
+
+#######  Lidianópolis
+
+##  Acertando a planilha de ovitrampas para conter só as últimas 4 leituras
+
+RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS <- read_sheet ("https://docs.google.com/spreadsheets/d/1kf5EuZ_-gOjogpVWkM5edv-yjIaPloSt0KrZK03V21w/edit?gid=1745514602#gid=1745514602",
+                                                         sheet ="Rede Ovitrampas")
+
+AUX <- RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS[, c(1:8,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -15,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -14,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -13,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -12,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -11,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -10,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -9,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -8,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -7,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -6,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -5,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -4,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -3,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -2,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS) -1,
+                                                     ncol(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS)), ]
+
+
+RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS <- AUX
+
+sheet_write(RS22_2025_SIG_LIDIANOPOLIS_OVITRAMPAS, 
+            ss = "https://docs.google.com/spreadsheets/d/1kf5EuZ_-gOjogpVWkM5edv-yjIaPloSt0KrZK03V21w/edit?gid=886661365#gid=886661365",
+            sheet = "SIG_OVITRAMPAS")
+
+#### SINAN 10 semanas - LIDIANOPOLIS
+
+RS22_LIDIANOPOLIS_2025_SINAN_10S <- RS22_2025_SINAN_10S %>%
+  filter(Municipio_Residencia == "LIDIANÓPOLIS")
+
+sheet_write(RS22_LIDIANOPOLIS_2025_SINAN_10S, 
+            ss = "https://docs.google.com/spreadsheets/d/1kf5EuZ_-gOjogpVWkM5edv-yjIaPloSt0KrZK03V21w/edit?gid=1764843095#gid=1764843095",
             sheet = "Notificações_10S")
 
 ##############   Planilha Ovitrampas Regional   ########
